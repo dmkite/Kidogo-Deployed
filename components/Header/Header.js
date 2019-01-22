@@ -11,13 +11,13 @@ function Header(props){
       </View>
       <View style={[styles.header, styles.buttons]}>
         <View style={styles.button}>
-          <Icon name="people" color="white" size="30"/>
+          <Icon name="people" color="white" size={30}/>
         </View>
         <View style={styles.button}>
-          <Icon name="home" color="white" size="30"/>
+          <Icon name="home" color="white" size={30}/>
         </View>
         <View style={styles.button}>
-          <Icon name="cloud-upload" color="white" size="30"/>
+          <Icon name="cloud-upload" color="white" size={30}/>
         </View>
       </View>
     </View>

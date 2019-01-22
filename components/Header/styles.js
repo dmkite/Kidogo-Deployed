@@ -8,7 +8,8 @@ export const styles = {
     flexDirection: 'row',
     flexWrap: 'nowrap',
     width: '100%',
-    backgroundColor: '#00B07C'
+    backgroundColor: '#00B07C',
+    paddingLeft: 10
   },
   buttons: {
     flex:1,
