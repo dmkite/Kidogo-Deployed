@@ -1,3 +1,5 @@
+import { CalendarAccessLevel } from "expo/build/Calendar";
+
 export const styles = {
   inputWrapper: {
     height:40,
@@ -6,12 +8,32 @@ export const styles = {
   },
   label: {
     flex:.3,
-    paddingRight:10
+    marginTop:10,
+    marginLeft:10
   },
   input: {
-    flex:.7,
-    borderWidth: 1,
-    borderColor:'#ccc'
+    height: 50,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: '#ccc',
+    paddingLeft: 10,
+    margin:10
+  },
+  badgeHolder:{
+    flex:1, 
+    height:50,
+    justifyContent:'space-between',
+    flexDirection:'row',
+    margin:10
+  },
+  badge:{
+    height:50,
+    flex:.3,
+    borderRadius:5,
+    borderColor:'#ccc',
+    borderWidth: 2,
+    textAlign:'center',
+    lineHeight:50
   },
   camera:{
     alignSelf:'stretch',
@@ -32,5 +54,9 @@ export const styles = {
     alignSelf:'stretch',
     marginHorizontal: 10,
     marginTop:10
+  },
+  selected:{
+    backgroundColor:'#ccc',
+    color:'white'
   }
 }

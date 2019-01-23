@@ -25,10 +25,11 @@ class DashView extends Component{
     const net = this.props.finances.net
     return (
       <TouchableHighlight
-        onPress={
+        onPress={ () => {
           this.state.time > 12 
             ? this.props.navigation.navigate('CheckIn')
             : this.props.navigation.navigate('CheckOut')
+          }
         }
       >
         <View style={styles.dash}>
