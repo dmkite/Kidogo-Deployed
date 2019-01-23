@@ -8,13 +8,13 @@ export const styles = {
     flexDirection: 'row',
     flexWrap: 'nowrap',
     width: '100%',
-    backgroundColor: '#00B07C',
+    backgroundColor: '#ff7e09',
     paddingLeft: 10
   },
   buttons: {
     flex:1,
     height:40,
-    backgroundColor: '#009E6F'
+    backgroundColor: '#ee6d05'
   },
   button: {
     flex:.33,

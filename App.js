@@ -6,12 +6,13 @@ import {Provider} from 'react-redux'
 import HomeScreen from './screens/HomeScreen'
 import DashBoard from './screens/DashBoard';
 import Enrollment from './screens/Enrollment'
-
+import CameraScreen from './screens/CameraScreen'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Dash: DashBoard,
-  Enrollment: Enrollment
+  Enrollment: Enrollment,
+  Camera: CameraScreen
 },
 {
   initialRouteName: 'Home'

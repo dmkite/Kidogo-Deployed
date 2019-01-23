@@ -1,4 +1,4 @@
-import InputDropDown from './Child'
-import InputText from './Guardian'
+import Child from './Child'
+// import InputText from './Guardian'
 
-export {InputDropDown, InputText}
+export {Child}
