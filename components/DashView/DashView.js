@@ -1,24 +1,48 @@
-import React from 'react'
-import {View, Text} from 'react-native'
+import React, {Component} from 'react'
+import {View, Text, TouchableHighlight, Image} from 'react-native'
 import {styles} from './styles'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-function DashView(props){
-  const numChildren = props.accounts.children.length
-  const net = props.finances.net
-  return (
-    <View style={styles.dash}>
-      <View style={styles.container}>
-        <Text style={styles.dashHeader}>{net}</Text>
-        <Text>{net > 0 ? `You have earned ${net} Shillings` : `You lost ${net} Shillings` }</Text>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.dashHeader}>{numChildren}</Text>
-        <Text>You have helped {numChildren} children</Text>
-      </View>
-    </View>
-  )
+class DashView extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      time: null
+    }
+  }
+
+  componentDidMount(){
+    const time = new Date()
+    const hours = time.getHours()
+    this.setState({
+      time: hours
+    })
+  }
+
+  render(){
+    const numChildren = this.props.accounts.children.length
+    const net = this.props.finances.net
+    return (
+      <TouchableHighlight
+        onPress={
+          this.state.time > 12 
+            ? this.props.navigation.navigate('CheckIn')
+            : this.props.navigation.navigate('CheckOut')
+        }
+      >
+        <View style={styles.dash}>
+          <Image 
+            source={this.state.time > 12
+            ? require('../../assets/sunrise.png')
+            : require('../../assets/sunset.png')
+            }
+          />
+          <Text style={styles.dashFont}>{numChildren} Children Checked In</Text>
+        </View>
+      </TouchableHighlight>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({accounts:state.accounts, finances: state.finances})

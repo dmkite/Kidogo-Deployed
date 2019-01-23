@@ -5,7 +5,7 @@ import {styles} from './styles'
 function ActionButtons(props){
   const {navigate} = props.navigation
   return (
-    <ScrollView style={styles.actionsContainer}>
+    <View style={styles.actionsContainer}>
       <TouchableHighlight style={styles.actionButton} onPress={() => navigate('Enrollment')}>
         <View>
           <Image style={styles.buttonImage}/>
@@ -30,7 +30,7 @@ function ActionButtons(props){
           <Text style={styles.actionText}>Daily Questions</Text>
         </View>
       </TouchableHighlight>
-    </ScrollView>
+    </View>
   )
 }
 

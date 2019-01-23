@@ -13,12 +13,12 @@ export default class HomeScreen extends Component{
   }
   
   componentDidMount = () => {
-
+    const { navigate } = this.props.navigation
+    if (true) navigate('Dash')
   }
 
   render(){
     const {navigate} = this.props.navigation
-    if(true) navigate('Dash')
     return (
       <View style={{flex: 1, padding:10}}>
         <View style={styles.imageHolder}>
