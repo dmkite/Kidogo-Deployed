@@ -1,24 +1,25 @@
 import React from 'react'
 import {styles} from './styles'
-import {View, Text} from 'react-native'
+import {View, Text, TouchableHighlight} from 'react-native'
 import {Icon} from 'react-native-elements'
 
 function Header(props){
+  const { navigate } = props.navigation
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
         <Text style={styles.h1}>Kidogo</Text>
       </View>
       <View style={[styles.header, styles.buttons]}>
-        <View style={styles.button}>
+        <TouchableHighlight style={styles.button}>
           <Icon name="people" color="white" size={30}/>
-        </View>
-        <View style={styles.button}>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => navigate('Home')}style={styles.button}>
           <Icon name="home" color="white" size={30}/>
-        </View>
-        <View style={styles.button}>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.button}>
           <Icon name="cloud-upload" color="white" size={30}/>
-        </View>
+        </TouchableHighlight>
       </View>
     </View>
   )
