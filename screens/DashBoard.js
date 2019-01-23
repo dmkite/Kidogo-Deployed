@@ -14,7 +14,7 @@ class DashBoard extends Component{
       <View style={{flex:1}}>
         <Header navigation={this.props.navigation}/>
         <DashView/>
-        <ActionButtons/>
+        <ActionButtons navigation={this.props.navigation}/>
       </View>
     )
   }
