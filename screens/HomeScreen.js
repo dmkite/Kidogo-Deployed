@@ -20,8 +20,6 @@ export default class HomeScreen extends Component{
     const {navigate} = this.props.navigation
     return (
       <View style={{flex: 1, backgroundColor: '#ccc', top: 0}}>
-        <Header/>
-        <Text>Hello</Text>
         <Button
           title="Login"
           onPress={ () => navigate('Dash')}

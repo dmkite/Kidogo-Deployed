@@ -8,9 +8,13 @@ import DashBoard from './screens/DashBoard';
 
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen },
-  Dash: {screen: DashBoard}
-})
+  Home: HomeScreen,
+  Dash: DashBoard
+},
+{
+  initialRouteName: 'Home'
+}
+)
 
 const AppContainer = createAppContainer(AppNavigator)
 

@@ -18,8 +18,8 @@ export const styles = {
   },
   button: {
     flex:.33,
-    textAlign:'center',
-    lineHeight:40,
+    // textAlign:'center',
+    // lineHeight:40,
     paddingTop:5
   },
   image: {},

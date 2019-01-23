@@ -8,6 +8,7 @@ export const styles = {
   container:{
     flex:.5,
     height:50,
-    backgroundColor:'white'
+    backgroundColor:'white',
+    padding:10
   }
 }

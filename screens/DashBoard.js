@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View } from 'react-native'
 import Header from '../components/Header'
 import DashView from '../components/DashView'
+import ActionButtons from '../components/ActionButtons'
+
 class DashBoard extends Component{
   constructor(props){
     super(props)
@@ -10,9 +12,9 @@ class DashBoard extends Component{
   render(){
     return(
       <View style={{flex:1}}>
-        <Header/>
+        <Header navigation={this.props.navigation}/>
         <DashView/>
-        <Text>This is the dashboard!!!</Text>
+        <ActionButtons/>
       </View>
     )
   }
