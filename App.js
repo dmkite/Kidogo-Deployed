@@ -5,11 +5,18 @@ import store from './store'
 import {Provider} from 'react-redux'
 import HomeScreen from './screens/HomeScreen'
 import DashBoard from './screens/DashBoard';
-
+import Enrollment from './screens/Enrollment'
+import CameraScreen from './screens/CameraScreen'
+import CheckIn from './screens/CheckIn'
+import CheckOut from './screens/CheckOut'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
-  Dash: DashBoard
+  Dash: DashBoard,
+  Enrollment: Enrollment,
+  Camera: CameraScreen,
+  CheckIn: CheckIn,
+  CheckOut: CheckOut
 },
 {
   initialRouteName: 'Home'

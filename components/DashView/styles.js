@@ -2,13 +2,20 @@ export const styles = {
   dash: {
     backgroundColor:'#aaa',
     height:200,
-    flexDirection:'row',
-    justifyContent: 'space-between'
+    justifyContent: 'center',
+    alignItems: 'center',
+    position:'relative',
   },
-  container:{
-    flex:.5,
-    height:50,
-    backgroundColor:'white',
-    padding:10
+  dashFont:{
+    zIndex:99,
+    fontSize: 36,
+    height:200,
+    lineHeight:200,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right:0,
+    textAlign:'center',
+    flex:1
   }
 }
