@@ -1,4 +1,4 @@
 import Child from './Child'
-// import InputText from './Guardian'
+import Guardian from './Guardian'
 
-export {Child}
+export {Child, Guardian}

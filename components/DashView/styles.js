@@ -15,7 +15,6 @@ export const styles = {
     top: 0,
     left: 0,
     right:0,
-    borderWidth:1,
     textAlign:'center',
     flex:1
   }

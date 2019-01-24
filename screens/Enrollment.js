@@ -5,8 +5,10 @@ import Header from '../components/Header'
 import {connect} from 'react-redux' 
 import {Camera, Permissions} from 'expo'
 import {Icon, Button} from 'react-native-elements'
-import {Child } from '../components/Forms'
+import {Child, Guardian} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
+
+
 class Enrollment extends Component{
   constructor(props){
     super(props)
@@ -18,19 +20,30 @@ class Enrollment extends Component{
         birthdate:0,
         gender: null,
         notes:null,
-        
+      },
+      guardian: {
+        f_name: null,
+        l_name: null,
+        street: null,
+        city: null,
+        phone: null,
+        govt_id: null
+      },
+      e_contact: {
+        f_name: null,
+        l_name: null,
+        phone: null
       }
-
     } 
   }
 
-  // async componentDidMount() {
-  //   const { status } = await Permissions.askAsync(Permissions.CAMERA);
-  //   this.setState({ hasCameraPermission: status === 'granted' });
-  // }
-  handleChangeText = (text, type) => {
+  handleChangeText = (text, type, entry) => {
+
     this.setState({
-      [type]: text
+      [type]:{
+        ...type,
+        [entry]: text
+      }
     })
   }
 
@@ -49,6 +62,13 @@ class Enrollment extends Component{
           handleChangeText={this.handleChangeText}
           handlePress={this.handlePress}
         />
+        
+        <View style={{height:2, backgroundColor:'#ccc', marginHorizontal:20, marginVertical: 40}}></View>
+
+        <Guardian 
+          handleChangeText={this.handleChangeText}
+        />
+
           {this.props.accounts.message 
             ?  <ErrorMessage error={this.props.accounts.message}/>
             : null}

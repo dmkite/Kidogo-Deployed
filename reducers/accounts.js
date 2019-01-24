@@ -16,7 +16,7 @@ const INITIAL_STATE = {
     guardians: [],
     emergencyContacts: []
   },
-  message: null
+  message: null //including this because the CameraScreen doesn't have access to props.
 }
 
 const accounts = (state=INITIAL_STATE, {type, payload}) => {

@@ -9,7 +9,8 @@ export const styles = {
   label: {
     flex:.3,
     marginTop:10,
-    marginLeft:10
+    marginLeft:10,
+    fontSize: 18
   },
   input: {
     height: 50,
@@ -61,5 +62,8 @@ export const styles = {
   },
   textarea: {
     height:100
+  },
+  dateInput: {
+    width:120
   }
 }

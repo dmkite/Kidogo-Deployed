@@ -4,48 +4,38 @@ import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
 import {styles} from './styles'
 
-
-
 class Child extends Component{
   constructor (props){
     super(props)
     this.state = {
-      female:false,
-      male: false,
-      other:false
+      gender:{
+        female:false,
+        male: false,
+        other:false
+      },
+      date:''
     }
   }
 
   selectBadge = (gender) => {
     const newState = {...this.state}
-    for(let key in newState){
+    for(let key in newState.gender){
       if(key === gender) newState[key] = true
       else newState[key] = false
     }
     this.setState({...newState})
   }
 
-  handlePress(){
-    try{
-      const {action, year, month, day} = DatePickerAndroid.open({
-        date: new date()
-      })
-      if(action !== DtaePickerAndroid.dismissedAction){
-        console.log('x')
-      }
-    } catch({code, message}){
-      console.warn('cannot open date picker', message)
-    }
+  handlePhoneNumber = (text, num1, num2) => {
+    const charCode = text[text.length -1].charCodeAt(0)
+    if(charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
+    if(text.length === num1 || text.length === num2) text += '-'
+    this.setState({
+      date: text
+    })
   }
 
   render(){
-    const today = new Date()
-    const dd = today.getDate()
-    const mm = today.getMonth() + 1
-    const yyyy = today.getFullYear()
-    if (dd < 10) dd = '0' + dd;
-    if (dd < 10)  mm = '0' + mm;
-    const date = `${dd}-${mm}-${yyyy}`
     return (
         <View style = {{ flex:1}} >
           {this.props.img_uri
@@ -62,24 +52,22 @@ class Child extends Component{
             <Icon name="camera-alt" size={this.props.img_uri ? 25 : 50} color="white"/>
           </TouchableHighlight>
           <Text style={styles.label}>First Name:</Text>
-          <TextInput style={styles.input} placeholder="John" onChangeText={(text) => this.props.handleChangeText(text, 'f_name')} />
+        <TextInput style={styles.input} placeholder="John" onChangeText={(text) => this.props.handleChangeText(text, 'child', 'f_name')} />
         <Text style={styles.label}>Surname:</Text>
         <TextInput 
           style={styles.input} 
-          onChangeText={(text) => this.props.handleChangeText(text, 'l_name')} placeholder="Mwangi" />
+          onChangeText={(text) => this.props.handleChangeText(text, 'child', 'l_name')} placeholder="Mwangi" />
         <Text style={styles.label}>Birthdate:</Text>
-        <DatePicker
-          style={{margin:10, borderColor:'#ccc', borderWidth:2, borderRadius:5}}
-          format="DD-MM-YYYY"
-          date={date} //sets default date to today
-          placeholder="select birthdate"
-          maxDate={date} //users can't enter birthday after today
-          minDate="01-01-1990"
-          onDateChange={(date) => this.props.handleChangeText(date, 'birthdate')}
-        />
-      
-        <TouchableOpacity onPress={this.handlePress}><Text>Hello</Text></TouchableOpacity>
-        {/* <TextInput style={styles.input} keyboardType="number-pad" placeholder="7" onChangeText={(text) => this.props.handleChangeText(text, 'birthdate')}/> */}
+        <TextInput 
+          style={[styles.input, styles.dateInput]}
+          maxLength={10}
+          keyboardType="number-pad" 
+          placeholder="DD-MM-YYYY" 
+          value={this.state.date} 
+          onChangeText={(text) => {
+            this.handlePhoneNumber(text, 2, 5)
+            this.props.handleChangeText(text, 'child', 'birthdate')
+          }}/>
         <Text style={styles.label}>Gender:</Text>
           <View style={styles.badgeHolder}>
             <Text 
@@ -102,7 +90,12 @@ class Child extends Component{
             style={[styles.badge, this.state.other ? styles.selected : null]}>Other</Text>
           </View>
         <Text style={styles.label}>Notes:</Text>
-        <TextInput style={[styles.input, styles.textarea]} multiline={true} placeholder="Anything important can go here..."/>
+        <TextInput   
+          style={[styles.input, styles.textarea]} 
+          multiline={true} 
+          placeholder="Anything important can go here..."
+          onChangeText={(text) => this.props.handleChangeText(text, 'child', 'notes')}
+        />
         </View > 
     )
   }
