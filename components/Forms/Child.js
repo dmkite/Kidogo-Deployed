@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-import {Picker, View, Text, TextInput, TouchableHighlight, Image} from 'react-native'
+import {Picker, View, Text, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
 import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
+import DatePicker from 'react-native-datepicker'
 import {styles} from './styles'
+
 
 
 class Child extends Component{
@@ -23,9 +25,29 @@ class Child extends Component{
     this.setState({...newState})
   }
 
+  handlePress(){
+    try{
+      const {action, year, month, day} = DatePickerAndroid.open({
+        date: new date()
+      })
+      if(action !== DtaePickerAndroid.dismissedAction){
+        console.log('x')
+      }
+    } catch({code, message}){
+      console.warn('cannot open date picker', message)
+    }
+  }
+
   render(){
+    const today = new Date()
+    const dd = today.getDate()
+    const mm = today.getMonth() + 1
+    const yyyy = today.getFullYear()
+    if (dd < 10) dd = '0' + dd;
+    if (dd < 10)  mm = '0' + mm;
+    const date = `${dd}-${mm}-${yyyy}`
     return (
-        <View style = {{ flex:1}}>
+        <View style = {{ flex:1}} >
           {this.props.img_uri
             ? <Image
                 style={styles.image}
@@ -46,7 +68,18 @@ class Child extends Component{
           style={styles.input} 
           onChangeText={(text) => this.props.handleChangeText(text, 'l_name')} placeholder="Mwangi" />
         <Text style={styles.label}>Birthdate:</Text>
-        <TextInput style={styles.input} keyboardType="number-pad" placeholder="7" onChangeText={(text) => this.props.handleChangeText(text, 'birthdate')}/>
+        <DatePicker
+          style={{margin:10, borderColor:'#ccc', borderWidth:2, borderRadius:5}}
+          format="DD-MM-YYYY"
+          date={date} //sets default date to today
+          placeholder="select birthdate"
+          maxDate={date} //users can't enter birthday after today
+          minDate="01-01-1990"
+          onDateChange={(date) => this.props.handleChangeText(date, 'birthdate')}
+        />
+      
+        <TouchableOpacity onPress={this.handlePress}><Text>Hello</Text></TouchableOpacity>
+        {/* <TextInput style={styles.input} keyboardType="number-pad" placeholder="7" onChangeText={(text) => this.props.handleChangeText(text, 'birthdate')}/> */}
         <Text style={styles.label}>Gender:</Text>
           <View style={styles.badgeHolder}>
             <Text 
@@ -69,7 +102,7 @@ class Child extends Component{
             style={[styles.badge, this.state.other ? styles.selected : null]}>Other</Text>
           </View>
         <Text style={styles.label}>Notes:</Text>
-        <TextInput style={styles.input} multiline={true} placeholder="Anything important can go here..."/>
+        <TextInput style={[styles.input, styles.textarea]} multiline={true} placeholder="Anything important can go here..."/>
         </View > 
     )
   }

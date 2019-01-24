@@ -28,7 +28,6 @@ class CameraScreen extends Component {
         this.props.navigation.navigate('Enrollment')
       })
       .catch(err => {
-        console.log(err)
         this.props.addMessage('Something went wrong, we couldnt take a picture.')
         this.props.navigation.navigate('Enrollment')
       })

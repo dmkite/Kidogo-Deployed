@@ -22,7 +22,7 @@ const INITIAL_STATE = {
 const accounts = (state=INITIAL_STATE, {type, payload}) => {
   switch (type){
     case ADD_MESSAGE:
-
+      return {...state, message: payload}
     case TAKE_TEMP_PIC:
       const newState = {...state}
       //need to know which child they are adding, could be multiple

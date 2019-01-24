@@ -58,5 +58,8 @@ export const styles = {
   selected:{
     backgroundColor:'#ccc',
     color:'white'
+  },
+  textarea: {
+    height:100
   }
 }

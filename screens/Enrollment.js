@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native'
+import {ScrollView, View, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native'
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
@@ -10,14 +10,18 @@ import ErrorMessage from '../components/ErrorMessage'
 class Enrollment extends Component{
   constructor(props){
     super(props)
-    this.state = {
-      img_uri: null,
-      f_name: null,
-      l_Name: null,
-      birthdate:0,
-      gender: null,
-      notes:null
-    }
+    this.state ={
+      child: {
+        img_uri: null,
+        f_name: null,
+        l_Name: null,
+        birthdate:0,
+        gender: null,
+        notes:null,
+        
+      }
+
+    } 
   }
 
   // async componentDidMount() {
@@ -36,7 +40,7 @@ class Enrollment extends Component{
 
   render(){
    return (
-     <View style={{flex:1}}>
+     <KeyboardAvoidingView style={{flex:1}} keyboardVerticalOffset={-500} behavior="padding" enabled>
       <Header navigation={this.props.navigation}/>
       <ScrollView style={{flex:1}}>
         <Child 
@@ -50,7 +54,7 @@ class Enrollment extends Component{
             : null}
          <Button large title="Submit" />
       </ScrollView>
-     </View>
+     </KeyboardAvoidingView>
    )
   }
 }
