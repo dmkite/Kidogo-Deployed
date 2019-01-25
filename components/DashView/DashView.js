@@ -34,7 +34,7 @@ class DashView extends Component{
       >
         <View style={styles.dash}>
           <Image 
-            source={this.state.time > 12
+            source={this.state.time < 12
             ? require('../../assets/sunrise.png')
             : require('../../assets/sunset.png')
             }

@@ -1,5 +1,3 @@
-import { CalendarAccessLevel } from "expo/build/Calendar";
-
 export const styles = {
   inputWrapper: {
     height:40,
@@ -65,5 +63,20 @@ export const styles = {
   },
   dateInput: {
     width:120
+  },
+  submit:{
+    margin:10,
+    height:100,
+    flex:1,
+    justifyContent:'center',
+    backgroundColor:'#ccc',
+    bordeRadius:5,
+    textAlign:'center'
+  },
+  
+  h1:{
+    fontSize:36,
+    marginHorizontal:10,
+    marginBottom:30
   }
 }
