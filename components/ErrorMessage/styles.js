@@ -14,7 +14,7 @@ export const styles = {
     flex:.75,
     fontSize:36,
     lineHeight:100,
-    marginleft:10
+    marginLeft:10
   },
   
 }

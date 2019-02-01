@@ -1,9 +1,7 @@
-import {ADD_MESSAGE, TAKE_TEMP_PIC} from '../actions/accounts'
+import {ADD_MESSAGE, TAKE_TEMP_PIC, ADD_ACCOUNT} from '../actions/accounts'
 
 const INITIAL_STATE = {
-  guardians: [],
-  children: [],
-  emergencyContacts: [],
+  accounts:[],
   newAccount: {
     children: {
       img_uri: null,
@@ -14,7 +12,10 @@ const INITIAL_STATE = {
       notes: null
     },
     guardians: [],
-    emergencyContacts: []
+    emergencyContacts: [],
+    rate: 0,
+    frequency: 'daily',
+    id: null
   },
   message: null //including this because the CameraScreen doesn't have access to props.
 }
@@ -28,7 +29,10 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       //need to know which child they are adding, could be multiple
       newState.newAccount.children.img_uri = payload
       return newState
-      return 
+    case ADD_ACCOUNT:
+      const newState = {...state}
+      newState.accounts = [...newState.accounts, payload]
+      return newState
     default: 
       return state
   }

@@ -34,6 +34,7 @@ class Guardian extends Component{
   render(){
     return (
       <View style={{ flex: 1 }} >
+        <Text style={styles.h1}>Guardian</Text>
         <Text style={styles.label}>First Name:</Text>
         <TextInput 
           style={styles.input} 

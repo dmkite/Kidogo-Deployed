@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Picker, View, Text, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
 import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
-import DatePicker from 'react-native-datepicker'
 import {styles} from './styles'
 
 class Child extends Component{
@@ -38,7 +37,7 @@ class Child extends Component{
   render(){
     return (
         <View style = {{ flex:1}} >
-          <Text style={styles.h1}>Child</Text>
+          <Text style={[styles.h1, {marginTop:50}]}>Child</Text>
           {this.props.img_uri
             ? <Image
                 style={styles.image}
