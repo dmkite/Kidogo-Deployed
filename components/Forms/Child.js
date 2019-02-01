@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Picker, View, Text, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
 import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
-import DatePicker from 'react-native-datepicker'
 import {styles} from './styles'
 
 class Child extends Component{
@@ -38,6 +37,7 @@ class Child extends Component{
   render(){
     return (
         <View style = {{ flex:1}} >
+          <Text style={[styles.h1, {marginTop:50}]}>Child</Text>
           {this.props.img_uri
             ? <Image
                 style={styles.image}
@@ -51,37 +51,50 @@ class Child extends Component{
             onPress={() => this.props.navigation.navigate('Camera')}>
             <Icon name="camera-alt" size={this.props.img_uri ? 25 : 50} color="white"/>
           </TouchableHighlight>
+
           <Text style={styles.label}>First Name:</Text>
-        <TextInput style={styles.input} placeholder="John" onChangeText={(text) => this.props.handleChangeText(text, 'child', 'f_name')} />
-        <Text style={styles.label}>Surname:</Text>
-        <TextInput 
-          style={styles.input} 
-          onChangeText={(text) => this.props.handleChangeText(text, 'child', 'l_name')} placeholder="Mwangi" />
-        <Text style={styles.label}>Birthdate:</Text>
-        <TextInput 
-          style={[styles.input, styles.dateInput]}
-          maxLength={10}
-          keyboardType="number-pad" 
-          placeholder="DD-MM-YYYY" 
-          value={this.state.date} 
-          onChangeText={(text) => {
-            this.handlePhoneNumber(text, 2, 5)
-            this.props.handleChangeText(text, 'child', 'birthdate')
-          }}/>
-        <Text style={styles.label}>Gender:</Text>
+          <TextInput 
+            style={styles.input} 
+            placeholder="John" 
+            onChangeText={(text) => this.props.handleChangeText(text, 'child', 'f_name')} 
+          />
+        
+          <Text style={styles.label}>Surname:</Text>
+          <TextInput 
+            style={styles.input} 
+            onChangeText={(text) => this.props.handleChangeText(text, 'child', 'l_name')} placeholder="Mwangi" 
+          />
+          
+          <Text style={styles.label}>Birthdate:</Text>
+          <TextInput 
+            style={[styles.input, styles.dateInput]}
+            maxLength={10}
+            keyboardType="number-pad" 
+            placeholder="DD-MM-YYYY" 
+            value={this.state.date} 
+            onChangeText={(text) => {
+              this.handlePhoneNumber(text, 2, 5)
+              this.props.handleChangeText(text, 'child', 'birthdate')
+            }}/>
+          
+          <Text style={styles.label}>Gender:</Text>
           <View style={styles.badgeHolder}>
             <Text 
               onPress={() => { 
                 this.props.handlePress('female') 
                 this.selectBadge('female')
               }} 
-              style={[styles.badge, this.state.female ? styles.selected : null]}>Female</Text>
-          <Text 
-            onPress={() => { 
-              this.props.handlePress('male') 
-              this.selectBadge('male')  
-            }} 
-            style={[styles.badge, this.state.male ? styles.selected : null]}>Male</Text>
+              style={[styles.badge, this.state.female ? styles.selected : null]}>
+              Female
+            </Text>
+            <Text 
+              onPress={() => { 
+                this.props.handlePress('male') 
+                this.selectBadge('male')  
+              }} 
+              style={[styles.badge, this.state.male ? styles.selected : null]}>
+              Male
+            </Text>
           <Text 
             onPress={() => { 
               this.props.handlePress('other') 

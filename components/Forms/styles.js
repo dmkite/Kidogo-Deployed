@@ -1,4 +1,4 @@
-import { CalendarAccessLevel } from "expo/build/Calendar";
+import { withNativeAd } from "expo/build/facebook-ads";
 
 export const styles = {
   inputWrapper: {
@@ -40,15 +40,17 @@ export const styles = {
     alignSelf:'stretch',
     backgroundColor:'#aefaef',
     margin:10,
-    height:100,
-    paddingVertical: 25
+    height:300,
+    paddingVertical: 125,
+    borderRadius:5
   },
   smallCamera: {
     alignSelf:'stretch',
     backgroundColor:'#ccc',
     marginHorizontal:10,
     height:45,
-    paddingVertical:10
+    paddingVertical:10,
+    borderRadius:5
   },
   image:{
     height:350,
@@ -65,5 +67,80 @@ export const styles = {
   },
   dateInput: {
     width:120
+  },
+  submit:{
+    margin:10,
+    height:100,
+    flex:1,
+    justifyContent:'center',
+    backgroundColor:'#ccc',
+    bordeRadius:5,
+    textAlign:'center',
+    marginVertical:50,
+    borderRadius:5,
+  },
+  submitText:{
+    textAlign:'center',
+    fontSize: 36,
+    color:'white'
+  },
+  h1:{
+    fontSize:36,
+    marginHorizontal:10,
+    marginBottom:30
+  },
+  ratePeriod: {
+    flex:1,
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    height:50,
+    margin: 10,
+  },
+  rateHolder:{
+    height:50,
+    flex:.6,
+    paddingLeft:10,
+    marginRight:10,
+    borderWidth:2,
+    borderColor:'#ccc',
+    borderRadius:5,
+    flexDirection: 'row',
+    justifyContent:'space-between',
+  },
+  rateInput:{
+    flex:.9,
+    paddingLeft:10,
+    height:50,
+    marginTop:0
+  },
+  frequencyHolder:{
+    flex:.4,
+    flexDirection:'row'
+  },
+  rateLabel: {
+    flex:.6,
+    fontSize:18,
+    lineHeight:50,
+  },
+  upDownHolder: {
+    flex: .4,
+    flexDirection:'column',
+    height:50
+  },
+  upBtn:{
+    flex:.5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius:5,
+    backgroundColor: '#ccc',
+    height:20,
+    marginBottom:5   
+  },
+  downBtn:{
+    flex:.5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius:5,
+    backgroundColor:'#ccc',
+    height:20   
   }
+
 }
