@@ -12,7 +12,8 @@ class Accounts extends Component{
     super(props)
     this.state = {
       filter:null,
-      filterOpen: false
+      filterOpen: false,
+      searchTerm: ''
     }
   }
   
@@ -22,12 +23,37 @@ class Accounts extends Component{
 
   sortBy = (a, b) => {
     if(this.state.filter === 'balance'){
-      return a.balance - b.balance
+      return b.balance - a.balance
     }
     if(this.state.filter === 'alphabetical'){
-      return a.children[0].l_name - b.children[0].l_name
+      return b.children[0].l_name - a.children[0].l_name
     }
     
+  }
+  
+  filterBy = (account) => {
+    if(this.state.searchTerm.length > 0){
+      const childVals = account.children.reduce((acc, child) => {
+        delete child.birthdate 
+        delete child.notes
+        delete child.gender
+        acc.concat(Object.values(child))
+        return acc
+      }, [])
+      const guardianVals = account.guardians.reduce((acc, guardian) => {
+        delete guardian.phone
+        delete guardian.city
+        delete guardian.address_1
+        delete guardian.govt_id
+        acc.concat(Object.values(guardian))
+        return acc
+      }, [])
+      for(let val of guardianVals.concat(childVals)){
+        if(val.includes(this.state.searchTerm)) return true
+      }
+      return false
+    }
+    return true
   }
 
   handleFilterOpen = () => {
@@ -35,11 +61,17 @@ class Accounts extends Component{
       filterOpen: !this.state.filterOpen})
   }
 
+  handleChangeText = (text) => {
+    this.setState({
+      searchTerm: text
+    })
+  }
+
   render(){
     return(
       <View style={{flex:1}}>
         <Header navigation={this.props.navigation} />
-        {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress}/> :  null}
+        {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress} handleChangeText={this.handleChangeText}/> :  null}
         <TouchableHighlight style={styles.filterBtn} onPress={this.handleFilterOpen}>
           <Icon name="search" size={30} color="white"/>
         </TouchableHighlight>
@@ -48,7 +80,10 @@ class Accounts extends Component{
                 <Text>You have not added an account yet.</Text>
                 <Text>Add an account</Text>
               </View>
-            : this.props.accounts.accounts.sort().map((account, i) => <AccountCard key={i} {...account} />)
+            : this.props.accounts.accounts
+              .sort(this.sortBy)
+              .filter(this.filterBy)
+              .map((account, i) => <AccountCard key={i} {...account} />)
           }
         </ScrollView>
       </View>

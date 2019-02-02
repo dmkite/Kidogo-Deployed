@@ -8,7 +8,7 @@ const INITIAL_STATE = {
         img_uri: null,
         f_name: 'John',
         l_name: 'Mwangi',
-        age: 4,
+        birthdate: '01-01-2014',
         gender: 'male',
         notes: null
       },
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
         img_uri: null,
         f_name: 'Mercy',
         l_name: 'Mwangi',
-        age: 6,
+        birthdate: '05-12-2012',
         gender: 'female',
         notes: null
       }
@@ -49,7 +49,7 @@ const INITIAL_STATE = {
           img_uri: null,
           f_name: 'Abe',
           l_name: 'Bower',
-          age: 6,
+          birthdate: '23-05-2015',
           gender: 'male',
           notes: null
         }
