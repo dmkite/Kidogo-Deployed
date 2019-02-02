@@ -1,10 +1,21 @@
 export const styles = {
   filterBlock:{
     height:70,
-    flex:1,
+    flex:.4,
     borderBottomWidth:2,
     borderBottomColor:'#ccc',
     flexWrap:'wrap'
+  },
+  filterBtn:{
+    height:50,
+    width:50,
+    borderRadius:25,
+    backgroundColor: '#ff7e09',
+    justifyContent:'center',
+    position:'absolute',
+    bottom:10,
+    right:10,
+    zIndex:101
   },
   search:{
     borderWidth:2,

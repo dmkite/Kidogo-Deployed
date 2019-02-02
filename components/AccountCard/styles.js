@@ -17,10 +17,11 @@ export const styles = {
     flexDirection:'row'
   },
   balance:{
-    fontSize:48,
+    fontSize:45,
     color:'#de6789',
     flex:.5,
-    textAlign:'right'
+    textAlign:'right',
+    fontWeight:'100'
   },
   circle:{
     height:75, 
