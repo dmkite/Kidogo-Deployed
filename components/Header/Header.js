@@ -11,10 +11,10 @@ function Header(props){
         <Text style={styles.h1}>Kidogo</Text>
       </View>
       <View style={[styles.header, styles.buttons]}>
-        <TouchableHighlight style={styles.button}>
+        <TouchableHighlight onPress={() => navigate('Accounts')} style={styles.button} >
           <Icon name="people" color="white" size={30}/>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => navigate('Dash')}style={styles.button}>
+        <TouchableHighlight onPress={() => navigate('Dash')} style={styles.button}>
           <Icon name="home" color="white" size={30}/>
         </TouchableHighlight>
         <TouchableHighlight style={styles.button}>

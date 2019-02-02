@@ -9,6 +9,7 @@ import Enrollment from './screens/Enrollment'
 import CameraScreen from './screens/CameraScreen'
 import CheckIn from './screens/CheckIn'
 import CheckOut from './screens/CheckOut'
+import Accounts from './screens/Acounts'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -16,8 +17,10 @@ const AppNavigator = createStackNavigator({
   Enrollment: Enrollment,
   Camera: CameraScreen,
   CheckIn: CheckIn,
-  CheckOut: CheckOut
+  CheckOut: CheckOut,
+  Accounts: Accounts
 },
+
 {
   initialRouteName: 'Home'
 }

@@ -14,7 +14,7 @@ export default class HomeScreen extends Component{
   
   componentDidMount = () => {
     const { navigate } = this.props.navigation
-    if (true) navigate('Dash')
+    if (true) navigate('Accounts')
   }
 
   render(){
