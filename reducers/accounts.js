@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, TAKE_TEMP_PIC, ADD_ACCOUNT } from '../actions/accounts'
+import { GET_ACCOUNTS, ADD_MESSAGE, TAKE_TEMP_PIC, ADD_ACCOUNT } from '../actions/accounts'
 import uuid from 'uuid'
 const INITIAL_STATE = {
   accounts:[
@@ -97,6 +97,8 @@ const INITIAL_STATE = {
 
 const accounts = (state=INITIAL_STATE, {type, payload}) => {
   switch (type){
+    case GET_ACCOUNTS:
+      return {...state, accounts: payload}
     case ADD_MESSAGE:
       return {...state, message: payload}
     case TAKE_TEMP_PIC:
@@ -106,7 +108,7 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       return newState
     case ADD_ACCOUNT:
       const newAcctState = {...state}
-      newAcctState.accounts = [...newAcctState.accounts, payload]
+      newAcctState.accounts = payload
       return newAcctState
     default: 
       return state

@@ -56,13 +56,13 @@ class Child extends Component{
           <TextInput 
             style={styles.input} 
             placeholder="John" 
-            onChangeText={(text) => this.props.handleChangeText(text, 'child', 'f_name')} 
+            onChangeText={(text) => this.props.handleChangeText(text, 'children', 'f_name')} 
           />
         
           <Text style={styles.label}>Surname:</Text>
           <TextInput 
             style={styles.input} 
-            onChangeText={(text) => this.props.handleChangeText(text, 'child', 'l_name')} placeholder="Mwangi" 
+            onChangeText={(text) => this.props.handleChangeText(text, 'children', 'l_name')} placeholder="Mwangi" 
           />
           
           <Text style={styles.label}>Birthdate:</Text>
@@ -74,7 +74,7 @@ class Child extends Component{
             value={this.state.date} 
             onChangeText={(text) => {
               this.handlePhoneNumber(text, 2, 5)
-              this.props.handleChangeText(text, 'child', 'birthdate')
+              this.props.handleChangeText(text, 'children', 'birthdate')
             }}/>
           
           <Text style={styles.label}>Gender:</Text>
@@ -107,7 +107,7 @@ class Child extends Component{
           style={[styles.input, styles.textarea]} 
           multiline={true} 
           placeholder="Anything important can go here..."
-          onChangeText={(text) => this.props.handleChangeText(text, 'child', 'notes')}
+          onChangeText={(text) => this.props.handleChangeText(text, 'children', 'notes')}
         />
         </View > 
     )

@@ -18,12 +18,13 @@ function hexify(x) {
 export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
-      {console.log('=====================', props, '===================')}
+      
       <View style={styles.imgAndBalance}>
         <View style={styles.img}>
+          {console.log(Array.isArray(props.children))}
           {props.children.map((child, i) => {
               let hex = hexify(i)
-              return child.img_uri 
+              return child.img_uri
                 ? <Image 
                     key={i}
                     source={'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} 

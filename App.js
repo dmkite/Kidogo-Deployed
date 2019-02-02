@@ -9,7 +9,7 @@ import Enrollment from './screens/Enrollment'
 import CameraScreen from './screens/CameraScreen'
 import CheckIn from './screens/CheckIn'
 import CheckOut from './screens/CheckOut'
-import Accounts from './screens/Acounts'
+import Accounts from './screens/Accounts'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,

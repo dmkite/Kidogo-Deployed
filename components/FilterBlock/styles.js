@@ -17,6 +17,10 @@ export const styles = {
     right:10,
     zIndex:101
   },
+  addBtn: {
+    bottom:70,
+    backgroundColor: '#ee6d05'
+  },
   search:{
     borderWidth:2,
     borderColor:'#ccc',

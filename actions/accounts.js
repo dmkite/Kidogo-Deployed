@@ -1,5 +1,22 @@
 import {AsyncStorage} from 'react-native'
 
+export const GET_ACCOUNTS = 'GET_ACCOUNTS'
+export function getAccounts(){
+  try{
+    return async dispatch => {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      if(!accounts) accounts = []
+      else accounts = JSON.parse(accounts)
+      dispatch({
+        type:GET_ACCOUNTS,
+        payload: accounts
+      })
+    }
+  }catch(err){
+    console.error(err)
+  }
+}
+
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export function addMessage(msg){
   return {
@@ -33,7 +50,7 @@ export function addAccount(account){
       })
     }catch(err){
       //error handling goes here
-      console.log(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
+      console.error(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     }
 
   }

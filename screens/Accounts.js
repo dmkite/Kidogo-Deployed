@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import Header from '../components/Header'
 import FilterBlock from '../components/FilterBlock'
 import {connect} from 'react-redux'
 import {Icon} from 'react-native-elements'
 import AccountCard from '../components/AccountCard'
 import {styles} from '../components/FilterBlock/styles'
+import {getAccounts} from '../actions/accounts'
+import { bindActionCreators } from 'redux';
 
 class Accounts extends Component{
   constructor(props){
@@ -68,25 +70,38 @@ class Accounts extends Component{
       searchTerm: text
     })
   }
+  
+  componentDidMount = () => {
+    this.props.getAccounts()
+  }
 
   render(){
     return(
       <View style={{flex:1}}>
         <Header navigation={this.props.navigation} />
         {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress} handleChangeText={this.handleChangeText}/> :  null}
-        <TouchableHighlight style={styles.filterBtn} onPress={this.handleFilterOpen}>
+        <TouchableOpacity style={styles.filterBtn} onPress={this.handleFilterOpen}>
           <Icon name="search" size={30} color="white"/>
-        </TouchableHighlight>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.filterBtn, addBtn]} onPress={() => this.props.navigation.navigate('Enrollment')}>
+          <Icon name="add" size={30} color="white" />
+        </TouchableOpacity>
+
         <ScrollView style={{flex:1}}>
-          {console.log('props from inside Account', props.accounts.accounts)}
           {this.props.accounts.accounts.length === 0 ? <View>
-                <Text>You have not added an account yet.</Text>
-                <Text>Add an account</Text>
+                <Text style={{fontSize:18, margin:10}}>You have not added any accounts yet.</Text>
+                <TouchableOpacity style={{ flexDirection: 'row', margin: 10 }} onPress={() => this.props.navigation.navigate('Enrollment')}>
+                  <Icon style={{flex:.1}} name='add-circle-outline' size={18} />
+                  <Text style={{flex: .9, fontSize:18}}> Add an account</Text>
+                </TouchableOpacity>
               </View>
             : this.props.accounts.accounts
               .sort(this.sortBy)
               .filter(this.filterBy)
-              .map((account, i) => <AccountCard key={i} {...account} />)
+              .map((account, i) => {
+                  return <AccountCard key={i} {...account} />
+                })
           }
         </ScrollView>
       </View>
@@ -95,5 +110,5 @@ class Accounts extends Component{
 }
 
 mapStateToProps = state => ({accounts: state.accounts})
-
-export default connect(mapStateToProps)(Accounts)
+mapDispatchToProps = dispatch => bindActionCreators({getAccounts}, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(Accounts)
