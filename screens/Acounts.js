@@ -34,10 +34,12 @@ class Accounts extends Component{
   filterBy = (account) => {
     if(this.state.searchTerm.length > 0){
       const childVals = account.children.reduce((acc, child) => {
+
         delete child.birthdate 
         delete child.notes
         delete child.gender
-        acc.concat(Object.values(child))
+        delete child.img_uri
+        acc = acc.concat(Object.values(child))
         return acc
       }, [])
       const guardianVals = account.guardians.reduce((acc, guardian) => {
@@ -45,11 +47,11 @@ class Accounts extends Component{
         delete guardian.city
         delete guardian.address_1
         delete guardian.govt_id
-        acc.concat(Object.values(guardian))
+        acc = acc.concat(Object.values(guardian))
         return acc
       }, [])
       for(let val of guardianVals.concat(childVals)){
-        if(val.includes(this.state.searchTerm)) return true
+        if(val.toLowerCase().includes(this.state.searchTerm.toLowerCase())) return true
       }
       return false
     }
@@ -76,6 +78,7 @@ class Accounts extends Component{
           <Icon name="search" size={30} color="white"/>
         </TouchableHighlight>
         <ScrollView style={{flex:1}}>
+          {console.log('props from inside Account', props.accounts.accounts)}
           {this.props.accounts.accounts.length === 0 ? <View>
                 <Text>You have not added an account yet.</Text>
                 <Text>Add an account</Text>

@@ -53,7 +53,11 @@ class Enrollment extends Component{
   }
 
   handlePress = (gender) => {
-    this.setState({gender})
+    this.setState({
+      child:{
+        ...child,
+        gender
+      }})
   }
 
   handleFrequency = (upOrDown) => {
@@ -71,7 +75,6 @@ class Enrollment extends Component{
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     const message = []
     const child = this.state.child
     const guardian = this.state.guardian
@@ -89,7 +92,6 @@ class Enrollment extends Component{
   }
   
   handleRate = (text) => {
-    console.log(text)
     const charCode = text[text.length - 1].charCodeAt(0)
     if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
     this.setState({

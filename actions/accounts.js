@@ -19,23 +19,24 @@ export function takeTempPic(uri){
 export const ADD_ACCOUNT = 'ADD_ACCOUNT'
 export function addAccount(account){
   return async dispatch => {
-    console.log(account)
-
     try{
       let newAccounts
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
       if(!accounts) newAccounts = [account]
       else newAccounts = [...accounts, account]
+      newAccounts = JSON.stringify(newAccounts)
+      await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
       dispatch({
         type: ADD_ACCOUNT,
-        payload: newAccounts
+        payload: JSON.parse(newAccounts)
       })
     }catch(err){
       //error handling goes here
+      console.log(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
     }
 
   }
-  console.log(account)
 
   
 }
