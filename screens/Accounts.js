@@ -54,7 +54,7 @@ class Accounts extends Component{
       const guardianVals = account.guardians.reduce((acc, guardian) => {
         delete guardian.phone
         delete guardian.city
-        delete guardian.address_1
+        delete guardian.street
         delete guardian.govt_id
         acc = acc.concat(Object.values(guardian))
         return acc

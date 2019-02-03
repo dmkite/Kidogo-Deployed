@@ -27,7 +27,7 @@ const INITIAL_STATE = {
         l_name: 'Mwangi',
         phone:'12-345-6789',
         govt_id:'123-45-6789',
-        address_1: '123 First Street',
+        street: '123 First Street',
         city: 'Nairobi'
       }
     ],
@@ -60,7 +60,7 @@ const INITIAL_STATE = {
           l_name: 'Bower',
           phone: '12-345-6789',
           govt_id: '123-45-6789',
-          address_1: '123 First Street',
+          street: '123 First Street',
           city: 'Nairobi'
         }
       ],

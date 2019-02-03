@@ -21,7 +21,6 @@ export default function AccountCard(props){
       
       <View style={styles.imgAndBalance}>
         <View style={styles.img}>
-          {console.log(Array.isArray(props.children))}
           {props.children.map((child, i) => {
               let hex = hexify(i)
               return child.img_uri

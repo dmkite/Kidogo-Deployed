@@ -1,3 +1,5 @@
 import ChildDetails from './ChildDetails'
+import GuardianDetails from './GuardianDetails'
+import EmergencyContactDetails from './EmergencyContactDetails'
 
-export default ChildDetails
+export {ChildDetails, GuardianDetails, EmergencyContactDetails}

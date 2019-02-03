@@ -17,6 +17,11 @@ export function getAccounts(){
   }
 }
 
+export const GET_ONE_ACCOUNT = 'GET_ONE_ACCOUNT'
+export function getOneAccount(id){
+  
+}
+
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export function addMessage(msg){
   return {
