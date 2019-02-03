@@ -39,28 +39,28 @@ class Guardian extends Component{
         <TextInput 
           style={styles.input} 
           placeholder="Mary" 
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardian', 'f_name')} 
+          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'f_name')} 
         />
 
         <Text style={styles.label}>Surname:</Text>
         <TextInput
           style={styles.input}
           placeholder="Mwangi" 
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardian', 'l_name')} 
+          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'l_name')} 
         />
 
         <Text style={styles.label}>Address:</Text>   
         <TextInput 
           style={styles.input}
           placeholder="123 Kenyata Avenue"
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardian', 'address_1')}
+          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'address_1')}
         />
 
         <Text style={styles.label}>City</Text>
         <TextInput
           style={styles.input} 
           placeholder="Nairobi"
-          onChangetext={(text) => this.props.handleChangeText(text, 'guardian', 'city')}
+          onChangetext={(text) => this.props.handleChangeText(text, 'guardians', 'city')}
         />
 
         <Text style={styles.label}>Phone Number:</Text>
@@ -71,7 +71,7 @@ class Guardian extends Component{
           maxLength={11}
           onChangeText={(text) => {
             this.handlePhoneNumber(text)
-            this.props.handleChangeText(text, 'guardian', 'phone')
+            this.props.handleChangeText(text, 'guardians', 'phone')
           }}
         />
 
@@ -81,7 +81,7 @@ class Guardian extends Component{
           placeholder="###-##-####"
           onChangeText={(text) => {
             this.handleId(text, 3, 6)
-            this.props.handleChangeText(text, 'guardian', 'govt_id')}}
+            this.props.handleChangeText(text, 'guardians', 'govt_id')}}
         />
       </View > 
     )

@@ -21,7 +21,10 @@ class DashView extends Component{
   }
 
   render(){
-    const numChildren = this.props.accounts.children.length
+    // const numChildren = this.props.accounts.reduce((acc,acct) => {
+    //   acc += acct.children.length
+    //   return acc
+    //  }, 0)
     const net = this.props.finances.net
     return (
       <TouchableHighlight
@@ -39,7 +42,7 @@ class DashView extends Component{
             : require('../../assets/sunset.png')
             }
           />
-          <Text style={styles.dashFont}>{numChildren} Children Checked In</Text>
+          <Text style={styles.dashFont}>Who's here today?</Text>
         </View>
       </TouchableHighlight>
     )

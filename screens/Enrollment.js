@@ -5,17 +5,18 @@ import Header from '../components/Header'
 import {connect} from 'react-redux' 
 import {Expo} from 'expo'
 import {Icon, Button} from 'react-native-elements'
-import {Child, Guardian, EmergencyContact} from '../components/Forms'
+import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
 import {styles} from '../components/Forms/styles'
 import {addAccount} from '../actions/accounts'
 import uuid from 'uuid'
 
+
 class Enrollment extends Component{
   constructor(props){
     super(props)
     this.state ={
-      child: {
+      children: {
         img_uri: null,
         f_name: null,
         l_Name: null,
@@ -23,7 +24,7 @@ class Enrollment extends Component{
         gender: null,
         notes:null,
       },
-      guardian: {
+      guardians: {
         f_name: null,
         l_name: null,
         street: null,
@@ -31,7 +32,7 @@ class Enrollment extends Component{
         phone: null,
         govt_id: null
       },
-      e_contact: {
+      e_contacts: {
         f_name: null,
         l_name: null,
         phone: null
@@ -53,7 +54,11 @@ class Enrollment extends Component{
   }
 
   handlePress = (gender) => {
-    this.setState({gender})
+    this.setState({
+      children:{
+        ...this.state.children,
+        gender
+      }})
   }
 
   handleFrequency = (upOrDown) => {
@@ -63,7 +68,7 @@ class Enrollment extends Component{
       if (frequency === 'weekly') this.setState({ frequency: 'termly' })
       if(frequency === 'termly') this.setState({frequency:'daily'})
     }
-    else{
+    else {
       if (frequency === 'daily') this.setState({ frequency: 'termly' })
       if (frequency === 'termly') this.setState({ frequency: 'weekly' })
       if (frequency === 'weekly') this.setState({ frequency: 'daily' }) 
@@ -71,12 +76,11 @@ class Enrollment extends Component{
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     const message = []
-    const child = this.state.child
-    const guardian = this.state.guardian
-    // if(!child.f_name || !child.l_name || !guardian.f_name || !guardian.l_name) message.push('Guardians and children need first and last names')
-    // if(!guardian.phone) message.push('You need to add a phone number for guarians')
+    const children = this.state.children
+    const guardians = this.state.guardians
+    // if(!children.f_name || !children.l_name || !guardians.f_name || !guardians.l_name) message.push('Guardians and children need first and last names')
+    // if(!guardians.phone) message.push('You need to add a phone number for guarians')
     // if(!this.state.rate) message.push('You need to include a rate')
     if(message.length){
       this.setState({
@@ -84,12 +88,19 @@ class Enrollment extends Component{
       })
       return
     }
-    const account = {...this.state, id: uuid()}
+    const account = {
+      children: [this.state.children],
+      guardians: [this.state.guardians],
+      e_contacts: [this.state.e_contacts],
+      rate: this.state.rate,
+      frequency: this.state.frequency,
+      id: uuid(),
+      balance: 0
+    }
     this.props.addAccount(account)
   }
   
   handleRate = (text) => {
-    console.log(text)
     const charCode = text[text.length - 1].charCodeAt(0)
     if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
     this.setState({
@@ -124,36 +135,7 @@ class Enrollment extends Component{
 
         <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
         
-        <Text style={styles.h1}>Rate</Text>
-        <View style={styles.ratePeriod}>
-
-          <View style={styles.rateHolder}>
-            <Image 
-              source={require('../assets/kes.png')}
-              style={{width:20, height:20, marginTop:15}}
-              opacity={0.3}
-            />
-             <TextInput style={styles.rateInput} placeholder="100" keyboardType="decimal-pad" onChangeText={(text) => { this.handleRate(text) }}/>
-          </View>
-
-          <View style={styles.frequencyHolder}>
-            <Text style={styles.rateLabel}>{this.state.frequency}</Text>
-
-            <View style={styles.upDownHolder}>
-
-              <TouchableOpacity style={styles.upBtn} onPress={() => this.handleFrequency('up')}>
-                 <Icon name="expand-less" color="white"/>
-               </TouchableOpacity>
-
-               <TouchableOpacity style={styles.downBtn} onPress={() => this.handleFrequency('down')}>
-                 <Icon name="expand-more" color="white"/>
-               </TouchableOpacity>
-
-            </View>
-
-          </View>
-
-        </View>
+        <Rate handleRate={this.handleRate} handleFrequency={this.handleFrequency} frequency={this.state.frequency}/>
 
         {this.props.accounts.message || this.state.message
           ?  <ErrorMessage error={this.props.accounts.message || this.state.message}/>

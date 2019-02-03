@@ -18,14 +18,14 @@ class EmergencyContact extends Component{
         <TextInput
           style={styles.input}
           placeholder="Mercy"
-          onChangeText={(text) => this.props.handleChangeText(text, 'e_contact', 'f_name')}
+          onChangeText={(text) => this.props.handleChangeText(text, 'e_contacts', 'f_name')}
         />
 
         <Text style={styles.label}>Surname:</Text>
         <TextInput
           style={styles.input}
           placeholder="Maina"
-          onChangeText={(text) => this.props.handleChangeText(text, 'e_contact', 'l_name')}
+          onChangeText={(text) => this.props.handleChangeText(text, 'e_contacts', 'l_name')}
         />
 
         <Text style={styles.label}>Phone Number:</Text>
@@ -36,7 +36,7 @@ class EmergencyContact extends Component{
           maxLength={11}
           onChangeText={(text) => {
             this.handlePhoneNumber(text)
-            this.props.handleChangeText(text, 'e_contact', 'phone')
+            this.props.handleChangeText(text, 'e_contacts', 'phone')
           }}
         />
 

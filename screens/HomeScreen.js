@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, Button, Image, TextInput, StyleSheet} from 'react-native'
+import {Text, View, Button, Image, TextInput, StyleSheet, AsyncStorage} from 'react-native'
 import Header from '../components/Header/'
 import DashBoard from './DashBoard'
 
@@ -12,9 +12,14 @@ export default class HomeScreen extends Component{
     }
   }
   
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { navigate } = this.props.navigation
-    if (true) navigate('Dash')
+    // try{
+    //   await AsyncStorage.clear()
+    // }catch(err){
+    //   console.error(err)
+    // }
+    if (true) navigate('Accounts')
   }
 
   render(){
