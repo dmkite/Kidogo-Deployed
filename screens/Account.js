@@ -78,6 +78,10 @@ class Account extends Component {
       <View style={{flex: 1}}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
+          <View>
+            <Text>K {this.state.account.balance}</Text>
+          </View>
+
           <ChildDetails children={this.state.account.children} isOpen={this.state.openChild} openView={this.openView}/>
           <GuardianDetails guardians={this.state.account.guardians} isOpen={this.state.openGuardian} openView={this.openView}/>
           <EmergencyContactDetails e_contacts={this.state.account.e_contacts} isOpen={this.state.openE_contact} openView={this.openView}/>

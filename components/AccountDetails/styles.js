@@ -52,7 +52,26 @@ export const styles = {
     backgroundColor:'#ccc',
     marginLeft:10,
     paddingHorizontal:5
-    
+  },
+  buttonBlock: {
+    flexDirection:'row',
+    justifyContent: 'spaceBetween',
+    margin:10
+  },
+  rateBtn: {
+    borderRadius:5,
+    backgroundColor:'#ccc',
+    flex: .5
+  },
+  balance: {
+    color:'red',
+    fontSize: 45,
+    marginHorizontal: 10,
+    MarginVertical:20
+  },
+  rateFreq:{
+    margin:10,
+    fontSize:18
   }
 
 }
