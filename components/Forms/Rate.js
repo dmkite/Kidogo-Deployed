@@ -1,6 +1,6 @@
 import React from 'react'
 import {styles} from './styles'
-import {View, Text, TextInput, TouchableOpacity} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native'
 import {Icon} from 'react-native-elements'
 
 export default function Rate(props){
@@ -11,7 +11,7 @@ export default function Rate(props){
 
           <View style={styles.rateHolder}>
             <Image
-              source={require('../assets/kes.png')}
+              source={require('../../assets/kes.png')}
               style={{ width: 20, height: 20, marginTop: 15 }}
               opacity={0.3}
             />

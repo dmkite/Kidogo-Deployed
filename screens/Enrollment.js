@@ -69,7 +69,6 @@ class Enrollment extends Component{
       if(frequency === 'termly') this.setState({frequency:'daily'})
     }
     else {
-      child
       if (frequency === 'daily') this.setState({ frequency: 'termly' })
       if (frequency === 'termly') this.setState({ frequency: 'weekly' })
       if (frequency === 'weekly') this.setState({ frequency: 'daily' }) 

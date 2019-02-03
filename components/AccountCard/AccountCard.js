@@ -38,7 +38,7 @@ export default function AccountCard(props){
         </View>
 
 
-        <Text style={styles.balance}>K {props.balance}</Text>
+        <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
       </View>
       <View style={styles.members}>
         <Text style={styles.childName}>

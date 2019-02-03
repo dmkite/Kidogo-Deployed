@@ -18,7 +18,14 @@ class Accounts extends Component{
       searchTerm: ''
     }
   }
-  
+  static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor:'#ff7e09',
+      height:0
+    }
+  }
+
   handlePress = (filter) =>{
     this.setState({filter})
   }
@@ -84,7 +91,7 @@ class Accounts extends Component{
           <Icon name="search" size={30} color="white"/>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.filterBtn, addBtn]} onPress={() => this.props.navigation.navigate('Enrollment')}>
+        <TouchableOpacity style={[styles.filterBtn, styles.addBtn]} onPress={() => this.props.navigation.navigate('Enrollment')}>
           <Icon name="add" size={30} color="white" />
         </TouchableOpacity>
 
@@ -100,7 +107,7 @@ class Accounts extends Component{
               .sort(this.sortBy)
               .filter(this.filterBy)
               .map((account, i) => {
-                  return <AccountCard key={i} {...account} />
+                  return <AccountCard key={i} {...account} navigate={this.props.navigation.navigate}/>
                 })
           }
         </ScrollView>

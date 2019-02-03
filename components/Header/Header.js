@@ -1,6 +1,6 @@
 import React from 'react'
 import {styles} from './styles'
-import {View, Text, TouchableHighlight} from 'react-native'
+import {View, Text, TouchableOpacity} from 'react-native'
 import {Icon} from 'react-native-elements'
 
 function Header(props){
@@ -11,15 +11,15 @@ function Header(props){
         <Text style={styles.h1}>Kidogo</Text>
       </View>
       <View style={[styles.header, styles.buttons]}>
-        <TouchableHighlight onPress={() => navigate('Accounts')} style={styles.button} >
+        <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
           <Icon name="people" color="white" size={30}/>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={() => navigate('Dash')} style={styles.button}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('Dash')} style={styles.button}>
           <Icon name="home" color="white" size={30}/>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.button}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
           <Icon name="cloud-upload" color="white" size={30}/>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     </View>
   )
