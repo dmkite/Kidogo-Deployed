@@ -113,7 +113,7 @@ class Account extends Component {
   openAddMember = (type) => {
     this.setState({
       [type]: {
-        ...type,
+        ...this.state[type],
         status: !this.state[type].status
       }
     })
@@ -182,6 +182,7 @@ class Account extends Component {
     return (
       <View style={{flex: 1}}>
         <Header navigation={this.props.navigation}/>
+        {console.log(this.state.children)}
         <ScrollView>
 
           <RateDetails 
@@ -192,8 +193,8 @@ class Account extends Component {
             changeBalance={this.changeBalance}
             editBalance={this.state.editBalance}
             changeField={this.changeField}
-
           />
+
           <ChildDetails 
             acctId={this.props.navigation.getParam('id')}
             children={this.state.account.children} 
