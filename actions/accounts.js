@@ -42,6 +42,7 @@ export const ADD_ACCOUNT = 'ADD_ACCOUNT'
 export function addAccount(account){
   return async dispatch => {
     try{
+      account.balance = 0
       let newAccounts
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       accounts = JSON.parse(accounts)
@@ -59,6 +60,51 @@ export function addAccount(account){
     }
 
   }
+}
 
-  
+// export const ADD_MEMBER_TO_ACCOUNT = 'ADD_MEMBER_TO_ACCOUNT'
+export function addMemberToAccount(newMember){
+  return async dispatch => {
+    try{
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      let newAccounts = accounts.map(acct => {
+        if(acct.id === newMember.id){
+          acct[newMember.type].push(newMember.content)
+        }
+        return acct
+      })
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    }catch(err){
+      console.error(err)
+    }
+  }
+}
+
+// export const CHANGE_FIELD = 'CHANGE_FIELD'
+export function changeField(fieldname, newValue, id){
+  console.log(fieldname, newValue, id)
+  return async dispatch => {
+    try {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      let newAccounts = accounts.map(acct => {
+        if (acct.id === id) {
+          acct[fieldname] = Number(newValue)
+        }
+        return acct
+      })
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
 }

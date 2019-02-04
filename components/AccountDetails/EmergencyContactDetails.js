@@ -6,7 +6,6 @@ import { styles } from './styles'
 export default function EmergencyContactDetails(props) {
   return (
     <View>
-      {console.log('this is props from inside childDetails: ', props)}
       <TouchableOpacity style={styles.header} onPress={() => { props.openView('openE_contact') }}>
         <Text style={styles.h1}>Contacts</Text>
         <Icon name={props.isOpen ? "expand-less" : "expand-more"} size={36} />

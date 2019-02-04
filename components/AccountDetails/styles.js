@@ -55,23 +55,42 @@ export const styles = {
   },
   buttonBlock: {
     flexDirection:'row',
-    justifyContent: 'spaceBetween',
+    justifyContent: 'space-between',
     margin:10
   },
   rateBtn: {
     borderRadius:5,
     backgroundColor:'#ccc',
-    flex: .5
+    flex: .5,
+    height:50
+  },
+  btnText:{
+    lineHeight:50,
+    textAlign: 'center',
+    fontSize:18,
+    color:'white'
   },
   balance: {
     color:'red',
     fontSize: 45,
     marginHorizontal: 10,
-    MarginVertical:20
+    marginVertical:20
+  },
+  balanceInput:{
+    borderBottomWidth:2,
+    borderBottomColor:'red',
+    flex:.9
   },
   rateFreq:{
     margin:10,
     fontSize:18
+  },
+  balanceDisplay:{
+    flexDirection:'row',
+  },
+  balanceEdit:{
+    flexDirection:'row',
+    borderWidth:1,
   }
 
 }

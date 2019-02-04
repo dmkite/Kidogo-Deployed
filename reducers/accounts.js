@@ -107,6 +107,7 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       newState.newAccount.children.img_uri = payload
       return newState
     case ADD_ACCOUNT:
+      console.log('hitting add account with payload: ', payload)
       const newAcctState = {...state}
       newAcctState.accounts = payload
       return newAcctState
