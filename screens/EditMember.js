@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, TouchableOpacity} from 'react-native'
 import {styles} from '../components/AccountDetails/styles'
-import { connect } from 'net';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {deleteMember} from '../actions/accounts'
 
 class EditMember extends Component{
   constructor(props){
@@ -27,28 +28,38 @@ class EditMember extends Component{
   }
 
   deleteMember = () => {
-    
+    const acctId = this.props.navigation.getParam('acctId')
+    const memberId = this.props.navigation.getParam('editing').id
+    const memberType = this.props.navigation.getParam('type')
+    this.props.deleteMember(acctId, memberType, memberId)
+    this.props.navigation.navigate('Account', {id: acctId})
   }
 
   componentDidMount = () => {
     const editing = this.props.navigation.getParam('editing')
-    console.log(editing)
+    this.setState({...editing})
   }
 
   render(){
     return (
       <View style={{flex:1}}>
-        <Text>Editing {this.props.f_name}'s Information</Text>
-
-        
+        <Text>Editing {this.state.f_name}'s Information</Text>
+        {this.state.birthdate 
+        ?<Text>Birthday</Text>
+        :<Text>Not birthday</Text>
+        }
+        {this.state.govt_id
+          ? <Text>govtId</Text>
+          : <Text>No govt id</Text>
+        }
         
         <View style={styles.buttonBlock}>
           <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#02A676', marginRight: 5 }]}>
             <Text style={styles.btnText}>Add Changes</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#FC3C3C', marginLeft: 5 }]}>
-            <Text style={styles.btnText}>Delete {this.props.f_name}</Text>
+          <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#FC3C3C', marginLeft: 5 }]} onPress={this.deleteMember}>
+            <Text style={styles.btnText}>Delete {this.state.f_name}</Text>
           </TouchableOpacity>
         </View>
       </View>

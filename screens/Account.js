@@ -8,7 +8,7 @@ import {ChildDetails, GuardianDetails, EmergencyContactDetails, RateDetails} fro
 import Header from '../components/Header'
 import {getOneAccount, addMemberToAccount, changeField} from '../actions/accounts'
 import {styles} from '../components/AccountDetails/styles'
-
+import uuid from 'uuid'
 
 
 class Account extends Component {
@@ -34,6 +34,7 @@ class Account extends Component {
           birthdate: null,
           gender: null,
           notes: null,
+          id: null
         }],
         guardians: [{
           f_name: null,
@@ -60,6 +61,7 @@ class Account extends Component {
         birthdate: null,
         gender: null,
         notes: null,
+        id: uuid()
       },
       guardians: {
         status:false,
@@ -68,13 +70,15 @@ class Account extends Component {
         street: null,
         city: null,
         phone: null,
-        govt_id: null
+        govt_id: null,
+        id: uuid()
       },
       e_contacts: {
         status:false,
         f_name: null,
         l_name: null,
-        phone: null
+        phone: null,
+        id: uuid()
       }
     }
   }
@@ -191,6 +195,7 @@ class Account extends Component {
 
           />
           <ChildDetails 
+            acctId={this.props.navigation.getParam('id')}
             children={this.state.account.children} 
             isOpen={this.state.openChild} 
             openView={this.openView} 
