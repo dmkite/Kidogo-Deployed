@@ -11,6 +11,7 @@ import CheckIn from './screens/CheckIn'
 import CheckOut from './screens/CheckOut'
 import Accounts from './screens/Accounts'
 import Account from './screens/Account'
+import EditMember from './screens/EditMember'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -20,7 +21,8 @@ const AppNavigator = createStackNavigator({
   CheckIn: CheckIn,
   CheckOut: CheckOut,
   Accounts: Accounts,
-  Account: Account
+  Account: Account,
+  EditMember: EditMember
 },
 
 {

@@ -39,6 +39,7 @@ class Enrollment extends Component{
       },
       rate: 0,
       frequency: 'daily',
+      balance: 0,
       message: null
     } 
   }
@@ -88,16 +89,18 @@ class Enrollment extends Component{
       })
       return
     }
+    const id = uuid()
     const account = {
       children: [this.state.children],
       guardians: [this.state.guardians],
       e_contacts: [this.state.e_contacts],
       rate: this.state.rate,
       frequency: this.state.frequency,
-      id: uuid(),
+      id,
       balance: 0
     }
     this.props.addAccount(account)
+    this.props.navigation.navigate('Account', {id})
   }
   
   handleRate = (text) => {

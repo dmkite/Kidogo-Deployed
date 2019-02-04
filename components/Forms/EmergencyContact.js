@@ -10,6 +10,17 @@ class EmergencyContact extends Component{
     }
   }
 
+  handlePhoneNumber = (text) => {
+    if (text.length) {
+      const charCode = text[text.length - 1].charCodeAt(0)
+      if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
+      if (text.length === 2 || text.length === 6) text += '-'
+      this.setState({
+        phone: text
+      })
+    }
+  }
+
   render(){
     return (
       <View style={{flex:1}}>
