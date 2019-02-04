@@ -15,14 +15,17 @@ class Account extends Component {
   constructor(props){
     super(props)
     this.state = {
-      addChild: false,
-      addGuardian: false,
-      addE_contact: false,
-      openChild: false,
-      openGuardian: false,
-      openE_contact: false,
+      // addChild: false,
+      // addGuardian: false,
+      // addE_contact: false,
+      // openChild: false,
+      // openGuardian: false,
+      // openE_contact: false,
       editBalance: false,
       newBalance:0,
+      editRate: false,
+      newFrequency: 'daily',
+      newRate: 0,
       account: {
         children: [{
           img_uri: null,
@@ -59,6 +62,7 @@ class Account extends Component {
         notes: null,
       },
       guardians: {
+        status:false,
         f_name: null,
         l_name: null,
         street: null,
@@ -67,6 +71,7 @@ class Account extends Component {
         govt_id: null
       },
       e_contacts: {
+        status:false,
         f_name: null,
         l_name: null,
         phone: null
@@ -97,7 +102,7 @@ class Account extends Component {
       this.setState({ account })
 
     }catch(err){
-      console.error(err,'!!!!!!!!!!!!!!')
+      console.error(err,'----------------------')
     }
   }
 
@@ -126,7 +131,6 @@ class Account extends Component {
   }
   
   changeField = (fieldname, newValue) => {
-    console.log('hitting', fieldname)
     this.props.changeField(fieldname, this.state[newValue], this.props.navigation.getParam('id'))
     this.setState({
       editBalance:false,
@@ -158,7 +162,7 @@ class Account extends Component {
     }
 
     this.props.addMemberToAccount(payload)
-    this.props.navigation.navigate('Account', {id: payload.id})
+    this.componentDidMount() // NOTE: this is probably bad practice - follow up w/ Roger
   }
 
   handlePress = (gender) => {
@@ -191,8 +195,9 @@ class Account extends Component {
             isOpen={this.state.openChild} 
             openView={this.openView} 
             openAddMember={this.openAddMember} 
+            navigation={this.props.navigation}
           />
-          {this.state.addChild.status
+          {this.state.children.status
             ? <View>
                 <Child handleChangeText={this.handleChangeText} handlePress={this.handlePress}/>
                 <View style={styles.buttonBlock}>
@@ -207,8 +212,48 @@ class Account extends Component {
               </View>
             : null
             }
-          <GuardianDetails guardians={this.state.account.guardians} isOpen={this.state.openGuardian} openView={this.openView}/>
-          <EmergencyContactDetails e_contacts={this.state.account.e_contacts} isOpen={this.state.openE_contact} openView={this.openView}/>
+          <GuardianDetails 
+            guardians={this.state.account.guardians} 
+            isOpen={this.state.openGuardian} 
+            openView={this.openView}
+            openAddMember={this.openAddMember}  
+          />
+          {this.state.guardians.status
+            ? <View>
+              <Guardian handleChangeText={this.handleChangeText} handlePress={this.handlePress} />
+              <View style={styles.buttonBlock}>
+                <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#02A676', marginRight: 5 }]} onPress={() => this.addMember('guardians')}>
+                  <Text style={styles.btnText}>Add</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#FC3C3C', marginLeft: 5 }]} onPress={() => this.openAddMember('guardians')}>
+                  <Text style={styles.btnText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            : null
+          }
+          <EmergencyContactDetails 
+            e_contacts={this.state.account.e_contacts} 
+            isOpen={this.state.openE_contact} 
+            openView={this.openView}
+            openAddMember={this.openAddMember}  
+          />
+          {this.state.e_contacts.status
+            ? <View>
+              <EmergencyContact handleChangeText={this.handleChangeText} handlePress={this.handlePress} />
+              <View style={styles.buttonBlock}>
+                <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#02A676', marginRight: 5 }]} onPress={() => this.addMember('e_contacts')}>
+                  <Text style={styles.btnText}>Add</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.rateBtn, { backgroundColor: '#FC3C3C', marginLeft: 5 }]} onPress={() => this.openAddMember('e_contacts')}>
+                  <Text style={styles.btnText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            : null
+          }
         </ScrollView>
       </View>
     )

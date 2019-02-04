@@ -45,9 +45,11 @@ export function addAccount(account){
       account.balance = 0
       let newAccounts
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
       if(!accounts) newAccounts = [account]
-      else newAccounts = [...accounts, account]
+      else{
+        accounts = JSON.parse(accounts)
+        newAccounts = [...accounts, account]
+      }
       newAccounts = JSON.stringify(newAccounts)
       await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
       dispatch({
@@ -56,7 +58,7 @@ export function addAccount(account){
       })
     }catch(err){
       //error handling goes here
-      console.error(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      console.error(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     }
 
   }

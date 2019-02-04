@@ -11,6 +11,14 @@ export default class HomeScreen extends Component{
       childrenEnrolled: 0
     }
   }
+
+  static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: '#ff7e09',
+      height: 0
+    }
+  }
   
   componentDidMount = async () => {
     const { navigate } = this.props.navigation

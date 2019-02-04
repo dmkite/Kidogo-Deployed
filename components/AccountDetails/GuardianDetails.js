@@ -28,7 +28,8 @@ export default class GuardianDetails extends Component{
         <View style={{ height: 2, backgroundColor: '#ccc', margin: 20 }}></View>
 
         {this.props.isOpen
-          ? this.props.guardians.map((g, i) => {
+          ? <View>
+            {this.props.guardians.map((g, i) => {
             return (
               <View style={styles.childDetails} key={i}>
 
@@ -64,13 +65,14 @@ export default class GuardianDetails extends Component{
                     </View>
                   </View>
                 </View>
-                <TouchableOpacity style={styles.addBtn}>
-                  <Icon name="person-add" color="white" size={35} />
-                </TouchableOpacity>
               </View>
             )
           }
-          )
+          )}
+            <TouchableOpacity style={styles.addBtn} onPress={() => this.props.openAddMember('guardians')}>
+              <Icon name="person-add" color="white" size={35} />
+            </TouchableOpacity>
+            </View>
           : null
         }
       </View>

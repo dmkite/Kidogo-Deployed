@@ -39,6 +39,7 @@ class Enrollment extends Component{
       },
       rate: 0,
       frequency: 'daily',
+      balance: 0,
       message: null
     } 
   }
