@@ -111,14 +111,39 @@ export function changeField(fieldname, newValue, id){
 }
 
 export function deleteMember(acctId, memberType, memberId){
-  console.log('hitting delete action', acctId, memberType, memberId)
   return async dispatch => {
     try {
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if (acct.id === acctId) {
-          acct[memberType].filter(member => member.id !== memberId)
+          acct[memberType] = acct[memberType].filter(member => member.id !== memberId)
+        }
+        return acct
+      })
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function changeMember(changes, acctId, memberType, memberId){
+  console.log(changes)
+  return async dispatch => {
+    try {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      let newAccounts = accounts.map(acct => {
+        if (acct.id === acctId) {
+          acct[memberType] = acct[memberType].map(member => {
+            if(member.id === memberId) member = {...member, ...changes}
+            return member
+          })
         }
         return acct
       })

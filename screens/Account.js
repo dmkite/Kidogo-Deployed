@@ -182,7 +182,6 @@ class Account extends Component {
     return (
       <View style={{flex: 1}}>
         <Header navigation={this.props.navigation}/>
-        {console.log(this.state.children)}
         <ScrollView>
 
           <RateDetails 
