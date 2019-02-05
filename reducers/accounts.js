@@ -70,7 +70,6 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
     case UPDATE_ACCOUNTS:
       const newAcctState = {...state}
       newAcctState.accounts = payload
-      console.log(newAcctState)
       return newAcctState
     default: 
       return state

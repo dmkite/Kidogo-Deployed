@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
+import {ScrollView, View, Text, TouchableOpacity, AsyncStorage, Alert} from 'react-native'
 import {Icon} from 'react-native-elements'
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {ChildDetails, GuardianDetails, EmergencyContactDetails, RateDetails} from '../components/AccountDetails'
 import Header from '../components/Header'
-import {getOneAccount, addMemberToAccount, changeField} from '../actions/accounts'
+import {getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 
@@ -20,6 +20,7 @@ class Account extends Component {
       editRate: false,
       newFrequency: 'daily',
       newRate: 0,
+      deleteMessage: false,
       account: {
         children: [{
           img_uri: null,
@@ -128,13 +129,15 @@ class Account extends Component {
     })
   }
   
-  changeField = (fieldname, newValue) => {
+  changeField = (fieldname, newValue, fieldname2, newValue2) => {
     this.props.changeField(fieldname, this.state[newValue], this.props.navigation.getParam('id'))
+    if (fieldname2 !== undefined && newValue2 !== undefined) this.props.changeField(fieldname2, this.state[newValue2], this.props.navigation.getParam('id'))
     this.setState({
       editBalance:false,
       account: {
         ...this.state.account,
-        [fieldname]: this.state[newValue]
+        [fieldname]: this.state[newValue],
+        [fieldname2]: this.state[fieldname2]
       }
     })
   }
@@ -172,6 +175,36 @@ class Account extends Component {
     })
   }
 
+  handleFrequency = (upOrDown) => {
+    let frequency = this.state.newFrequency
+    if (upOrDown === 'up') {
+      if (frequency === 'daily') this.setState({ newFrequency: 'weekly' })
+      if (frequency === 'weekly') this.setState({ newFrequency: 'termly' })
+      if (frequency === 'termly') this.setState({ newFrequency: 'daily' })
+    }
+    else {
+      if (frequency === 'daily') this.setState({ newFrequency: 'termly' })
+      if (frequency === 'termly') this.setState({ newFrequency: 'weekly' })
+      if (frequency === 'weekly') this.setState({ newFrequency: 'daily' })
+    }
+  }
+
+  handleRate = (text) => {
+    if(text.length > 0){
+      const charCode = text[text.length - 1].charCodeAt(0)
+      if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
+    }
+    this.setState({
+      newRate: text,
+    })
+  }
+
+  deleteAccount = () => {
+    const id = this.props.navigation.getParam('id')
+    this.props.deleteAccount(id)
+    this.props.navigation.navigate('Accounts')
+  }
+
   render(){
     return (
       <View style={{flex: 1}}>
@@ -182,10 +215,16 @@ class Account extends Component {
             balance={this.state.account.balance} 
             rate={this.state.account.rate} 
             frequency={this.state.account.frequency} 
+            newFrequency={this.state.newFrequency}
             openView={this.openView}
             changeBalance={this.changeBalance}
             editBalance={this.state.editBalance}
+            editRate={this.state.editRate}
             changeField={this.changeField}
+            navigation={this.props.navigation}
+            acctId={this.props.navigation.getParam('id')}
+            handleRate={this.handleRate}
+            handleFrequency={this.handleFrequency}
           />
 
           <ChildDetails 
@@ -196,6 +235,7 @@ class Account extends Component {
             openAddMember={this.openAddMember} 
             navigation={this.props.navigation}
           />
+
           {this.state.children.status
             ? <View>
                 <Child handleChangeText={this.handleChangeText} handlePress={this.handlePress}/>
@@ -257,6 +297,31 @@ class Account extends Component {
             </View>
             : null
           }
+          
+          {this.state.deleteMessage
+            ? <View style={styles.deleteWarning}>
+              <Text>Hold the button down to delete</Text>
+              <View style={styles.iconHolder}>
+                <Icon name="touch-app" />
+                <Icon name="timer" />
+                <Icon name="timer-3" />
+              </View>
+            </View>
+            : null
+          }
+
+          <TouchableOpacity 
+            style={styles.deleteBtn} 
+            onPress={() => {
+              this.setState({deleteMessage: !this.state.deleteMessage})
+              setTimeout(() => {
+                this.setState({ deleteMessage: !this.state.deleteMessage })
+              }, 3000)}}
+            onLongPress={this.deleteAccount}
+          >
+            <Icon name="delete" color="white"/>
+            <Text style={[styles.btnText, {lineHeight:100}]}>Delete</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     )
@@ -264,6 +329,6 @@ class Account extends Component {
 }
 
 const mapStateToProps = state => ({accounts: state.accounts})
-const mapDispatchToProps = dispatch => bindActionCreators({getOneAccount, addMemberToAccount, changeField}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getOneAccount, addMemberToAccount, changeField, deleteAccount}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account)

@@ -64,6 +64,27 @@ export const styles = {
     flex: .5,
     height:50
   },
+  deleteBtn:{
+    flexDirection:'row',
+    backgroundColor:'red',
+    borderRadius:5,
+    height:100,
+    marginHorizontal:10,
+    marginVertical:50,
+    justifyContent:'center'
+  },
+  deleteWarning:{
+    height:150,
+    margin:10,
+    padding:10,
+    borderRadius:5,
+    borderWidth:2
+  },
+  iconHolder:{
+    flexDirection:'row',
+    justifyContent: 'space-between',
+
+  },
   btnText:{
     lineHeight:50,
     textAlign: 'center',
