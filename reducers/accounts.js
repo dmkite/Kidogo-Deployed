@@ -1,4 +1,4 @@
-import { GET_ACCOUNTS, ADD_MESSAGE, TAKE_TEMP_PIC, ADD_ACCOUNT } from '../actions/accounts'
+import { GET_ACCOUNTS, ADD_MESSAGE, TAKE_TEMP_PIC, UPDATE_ACCOUNTS } from '../actions/accounts'
 import uuid from 'uuid'
 const INITIAL_STATE = {
   accounts:[
@@ -10,16 +10,9 @@ const INITIAL_STATE = {
         l_name: 'Mwangi',
         birthdate: '01-01-2014',
         gender: 'male',
-        notes: null
+        notes: null,
+        id: null
       },
-      {
-        img_uri: null,
-        f_name: 'Mercy',
-        l_name: 'Mwangi',
-        birthdate: '05-12-2012',
-        gender: 'female',
-        notes: null
-      }
     ],
     guardians: [
       {
@@ -28,55 +21,23 @@ const INITIAL_STATE = {
         phone:'12-345-6789',
         govt_id:'123-45-6789',
         street: '123 First Street',
-        city: 'Nairobi'
+        city: 'Nairobi',
+        id: null
       }
     ],
     emergencyContacts: [
       {
         f_name:'William',
         l_name:'Doe',
-        phone: '98-765-4321'
+        phone: '98-765-4321',
+        id: null
       }
     ],
     rate: 120,
     frequency: 'daily',
     id: uuid(),
     balance: 900
-  },
-    {
-      children: [
-        {
-          img_uri: null,
-          f_name: 'Abe',
-          l_name: 'Bower',
-          birthdate: '23-05-2015',
-          gender: 'male',
-          notes: null
-        }
-      ],
-      guardians: [
-        {
-          f_name: 'Carrie',
-          l_name: 'Bower',
-          phone: '12-345-6789',
-          govt_id: '123-45-6789',
-          street: '123 First Street',
-          city: 'Nairobi'
-        }
-      ],
-      emergencyContacts: [
-        {
-          f_name: 'Adam',
-          l_name: 'Doe',
-          phone: '98-765-4321'
-        }
-      ],
-      rate: 920,
-      frequency: 'weekly',
-      id: uuid(),
-      balance: 2500
-    }
-  ],
+  }],
   newAccount: {
     children: {
       img_uri: null,
@@ -106,9 +67,10 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       //need to know which child they are adding, could be multiple
       newState.newAccount.children.img_uri = payload
       return newState
-    case ADD_ACCOUNT:
+    case UPDATE_ACCOUNTS:
       const newAcctState = {...state}
       newAcctState.accounts = payload
+      console.log(newAcctState)
       return newAcctState
     default: 
       return state

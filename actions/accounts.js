@@ -38,7 +38,7 @@ export function takeTempPic(uri){
   }
 }
 
-export const ADD_ACCOUNT = 'ADD_ACCOUNT'
+export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
     try{
@@ -53,7 +53,7 @@ export function addAccount(account){
       newAccounts = JSON.stringify(newAccounts)
       await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
       dispatch({
-        type: ADD_ACCOUNT,
+        type: UPDATE_ACCOUNTS,
         payload: JSON.parse(newAccounts)
       })
     }catch(err){
@@ -78,7 +78,7 @@ export function addMemberToAccount(newMember){
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
       })
     }catch(err){
@@ -101,7 +101,7 @@ export function changeField(fieldname, newValue, id){
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
       })
     } catch (err) {
@@ -123,7 +123,7 @@ export function deleteMember(acctId, memberType, memberId){
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
       })
     } catch (err) {
@@ -133,13 +133,13 @@ export function deleteMember(acctId, memberType, memberId){
 }
 
 export function changeMember(changes, acctId, memberType, memberId){
-  console.log(changes)
   return async dispatch => {
     try {
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if (acct.id === acctId) {
+          console.log(Object.keys(acct), memberType)
           acct[memberType] = acct[memberType].map(member => {
             if(member.id === memberId) member = {...member, ...changes}
             return member
@@ -149,7 +149,7 @@ export function changeMember(changes, acctId, memberType, memberId){
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
       })
     } catch (err) {

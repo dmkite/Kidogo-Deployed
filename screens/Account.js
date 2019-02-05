@@ -15,12 +15,6 @@ class Account extends Component {
   constructor(props){
     super(props)
     this.state = {
-      // addChild: false,
-      // addGuardian: false,
-      // addE_contact: false,
-      // openChild: false,
-      // openGuardian: false,
-      // openE_contact: false,
       editBalance: false,
       newBalance:0,
       editRate: false,
@@ -218,10 +212,12 @@ class Account extends Component {
             : null
             }
           <GuardianDetails 
+            acctId={this.props.navigation.getParam('id')}
             guardians={this.state.account.guardians} 
             isOpen={this.state.openGuardian} 
             openView={this.openView}
             openAddMember={this.openAddMember}  
+            navigation={this.props.navigation}
           />
           {this.state.guardians.status
             ? <View>
@@ -239,10 +235,12 @@ class Account extends Component {
             : null
           }
           <EmergencyContactDetails 
+            acctId={this.props.navigation.getParam('id')}
             e_contacts={this.state.account.e_contacts} 
             isOpen={this.state.openE_contact} 
             openView={this.openView}
             openAddMember={this.openAddMember}  
+            navigation={this.props.navigation}
           />
           {this.state.e_contacts.status
             ? <View>

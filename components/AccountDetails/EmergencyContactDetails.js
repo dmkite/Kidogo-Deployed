@@ -18,10 +18,9 @@ export default function EmergencyContactDetails(props) {
         {props.e_contacts.map((eC, i) => {
           return (
             <View style={styles.childDetails} key={i}>
-
               <View style={styles.imgAndName}>
                 <Text style={[styles.topic, styles.name]}>{eC.f_name + ' ' + eC.l_name}</Text>
-                <TouchableOpacity style={styles.editBtn}>
+                <TouchableOpacity style={styles.editBtn} onPress={ () => props.navigation.navigate('EditMember', {editing: eC, acctId: props.acctId, type:'e_contacts'})}>
                   <Icon name="edit" color="#ccc" />
                 </TouchableOpacity>
               </View>
