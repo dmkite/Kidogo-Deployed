@@ -35,7 +35,7 @@ export default class GuardianDetails extends Component{
 
                 <View style={styles.imgAndName}>
                   <Text style={[styles.topic, styles.name]}>{g.f_name + ' ' + g.l_name}</Text>
-                  <TouchableOpacity style={styles.editBtn}>
+                  <TouchableOpacity style={styles.editBtn} onPress={() => this.props.navigation.navigate('EditMember', { editing: g, acctId: this.props.acctId, type: 'guardians' })}>
                     <Icon name="edit" color="#ccc" />
                   </TouchableOpacity>
                 </View>

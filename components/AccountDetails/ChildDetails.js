@@ -26,8 +26,7 @@ export default function ChildDetails(props){
                     ? <Image style={[cardStyles.circle, cardStyles.img]} source={require('../../assets/kes.png')}/>
                     : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: 0}]}>{child.f_name[0].toUpperCase()}</Text>}
                   <Text style={[styles.topic, styles.name]}>{child.f_name + ' ' + child.l_name}</Text>
-                
-                  <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child})}>
+                  <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children'})}>
                     <Icon name="edit" color="#ccc" />
                   </TouchableOpacity>
                 

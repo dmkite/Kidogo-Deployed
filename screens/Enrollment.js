@@ -23,6 +23,7 @@ class Enrollment extends Component{
         birthdate:0,
         gender: null,
         notes:null,
+        id: uuid()
       },
       guardians: {
         f_name: null,
@@ -30,12 +31,14 @@ class Enrollment extends Component{
         street: null,
         city: null,
         phone: null,
-        govt_id: null
+        govt_id: null,
+        id: uuid()
       },
       e_contacts: {
         f_name: null,
         l_name: null,
-        phone: null
+        phone: null,
+        id: uuid()
       },
       rate: 0,
       frequency: 'daily',

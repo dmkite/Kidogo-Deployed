@@ -18,7 +18,6 @@ function hexify(x) {
 export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
-      
       <View style={styles.imgAndBalance}>
         <View style={styles.img}>
           {props.children.map((child, i) => {

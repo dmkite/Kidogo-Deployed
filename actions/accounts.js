@@ -38,7 +38,7 @@ export function takeTempPic(uri){
   }
 }
 
-export const ADD_ACCOUNT = 'ADD_ACCOUNT'
+export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
     try{
@@ -53,7 +53,7 @@ export function addAccount(account){
       newAccounts = JSON.stringify(newAccounts)
       await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
       dispatch({
-        type: ADD_ACCOUNT,
+        type: UPDATE_ACCOUNTS,
         payload: JSON.parse(newAccounts)
       })
     }catch(err){
@@ -78,7 +78,7 @@ export function addMemberToAccount(newMember){
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
       })
     }catch(err){
@@ -89,20 +89,86 @@ export function addMemberToAccount(newMember){
 
 // export const CHANGE_FIELD = 'CHANGE_FIELD'
 export function changeField(fieldname, newValue, id){
-  console.log(fieldname, newValue, id)
+  console.log('hitting changefield with: ', fieldname, newValue)
+  return async dispatch => {
+    try {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      console.log('before: ', accounts[0].rate, accounts[0].frequency)
+      let newAccounts = accounts.map(acct => {
+        if (acct.id === id) {
+          acct[fieldname] = newValue
+        }
+        return acct
+      })
+      console.log('after: ', newAccounts[0].rate, newAccounts[0].frequency)
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function deleteMember(acctId, memberType, memberId){
   return async dispatch => {
     try {
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
-        if (acct.id === id) {
-          acct[fieldname] = Number(newValue)
+        if (acct.id === acctId) {
+          acct[memberType] = acct[memberType].filter(member => member.id !== memberId)
         }
         return acct
       })
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
-        type: ADD_ACCOUNT, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function changeMember(changes, acctId, memberType, memberId){
+  return async dispatch => {
+    try {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      let newAccounts = accounts.map(acct => {
+        if (acct.id === acctId) {
+          acct[memberType] = acct[memberType].map(member => {
+            if(member.id === memberId) member = {...member, ...changes}
+            return member
+          })
+        }
+        return acct
+      })
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        payload: newAccounts
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function deleteAccount(id){
+  return async dispatch => {
+    try {
+      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      accounts = JSON.parse(accounts)
+      let newAccounts = accounts.filter(acct => acct.id !== id)
+      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      dispatch({
+        type: UPDATE_ACCOUNTS, 
         payload: newAccounts
       })
     } catch (err) {
