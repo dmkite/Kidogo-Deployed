@@ -23,10 +23,17 @@ export default function AccountCard(props){
           {props.children.map((child, i) => {
               let hex = hexify(i)
               return child.img_uri
-                ? <Image 
-                    key={i}
-                    source={'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} 
-                    style={[style.circle, {zIndex: (100 - i)}]}/>
+                ? <View key={i} style={[styles.circle, {zIndex: (100 - i)}]}>
+                    <Image
+                      source={{ uri: child.img_uri }}
+                      style={{
+                        flex:1,
+                        width:75,
+                        height: null,
+                        resizeMode: 'cover'
+                      }}
+                    />
+                  </View>
                 : <Text 
                     key={i}
                     style={[styles.circle, {zIndex:100 - i, backgroundColor: hex }]}>

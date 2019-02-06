@@ -67,11 +67,11 @@ export default class HomeScreen extends Component{
     // }catch(err){
     //   console.error(err)
     // }
-    try{
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(accounts))
-    }catch(err){
-      console.error(err)
-    }
+    // try{
+    //   await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(accounts))
+    // }catch(err){
+    //   console.error(err)
+    // }
     if (true) navigate('Accounts')
   }
 
