@@ -21,28 +21,34 @@ class Account extends Component {
       newRate: 0,
       deleteMessage: false,
       account: {
-        children: [{
-          img_uri: null,
-          f_name: ' ',
-          l_name: ' ',
-          birthdate: null,
-          gender: null,
-          notes: null,
-          id: null
-        }],
-        guardians: [{
-          f_name: null,
-          l_name: null,
-          street: null,
-          city: null,
-          phone: null,
-          govt_id: null
-        }],
-        e_contacts: [{
-          f_name: null,
-          l_name: null,
-          phone: null
-        }],
+        children: [
+        //   {
+        //   img_uri: null,
+        //   f_name: ' ',
+        //   l_name: ' ',
+        //   birthdate: null,
+        //   gender: null,
+        //   notes: null,
+        //   id: null
+        // }
+      ],
+        guardians: [
+        //   {
+        //   f_name: null,
+        //   l_name: null,
+        //   street: null,
+        //   city: null,
+        //   phone: null,
+        //   govt_id: null
+        // }
+      ],
+        e_contacts: [
+        //   {
+        //   f_name: null,
+        //   l_name: null,
+        //   phone: null
+        // }
+      ],
         rate: 0,
         frequency: 'daily',
         balance: 0
@@ -162,7 +168,12 @@ class Account extends Component {
     }
 
     this.props.addMemberToAccount(payload)
-    this.componentDidMount() // NOTE: this is probably bad practice - follow up w/ Roger
+    this.setState({
+      [type]: {
+        ...this.state[type],
+        status: !this.state[type].status
+      }
+    })
   }
 
   handlePress = (gender) => {
@@ -234,10 +245,10 @@ class Account extends Component {
             handleRate={this.handleRate}
             handleFrequency={this.handleFrequency}
           />
-
+          {/* changed from this.state.account.children */}
           <ChildDetails 
             acctId={this.props.navigation.getParam('id')}
-            children={this.state.account.children} 
+            children={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].children} 
             isOpen={this.state.openChild} 
             openView={this.openView} 
             openAddMember={this.openAddMember} 
@@ -266,7 +277,7 @@ class Account extends Component {
             }
           <GuardianDetails 
             acctId={this.props.navigation.getParam('id')}
-            guardians={this.state.account.guardians} 
+            children={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].guardians} 
             isOpen={this.state.openGuardian} 
             openView={this.openView}
             openAddMember={this.openAddMember}  
@@ -289,7 +300,7 @@ class Account extends Component {
           }
           <EmergencyContactDetails 
             acctId={this.props.navigation.getParam('id')}
-            e_contacts={this.state.account.e_contacts} 
+            children={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].e_contacts} 
             isOpen={this.state.openE_contact} 
             openView={this.openView}
             openAddMember={this.openAddMember}  

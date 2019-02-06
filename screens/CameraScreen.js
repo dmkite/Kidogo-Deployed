@@ -57,7 +57,7 @@ class CameraScreen extends Component {
       return (
         <View style={{ flex: 1 }}>
           <Header navigation={this.props.navigation}/>
-          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref}} autoFocus='off'>
+          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref}}>
             <View
               style={{
                 flex: 1,

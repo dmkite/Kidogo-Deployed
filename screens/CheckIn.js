@@ -54,12 +54,16 @@ class CheckIn extends Component{
     }, [])
     this.setState({accounts})
   }
-
+  day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()]
+  year = new Date().getFullYear()
+  date = new Date().getDate()
+  month = ['January', 'February','March','April','May','June','July','August','September','October','November','December'][new Date().getMonth()]
+  
   render(){
     return (
       <View style={{flex:1}}>
-        {console.log(this.props.accounts)}
         <Header navigation={this.props.navigation}/>
+        <Text>{this.day}, {this.date}, {this.month} {this.year}</Text>
         { this.numberPresent() === this.state.attendance.length 
           ? <Text>Everyone is here today</Text>
           : <Text>{this.numberPresent()} {this.numberPresent() !== 1 ? 'Children are' : 'Child is'} here today</Text>
