@@ -21,9 +21,20 @@ export default function ChildDetails(props){
               <View style={styles.childDetails} key={i}>
                 
 
+                      {/* style={[cardStyles.circle, cardStyles.img]}  */}
                 <View style={styles.imgAndName}>
                   {child.img_uri 
-                    ? <Image style={[cardStyles.circle, cardStyles.img]} source={require('../../assets/kes.png')}/>
+                    ? <View key={i} style={[cardStyles.circle, {marginRight:10}]}>
+                        <Image
+                          source={{ uri: child.img_uri }}
+                          style={{
+                            flex: 1,
+                            width: 75,
+                            height: null,
+                            resizeMode: 'cover'
+                          }}
+                        />
+                      </View>
                     : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: 0}]}>{child.f_name[0].toUpperCase()}</Text>}
                   <Text style={[styles.topic, styles.name]}>{child.f_name + ' ' + child.l_name}</Text>
                   <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children'})}>

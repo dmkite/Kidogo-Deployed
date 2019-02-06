@@ -50,7 +50,8 @@ export const styles = {
     marginHorizontal:10,
     height:45,
     paddingVertical:10,
-    borderRadius:5
+    borderBottomLeftRadius:5,
+    borderBottomRightRadius: 5,
   },
   image:{
     height:350,

@@ -10,7 +10,6 @@ import {getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 
-
 class Account extends Component {
   constructor(props){
     super(props)
@@ -205,6 +204,15 @@ class Account extends Component {
     this.props.navigation.navigate('Accounts')
   }
 
+  addURI = (uri) => {
+    this.setState({
+      children: {
+        ...this.state.children,
+        img_uri: uri
+      }
+    })
+  }
+
   render(){
     return (
       <View style={{flex: 1}}>
@@ -238,7 +246,12 @@ class Account extends Component {
 
           {this.state.children.status
             ? <View>
-                <Child handleChangeText={this.handleChangeText} handlePress={this.handlePress}/>
+                <Child 
+                  handleChangeText={this.handleChangeText} 
+                  handlePress={this.handlePress} 
+                  addURI={this.addURI} navigation={this.props.navigation}
+                  img_uri={this.state.children.img_uri}
+                />
                 <View style={styles.buttonBlock}>
                   <TouchableOpacity style={[styles.rateBtn, {backgroundColor: '#02A676', marginRight:5}]} onPress={() => this.addMember('children')}>
                     <Text style={styles.btnText}>Add</Text>

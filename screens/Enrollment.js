@@ -3,14 +3,11 @@ import {ScrollView, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoi
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
-import {Expo} from 'expo'
-import {Icon, Button} from 'react-native-elements'
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
 import {styles} from '../components/Forms/styles'
 import {addAccount} from '../actions/accounts'
 import uuid from 'uuid'
-
 
 class Enrollment extends Component{
   constructor(props){
@@ -46,9 +43,25 @@ class Enrollment extends Component{
       message: null
     } 
   }
+  
+   static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: '#ff7e09',
+      height:0
+    }
+  }
+
+  addURI = (uri) => {
+    this.setState({
+      children: {
+        ...this.state.children,
+        img_uri: uri
+      }
+    })
+  }
 
   handleChangeText = (text, type, entry) => {
-
     this.setState({
       [type]:{
         ...this.state[type],
@@ -79,7 +92,7 @@ class Enrollment extends Component{
     }
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const message = []
     const children = this.state.children
     const guardians = this.state.guardians
@@ -102,8 +115,8 @@ class Enrollment extends Component{
       id,
       balance: 0
     }
-    this.props.addAccount(account)
-    this.props.navigation.navigate('Account', {id})
+    await this.props.addAccount(account)
+    await this.props.navigation.navigate('Account', {id})
   }
   
   handleRate = (text) => {
@@ -124,6 +137,7 @@ class Enrollment extends Component{
           img_uri={this.props.accounts.newAccount.children.img_uri}
           handleChangeText={this.handleChangeText}
           handlePress={this.handlePress}
+          addURI={this.addURI}
         />
         
         <View style={{height:2, backgroundColor:'#ccc', marginHorizontal:20, marginVertical: 40}}></View>

@@ -89,19 +89,16 @@ export function addMemberToAccount(newMember){
 
 // export const CHANGE_FIELD = 'CHANGE_FIELD'
 export function changeField(fieldname, newValue, id){
-  console.log('hitting changefield with: ', fieldname, newValue)
   return async dispatch => {
     try {
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       accounts = JSON.parse(accounts)
-      console.log('before: ', accounts[0].rate, accounts[0].frequency)
       let newAccounts = accounts.map(acct => {
         if (acct.id === id) {
           acct[fieldname] = newValue
         }
         return acct
       })
-      console.log('after: ', newAccounts[0].rate, newAccounts[0].frequency)
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT

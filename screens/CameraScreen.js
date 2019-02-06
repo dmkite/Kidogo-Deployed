@@ -16,6 +16,14 @@ class CameraScreen extends Component {
     }
   }
 
+  static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: '#ff7e09',
+      height: 0
+    }
+  }
+
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
@@ -25,11 +33,16 @@ class CameraScreen extends Component {
     return this.camera.takePictureAsync({quality:0.5})
       .then(pic => {
         this.props.takeTempPic(pic.uri)
-        this.props.navigation.navigate('Enrollment')
+        const addURI = this.props.navigation.getParam('addURI')
+        addURI(pic.uri)
+        // this.props.navigation.navigate('Enrollment')
+        this.props.navigation.goBack()
       })
       .catch(err => {
         this.props.addMessage('Something went wrong, we couldnt take a picture.')
-        this.props.navigation.navigate('Enrollment')
+        // this.props.navigation.navigate('Enrollment')
+        console.error(err)
+        this.props.navigation.goBack()
       })
   }
 
@@ -42,7 +55,8 @@ class CameraScreen extends Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref}}>
+          <Header navigation={this.props.navigation}/>
+          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref}} autoFocus='off'>
             <View
               style={{
                 flex: 1,

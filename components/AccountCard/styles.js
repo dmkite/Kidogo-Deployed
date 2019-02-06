@@ -24,6 +24,8 @@ export const styles = {
     fontWeight:'100'
   },
   circle:{
+    zIndex:101,
+    overflow:'hidden',
     height:75, 
     width: 75, 
     marginRight: -25, 
