@@ -49,7 +49,7 @@ class Child extends Component{
   
           <TouchableHighlight 
             style={this.props.img_uri ? styles.smallCamera : styles.camera} 
-            onPress={() => this.props.navigation.navigate('Camera', {addURI: this.props.addURI})}>
+            onPress={() => this.props.navigation.navigate('Camera', {addURI: this.props.addURI, addMessage:this.props.addMessage})}>
             <Icon name="camera-alt" size={this.props.img_uri ? 25 : 50} color="white"/>
           </TouchableHighlight>
 
