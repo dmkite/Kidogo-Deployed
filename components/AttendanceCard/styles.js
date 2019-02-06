@@ -1,16 +1,20 @@
 export const styles = {
   attendanceHolder:{
+    // flex:1,
     flexDirection:'row',
-    justifyContent:'spaceBetween',
-    padding:10
+    justifyContent:'space-between',
+    padding:10,
+    flexWrap: 'wrap',
+    alignItems:'flex-start'
   },
   attendanceCard: {
-    flex:.3,
+    width:100,
+    height:200,
     padding:10,
     position:'relative',
     borderRadius:5,
     borderWidth: 2,
-    borderColor: '#ccc'
+    borderColor: '#ccc',
   },
   present:{
     backgroundColor:'green',

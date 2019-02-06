@@ -1,9 +1,8 @@
 import {AsyncStorage} from 'react-native'
 
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
-export function getAttendance(){
+export function getAttendance(today){
   //get attendance from storage 
-  const today = `${new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`
   return async dispatch => {
     try{  
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
@@ -24,7 +23,7 @@ export function getAttendance(){
           })
           acc = acc.concat(acct.children)
           return acc
-        }, acc)
+        }, [])
         
         newAttendance[today] = children.reduce((acc, child) => {
           acc[child.id] = {...child}
@@ -56,7 +55,7 @@ export function changeCheckIn(date, id){
 
       attendance[date] = newAttendance
       await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(attendance))
-      
+
       dispatch({
         type: CHANGE_CHECK_IN,
         payload: {newAttendance, date}

@@ -6,7 +6,7 @@ import {styles} from './styles'
 export default function AttendanceCard(props){
   return (
     <TouchableOpacity style={styles.attendanceCard}>
-      {props.isPresent 
+      {props.checkIn
         ? <View style={styles.present}>
             <Icon name="check-circle-outline" color="white"/>
         </View>
