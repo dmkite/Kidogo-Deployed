@@ -7,12 +7,13 @@ import HomeScreen from './screens/HomeScreen'
 import DashBoard from './screens/DashBoard';
 import Enrollment from './screens/Enrollment'
 import CameraScreen from './screens/CameraScreen'
-import CheckIn from './screens/CheckIn'
-import CheckOut from './screens/CheckOut'
 import Accounts from './screens/Accounts'
 import Account from './screens/Account'
 import EditMember from './screens/EditMember'
 import Attendance from './screens/Attendance'
+import AttendanceHistory from './screens/AttendanceHistory'
+import CheckIn from './screens/CheckIn'
+import CheckOut from './screens/CheckOut'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -24,7 +25,8 @@ const AppNavigator = createStackNavigator({
   Accounts: Accounts,
   Account: Account,
   EditMember: EditMember,
-  Attendance: Attendance
+  Attendance: Attendance,
+  AttendanceHistory: AttendanceHistory
 },
 
 {

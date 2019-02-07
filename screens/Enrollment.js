@@ -16,7 +16,7 @@ class Enrollment extends Component{
       children: {
         img_uri: null,
         f_name: null,
-        l_Name: null,
+        l_name: null,
         birthdate:0,
         gender: null,
         notes:null,

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import AttendanceCard from '../components/AttendanceCard'
 import { styles } from '../components/AttendanceCard/styles'
-import { getAttendance, changeCheckIn } from '../actions/attendance'
+import { getAttendance, changeCheckInOut } from '../actions/attendance'
 
 class CheckOut extends Component {
   constructor(props) {
@@ -44,6 +44,7 @@ class CheckOut extends Component {
     }, {total:0, remaining:0})
   }
 
+  changeCheckOut
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -58,12 +59,22 @@ class CheckOut extends Component {
           {this.childrenHere().total === this.childrenHere().remaining ? 'No children have left' : this.childrenHere().remaining === 1 ? '1 child is still here' : this.childrenHere().remaining + ' children are still here'
           }
         </Text>
+        <ScrollView contentContainerStyle={styles.attendanceHolder}>
+          {this.props.attendance[this.returnToday()]
+            ? Object.keys(this.props.attendance[this.returnToday()]).map((id, i) => {
+              let cardDetails = this.props.attendance[this.returnToday()][id]
+              if(!!cardDetails.checkIn) return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkOut')} isMorning={false}/>
+              else return
+            })
+            : null
+          }
+        </ScrollView>
         </View>
     )
   }
 }
 
 const mapStateToProps = state => ({attendance:state.attendance})
-const mapDispatchToProps = dispatch => bindActionCreators({getAttendance}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getAttendance, changeCheckInOut}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckOut)

@@ -62,17 +62,8 @@ export default class HomeScreen extends Component{
         balance: 1200,
         id: 'a50496b9-15c5-4542-bbdb-221b85ac8c4e'
       }]
-    // try{
-    //   await AsyncStorage.clear()
-    // }catch(err){
-    //   console.error(err)
-    // }
-    // try{
-    //   await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(accounts))
-    // }catch(err){
-    //   console.error(err)
-    // }
-    if (true) navigate('CheckIn')
+    
+    if (true) navigate('AttendanceHistory')
   }
 
   render(){

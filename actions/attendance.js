@@ -3,7 +3,6 @@ import {SecureStore} from 'expo'
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 export function getAttendance(today){
   //get attendance from storage 
-  console.log('hitting get attendance action')
   return async dispatch => {
     const now = new Date().getTime()
     try{  
@@ -14,7 +13,6 @@ export function getAttendance(today){
       let newAttendance
       if(!attendance) newAttendance = {}
       else newAttendance = {...JSON.parse(attendance)}
-      console.log('this is newAttendance at GET_ATTENDANCE', newAttendance)
       if (!newAttendance[today]){
         const children = accounts.reduce((acc, acct) => {
           acct.children.forEach(child => {
@@ -48,23 +46,21 @@ export function getAttendance(today){
 
 }
 
-export const CHANGE_CHECK_IN = 'CHANGE_CHECK_IN'
-export function changeCheckIn(date, id){
+export const CHANGE_CHECK_IN_OUT = 'CHANGE_CHECK_IN_OUT'
+export function changeCheckInOut(date, id, inOrOut){
   return async dispatch => {
     try{
       let attendance = await SecureStore.getItemAsync('_ATTENDANCE')
       attendance = JSON.parse(attendance)
       let newAttendance = attendance[date]
-      console.log('this is newAttendance: ', newAttendance)
-      if(!newAttendance[id].checkIn) newAttendance[id].checkIn = new Date().getTime()
-      else newAttendance[id].checkIn = false
-      
+      if(!newAttendance[id][inOrOut]) newAttendance[id][inOrOut] = new Date().getTime()
+      else newAttendance[id][inOrOut] = false
+      console.log(newAttendance[id])
       attendance[date] = newAttendance
-      console.log(attendance, console.log(typeof(attendance)))
       await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(attendance))
 
       dispatch({
-        type: CHANGE_CHECK_IN,
+        type: CHANGE_CHECK_IN_OUT,
         payload: {newAttendance, date}
       })
     }catch(err){

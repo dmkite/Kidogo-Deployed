@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import AttendanceCard from '../components/AttendanceCard'
 import {styles} from '../components/AttendanceCard/styles'
-import {getAttendance, changeCheckIn} from '../actions/attendance'
+import {getAttendance, changeCheckInOut} from '../actions/attendance'
 
 class CheckIn extends Component{
   constructor(props){
@@ -35,12 +35,16 @@ class CheckIn extends Component{
 
   childrenHere = () => {
     const today = this.returnToday()
+    if(!this.props.attendance[today]) return {total: 0, hereToday: 0}
     return Object.keys(this.props.attendance[today]).reduce((acc, id) => {
       childHere = this.props.attendance[today][id].checkIn
-      if(childHere) acc++
+      if(childHere) acc.hereToday++
+      acc.total++
       return acc
-    }, 0)
+    }, {total: 0, hereToday: 0})
   }
+
+  
 
   render(){
     return (
@@ -53,14 +57,17 @@ class CheckIn extends Component{
           this.state.date.getFullYear()}
         </Text>
         <Text>
-          {Object.keys(this.props.attendance[this.returnToday()]).length === this.childrenHere() ? 'All children are here' : this.childrenHere() === 1 ? '1 child is here' : this.childrenHere() + ' children are here'
+          {this.childrenHere().total === this.childrenHere().hereToday ? 'All children are here' : this.childrenHere().hereToday === 1 ? '1 child is here' : this.childrenHere().hereToday + ' children are here'
           }
         </Text>
         <ScrollView contentContainerStyle={styles.attendanceHolder}>
-          {Object.keys(this.props.attendance[this.returnToday()]).map( (id, i) =>{
-            let cardDetails = this.props.attendance[this.returnToday()][id]
-            return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckIn(this.returnToday(), id )} />
-          })}
+          { this.props.attendance[this.returnToday()]
+            ? Object.keys(this.props.attendance[this.returnToday()]).map( (id, i) =>{
+              let cardDetails = this.props.attendance[this.returnToday()][id]
+              return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkIn')} isMorning={true}/>
+            })
+            : null
+          }
         </ScrollView>
 
       </View>
@@ -70,5 +77,5 @@ class CheckIn extends Component{
 
 
 const mapStateToProps = state => ({attendance:state.attendance})
-const mapDispatchToProps = dispatch => bindActionCreators({getAttendance, changeCheckIn}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getAttendance, changeCheckInOut}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(CheckIn)
