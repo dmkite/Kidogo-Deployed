@@ -38,7 +38,7 @@ class Child extends Component{
     return (
         <View style = {{ flex:1}} >
           <Text style={[styles.h1, {marginTop:50}]}>Child</Text>
-            {console.log(this.props.img_uri)}
+            
           {this.props.img_uri
             ? <Image
                 style={styles.image}

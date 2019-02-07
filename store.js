@@ -7,4 +7,4 @@ import attendance from './reducers/attendance'
 
 const reducers = combineReducers({accounts, attendance, finances})
 
-export default createStore(reducers, applyMiddleware(thunk, logger))
+export default createStore(reducers, applyMiddleware(thunk))

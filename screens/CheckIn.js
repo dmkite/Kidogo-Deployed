@@ -5,8 +5,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import AttendanceCard from '../components/AttendanceCard'
 import {styles} from '../components/AttendanceCard/styles'
-// import {getAttendance, changeCheckIn} from '../actions/attendance'
-import {getAttendance} from '../actions/attendance'
+import {getAttendance, changeCheckIn} from '../actions/attendance'
 
 class CheckIn extends Component{
   constructor(props){
@@ -34,6 +33,15 @@ class CheckIn extends Component{
     this.props.getAttendance(today)
   }
 
+  childrenHere = () => {
+    const today = this.returnToday()
+    return Object.keys(this.props.attendance[today]).reduce((acc, id) => {
+      childHere = this.props.attendance[today][id].checkIn
+      if(childHere) acc++
+      return acc
+    }, 0)
+  }
+  
   render(){
     return (
       <View style={{flex:1}}>
@@ -44,10 +52,14 @@ class CheckIn extends Component{
           ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.state.date.getMonth()] + ' ' +
           this.state.date.getFullYear()}
         </Text>
+        <Text>
+          {Object.keys(this.props.attendance[this.returnToday()]).length === this.childrenHere() ? 'All children are here' : this.childrenHere() === 1 ? '1 child is here' : this.childrenHere() + ' children are here'
+          }
+        </Text>
         <ScrollView contentContainerStyle={styles.attendanceHolder}>
           {Object.keys(this.props.attendance[this.returnToday()]).map( (id, i) =>{
             let cardDetails = this.props.attendance[this.returnToday()][id]
-            return <AttendanceCard key={i} {...cardDetails}/>
+            return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckIn(this.returnToday(), id )} />
           })}
         </ScrollView>
 
@@ -58,5 +70,5 @@ class CheckIn extends Component{
 
 
 const mapStateToProps = state => ({attendance:state.attendance})
-const mapDispatchToProps = dispatch => bindActionCreators({getAttendance}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getAttendance, changeCheckIn}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(CheckIn)

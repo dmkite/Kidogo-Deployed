@@ -8,24 +8,27 @@ export const styles = {
     alignItems:'flex-start'
   },
   attendanceCard: {
-    width:100,
+    width:105,
     height:200,
     padding:10,
     position:'relative',
     borderRadius:5,
     borderWidth: 2,
     borderColor: '#ccc',
+    marginBottom:15
   },
   present:{
     backgroundColor:'green',
-    height:50,
-    width:50,
-    borderRadius:25,
+    height:30,
+    width:30,
+    paddingTop:3,
+    borderRadius:15,
     position:'absolute',
     top:-10,
     right:-10,
     borderWidth:2,
-    borderColor:'white'
+    borderColor:'white',
+    zIndex:101
   },
   img:{
     flex:1,

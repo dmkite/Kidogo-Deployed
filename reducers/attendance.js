@@ -17,10 +17,10 @@ const attendance = (state = INITIAL_STATE, {type, payload}) => {
   switch(type){
     case GET_ATTENDANCE:
       return payload
-    // case CHANGE_CHECK_IN:
-    //   newState = {...state}
-    //   newState[payload.date] = payload.newAttedance
-    //   return newState
+    case CHANGE_CHECK_IN:
+      newState = {...state}
+      newState[payload.date] = payload.newAttendance
+      return newState
     default: 
       return state
   }

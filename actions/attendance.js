@@ -4,6 +4,7 @@ export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 export function getAttendance(today){
   //get attendance from storage 
   return async dispatch => {
+    const now = new Date().getTime()
     try{  
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       if(!accounts) accounts = []
@@ -16,7 +17,8 @@ export function getAttendance(today){
         const children = JSON.parse(accounts).reduce((acc, acct) => {
           acct.children.forEach(child => {
             child.acctId = acct.id
-            child.isPresent = true
+            child.checkIn = now
+            child.checkOut = false
             delete child.notes
             delete child.gender
             delete child.birthday
@@ -48,13 +50,16 @@ export const CHANGE_CHECK_IN = 'CHANGE_CHECK_IN'
 export function changeCheckIn(date, id){
   return async dispatch => {
     try{
-      const attendance = await AsyncStorage.getItem('_ACCOUNTS')
-      const newAttendance = JSON.parse(attendance)[date]
-      if(newAttendance[id].checkIn) newAttendance[id].checkIn = new Date().getTime()
+      const attendance = await AsyncStorage.getItem('_ATTENDANCE')
+      let newAttendance = JSON.parse(attendance)[date]
+      console.log(newAttendance)
+      if(!newAttendance[id].checkIn) newAttendance[id].checkIn = new Date().getTime()
       else newAttendance[id].checkIn = false
 
       attendance[date] = newAttendance
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(attendance))
+      attendance = JSON.stringify(attendance)
+      console.log(attendance, 'before adding it to storage')
+      await AsyncStorage.setItem('_ATTENDANCE', JSON.stringify(attendance))
 
       dispatch({
         type: CHANGE_CHECK_IN,
