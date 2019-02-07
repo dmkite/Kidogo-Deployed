@@ -40,7 +40,7 @@ class Enrollment extends Component{
       rate: 0,
       frequency: 'daily',
       balance: 0,
-      message: null
+      message: null,
     } 
   }
   
@@ -126,6 +126,10 @@ class Enrollment extends Component{
       rate: text
     })
   }
+
+  addMessage = (message) => {
+    this.setState({message})
+  }
   
   render(){
    return (
@@ -134,10 +138,11 @@ class Enrollment extends Component{
       <ScrollView style={{flex:1}}>
         <Child 
           navigation={this.props.navigation} 
-          img_uri={this.props.accounts.newAccount.children.img_uri}
+          img_uri={this.state.children.img_uri}
           handleChangeText={this.handleChangeText}
           handlePress={this.handlePress}
           addURI={this.addURI}
+          addMessage={this.addMessage}
         />
         
         <View style={{height:2, backgroundColor:'#ccc', marginHorizontal:20, marginVertical: 40}}></View>
@@ -157,8 +162,8 @@ class Enrollment extends Component{
         
         <Rate handleRate={this.handleRate} handleFrequency={this.handleFrequency} frequency={this.state.frequency}/>
 
-        {this.props.accounts.message || this.state.message
-          ?  <ErrorMessage error={this.props.accounts.message || this.state.message}/>
+        {this.state.message
+          ?  <ErrorMessage error={this.state.message}/>
           : null
         }
         <TouchableOpacity style={styles.submit} onPress={this.handleSubmit}>
