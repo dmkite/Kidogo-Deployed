@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableOpacity, AsyncStorage, Alert} from 'react-native'
+import {ScrollView, View, Text, TouchableOpacity, Alert} from 'react-native'
+import {SecureStore} from 'expo'
 import {Icon} from 'react-native-elements'
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {ChildDetails, GuardianDetails, EmergencyContactDetails, RateDetails} from '../components/AccountDetails'
 import Header from '../components/Header'
-import {getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
+import {getAccounts, getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 
@@ -101,7 +102,7 @@ class Account extends Component {
   componentDidMount = async () => {
     const id = this.props.navigation.getParam('id')
     try{
-      const accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      const accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       const [account] = JSON.parse(accounts).filter(acct => acct.id === id)
       this.setState({ account })
 

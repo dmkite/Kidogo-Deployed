@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, AsyncStorage, TouchableOpacity, Image } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Image } from 'react-native'
 import Header from '../components/Header'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
