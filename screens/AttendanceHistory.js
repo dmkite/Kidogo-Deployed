@@ -87,9 +87,9 @@ class AttendanceHistory extends Component {
 
   attendanceByChild = (id) => {
     let attendance = this.props.attendance
-    console.log(attendance)
+    
     return this.state.dateSpan.map((date, i) => {
-      if (!attendance[date] || !attendance[date][id]) return false
+      if (!attendance[date] || !attendance[date][id] || !attendance[date][id].checkIn) return false
       return true
     })
   }
@@ -113,7 +113,7 @@ class AttendanceHistory extends Component {
         <Header navigation={this.props.navigation}/>
         <Text>Attendance History</Text>
         <AttendanceHistoryView span={this.state.dateSpan} changeWeeks={this.changeWeeks} dateMod={this.state.dateMod}/>
-        <ScrollView>
+        <ScrollView style={{marginTop:10}}>
           {this.accountsToChildren().map( (child, i) => {
             return <AttendanceHistoryRow key={i} i={i} {...child} attendanceStatus={this.attendanceByChild(child.id)}/>
           })}
