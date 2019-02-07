@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native'
+import {SecureStore} from 'expo'
 
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 export function getAttendance(today){
@@ -7,14 +7,14 @@ export function getAttendance(today){
   return async dispatch => {
     const now = new Date().getTime()
     try{  
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       if(!accounts) accounts = []
       else accounts = JSON.parse(accounts)
-      const attendance = await AsyncStorage.getItem('_ATTENDANCE')
+      const attendance = await SecureStore.getItemAsync('_ATTENDANCE')
       let newAttendance
       if(!attendance) newAttendance = {}
       else newAttendance = {...JSON.parse(attendance)}
-      
+      console.log('this is newAttendance at GET_ATTENDANCE', newAttendance)
       if (!newAttendance[today]){
         const children = accounts.reduce((acc, acct) => {
           acct.children.forEach(child => {
@@ -35,7 +35,7 @@ export function getAttendance(today){
         }, {})
       }
 
-      await AsyncStorage.setItem('_ATTENDANCE', JSON.stringify(newAttendance))
+      await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(newAttendance))
       
       dispatch({
         type: GET_ATTENDANCE,
@@ -52,14 +52,16 @@ export const CHANGE_CHECK_IN = 'CHANGE_CHECK_IN'
 export function changeCheckIn(date, id){
   return async dispatch => {
     try{
-      const attendance = await AsyncStorage.getItem('_ATTENDANCE')
-      let newAttendance = JSON.parse(attendance)[date]
+      let attendance = await SecureStore.getItemAsync('_ATTENDANCE')
+      attendance = JSON.parse(attendance)
+      let newAttendance = attendance[date]
+      console.log('this is newAttendance: ', newAttendance)
       if(!newAttendance[id].checkIn) newAttendance[id].checkIn = new Date().getTime()
       else newAttendance[id].checkIn = false
-
+      
       attendance[date] = newAttendance
-      attendance = JSON.stringify(attendance)
-      await AsyncStorage.setItem('_ATTENDANCE', JSON.stringify(attendance))
+      console.log(attendance, console.log(typeof(attendance)))
+      await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(attendance))
 
       dispatch({
         type: CHANGE_CHECK_IN,

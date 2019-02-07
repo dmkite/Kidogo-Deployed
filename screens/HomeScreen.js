@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, Button, Image, TextInput, StyleSheet, AsyncStorage} from 'react-native'
+import {Text, View, Button, Image, TextInput, StyleSheet} from 'react-native'
 import Header from '../components/Header/'
 import DashBoard from './DashBoard'
 import uuid from 'uuid'

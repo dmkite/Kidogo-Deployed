@@ -9,7 +9,7 @@ export const styles = {
   },
   attendanceCard: {
     width:105,
-    height:200,
+    height:150,
     padding:10,
     position:'relative',
     borderRadius:5,
@@ -35,5 +35,23 @@ export const styles = {
   },
   text:{
     fontSize:18
+  },
+  selected:{
+    opacity:.3,
+    scaleX: .7,
+    scaleY: .7
+  },
+  imgNameHolder:{
+    height:80,
+    width:80,
+    zIndex:100,
+    overflow:'hidden'
+  },
+  letter:{
+    fontSize:36,
+    color:'white',
+    lineHeight:80,
+    textAlign:'center'
   }
+
 }

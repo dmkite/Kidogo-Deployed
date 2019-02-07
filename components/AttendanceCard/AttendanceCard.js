@@ -13,15 +13,21 @@ export default function AttendanceCard(props){
         </View>
         : null
       }
-      <Image 
-        source={{uri:props.img_uri}}
-        style={{
-          flex: 1,
-          width: 80,
-          height:80,
-          resizeMode: 'cover'
-        }}
-        />
+      <View style={[styles.imgNameHolder, props.img_uri ? null : {backgroundColor:'#ccc'}]}>
+        {props.img_uri
+          ? <Image 
+              source={{uri:props.img_uri}}
+              style={{
+                flex: 1,
+                width: 80,
+                height:80,
+                resizeMode: 'cover'
+              }}
+            />
+          : <Text style={styles.letter}>{props.f_name ? props.f_name[0].toUpperCase() : null}</Text>
+        }
+
+      </View>
       <Text style={styles.text}>{props.f_name} {props.l_name || ' '}</Text>
     </TouchableOpacity>
   )
