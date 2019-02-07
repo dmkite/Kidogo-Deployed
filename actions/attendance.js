@@ -9,13 +9,14 @@ export function getAttendance(today){
     try{  
       let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       if(!accounts) accounts = []
+      else accounts = JSON.parse(accounts)
       const attendance = await AsyncStorage.getItem('_ATTENDANCE')
       let newAttendance
       if(!attendance) newAttendance = {}
       else newAttendance = {...JSON.parse(attendance)}
       
       if (!newAttendance[today]){
-        const children = JSON.parse(accounts).reduce((acc, acct) => {
+        const children = accounts.reduce((acc, acct) => {
           acct.children.forEach(child => {
             child.acctId = acct.id
             child.checkIn = now
