@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {ChildDetails, GuardianDetails, EmergencyContactDetails, RateDetails} from '../components/AccountDetails'
 import Header from '../components/Header'
-import {getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
+import {getAccounts, getOneAccount, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 

@@ -1,10 +1,13 @@
 import {AsyncStorage} from 'react-native'
+import {SecureStore} from 'expo'
 
 export const GET_ACCOUNTS = 'GET_ACCOUNTS'
 export function getAccounts(){
   try{
     return async dispatch => {
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
+
       if(!accounts) accounts = []
       else accounts = JSON.parse(accounts)
       dispatch({
@@ -44,14 +47,16 @@ export function addAccount(account){
     try{
       account.balance = 0
       let newAccounts
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       if(!accounts) newAccounts = [account]
       else{
         accounts = JSON.parse(accounts)
         newAccounts = [...accounts, account]
       }
       newAccounts = JSON.stringify(newAccounts)
-      await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
+      // await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
+      await SecureStore.setItemAsync('_ACCOUNTS', newAccounts)
       dispatch({
         type: UPDATE_ACCOUNTS,
         payload: JSON.parse(newAccounts)
@@ -68,7 +73,8 @@ export function addAccount(account){
 export function addMemberToAccount(newMember){
   return async dispatch => {
     try{
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if(acct.id === newMember.id){
@@ -76,7 +82,8 @@ export function addMemberToAccount(newMember){
         }
         return acct
       })
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
@@ -91,7 +98,8 @@ export function addMemberToAccount(newMember){
 export function changeField(fieldname, newValue, id){
   return async dispatch => {
     try {
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if (acct.id === id) {
@@ -99,7 +107,8 @@ export function changeField(fieldname, newValue, id){
         }
         return acct
       })
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
@@ -113,7 +122,8 @@ export function changeField(fieldname, newValue, id){
 export function deleteMember(acctId, memberType, memberId){
   return async dispatch => {
     try {
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if (acct.id === acctId) {
@@ -121,7 +131,8 @@ export function deleteMember(acctId, memberType, memberId){
         }
         return acct
       })
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
@@ -135,7 +146,8 @@ export function deleteMember(acctId, memberType, memberId){
 export function changeMember(changes, acctId, memberType, memberId){
   return async dispatch => {
     try {
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
         if (acct.id === acctId) {
@@ -146,7 +158,8 @@ export function changeMember(changes, acctId, memberType, memberId){
         }
         return acct
       })
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
         payload: newAccounts
@@ -160,10 +173,12 @@ export function changeMember(changes, acctId, memberType, memberId){
 export function deleteAccount(id){
   return async dispatch => {
     try {
-      let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
+      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.filter(acct => acct.id !== id)
-      await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, 
         payload: newAccounts
