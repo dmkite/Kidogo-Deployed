@@ -15,11 +15,6 @@ class CheckIn extends Component{
     }
   }
   
-  returnToday = () => {    
-    return (
-      `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
-  }
-  
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -27,9 +22,13 @@ class CheckIn extends Component{
       height: 0
     }
   }
+
+  returnToday = () => {    
+    return (
+      `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
+  }
   
   componentDidMount = () => {
-    console.log('hitting component did mount')
     const today = this.returnToday()
     this.props.getAttendance(today)
   }
