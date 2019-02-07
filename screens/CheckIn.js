@@ -29,6 +29,7 @@ class CheckIn extends Component{
   }
   
   componentDidMount = () => {
+    console.log('hitting component did mount')
     const today = this.returnToday()
     this.props.getAttendance(today)
   }
@@ -41,7 +42,7 @@ class CheckIn extends Component{
       return acc
     }, 0)
   }
-  
+
   render(){
     return (
       <View style={{flex:1}}>

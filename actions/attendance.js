@@ -3,6 +3,7 @@ import {AsyncStorage} from 'react-native'
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 export function getAttendance(today){
   //get attendance from storage 
+  console.log('hitting get attendance action')
   return async dispatch => {
     const now = new Date().getTime()
     try{  
@@ -52,13 +53,11 @@ export function changeCheckIn(date, id){
     try{
       const attendance = await AsyncStorage.getItem('_ATTENDANCE')
       let newAttendance = JSON.parse(attendance)[date]
-      console.log(newAttendance)
       if(!newAttendance[id].checkIn) newAttendance[id].checkIn = new Date().getTime()
       else newAttendance[id].checkIn = false
 
       attendance[date] = newAttendance
       attendance = JSON.stringify(attendance)
-      console.log(attendance, 'before adding it to storage')
       await AsyncStorage.setItem('_ATTENDANCE', JSON.stringify(attendance))
 
       dispatch({
