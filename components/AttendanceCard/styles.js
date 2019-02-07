@@ -15,7 +15,8 @@ export const styles = {
     borderRadius:5,
     borderWidth: 2,
     borderColor: '#ccc',
-    marginBottom:15
+    marginBottom:15,
+    opacity:1
   },
   present:{
     backgroundColor:'green',
@@ -37,7 +38,7 @@ export const styles = {
     fontSize:18
   },
   selected:{
-    opacity:.3,
+    // opacity:.3,
     scaleX: .7,
     scaleY: .7
   },

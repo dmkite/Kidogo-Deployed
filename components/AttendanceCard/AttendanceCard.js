@@ -5,14 +5,23 @@ import {styles} from './styles'
 
 export default function AttendanceCard(props){
   return (
-    <TouchableOpacity style={[styles.attendanceCard, props.checkIn ? {opacity: 0.3, scaleX:.7, scaleY:.7} : null ]} onPress={props.onPress}>
-      
-      {props.checkIn
+    <TouchableOpacity style={[styles.attendanceCard, (props.checkIn && props.isMorning) || (props.checkOut && !props.isMorning) ? styles.selected : null ]} onPress={props.onPress}>
+
+      {props.checkIn && props.isMorning
         ? <View style={styles.present}>
             <Icon name="check-circle" color="white" size={20}/>
         </View>
         : null
       }
+
+      {props.checkOut && !props.isMorning
+        ? <View style={styles.present}>
+          <Icon name="check-circle" color="white" size={20} />
+        </View>
+        : null
+      }
+
+
       <View style={[styles.imgNameHolder, props.img_uri ? null : {backgroundColor:'#ccc'}]}>
         {props.img_uri
           ? <Image 

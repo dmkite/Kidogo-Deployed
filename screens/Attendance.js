@@ -10,11 +10,11 @@ export default function Attendance(props){
         <Text>Check In</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{ flex: 1, borderWidth: 2 }}>
+      <TouchableOpacity style={{ flex: 1, borderWidth: 2 }} onPress={() => props.navigation.navigate('CheckOut')}>
         <Text>Check Out</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{ flex: 1, borderWidth: 2 }}>
+      <TouchableOpacity style={{ flex: 1, borderWidth: 2 }} onPress={() => props.navigation.navigate('AttendanceHistory')}>
         <Text>History</Text>
       </TouchableOpacity>
     </View>
