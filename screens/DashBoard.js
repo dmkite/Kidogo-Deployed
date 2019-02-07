@@ -4,9 +4,17 @@ import Header from '../components/Header'
 import DashView from '../components/DashView'
 import ActionButtons from '../components/ActionButtons'
 
-class DashBoard extends Component{
+class DashBoard extends Component{ //can definitely be a functional component
   constructor(props){
     super(props)
+  }
+  
+  static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: '#ff7e09',
+      height: 0
+    }
   }
 
   render(){

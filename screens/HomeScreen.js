@@ -72,7 +72,7 @@ export default class HomeScreen extends Component{
     // }catch(err){
     //   console.error(err)
     // }
-    if (true) navigate('Accounts')
+    if (true) navigate('CheckIn')
   }
 
   render(){

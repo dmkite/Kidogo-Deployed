@@ -38,21 +38,6 @@ const INITIAL_STATE = {
     id: uuid(),
     balance: 900
   }],
-  newAccount: {
-    children: {
-      img_uri: null,
-      f_name: null,
-      l_name: null,
-      age: 0,
-      gender: null,
-      notes: null
-    },
-    guardians: [],
-    emergencyContacts: [],
-    rate: 0,
-    frequency: 'daily',
-    id: null
-  },
   message: null //including this because the CameraScreen doesn't have access to props.
 }
 

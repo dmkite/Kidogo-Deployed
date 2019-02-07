@@ -30,8 +30,8 @@ class DashView extends Component{
       <TouchableHighlight
         onPress={ () => {
           this.state.time > 12 
-            ? this.props.navigation.navigate('CheckIn')
-            : this.props.navigation.navigate('CheckOut')
+            ? this.props.navigation.navigate('CheckOut') 
+            : this.props.navigation.navigate('CheckIn')
           }
         }
       >
