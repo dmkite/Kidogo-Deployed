@@ -63,7 +63,8 @@ export default class HomeScreen extends Component{
         id: 'a50496b9-15c5-4542-bbdb-221b85ac8c4e'
       }]
     
-    if (true) navigate('AttendanceHistory')
+    if (true) navigate('Payments', {id:"67da9144-e9dc-404f-b4ab-213ee8d1eb69"})
+    
   }
 
   render(){

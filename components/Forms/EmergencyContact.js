@@ -44,6 +44,7 @@ class EmergencyContact extends Component{
           style={styles.input}
           placeholder="##-###-####"
           value={this.state.phone}
+          keyboardType="number-pad"
           maxLength={11}
           onChangeText={(text) => {
             this.handlePhoneNumber(text)

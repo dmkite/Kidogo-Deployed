@@ -70,6 +70,7 @@ class Guardian extends Component{
           style={styles.input}
           placeholder="##-###-####"
           value={this.state.phone}
+          keyboardType="number-pad"
           maxLength={11}
           onChangeText={(text) => {
             this.handlePhoneNumber(text)
@@ -81,6 +82,7 @@ class Guardian extends Component{
         <TextInput
           style={styles.input}
           placeholder="###-##-####"
+          keyboardType="number-pad"
           onChangeText={(text) => {
             this.handleId(text, 3, 6)
             this.props.handleChangeText(text, 'guardians', 'govt_id')}}

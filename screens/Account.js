@@ -22,34 +22,9 @@ class Account extends Component {
       newRate: 0,
       deleteMessage: false,
       account: {
-        children: [
-        //   {
-        //   img_uri: null,
-        //   f_name: ' ',
-        //   l_name: ' ',
-        //   birthdate: null,
-        //   gender: null,
-        //   notes: null,
-        //   id: null
-        // }
-      ],
-        guardians: [
-        //   {
-        //   f_name: null,
-        //   l_name: null,
-        //   street: null,
-        //   city: null,
-        //   phone: null,
-        //   govt_id: null
-        // }
-      ],
-        e_contacts: [
-        //   {
-        //   f_name: null,
-        //   l_name: null,
-        //   phone: null
-        // }
-      ],
+        children: [],
+        guardians: [],
+        e_contacts: [],
         rate: 0,
         frequency: 'daily',
         balance: 0
