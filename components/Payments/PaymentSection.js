@@ -53,10 +53,15 @@ class PaymentSection extends Component{
             onChangeText={(text) => this.numberValidation(text, 'date', 2, 5)}
           />
         </View>
-          <TouchableOpacity style={styles.submit} onPress={() => {
+        {console.log(this.state.amount, (Number(this.state.amount) <= 0), typeof(Number(this.state.amount)))}
+          <TouchableOpacity style={[styles.submit, (Number(this.state.amount) <= 0) ? {opacity:0.3} : null]} onPress={
+            (Number(this.state.amount) <= 0 )
+              ? () => {
               this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)
               this.props.changeField('balance', this.props.balance - this.state.amount, this.props.id)
-              }}>
+              }
+              : null
+            }>
             <Text style={styles.btnText}>Make Payment</Text>
           </TouchableOpacity>
       </View>

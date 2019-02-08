@@ -21,7 +21,7 @@ export function getAttendance(today){
             child.checkOut = false
             delete child.notes
             delete child.gender
-            delete child.birthday
+            delete child.birthdate
           })
           acc = acc.concat(acct.children)
           return acc

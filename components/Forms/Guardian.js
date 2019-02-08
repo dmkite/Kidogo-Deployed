@@ -55,7 +55,7 @@ class Guardian extends Component{
         <TextInput 
           style={styles.input}
           placeholder="123 Kenyata Avenue"
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'address_1')}
+          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'street')}
         />
 
         <Text style={styles.label}>City</Text>

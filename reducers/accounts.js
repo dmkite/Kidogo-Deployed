@@ -1,4 +1,6 @@
 import { GET_ACCOUNTS, ADD_MESSAGE, TAKE_TEMP_PIC, UPDATE_ACCOUNTS } from '../actions/accounts'
+import { ADD_FEES } from '../actions/payments'
+
 import uuid from 'uuid'
 const INITIAL_STATE = {
   accounts:[
@@ -30,9 +32,14 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       const newAcctState = {...state}
       newAcctState.accounts = payload
       return newAcctState
+    case ADD_FEES:
+      const newFeeState = {...state}
+      newFeeState.accounts = payload.accounts
+      return newFeeState 
     default: 
       return state
   }
 }
+
 
 export default accounts

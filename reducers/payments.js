@@ -1,4 +1,4 @@
-import {GET_PAYMENTS, MAKE_PAYMENT} from '../actions/payments'
+import {GET_PAYMENTS, MAKE_PAYMENT, ADD_FEES} from '../actions/payments'
 
 const INITIAL_STATE = {
   id: [
@@ -17,6 +17,8 @@ function payments(state=INITIAL_STATE, {type, payload}){
       return payload
     case MAKE_PAYMENT:
       return payload
+    case ADD_FEES:
+      return payload.payments
     default: 
       return state
   }
