@@ -25,7 +25,7 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     const { navigate } = this.props.navigation
       // await addData()
-      navigate('Finances')
+      navigate('Payments', {id:'40'})
     // if (true) navigate('Payments', {id:"67da9144-e9dc-404f-b4ab-213ee8d1eb69"})
     
   }

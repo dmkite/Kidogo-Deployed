@@ -8,7 +8,7 @@ class PaymentSection extends Component{
     super(props)
     this.state={
       date: this.returnToday(),
-      amount: null
+      amount: null,
     }
   }
 
@@ -43,6 +43,7 @@ class PaymentSection extends Component{
             style={[styles.input, styles.amountInput, {borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} 
             keyboardType="number-pad"
             placeholder='amount'
+            value={this.state.amount}
             onChangeText={(text)=> this.numberValidation(text, 'amount')}
           />
           <TextInput 
@@ -54,18 +55,14 @@ class PaymentSection extends Component{
             onChangeText={(text) => this.numberValidation(text, 'date', 2, 5)}
           />
         </View>
-        {/*NOTE: I have no idea what's going on below. updates to state does not change conidtional render. state does notchange upon set state*/}
-          {!!this.state.amount
-          ? <TouchableOpacity style={styles.submit} onPress={ () => {
-              this.setState({amount:null})
-              this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)
+           
+            <TouchableOpacity style={styles.submit} onPress={ () => {
+              return Number(this.state.amount) > 0    
+                ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
+                : null
             }}>
               <Text style={styles.btnText}>Make Payment</Text>
             </TouchableOpacity>
-          : <TouchableOpacity style={[styles.submit, { opacity: 0.3 }]} >
-              <Text style={styles.btnText}>Make Payment</Text>
-            </TouchableOpacity>
-          }
       </View>
     )
 
