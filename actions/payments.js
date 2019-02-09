@@ -1,6 +1,5 @@
 import {SecureStore} from 'expo'
 import Dates from '../utilities/dates'
-import { FULLSCREEN_UPDATE_PLAYER_DID_PRESENT } from 'expo/build/av/Video';
 
 export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
@@ -21,6 +20,7 @@ export function getPayments() {
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
 export function makePayment(id, amount, balance, date){
+  if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
       let payments = await SecureStore.getItemAsync('_PAYMENTS')
@@ -30,7 +30,7 @@ export function makePayment(id, amount, balance, date){
       const paymentDetails = {
         amount,
         balanceBefore: balance,
-        balanceAfter: balance - amount,
+        balanceAfter: Number(balance) - Number(amount),
         date
       }
       if(!newPayments[id]) newPayments[id] = []
@@ -48,19 +48,22 @@ export function makePayment(id, amount, balance, date){
 }
 
 export const ADD_FEES = 'ADD_FEES'
-export function addFees(){
+export function addFees(){  
   return async dispatch => {
     try{
       const dates = new Dates()
-
       const { newPayments, newAccounts, newAttendance } = await getFromSecureStore(true, true, true)
       const { previousAttendance, dayToCheck, needsToPay } = checkIfPaymentNeeded(newAttendance, dates)
 
       if(needsToPay){
         newAccounts.forEach((acct) => {
           const paymentHistory = newPayments[acct.id]
+          let paymentNeeded
+          
+          if(acct.frequency === 'daily') paymentNeeded = needToPayDailyFee(paymentHistory, dayToCheck, acct, previousAttendance) 
+          else if(acct.frequency === 'weekly') paymentNeeded = needToPayWeeklyOrTermlyFee(paymentHistory, acct, 7)
+          else paymentNeeded = needToPayWeeklyOrTermlyFee(paymentHistory, acct, 90) //NOTE: this assumes a 90 day term
 
-          let paymentNeeded = needToPayDailyFee(paymentHistory, dayToCheck, acct, previousAttendance) 
           if(paymentNeeded){
             if(!newPayments[acct.id]) newPayments[acct.id] = []
             newPayments[acct.id].push({
@@ -92,9 +95,9 @@ export function addFees(){
 
     if(paymentHistory){
       for (let payment of paymentHistory) {
-        let {date, amount} = payment
+        let {date, amount,balanceAfter, balanceBefore} = payment
 
-        if (date === expectedPaymentDay && amount == acct.rate) return false
+        if (date === expectedPaymentDay && balanceBefore < balanceAfter) return false
       }
     }
     //check to see if any child was present on day in question
@@ -130,8 +133,6 @@ export function addFees(){
       const newAttendance = { ...attendance }
       dataObj.newAttendance = newAttendance
     }
-    // console.log(dataObj)
-    // console.log(dataObj)
     return dataObj
   }
 
@@ -155,6 +156,19 @@ export function addFees(){
     return {previousAttendance, dayToCheck, needsToPay}
 
   }
-//check yesterday to see if payment was made
-//check yesterday to see if child at account was present
-//if yesterday was sunday, check saturday
+
+function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
+  if(!paymentHistory) return true
+  let date = new Dates()
+  let lastPaymentDate
+  for(let i = paymentHistory.length - 1; i >= 0; i--){
+    let {amount, balanceBefore, balanceAfter } = paymentHistory[i]
+    if (amount == acct.rate && balanceBefore < balanceAfter) lastPaymentDate = paymentHistory[i].date
+  }
+  if(!lastPaymentDate) return true
+  const today = date.getToday()
+  
+  let difference = date.compareDates(today, lastPaymentDate)
+  if(difference >= days) return true
+  return false
+}

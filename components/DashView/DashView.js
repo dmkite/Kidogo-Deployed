@@ -29,9 +29,11 @@ class DashView extends Component{
     return (
       <TouchableHighlight
         onPress={ () => {
-          this.state.time > 12 
-            ? this.props.navigation.navigate('CheckOut') 
-            : this.props.navigation.navigate('CheckIn')
+          this.state.time < 12 
+            ? this.props.navigation.navigate('CheckIn') 
+            : this.state.time < 17
+                ? this.props.navigation.navigate('CheckOut')
+                : this.props.navigation.navigate('Finances')
           }
         }
       >
@@ -39,10 +41,19 @@ class DashView extends Component{
           <Image 
             source={this.state.time < 12
             ? require('../../assets/sunrise.png')
-            : require('../../assets/sunset.png')
+            : this.state.time < 17
+                ? require('../../assets/sunset.png')
+                : require('../../assets/nighttime.png')
             }
           />
-          <Text style={styles.dashFont}>Who's here today?</Text>
+          <Text style={[styles.dashFont, this.state.time >= 17 ? {color:'white'} : null]}>
+            { this.state.time < 12
+              ? "Who's here today?"
+              : this.state.time < 17
+                ? "Has anyone left?"
+                : "Do you buy anything today?"
+            }
+              </Text>
         </View>
       </TouchableHighlight>
     )

@@ -7,6 +7,7 @@ import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
 import {styles} from '../components/Forms/styles'
 import {addAccount} from '../actions/accounts'
+import {makePayment} from '../actions/payments'
 import uuid from 'uuid'
 
 class Enrollment extends Component{
@@ -116,6 +117,7 @@ class Enrollment extends Component{
       balance: 0
     }
     await this.props.addAccount(account)
+    if(this.state.frequency !== 'daily') await this.props.makePayment(id, -Number(this.state.rate), 0) //negative payment will process as fee
     await this.props.navigation.navigate('Account', {id})
   }
   
@@ -177,5 +179,5 @@ class Enrollment extends Component{
 }
 
 const mapStateToProps = state => ({accounts: state.accounts})
-const mapDispatchToProps = dispatch => bindActionCreators({addAccount}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({addAccount, makePayment}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Enrollment)
