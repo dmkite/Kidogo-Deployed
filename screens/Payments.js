@@ -11,6 +11,7 @@ import{getPayments, makePayment} from '../actions/payments'
 class Payments extends Component{
   constructor(props){
     super(props)
+      
   }
   
   static navigationOptions = {

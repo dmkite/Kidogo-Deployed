@@ -8,7 +8,7 @@ class PaymentSection extends Component{
     super(props)
     this.state={
       date: this.returnToday(),
-      amount: null
+      amount: null,
     }
   }
 
@@ -55,18 +55,14 @@ class PaymentSection extends Component{
             onChangeText={(text) => this.numberValidation(text, 'date', 2, 5)}
           />
         </View>
-        {/*NOTE: I have no idea what's going on below. updates to state does not change conidtional render. state does notchange upon set state*/}
-          {!!this.state.amount
-          ? <TouchableOpacity style={styles.submit} onPress={ () => {
-              const promiseArray = [this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)]
-              Promise.all(promiseArray).then(() => console.log(this.state))
+           
+            <TouchableOpacity style={styles.submit} onPress={ () => {
+              return Number(this.state.amount) > 0    
+                ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
+                : null
             }}>
               <Text style={styles.btnText}>Make Payment</Text>
             </TouchableOpacity>
-          : <TouchableOpacity style={[styles.submit, { opacity: 0.3 }]} >
-              <Text style={styles.btnText}>Make Payment</Text>
-            </TouchableOpacity>
-          }
       </View>
     )
 
