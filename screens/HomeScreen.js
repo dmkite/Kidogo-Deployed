@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, Button, Image, TextInput, StyleSheet} from 'react-native'
+import {Text, View, TouchableOpacity, Image, TextInput, StyleSheet} from 'react-native'
 import Header from '../components/Header/'
 import DashBoard from './DashBoard'
 import uuid from 'uuid'
@@ -25,7 +25,7 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     const { navigate } = this.props.navigation
       // await addData()
-      navigate('Payments', {id:'40'})
+      navigate('Finances')
     // if (true) navigate('Payments', {id:"67da9144-e9dc-404f-b4ab-213ee8d1eb69"})
     
   }
@@ -44,11 +44,12 @@ export default class HomeScreen extends Component{
         <TextInput style={styles.input}/>
         <Text style={styles.label}>Password:</Text>
         <TextInput style={[styles.input, {marginBottom:20}]}/>
-        <Button
-       
-          title="Login"
-          onPress={ () => navigate('Dash')}
-        />
+        <TouchableOpacity style={styles.button} onPress={() => navigate('Dash')}>
+          <Text style={styles.buttonText}>Log In</Text>
+        </TouchableOpacity>
+
+          
+        
       </View>
     )
   }
@@ -72,7 +73,15 @@ const styles= StyleSheet.create({
     fontSize:24
   },
   button:{
-    height:50,
-    marginTop:20
+    height:75,
+    marginTop:20,
+    borderRadius:5,
+    backgroundColor:'#ccc',
+    marginHorizontal:10
+  },
+  buttonText: {
+    fontSize: 36,
+    textAlign:'center',
+    color:'white'
   }
 })

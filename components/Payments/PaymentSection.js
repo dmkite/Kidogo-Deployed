@@ -56,13 +56,13 @@ class PaymentSection extends Component{
           />
         </View>
            
-            <TouchableOpacity style={styles.submit} onPress={ () => {
-              return Number(this.state.amount) > 0    
-                ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
-                : null
-            }}>
-              <Text style={styles.btnText}>Make Payment</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.submit} onPress={ () => {
+            return Number(this.state.amount) > 0    
+              ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
+              : null
+          }}>
+            <Text style={styles.btnText}>Make Payment</Text>
+          </TouchableOpacity>
       </View>
     )
 

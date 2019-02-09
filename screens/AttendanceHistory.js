@@ -59,7 +59,7 @@ class AttendanceHistory extends Component {
     let endDate = upper.getDate()
     while( endDate > 0 && endSpan.length < 7){
       let day = endDate < 10 ? '0' + endDate : endDate
-      let month = upper.getMonth() + 1 < 10 ? '0' + (upper.getMonth() + 1) : lower.getMonth() + 1
+      let month = upper.getMonth() + 1 < 10 ? '0' + (upper.getMonth() + 1) : upper.getMonth() + 1
       let year = upper.getFullYear()
       endSpan.unshift(`${day}-${month}-${year}`)
       endDate--

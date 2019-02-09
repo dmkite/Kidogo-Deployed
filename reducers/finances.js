@@ -1,12 +1,19 @@
+import {GET_FINANCES, GET_WEEK_BALANCE} from '../actions/finances'
 
 const INITIAL_STATE = {
-  expenses: [],
-  income:[],
-  net: 0
+  history: {},
+  net: {
+    expenses: 0,
+    income:0
+  }
 }
 
 const finances = (state=INITIAL_STATE, {type, payload}) => {
-  switch(type){
+  switch(type){ 
+    case GET_FINANCES:
+      return {...state, history: payload}
+    case GET_WEEK_BALANCE:
+      return payload
     default: 
       return state
   }

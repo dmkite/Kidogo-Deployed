@@ -6,6 +6,7 @@ import ActionButtons from '../components/ActionButtons'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {addFees} from '../actions/payments'
+import {getAttendance} from '../actions/attendance'
 
 class DashBoard extends Component{ //can definitely be a functional component
   constructor(props){
@@ -21,7 +22,7 @@ class DashBoard extends Component{ //can definitely be a functional component
   }
 
   componentDidMount = () => {
-    this.props.addFees()
+    return Promise.all([this.props.addFees(), this.props.getAttendance()])
   }
 
   render(){
