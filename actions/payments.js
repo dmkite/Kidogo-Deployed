@@ -20,6 +20,7 @@ export function getPayments() {
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
 export function makePayment(id, amount, balance, date){
+  console.log('hitting make payment')
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
