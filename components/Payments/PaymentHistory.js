@@ -50,8 +50,8 @@ function byDate(a,b){
   }
 
   if( !aAdding && bAdding){
-    if(a.balanceAfter >= b.balanceBefore) return -1
-    if(b.balanceBefore >= a.balanceAfter) return 1
+    if(a.balanceAfter >= b.balanceBefore) return 1
+    if(b.balanceBefore >= a.balanceAfter) return -1
   }
   return 0
 }

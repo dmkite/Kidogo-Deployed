@@ -43,6 +43,7 @@ class PaymentSection extends Component{
             style={[styles.input, styles.amountInput, {borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} 
             keyboardType="number-pad"
             placeholder='amount'
+            value={this.state.amount}
             onChangeText={(text)=> this.numberValidation(text, 'amount')}
           />
           <TextInput 
@@ -57,8 +58,8 @@ class PaymentSection extends Component{
         {/*NOTE: I have no idea what's going on below. updates to state does not change conidtional render. state does notchange upon set state*/}
           {!!this.state.amount
           ? <TouchableOpacity style={styles.submit} onPress={ () => {
-              this.setState({amount:null})
-              this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)
+              const promiseArray = [this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)]
+              Promise.all(promiseArray).then(() => console.log(this.state))
             }}>
               <Text style={styles.btnText}>Make Payment</Text>
             </TouchableOpacity>
