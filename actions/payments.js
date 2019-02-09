@@ -1,5 +1,6 @@
 import {SecureStore} from 'expo'
 import Dates from '../utilities/dates'
+import { UPDATE_ACCOUNTS } from './accounts';
 
 export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
@@ -20,14 +21,15 @@ export function getPayments() {
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
 export function makePayment(id, amount, balance, date){
-  console.log('hitting make payment')
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
-      let payments = await SecureStore.getItemAsync('_PAYMENTS')
-      if (!payments) payments = {}
-      else payments = JSON.parse(payments)
-      const newPayments = Object.assign(payments)
+      // let payments = await SecureStore.getItemAsync('_PAYMENTS')
+      // let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
+      const {newPayments, newAccounts} = await getFromSecureStore(true, true)
+      // if (!payments) payments = {}
+      // else payments = JSON.parse(payments)
+      // const newPayments = Object.assign(payments)
       const paymentDetails = {
         amount,
         balanceBefore: balance,
@@ -36,10 +38,18 @@ export function makePayment(id, amount, balance, date){
       }
       if(!newPayments[id]) newPayments[id] = []
       newPayments[id].push(paymentDetails)
+      newAccounts.forEach(acct => {
+        if(acct.id === id) acct.balance = Number(acct.balance) - Number(amount)
+      })
       await SecureStore.setItemAsync('_PAYMENTS', JSON.stringify(newPayments))
+      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: GET_PAYMENTS,
         payload: newPayments
+      })
+      dispatch({
+        type: UPDATE_ACCOUNTS,
+        payload: newAccounts
       })
       
     } catch (err) {

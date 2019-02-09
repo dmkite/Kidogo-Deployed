@@ -42,7 +42,12 @@ class Payments extends Component{
       <ScrollView style={{flex:1}}>
         <Header navigation={this.props.navigation}/>
         <Text>Payments</Text>
-        <PaymentSection balance={this.findAccount() ? this.findAccount().balance : 0} id={this.props.navigation.getParam('id')} makePayment={this.props.makePayment} changeField={this.props.changeField}/>
+        <PaymentSection 
+          balance={this.findAccount() ? this.findAccount().balance : 0} 
+          id={this.props.navigation.getParam('id')} 
+          makePayment={this.props.makePayment} 
+          changeField={this.props.changeField}
+        />
         <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
         
         <PaymentHistory paymentHistory={this.props.payments ? this.props.payments[this.props.navigation.getParam('id')] : []}/>

@@ -13,7 +13,6 @@ export default function PaymentHistory(props) {
         <Text style={{ flex: .2, textAlign: 'center', fontWeight: 'bold' }}>Amount</Text>
         <Text style={{ flex: .2, textAlign: 'right', fontWeight: 'bold', marginRight:10 }}>After</Text>
       </View>
-      {console.log(props.paymentHistory)}
       {!props.paymentHistory
         ? <Text style={{ fontSize: 18 }}>This account has not made any payments</Text>
         : <View>

@@ -49,7 +49,6 @@ class CheckOut extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header navigation={this.props.navigation} />
-        {console.log(this.props)}
         <Text>
           {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][this.state.date.getDay()] + ', ' +
             this.state.date.getDate() + ', ' +

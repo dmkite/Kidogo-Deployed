@@ -8,7 +8,7 @@ class PaymentSection extends Component{
     super(props)
     this.state={
       date: this.returnToday(),
-      amount: 0
+      amount: null
     }
   }
 
@@ -22,9 +22,10 @@ class PaymentSection extends Component{
 
   numberValidation = (text, field, num1, num2) => {
     let charCode
+    
     if (text.length > 0) charCode = text[text.length - 1].charCodeAt(0)
     if (text.length > 0 && (charCode < 48 || charCode > 57)) text = text.slice(0, (text.length - 1))
-    if (text.length > this.state[field].length) { //checks if deleting, don't add '-'
+    if (text.length > String(this.state[field]).length) { //checks if deleting, don't add '-'
       if ((num1 && text.length === num1) || (num2 && text.length === num2)) text += '-'
     }
     this.setState({
@@ -37,13 +38,13 @@ class PaymentSection extends Component{
       <View>
         <Text style={styles.balance}>K {this.props.balance}</Text>
         <View style={styles.inputHolder}>
-            <Text style={styles.prefix}>K</Text>
-            <TextInput
-              style={[styles.input, styles.amountInput, {borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} 
-              keyboardType="number-pad"
-              placeholder='amount'
-              onChangeText={(text)=> this.numberValidation(text, 'amount')}
-            />
+          <Text style={styles.prefix}>K</Text>
+          <TextInput
+            style={[styles.input, styles.amountInput, {borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]} 
+            keyboardType="number-pad"
+            placeholder='amount'
+            onChangeText={(text)=> this.numberValidation(text, 'amount')}
+          />
           <TextInput 
             style={[styles.input, styles.dateInput]}
             maxLength={10}
@@ -53,17 +54,18 @@ class PaymentSection extends Component{
             onChangeText={(text) => this.numberValidation(text, 'date', 2, 5)}
           />
         </View>
-        {console.log(this.state.amount, (Number(this.state.amount) <= 0), typeof(Number(this.state.amount)))}
-          <TouchableOpacity style={[styles.submit, (Number(this.state.amount) <= 0) ? {opacity:0.3} : null]} onPress={
-            (Number(this.state.amount) <= 0 )
-              ? () => {
+        {/*NOTE: I have no idea what's going on below. updates to state does not change conidtional render. state does notchange upon set state*/}
+          {!!this.state.amount
+          ? <TouchableOpacity style={styles.submit} onPress={ () => {
+              this.setState({amount:null})
               this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)
-              this.props.changeField('balance', this.props.balance - this.state.amount, this.props.id)
-              }
-              : null
-            }>
-            <Text style={styles.btnText}>Make Payment</Text>
-          </TouchableOpacity>
+            }}>
+              <Text style={styles.btnText}>Make Payment</Text>
+            </TouchableOpacity>
+          : <TouchableOpacity style={[styles.submit, { opacity: 0.3 }]} >
+              <Text style={styles.btnText}>Make Payment</Text>
+            </TouchableOpacity>
+          }
       </View>
     )
 

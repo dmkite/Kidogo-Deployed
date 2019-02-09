@@ -27,7 +27,7 @@ class AttendanceHistory extends Component {
   }
 
   changeWeeks = (direction) => {
-    console.log(typeof(this.state.dateMod))
+
     let dateMod = this.state.dateMod
     if (direction === 'forward') dateMod += 7
     else dateMod -= 7

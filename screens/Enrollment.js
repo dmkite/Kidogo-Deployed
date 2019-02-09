@@ -119,7 +119,13 @@ class Enrollment extends Component{
 
     //NOTE: for some reason the below doesn't work. it navigates, but the fee is not added
     await this.props.addAccount(account)
-    if(this.state.frequency !== 'daily') await this.props.makePayment(id, -Number(this.state.rate), 0) //negative payment will process as fee
+    
+    if(this.state.frequency !== 'daily'){
+      
+      await this.props.makePayment(id, -Number(this.state.rate), 0) //negative payment will process as fee
+      
+    }
+    
     await this.props.navigation.navigate('Account', {id})
   }
   

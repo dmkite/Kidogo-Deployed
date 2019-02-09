@@ -18,7 +18,7 @@ function ActionButtons(props){
           <Text style={styles.actionText}>Attendance</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.actionButton}>
+      <TouchableOpacity style={styles.actionButton} onPress={()=> navigate('Finances')}>
         <View>
           <Image style={styles.buttonImage} />
           <Text style={styles.actionText}>Finances</Text>

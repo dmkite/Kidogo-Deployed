@@ -31,7 +31,6 @@ export default class Dates {
     const year = previousDay.getFullYear()
     previousDay = self.constructDate(day, month, year)
     return previousDay
-    // console.log( `${previousDay.substring(7,9)}-${previousDay.substring(5,7)}-${previousDay.substring(0,4)}`)
   }
 
   

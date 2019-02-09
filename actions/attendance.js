@@ -55,7 +55,6 @@ export function changeCheckInOut(date, id, inOrOut){
       let newAttendance = attendance[date]
       if(!newAttendance[id][inOrOut]) newAttendance[id][inOrOut] = new Date().getTime()
       else newAttendance[id][inOrOut] = false
-      console.log(newAttendance[id])
       attendance[date] = newAttendance
       await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(attendance))
 

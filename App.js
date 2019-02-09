@@ -15,6 +15,7 @@ import AttendanceHistory from './screens/AttendanceHistory'
 import CheckIn from './screens/CheckIn'
 import CheckOut from './screens/CheckOut'
 import Payments from './screens/Payments'
+import Finances from './screens/Finances'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -28,7 +29,8 @@ const AppNavigator = createStackNavigator({
   EditMember: EditMember,
   Attendance: Attendance,
   AttendanceHistory: AttendanceHistory,
-  Payments: Payments
+  Payments: Payments,
+  Finances: Finances
 },
 
 {

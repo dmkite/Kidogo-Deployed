@@ -6,7 +6,6 @@ import {styles} from './styles'
 export default function PaymentRow(props){
   return(
     <View style={[styles.paymentRow, props.even ? {backgroundColor:'#efefef'} : null]}>
-      {console.log(props.even)}
       <View style={styles.iconHolder}>
         {props.balanceBefore > props.balanceAfter 
           ? <View style={[styles.entryIcon, {backgroundColor:'green'}]}>
