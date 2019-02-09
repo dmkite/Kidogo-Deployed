@@ -41,7 +41,7 @@ class Payments extends Component{
     return (
       <ScrollView style={{flex:1}}>
         <Header navigation={this.props.navigation}/>
-        <Text>Payments</Text>
+        <Text style={{fontSize:36, margin:10, marginBottom:20}}>Make a Payment</Text>
         <PaymentSection 
           balance={this.findAccount() ? this.findAccount().balance : 0} 
           id={this.props.navigation.getParam('id')} 
