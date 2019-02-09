@@ -22,34 +22,9 @@ class Account extends Component {
       newRate: 0,
       deleteMessage: false,
       account: {
-        children: [
-        //   {
-        //   img_uri: null,
-        //   f_name: ' ',
-        //   l_name: ' ',
-        //   birthdate: null,
-        //   gender: null,
-        //   notes: null,
-        //   id: null
-        // }
-      ],
-        guardians: [
-        //   {
-        //   f_name: null,
-        //   l_name: null,
-        //   street: null,
-        //   city: null,
-        //   phone: null,
-        //   govt_id: null
-        // }
-      ],
-        e_contacts: [
-        //   {
-        //   f_name: null,
-        //   l_name: null,
-        //   phone: null
-        // }
-      ],
+        children: [],
+        guardians: [],
+        e_contacts: [],
         rate: 0,
         frequency: 'daily',
         balance: 0
@@ -99,18 +74,7 @@ class Account extends Component {
   }
   
 
-  componentDidMount = async () => {
-    const id = this.props.navigation.getParam('id')
-    try{
-      const accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      const [account] = JSON.parse(accounts).filter(acct => acct.id === id)
-      this.setState({ account })
-
-    }catch(err){
-      console.error(err,'----------------------')
-    }
-  }
-
+  
   openAddMember = (type) => {
     this.setState({
       [type]: {
@@ -167,7 +131,7 @@ class Account extends Component {
       // validation goes here
       payload.content = this.state.e_contacts
     }
-
+    
     this.props.addMemberToAccount(payload)
     this.setState({
       [type]: {
@@ -209,7 +173,7 @@ class Account extends Component {
       newRate: text,
     })
   }
-
+  
   deleteAccount = () => {
     const id = this.props.navigation.getParam('id')
     this.props.deleteAccount(id)
@@ -223,6 +187,19 @@ class Account extends Component {
         img_uri: uri
       }
     })
+  }
+  
+  componentDidMount = async () => {
+    //should cahnge this to an action!
+    const id = this.props.navigation.getParam('id')
+    try{
+      const accounts = await SecureStore.getItemAsync('_ACCOUNTS')
+      const [account] = JSON.parse(accounts).filter(acct => acct.id === id)
+      this.setState({ account })
+
+    }catch(err){
+      console.error(err,'----------------------')
+    }
   }
 
   render(){

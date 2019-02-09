@@ -21,7 +21,7 @@ export function getAttendance(today){
             child.checkOut = false
             delete child.notes
             delete child.gender
-            delete child.birthday
+            delete child.birthdate
           })
           acc = acc.concat(acct.children)
           return acc
@@ -55,7 +55,6 @@ export function changeCheckInOut(date, id, inOrOut){
       let newAttendance = attendance[date]
       if(!newAttendance[id][inOrOut]) newAttendance[id][inOrOut] = new Date().getTime()
       else newAttendance[id][inOrOut] = false
-      console.log(newAttendance[id])
       attendance[date] = newAttendance
       await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(attendance))
 

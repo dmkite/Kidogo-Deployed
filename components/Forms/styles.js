@@ -1,5 +1,3 @@
-import { withNativeAd } from "expo/build/facebook-ads";
-
 export const styles = {
   inputWrapper: {
     height:40,

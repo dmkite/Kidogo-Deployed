@@ -1,38 +1,13 @@
 import { GET_ACCOUNTS, ADD_MESSAGE, TAKE_TEMP_PIC, UPDATE_ACCOUNTS } from '../actions/accounts'
+import { ADD_FEES } from '../actions/payments'
+
 import uuid from 'uuid'
 const INITIAL_STATE = {
   accounts:[
     //exmaple account
-    {children: [
-      // {
-      //   img_uri: null,
-      //   f_name: 'John',
-      //   l_name: 'Mwangi',
-      //   birthdate: '01-01-2014',
-      //   gender: 'male',
-      //   notes: null,
-      //   id: null
-      // },
-    ],
-    guardians: [
-      // {
-      //   f_name: 'Mary',
-      //   l_name: 'Mwangi',
-      //   phone:'12-345-6789',
-      //   govt_id:'123-45-6789',
-      //   street: '123 First Street',
-      //   city: 'Nairobi',
-      //   id: null
-      // }
-    ],
-    emergencyContacts: [
-      // {
-      //   f_name:'William',
-      //   l_name:'Doe',
-      //   phone: '98-765-4321',
-      //   id: null
-      // }
-    ],
+    {children: [],
+    guardians: [],
+    emergencyContacts: [],
     rate: 0,
     frequency: 'daily',
     id: uuid(),
@@ -40,7 +15,8 @@ const INITIAL_STATE = {
   }],
   message: null //including this because the CameraScreen doesn't have access to props.
 }
-
+  //above can definitely change to just an array. don't use message
+  
 const accounts = (state=INITIAL_STATE, {type, payload}) => {
   switch (type){
     case GET_ACCOUNTS:
@@ -56,9 +32,14 @@ const accounts = (state=INITIAL_STATE, {type, payload}) => {
       const newAcctState = {...state}
       newAcctState.accounts = payload
       return newAcctState
+    case ADD_FEES:
+      const newFeeState = {...state}
+      newFeeState.accounts = payload.accounts
+      return newFeeState 
     default: 
       return state
   }
 }
+
 
 export default accounts

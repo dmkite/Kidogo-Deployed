@@ -33,13 +33,13 @@ export function addMessage(msg){
   }
 }
 
-export const TAKE_TEMP_PIC = 'TAKE_TEMP_PIC'
-export function takeTempPic(uri){
-  return {
-    type: TAKE_TEMP_PIC,
-    payload: uri
-  }
-}
+// export const TAKE_TEMP_PIC = 'TAKE_TEMP_PIC'
+// export function takeTempPic(uri){
+//   return {
+//     type: TAKE_TEMP_PIC,
+//     payload: uri
+//   }
+// }
 
 export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
