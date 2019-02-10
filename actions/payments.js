@@ -20,6 +20,7 @@ export function getPayments() {
 }
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
+export const UPDATE_FINANCES = 'UPDATE_FINANCES'
 export function makePayment(id, amount, balance, date){
   if(!date) date = new Dates().getToday()
   return async dispatch => {
@@ -50,6 +51,10 @@ export function makePayment(id, amount, balance, date){
       dispatch({
         type: UPDATE_ACCOUNTS,
         payload: newAccounts
+      })
+      dispatch({
+        type:UPDATE_FINANCES,
+        payload:{income:amount}
       })
       
     } catch (err) {

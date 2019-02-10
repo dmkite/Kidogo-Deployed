@@ -25,7 +25,7 @@ class CheckOut extends Component {
 
   returnToday = () => {
     return (
-      `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
+      `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date.getDate()}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
   }
 
   componentDidMount = () => {
@@ -44,7 +44,7 @@ class CheckOut extends Component {
     }, {total:0, remaining:0})
   }
 
-  changeCheckOut
+  // changeCheckOut
   render() {
     return (
       <View style={{ flex: 1 }}>

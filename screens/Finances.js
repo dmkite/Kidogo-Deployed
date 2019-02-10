@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, Image} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity, Image} from 'react-native'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import {getWeekBalances} from '../actions/finances'
 import Header from '../components/Header'
 import {FinancesDash, EnterFinances} from '../components/FinancesDash'
-
+import { addExpense } from '../actions/finances'
 
 class Finances extends Component{
   constructor(props){
@@ -31,14 +31,17 @@ class Finances extends Component{
     return (
       <View style={{flex:1}}> 
         <Header navigation={this.props.navigation}/>
-        <FinancesDash {...this.props.finances.net}/>
-        <EnterFinances/>
+        <ScrollView>
+          <FinancesDash/>
+          <EnterFinances addExpense={this.props.addExpense}/>
+          <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
+        </ScrollView>
       </View>
     )
   }
 }
 
 const mapStateToProps = state => ({finances:state.finances})
-const mapDispatchToProps = dispatch => bindActionCreators({getWeekBalances}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getWeekBalances, addExpense}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Finances)

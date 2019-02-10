@@ -255,7 +255,7 @@ class Account extends Component {
             }
           <GuardianDetails 
             acctId={this.props.navigation.getParam('id')}
-            children={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].guardians} 
+            guardians={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].guardians} 
             isOpen={this.state.openGuardian} 
             openView={this.openView}
             openAddMember={this.openAddMember}  
@@ -278,7 +278,7 @@ class Account extends Component {
           }
           <EmergencyContactDetails 
             acctId={this.props.navigation.getParam('id')}
-            children={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].e_contacts} 
+            e_contacts={this.props.accounts.accounts.filter(acct => acct.id === this.props.navigation.getParam('id'))[0].e_contacts} 
             isOpen={this.state.openE_contact} 
             openView={this.openView}
             openAddMember={this.openAddMember}  

@@ -1,5 +1,6 @@
 import getAsync from '../utilities/getAsync'
 import dateMath from 'date-arithmetic'
+import { SecureStore } from 'expo';
 
 
 export const GET_FINANCES = 'GET_FINANCES'
@@ -14,9 +15,7 @@ export function getFinances(){
     }catch(err){
       console.error(err)
     }
-
   }
-  
 }
 
 export const GET_WEEK_BALANCE = 'GET_WEEK_BALANCE'
@@ -30,6 +29,29 @@ export function getWeekBalances(dateMod = 0){
       type: GET_WEEK_BALANCE,
       payload:{net: {income, expenses}, history: newFinances}
     })
+  }
+}
+
+export const ADD_EXPENSE = 'ADD_EXPENSE'
+export function addExpense(expense){
+  console.log(expense)
+  return async dispatch => {
+    try{
+      const {newFinances} = await getAsync(false, false, false, true)
+      if(!newFinances[expense.date]) newFinances[expense.date] = []
+      newFinances[expense.date].unshift({
+        memo: expense.memo,
+        amount: expense.amount
+      })
+
+      SecureStore.setItemAsync('_FINANCES', JSON.stringify(newFinances))
+      dispatch({
+        type: ADD_EXPENSE,
+        payload:{history: newFinances, amount: expense.amount}
+      })
+    }catch(err){
+      console.error(err)
+    }
   }
 }
 
@@ -87,6 +109,7 @@ function getIncome(paymentObj, week){
 
 function getExpenses(financesObj, week){
   return week.reduce((acc, date) => {
+    console.log(date)
     if(financesObj[date]){
       financesObj[date].map(exp => {
         acc += Number(exp.amount)

@@ -8,13 +8,19 @@ function ActionButtons(props){
     <View style={styles.actionsContainer}>
       <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Enrollment')}>
         <View>
-          <Image style={styles.buttonImage}/>
+          <Image 
+            style={styles.buttonImage}
+            source={require('../../assets/ENROLLMENT.png')}
+          />
           <Text style={styles.actionText}>Enrollment</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Attendance')}>
         <View>
-          <Image style={styles.buttonImage} />
+          <Image 
+            style={styles.buttonImage} 
+            source={require('../../assets/ATTENDANCE.png')}
+          />
           <Text style={styles.actionText}>Attendance</Text>
         </View>
       </TouchableOpacity>

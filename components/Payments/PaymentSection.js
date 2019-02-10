@@ -16,7 +16,7 @@ class PaymentSection extends Component{
   returnToday = () => {
     const date = new Date()
     return (
-      `${date.getDate() < 10 ? '0' + date.getDate() : date}-${Number(date.getMonth()) + 1 < 10 ? '0' + Number((date.getMonth()) + 1) : Number(date.getMonth()) + 1}-${date.getFullYear()}`
+      `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}-${Number(date.getMonth()) + 1 < 10 ? '0' + Number((date.getMonth()) + 1) : Number(date.getMonth()) + 1}-${date.getFullYear()}`
       )
   }
 

@@ -6,7 +6,8 @@ export default class Dates {
 
   getToday = () => {
       const self = this
-      return `${self.date.getDate() < 10 ? '0' + self.date.getDate() : self.date}-${Number(self.date.getMonth()) + 1 < 10 ? '0' + Number((self.date.getMonth()) + 1) : Number(self.date.getMonth()) + 1}-${self.date.getFullYear()}`
+      const result = `${self.date.getDate() < 10 ? '0' + self.date.getDate() : self.date.getDate()}-${Number(self.date.getMonth()) + 1 < 10 ? '0' + Number((self.date.getMonth()) + 1) : Number(self.date.getMonth()) + 1}-${self.date.getFullYear()}`
+      return result
   }  
 
   getDifferentDay = (addOrSub, date, amt = 1) => {

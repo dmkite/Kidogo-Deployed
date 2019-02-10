@@ -39,6 +39,6 @@ class DashBoard extends Component{ //can definitely be a functional component
 }
 
 const mapStateToProps = state => ({payments: state.payments})
-const mapDispatchToProps = dispatch => bindActionCreators({addFees}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({addFees, getAttendance}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoard)
