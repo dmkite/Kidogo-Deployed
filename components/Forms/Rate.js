@@ -10,11 +10,7 @@ export default function Rate(props){
         <View style={styles.ratePeriod}>
 
           <View style={styles.rateHolder}>
-            <Image
-              source={require('../../assets/kes.png')}
-              style={{ width: 20, height: 20, marginTop: 15 }}
-              opacity={0.3}
-            />
+            <Text style={styles.prefix}>K</Text>
             <TextInput style={styles.rateInput} placeholder="100" keyboardType="decimal-pad" onChangeText={(text) => { props.handleRate(text) }} />
           </View>
 
