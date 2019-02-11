@@ -30,5 +30,30 @@ export const styles = {
     lineHeight:75,
     textAlign:'center',
     fontSize:24
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    height: 35
+  },
+  financeRow: {
+    height: 50,
+    flexDirection: 'row'
+  },
+  iconHolder: {
+    flex: .19,
+    paddingTop:5
+  },
+  entryIcon: {
+    height: 30,
+    width: 30,
+    margin: 10,
+    borderRadius: 15,
+    paddingTop: 2.5
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    height: 35
   }
 }

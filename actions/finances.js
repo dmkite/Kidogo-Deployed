@@ -34,7 +34,6 @@ export function getWeekBalances(dateMod = 0){
 
 export const ADD_EXPENSE = 'ADD_EXPENSE'
 export function addExpense(expense){
-  console.log(expense)
   return async dispatch => {
     try{
       const {newFinances} = await getAsync(false, false, false, true)
@@ -109,7 +108,6 @@ function getIncome(paymentObj, week){
 
 function getExpenses(financesObj, week){
   return week.reduce((acc, date) => {
-    console.log(date)
     if(financesObj[date]){
       financesObj[date].map(exp => {
         acc += Number(exp.amount)

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import {getWeekBalances} from '../actions/finances'
 import Header from '../components/Header'
-import {FinancesDash, EnterFinances} from '../components/FinancesDash'
+import {FinancesDash, EnterFinances, FinanceHistory} from '../components/FinancesDash'
 import { addExpense } from '../actions/finances'
 
 class Finances extends Component{
@@ -35,6 +35,7 @@ class Finances extends Component{
           <FinancesDash/>
           <EnterFinances addExpense={this.props.addExpense}/>
           <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
+          <FinanceHistory history={this.props.finances.history}/>
         </ScrollView>
       </View>
     )
