@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Alert} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import store from './store'
 import {Provider} from 'react-redux'
@@ -16,6 +16,8 @@ import CheckIn from './screens/CheckIn'
 import CheckOut from './screens/CheckOut'
 import Payments from './screens/Payments'
 import Finances from './screens/Finances'
+import Questions from './screens/Questions'
+import {Notifications} from 'expo'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -30,7 +32,8 @@ const AppNavigator = createStackNavigator({
   Attendance: Attendance,
   AttendanceHistory: AttendanceHistory,
   Payments: Payments,
-  Finances: Finances
+  Finances: Finances,
+  Questions: Questions
 },
 
 {
@@ -40,12 +43,64 @@ const AppNavigator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppNavigator)
 
-function App(){
-  return (
-    <Provider store={store}>
-      <AppContainer/>
-    </Provider>
-  )
+class App extends Component{
+  async componentDidMount(){
+    const morningNotification = {
+      title: 'Questions',
+      body: 'Here are questiosn',
+      android: {
+        sound: true, color: 'red', priority: 'max', vibrate: true
+      }
+    }
+    const t = new Date()
+    t.setMinutes(0)
+    t.setHours(8)
+
+    const morningOptions = {
+      time: t,
+      repeat: 'day'
+    }
+
+    const afternoonNotification = {
+      title: 'Time to Answer Questions',
+      body: 'There are 2 questions for you to answer this afternoon',
+      android: {
+        sound: true, color: 'red', priority: 'max', vibrate: true
+      }
+    }
+    
+    const t2 = new Date()
+    t2.setMinutes(0)
+    t2.setHours(15)
+    
+    const afternoonOptions = {
+      time: t2,
+      repeat: 'day'
+    }
+
+    Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
+    Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
+  }
+
+  listenForNotifications = () => {
+    Notifications.addListener(notification => {
+      if (notification.origin === 'received') {
+        Alert.alert('It\'s time to answer the daily questions');
+      }
+    });
+  };
+
+  componentWillMount(){
+    this.listenForNotifications()
+  }
+
+  render(){
+    return (
+      <Provider store={store}>
+        <AppContainer/>
+      </Provider>
+    )
+  }
 }
 
 export default App;
