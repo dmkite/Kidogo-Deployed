@@ -4,6 +4,7 @@ import Header from '../components/Header/'
 import DashBoard from './DashBoard'
 import uuid from 'uuid'
 import addData from '../seeds'
+import {Notification, Notifications} from 'expo'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -25,11 +26,11 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     const { navigate } = this.props.navigation
       // await addData()
-      navigate('Finances')
+      navigate('Questions')
     // if (true) navigate('Payments', {id:"67da9144-e9dc-404f-b4ab-213ee8d1eb69"})
     
   }
-
+  
   render(){
     const {navigate} = this.props.navigation
     return (
@@ -47,9 +48,6 @@ export default class HomeScreen extends Component{
         <TouchableOpacity style={styles.button} onPress={() => navigate('Dash')}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-
-          
-        
       </View>
     )
   }
