@@ -1,3 +1,5 @@
+
+
 export const styles = {
   actionsContainer: {
     flex:1,
@@ -5,10 +7,12 @@ export const styles = {
     alignSelf:'stretch'
   },
   actionButton:{
-    height:100,
-    marginBottom:20,
-    borderColor:'black',
-    borderWidth:2
+    height:150,
+    marginBottom:10,
+    zIndex:101,
+    overFlow:'hidden',
+    borderRadius:5,
+    borderWidth:1
   },
   actionText:{
     zIndex: 99,
@@ -18,7 +22,15 @@ export const styles = {
     lineHeight:100
   },
   actionImage:{
-    alignSelf: 'stretch',
-    top:0
+    // alignSelf: 'stretch',
+    // top:0,
+    // flex:1,
+    width:null,
+    height:150,
+    resizeMode:'center',
+
+    // flex:1,
+    // position:'absolute',
+    // zIndex:99
   }
 }

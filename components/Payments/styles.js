@@ -1,5 +1,3 @@
-import { changeCheckInOut } from "../../actions/attendance";
-
 export const styles = {
   balance:{
     fontSize:48,

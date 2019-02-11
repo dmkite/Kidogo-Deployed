@@ -16,7 +16,7 @@ class PaymentSection extends Component{
   returnToday = () => {
     const date = new Date()
     return (
-      `${date.getDate() < 10 ? '0' + date.getDate() : date}-${Number(date.getMonth()) + 1 < 10 ? '0' + Number((date.getMonth()) + 1) : Number(date.getMonth()) + 1}-${date.getFullYear()}`
+      `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}-${Number(date.getMonth()) + 1 < 10 ? '0' + Number((date.getMonth()) + 1) : Number(date.getMonth()) + 1}-${date.getFullYear()}`
       )
   }
 
@@ -56,13 +56,13 @@ class PaymentSection extends Component{
           />
         </View>
            
-            <TouchableOpacity style={styles.submit} onPress={ () => {
-              return Number(this.state.amount) > 0    
-                ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
-                : null
-            }}>
-              <Text style={styles.btnText}>Make Payment</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.submit} onPress={ () => {
+            return Number(this.state.amount) > 0    
+              ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
+              : null
+          }}>
+            <Text style={styles.btnText}>Make Payment</Text>
+          </TouchableOpacity>
       </View>
     )
 
