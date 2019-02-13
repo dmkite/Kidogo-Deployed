@@ -9,25 +9,29 @@ export const styles = {
   actionButton:{
     height:150,
     marginBottom:10,
-    zIndex:101,
+    zIndex:100,
     overFlow:'hidden',
     borderRadius:5,
-    borderWidth:1
+    borderWidth:1,
+    position:'relative'
   },
   actionText:{
-    zIndex: 99,
+    zIndex: 101,
     fontSize: 24,
     top:0,
     height:100,
     lineHeight:100
   },
-  actionImage:{
+  buttonImage:{
     // alignSelf: 'stretch',
     // top:0,
     // flex:1,
-    width:null,
+    // width:null,
     height:150,
-    resizeMode:'center',
+    zIndex:99,
+    position:'absolute',
+    right:0,
+    bottom:0
 
     // flex:1,
     // position:'absolute',

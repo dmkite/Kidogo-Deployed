@@ -10,6 +10,7 @@ function ActionButtons(props){
         <View>
           <Image 
             style={styles.buttonImage}
+            height={150}
             source={require('../../assets/ENROLLMENT.png')}
           />
           <Text style={styles.actionText}>Enrollment</Text>
