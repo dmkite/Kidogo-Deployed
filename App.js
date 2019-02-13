@@ -17,6 +17,7 @@ import CheckOut from './screens/CheckOut'
 import Payments from './screens/Payments'
 import Finances from './screens/Finances'
 import Questions from './screens/Questions'
+import Signup from './screens/Signup'
 import {Notifications} from 'expo'
 
 const AppNavigator = createStackNavigator({
@@ -33,7 +34,8 @@ const AppNavigator = createStackNavigator({
   AttendanceHistory: AttendanceHistory,
   Payments: Payments,
   Finances: Finances,
-  Questions: Questions
+  Questions: Questions,
+  Signup: Signup
 },
 
 {
@@ -44,55 +46,55 @@ const AppNavigator = createStackNavigator({
 const AppContainer = createAppContainer(AppNavigator)
 
 class App extends Component{
-  async componentDidMount(){
-    const morningNotification = {
-      title: 'Questions',
-      body: 'Here are questiosn',
-      android: {
-        sound: true, color: 'red', priority: 'max', vibrate: true
-      }
-    }
-    const t = new Date()
-    t.setMinutes(0)
-    t.setHours(8)
+  // async componentDidMount(){
+  //   const morningNotification = {
+  //     title: 'Questions',
+  //     body: 'Here are questiosn',
+  //     android: {
+  //       sound: true, color: 'red', priority: 'max', vibrate: true
+  //     }
+  //   }
+  //   const t = new Date()
+  //   t.setMinutes(0)
+  //   t.setHours(8)
 
-    const morningOptions = {
-      time: t,
-      repeat: 'day'
-    }
+  //   const morningOptions = {
+  //     time: t,
+  //     repeat: 'day'
+  //   }
 
-    const afternoonNotification = {
-      title: 'Time to Answer Questions',
-      body: 'There are 2 questions for you to answer this afternoon',
-      android: {
-        sound: true, color: 'red', priority: 'max', vibrate: true
-      }
-    }
+  //   const afternoonNotification = {
+  //     title: 'Time to Answer Questions',
+  //     body: 'There are 2 questions for you to answer this afternoon',
+  //     android: {
+  //       sound: true, color: 'red', priority: 'max', vibrate: true
+  //     }
+  //   }
     
-    const t2 = new Date()
-    t2.setMinutes(0)
-    t2.setHours(15)
+  //   const t2 = new Date()
+  //   t2.setMinutes(0)
+  //   t2.setHours(15)
     
-    const afternoonOptions = {
-      time: t2,
-      repeat: 'day'
-    }
+  //   const afternoonOptions = {
+  //     time: t2,
+  //     repeat: 'day'
+  //   }
 
-    Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
-    Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
-  }
+  //   Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
+  //   Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
+  // }
 
-  listenForNotifications = () => {
-    Notifications.addListener(notification => {
-      if (notification.origin === 'received') {
-        Alert.alert('It\'s time to answer the daily questions');
-      }
-    });
-  };
+  // listenForNotifications = () => {
+  //   Notifications.addListener(notification => {
+  //     if (notification.origin === 'received') {
+  //       Alert.alert('It\'s time to answer the daily questions');
+  //     }
+  //   });
+  // };
 
-  componentWillMount(){
-    this.listenForNotifications()
-  }
+  // componentWillMount(){
+  //   this.listenForNotifications()
+  // }
 
   render(){
     return (
