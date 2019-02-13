@@ -34,7 +34,9 @@ class CameraScreen extends Component {
       .then(pic => {
         // this.props.takeTempPic(pic.uri)
         const addURI = this.props.navigation.getParam('addURI')
-        addURI(pic.uri)
+        const userData = this.props.navigation.getParam('userData')
+        userData.img_uri = pic.uri
+        addURI(userData)
         // this.props.navigation.navigate('Enrollment')
         this.props.navigation.goBack()
       })

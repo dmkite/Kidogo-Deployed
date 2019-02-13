@@ -1,18 +1,22 @@
 import React, {Component} from 'react'
-import {Picker, View, Text, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
+import {Picker, View, Text, ScrollView, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
 import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
-import {styles} from './styles'
+import {styles} from './newStyles'
+import numberValidation from '../../utilities/numberValidation'
+import {LinearGradient} from 'expo'
+import { WHEN_PASSCODE_SET_THIS_DEVICE_ONLY } from 'expo/build/SecureStore/SecureStore';
 
 class Child extends Component{
   constructor (props){
     super(props)
     this.state = {
-      gender:{
-        female:false,
-        male: false,
-        other:false
-      },
-      date:''
+      focusedOn: null,
+      img_uri:null,
+      f_name:null,
+      l_name: null,
+      birthdate: null,
+      gender: null,
+      notes: null
     }
   }
 
@@ -25,94 +29,197 @@ class Child extends Component{
     this.setState({...newState})
   }
 
-  handlePhoneNumber = (text, num1, num2) => {
-    const charCode = text[text.length -1].charCodeAt(0)
-    if(charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
-    if(text.length === num1 || text.length === num2) text += '-'
+  handleDate = (text) => {
+    let length = 0
+    if(this.state.birthdate && this.state.birthdate.length) length = this.state.birthdate.length 
     this.setState({
-      date: text
+      birthdate: numberValidation(text, 'birthdate', length, 2, 5)
     })
+  }
+
+  changeFocus = (action, type) => {
+    if (action === 'focus') this.setState({ focusedOn: type })
+    else this.setState({ focusedOn: null })
+  }
+
+  handleChangeText = (text, field) => {
+    this.setState({[field]: text})
+  }
+
+
+  addURI = (userData) => { //adding uri reverted state
+    this.setState({ ...userData })
   }
 
   render(){
     return (
-        <View style = {{ flex:1}} >
-          <Text style={[styles.h1, {marginTop:50}]}>Child</Text>
+      <ScrollView style = {{ flex:1}} >
+        {this.state.img_uri
+          ? <Image
+            source={{uri:this.state.img_uri}}
+            style={{
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+            }}
+          />
+          : <Image
+            source={require('../../assets/CHILD.png')}
+            style={{
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+            }}
+          />
+        }
             
-          {this.props.img_uri
-            ? <Image
-                style={styles.image}
-                source={{uri: this.props.img_uri}}
-              />
-            : null
-          } 
+           
   
-          <TouchableHighlight 
-            style={this.props.img_uri ? styles.smallCamera : styles.camera} 
-            onPress={() => this.props.navigation.navigate('Camera', {addURI: this.props.addURI, addMessage:this.props.addMessage})}>
-            <Icon name="camera-alt" size={this.props.img_uri ? 25 : 50} color="white"/>
-          </TouchableHighlight>
+          <TouchableOpacity style={{width:50, opacity:0.5, margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
+            <Icon name="camera-alt" size={36} color="white"/>
+          </TouchableOpacity>
 
-          <Text style={styles.label}>First Name:</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="John" 
-            onChangeText={(text) => this.props.handleChangeText(text, 'children', 'f_name')} 
-          />
-        
-          <Text style={styles.label}>Surname:</Text>
-          <TextInput 
-            style={styles.input} 
-            onChangeText={(text) => this.props.handleChangeText(text, 'children', 'l_name')} placeholder="Mwangi" 
-          />
-          
-          <Text style={styles.label}>Birthdate:</Text>
-          <TextInput 
-            style={[styles.input, styles.dateInput]}
-            maxLength={10}
-            keyboardType="number-pad" 
-            placeholder="DD-MM-YYYY" 
-            value={this.state.date} 
-            onChangeText={(text) => {
-              this.handlePhoneNumber(text, 2, 5)
-              this.props.handleChangeText(text, 'children', 'birthdate')
-            }}/>
-          
-          <Text style={styles.label}>Gender:</Text>
-          <View style={styles.badgeHolder}>
-            <Text 
-              onPress={() => { 
-                this.props.handlePress('female') 
-                this.selectBadge('female')
-              }} 
-              style={[styles.badge, this.state.female ? styles.selected : null]}>
-              Female
-            </Text>
-            <Text 
-              onPress={() => { 
-                this.props.handlePress('male') 
-                this.selectBadge('male')  
-              }} 
-              style={[styles.badge, this.state.male ? styles.selected : null]}>
-              Male
-            </Text>
-          <Text 
-            onPress={() => { 
-              this.props.handlePress('other') 
-              this.selectBadge('other')  
-            }} 
-            style={[styles.badge, this.state.other ? styles.selected : null]}>Other</Text>
+          <View style={styles.nameHolder}>
+            <View style={{ flex: .5, marginRight: 5 }}>
+              <TextInput
+                onFocus={() => {
+                  this.changeFocus('focus', 'f_name')
+                  this.props.addMargin(-175)
+                }}
+                onBlur={() => {
+                  this.changeFocus('blur', null)
+                  this.props.addMargin(0)
+                }}
+                style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
+                value={this.state.f_name}
+                onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+              />
+              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+            </View>
+
+            <View style={{ flex: .5, marginLeft: 5 }}>
+              <TextInput
+                onFocus={() => {
+                  this.changeFocus('focus', 'l_name')
+                  this.props.addMargin(-175)
+                }}
+                onBlur={() => {
+                  this.changeFocus('blur', null)
+                  this.props.addMargin(0)
+                }}
+                style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
+                value={this.state.l_name}
+                onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+              />
+              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+            </View>
           </View>
-        <Text style={styles.label}>Notes:</Text>
+
+        <View style={styles.nameHolder}>
+          <View style={{ flex: .5, marginRight: 5 }}>
+            <TextInput 
+              style={[styles.input, styles.dateInput]}
+              maxLength={10}
+              keyboardType="number-pad" 
+              value={this.state.birthdate} 
+              onChangeText={(text) => this.handleDate(text)}
+              onFocus={() => {
+                this.changeFocus('focus', 'birthdate')
+                this.props.addMargin(-250)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }}/>
+              <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Birthday <Text style={{fontSize:10}}>(DD-MM-YYYY)</Text></Text>
+          </View>
+          <View style={{ flex: .5, marginLeft: 5}}>
+            <View style={[styles.input, { height:30, paddingLeft:0}] }>
+              <Picker
+                style={{color:'white', marginTop:-10}}
+                selectedValue={this.state.gender}
+                onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
+                <Picker.Item label="" value={null}/>
+                <Picker.Item label="female" value="female" />
+                <Picker.Item label="male" value="male" />
+                <Picker.Item label="other" value="other" />
+              </Picker>
+            </View>
+            <Text style={styles.label}>Gender</Text>
+          </View>
+        </View>
+          
         <TextInput   
-          style={[styles.input, styles.textarea]} 
+          style={styles.input} 
           multiline={true} 
-          placeholder="Anything important can go here..."
-          onChangeText={(text) => this.props.handleChangeText(text, 'children', 'notes')}
-        />
-        </View > 
+          value={this.state.notes}
+          onChangeText={(text) => this.handleChangeText(text, 'notes')}
+          onFocus={() => {
+            this.changeFocus('focus', 'notes')
+            this.props.addMargin(-350)
+          }}
+          onBlur={() => {
+            this.changeFocus('blur', null)
+            this.props.addMargin(0)
+          }} />
+      
+        <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Notes</Text>
+   
+          <View style={{ flexDirection:'row'}}>
+            <TouchableOpacity style={[{flex: .5, marginTop:20}, (!!this.state.f_name && !!this.state.l_name)
+                            ? styles.ready
+                            : styles.notReady]}
+                onPress={
+              (!!this.state.f_name && !!this.state.l_name)
+                ? () => {
+                  this.state
+                  let child = { ...this.state }
+                  delete child.focusedOn
+                  this.props.addToAccount(child, 'children')
+                  this.setState({
+                    focusedOn: null,
+                    img_uri: null,
+                    f_name: null,
+                    l_name: null,
+                    birthdate: null,
+                    gender: null,
+                    notes: null
+                  })
+                }
+                : null}
+            >
+                <Text style={styles.nextText}>Add Another</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[{ flex: .5,  flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
+              (!!this.state.f_name && !!this.state.l_name)
+                ? styles.ready
+                : styles.notReady]}
+                onPress={ () => {
+                      this.state
+                      let child = {...this.state}
+                      delete child.focusedOn
+                      this.props.addToAccount(child, 'children')
+                      this.props.changeQuestionFocus('guardian')
+                    }}
+              >
+                <Text style={styles.nextText}>Next</Text>
+              <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
+            </TouchableOpacity>
+          </View>
+        </ScrollView > 
     )
   }
 }
+
+/**
+ onPress={
+                  (!!this.state.f_name && !!this.state.l_name)
+                    ? () => {
+                      this.state
+                      let child = {...this.state}
+                      delete child.focusedOn
+                      this.props.addToAccount(child, 'children')
+                      this.props.changeQuestionFocus('guardian')
+                    }
+                    : null}
+
+                    ADD THIS BACK TO TOUCHABLEOPACITY
+ */
 
 export default Child

@@ -1,93 +1,233 @@
 import React, {Component} from 'react'
-import { TextInput, View, Text } from 'react-native'
+import { ScrollView, TextInput, View, Text, Image, Picker, TouchableOpacity} from 'react-native'
 import {Icon} from 'react-native-elements'
-import {styles} from './styles'
-import { HitTestResultTypes } from 'expo/build/AR';
+import {styles} from './newStyles'
+import numberValidation from '../../utilities/numberValidation'
 
 class Guardian extends Component{
   constructor(props){
     super(props)
     this.state = {
+      focusedOn: null,
+      f_name: null,
+      l_name:null,
       phone: null,
-      govt_id: null
+      govt_id: '',
+      street: null,
+      city: null,
+      frequency: 'daily',
+      rate: '100',
+      hiddenId: '',
+      showId: false
     }
   }
 
-  handlePhoneNumber = (text) => {
-    if(text.length){
-      const charCode = text[text.length - 1].charCodeAt(0)
-      if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
-      if (text.length === 2 || text.length === 6) text += '-'
-      this.setState({
-        phone: text
-      })
-    }
+
+  changeFocus = (action, type) => {
+    if (action === 'focus') this.setState({ focusedOn: type })
+    else this.setState({ focusedOn: null })
   }
 
-  handleId = (text, num1, num2) => {
-    const charCode = text[text.length - 1].charCodeAt(0)
-    if (charCode < 48 || charCode > 57) text = text.slice(0, (text.length - 1))
-    if (text.length === num1 || text.length === num2) text += '-'
+  handleChangeText = (text, field) => {
+    this.setState({ [field]: text })
+  }
+
+  handleNumberChange = (text, field, num1, num2) => {
+    let length = 0
+    if(this.state[field] && this.state[field].length) length = this.state[field].length
     this.setState({
-      date: text
+      [field]: numberValidation(text, field, length, num1, num2)
     })
+  }
+
+
+  handleId = (text) => {
+    let govt_id = this.state.govt_id 
+    
+    text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
+    let hiddenId = ''
+    for (let letter of govt_id) {
+      hiddenId += '*'
+    }
+    this.setState({
+      govt_id,
+      hiddenId
+    })
+  }
+
+  showId = () => {
+    this.setState({showId: !this.state.showId})
   }
 
   render(){
     return (
-      <View style={{ flex: 1 }} >
-        <Text style={styles.h1}>Guardian</Text>
-        <Text style={styles.label}>First Name:</Text>
+      <ScrollView style={{ flex: 1 }} >
+        {console.log(this.state)}
+          <Image
+            source={require('../../assets/GUARDIAN.png')}
+            style={{
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+            }}
+          />
+
+        <View style={styles.nameHolder}>
+          <View style={{ flex: .5, marginRight: 5 }}>
+            <TextInput
+              onFocus={() => {
+                this.changeFocus('focus', 'f_name')
+                this.props.addMargin(-175)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }}
+              style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
+              value={this.state.f_name}
+              onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+            />
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+          </View>
+
+          <View style={{ flex: .5, marginLeft: 5 }}>
+            <TextInput
+              onFocus={() => {
+                this.changeFocus('focus', 'l_name')
+                this.props.addMargin(-175)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }}
+              style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
+              value={this.state.l_name}
+              onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+            />
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+          </View>
+        </View>
+
         <TextInput 
-          style={styles.input} 
-          placeholder="Mary" 
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'f_name')} 
+          value={this.state.street}
+          style={[styles.input, this.state.focusedOn === 'street' ? styles.focused : null]}
+          onChangeText={(text) => this.handleChangeText(text, 'street')}
+          onFocus={() => {
+            this.changeFocus('focus', 'street')
+            this.props.addMargin(-250)
+          }}
+          onBlur={() => {
+            this.changeFocus('blur', null)
+            this.props.addMargin(0)
+          }}
         />
+        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Address</Text>   
 
-        <Text style={styles.label}>Surname:</Text>
         <TextInput
-          style={styles.input}
-          placeholder="Mwangi" 
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'l_name')} 
+          value={this.state.city}
+          style={[styles.input, { width: 150 }, this.state.focusedOn === 'city' ? styles.focused : null]}
+          onChangeText={(text) => this.handleChangeText(text, 'city')}
+          onFocus={() => {
+            this.changeFocus('focus', 'city')
+            this.props.addMargin(-300)
+          }}
+          onBlur={() => {
+            this.changeFocus('blur', null)
+            this.props.addMargin(0)
+          }}
         />
+        <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>City</Text>   
 
-        <Text style={styles.label}>Address:</Text>   
-        <TextInput 
-          style={styles.input}
-          placeholder="123 Kenyata Avenue"
-          onChangeText={(text) => this.props.handleChangeText(text, 'guardians', 'street')}
-        />
-
-        <Text style={styles.label}>City</Text>
         <TextInput
-          style={styles.input} 
-          placeholder="Nairobi"
-          onChangetext={(text) => this.props.handleChangeText(text, 'guardians', 'city')}
-        />
-
-        <Text style={styles.label}>Phone Number:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="##-###-####"
+          style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
           value={this.state.phone}
           keyboardType="number-pad"
           maxLength={11}
-          onChangeText={(text) => {
-            this.handlePhoneNumber(text)
-            this.props.handleChangeText(text, 'guardians', 'phone')
+          onFocus={() => {
+            this.changeFocus('focus', 'phone')
+            this.props.addMargin(-375)
           }}
+          onBlur={() => {
+            this.changeFocus('blur', null)
+            this.props.addMargin(0)
+          }}
+          onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
         />
+        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
 
-        <Text style={styles.label}>Government Id</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="###-##-####"
+        {/* <TextInput
+          style={[styles.input, this.state.focusedOn === 'govt_id' ? styles.focused : null]}
+          maxLength={8}
+          value={this.state.govt_id}
           keyboardType="number-pad"
-          onChangeText={(text) => {
-            this.handleId(text, 3, 6)
-            this.props.handleChangeText(text, 'guardians', 'govt_id')}}
+          onFocus={() => {
+            this.changeFocus('focus', 'govt_id')
+            this.props.addMargin(-425)
+          }}
+          onBlur={() => {
+            this.changeFocus('blur', null)
+            this.props.addMargin(0)
+          }}
+          onChangeText={(text) => this.handleNumberChange(text, 'govt_id')}
         />
-      </View > 
+        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> */}
+
+        <View style={styles.passwordHolder}>
+          <TextInput
+            onFocus={() => {
+              this.changeFocus('focus', 'govt_id')
+              this.props.addMargin(-425)
+              }}
+            onBlur={() =>{
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+                }}
+            style={[styles.input, {flex:0.9, marginRight:0}, this.state.focusedOn === 'govt_id' ? styles.focused : null]}
+            maxLength={8}
+            value={this.state.showId ? this.state.govt_id : this.state.hiddenId}
+            onChangeText={(text) => this.handleId(text)}
+          />
+          <View style={[styles.showButton, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>
+            <TouchableOpacity onPress={this.showId}>
+              <Icon name={this.state.showId ? "visibility-off" : 'visibility'} color="white" />
+            </TouchableOpacity> 
+          </View>
+        </View>
+        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
+
+        <View style={styles.nameHolder}>
+          <View style={{ flex: .5, marginRight: 5}}>
+            <View style={{flexDirection:'row'}}>
+              <Text style={[styles.prefix, this.state.focusedOn === 'rate' ? styles.focused : null]}>K</Text>
+              <TextInput
+                style={[styles.input, {flex:.8, marginLeft: 0}]}
+                keyboardType="number-pad"
+                value={this.state.rate}
+                onChangeText={(text) => this.handleNumberChange(text, 'rate')}
+                onFocus={() => {
+                  this.changeFocus('focus', 'rate')
+                  this.props.addMargin(-425)
+                }}
+                onBlur={() => {
+                  this.changeFocus('blur', null)
+                  this.props.addMargin(0)
+                }} />
+            </View>
+            <Text style={[styles.label, this.state.focusedOn === 'rate' ? styles.focused : null]}>Rate</Text>
+          </View>
+          <View style={{ flex: .5, marginLeft: 5 }}>
+            <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
+              <Picker
+                style={{ color: 'white', marginTop: -10 }}
+                selectedValue={this.state.frequency}
+                onValueChange={(itemValue, itemIndex) => this.setState({ frequency: itemValue })}>
+                <Picker.Item label="daily" value="daily" />
+                <Picker.Item label="weekly" value="weekly" />
+                <Picker.Item label="termly" value="termly" />
+              </Picker>
+            </View>
+            <Text style={styles.label}>frequency</Text>
+          </View>
+        </View>
+      </ScrollView>
     )
   }
 }

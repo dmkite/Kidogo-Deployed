@@ -69,7 +69,7 @@ export function addFees(){
     try{
       const dates = new Dates()
       const { newPayments, newAccounts, newAttendance } = await getFromSecureStore(true, true, true)
-      const { previousAttendance, dayToCheck, needsToPay } = checkIfPaymentNeeded(newAttendance, dates)
+      let { previousAttendance, dayToCheck, needsToPay } = checkIfPaymentNeeded(newAttendance, dates)
 
       if(needsToPay){
         newAccounts.forEach((acct) => {
@@ -157,7 +157,7 @@ export function addFees(){
     let needsToPay = true
 
     let dayToCheck = yesterday
-    const previousAttendance = newAttendance[dayToCheck]
+    let previousAttendance = newAttendance[dayToCheck]
 
     if (!newAttendance[yesterday]) {
       dayToCheck = dates.getDifferentDay('subtract', yesterday)

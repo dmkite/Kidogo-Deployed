@@ -77,6 +77,7 @@ export default class HomeScreen extends Component{
   }
 
   componentDidMount = async () => {
+    return this.props.navigation.navigate('Enrollment')
     const signedIn = SecureStore.getItemAsync('_SIGNEDIN')
     if(signedIn) this.props.navigation.navigate('Dash')
   }
