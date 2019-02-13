@@ -1,10 +1,12 @@
-export default numberValidation = (text, field, num1, num2) => {
+export default numberValidation = (text, field, fieldLength, num1, num2) => {
   console.log(text, field, num1, num2)
   let charCode
   if (text.length > 0) charCode = text[text.length - 1].charCodeAt(0)
   if (text.length > 0 && (charCode < 48 || charCode > 57)) text = text.slice(0, (text.length - 1))
-  if (text.length > this.state[field].length) { //checks if deleting, don't add '-'
-    if ((num1 && text.length === num1) || (num2 && text.length === num2)) text += '-'
+  if(fieldLength){
+    if (text.length > fieldLength) { //checks if deleting, don't add '-'
+      if ((num1 && text.length === num1) || (num2 && text.length === num2)) text += '-'
+    }
   }
 
   if(field === 'date' || field === 'birthdate'){

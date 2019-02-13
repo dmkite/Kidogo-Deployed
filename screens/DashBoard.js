@@ -16,7 +16,7 @@ class DashBoard extends Component{ //can definitely be a functional component
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#513',
       height: 0
     }
   }

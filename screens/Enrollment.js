@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux'
+import {LinearGradient} from 'expo'
+
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
@@ -14,30 +16,11 @@ class Enrollment extends Component{
   constructor(props){
     super(props)
     this.state ={
-      children: {
-        img_uri: null,
-        f_name: null,
-        l_name: null,
-        birthdate:0,
-        gender: null,
-        notes:null,
-        id: uuid()
-      },
-      guardians: {
-        f_name: null,
-        l_name: null,
-        street: null,
-        city: null,
-        phone: null,
-        govt_id: null,
-        id: uuid()
-      },
-      e_contacts: {
-        f_name: null,
-        l_name: null,
-        phone: null,
-        id: uuid()
-      },
+      questionFocus: 'child',
+      avoidView:0,
+      children: [],
+      guardians: [],
+      e_contacts: [],
       rate: 0,
       frequency: 'daily',
       balance: 0,
@@ -53,15 +36,6 @@ class Enrollment extends Component{
     }
   }
 
-  addURI = (uri) => {
-    this.setState({
-      children: {
-        ...this.state.children,
-        img_uri: uri
-      }
-    })
-  }
-
   handleChangeText = (text, type, entry) => {
     this.setState({
       [type]:{
@@ -71,13 +45,12 @@ class Enrollment extends Component{
     })
   }
 
-  handlePress = (gender) => {
-    this.setState({
-      children:{
-        ...this.state.children,
-        gender
-      }})
-  }
+  addToAccount = (data, field) => {
+    const newState = {...this.state}
+    data.id = uuid()
+    newState[field].push(data)
+    this.setState({...newState})
+  } 
 
   handleFrequency = (upOrDown) => {
     let frequency = this.state.frequency
@@ -140,48 +113,47 @@ class Enrollment extends Component{
   addMessage = (message) => {
     this.setState({message})
   }
+
+  changeQuestionFocus = (type) => {
+    this.setState({questionFocus: type})
+  }
   
+  addMargin = (num) => this.setState({ avoidView: num })
+
   render(){
    return (
-     <KeyboardAvoidingView style={{flex:1}} keyboardVerticalOffset={-500} behavior="padding" enabled>
+     <LinearGradient
+       style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
+       colors={['#11011B', '#1A011B']}>
+       {console.log(this.state.children)}
       <Header navigation={this.props.navigation}/>
-      <ScrollView style={{flex:1}}>
-        <Child 
-          navigation={this.props.navigation} 
-          img_uri={this.state.children.img_uri}
-          handleChangeText={this.handleChangeText}
-          handlePress={this.handlePress}
-          addURI={this.addURI}
-          addMessage={this.addMessage}
-        />
+        {this.state.questionFocus === 'child'
+           ? <Child
+             navigation={this.props.navigation}
+             changeQuestionFocus={this.changeQuestionFocus}
+             addToAccount={this.addToAccount}
+             addMessage={this.addMessage}
+             addMargin={this.addMargin}
+           />
+           : this.state.questionFocus === 'guardian'
+             ? <Guardian
+                changeQuestionFocus={this.changeQuestionFocus}
+                addMargin={this.addMargin}
+                addToAccount={this.addToAccount}
+             />
+             : <EmergencyContact
+               handleChangeText={this.handleChangeText}
+             />
+        }
         
-        <View style={{height:2, backgroundColor:'#ccc', marginHorizontal:20, marginVertical: 40}}></View>
 
-        <Guardian 
-          handleChangeText={this.handleChangeText}
-        />
-
-        <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
-
-        <EmergencyContact
-          handleChangeText={this.handleChangeText}
-        />
-
-
-        <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
-        
-        <Rate handleRate={this.handleRate} handleFrequency={this.handleFrequency} frequency={this.state.frequency}/>
 
         {this.state.message
           ?  <ErrorMessage error={this.state.message}/>
           : null
         }
-        <TouchableOpacity style={styles.submit} onPress={this.handleSubmit}>
-          <Text style={styles.submitText}>Submit</Text>
-        </TouchableOpacity>
 
-      </ScrollView>
-     </KeyboardAvoidingView>
+     </LinearGradient>
    )
   }
 }

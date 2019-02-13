@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableOpacity, Image, Text, ScrollView, View} from 'react-native'
+import {TouchableOpacity, ImageBackground, Text, ScrollView, View} from 'react-native'
 import {styles} from './styles'
 
 function ActionButtons(props){
@@ -7,35 +7,33 @@ function ActionButtons(props){
   return (
     <View style={styles.actionsContainer}>
       <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Enrollment')}>
-        <View>
-          <Image 
+          <ImageBackground
             style={styles.buttonImage}
-            height={150}
-            source={require('../../assets/ENROLLMENT.png')}
-          />
+            source={require('../../assets/ENROLLMENT.png')}>
           <Text style={styles.actionText}>Enrollment</Text>
-        </View>
+
+        </ImageBackground>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Attendance')}>
-        <View>
-          <Image 
+          <ImageBackground
             style={styles.buttonImage} 
-            source={require('../../assets/ATTENDANCE.png')}
-          />
+            source={require('../../assets/ATTENDANCE.png')}>
           <Text style={styles.actionText}>Attendance</Text>
-        </View>
+        </ImageBackground>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton} onPress={()=> navigate('Finances')}>
-        <View>
-          <Image style={styles.buttonImage} />
+          <ImageBackground
+            style={styles.buttonImage} 
+            source={require('../../assets/FINANCES.png')}>
           <Text style={styles.actionText}>Finances</Text>
-        </View>
+        </ImageBackground>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton}>
-        <View>
-          <Image style={styles.buttonImage} />
+          <ImageBackground
+            style={styles.buttonImage} >
           <Text style={styles.actionText}>Daily Questions</Text>
-        </View>
+          </ImageBackground>
       </TouchableOpacity>
     </View>
   )

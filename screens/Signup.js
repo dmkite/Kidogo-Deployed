@@ -69,7 +69,6 @@ class Signup extends Component{
   }
 
   storeAndNavigate = async () => {
-    console.log(this.state)
     const {username, password, f_name, l_name, centre_address_1, centre_address_2} = this.state
     const caregiverId = uuid()
     const centreId = uuid()
