@@ -26,7 +26,7 @@ export const styles = {
   },
   buttonImage:{
     // alignSelf: '',
-    // top:0,
+    // top:0,npm 
     // flex:1,
     // width:null,
     // height:150,

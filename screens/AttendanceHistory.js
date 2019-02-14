@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-nativ
 import dateMath from 'date-arithmetic'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {LinearGradient} from 'expo'
 import Header from '../components/Header'
 import {AttendanceHistoryView, AttendanceHistoryRow} from '../components/AttendanceHistoryView'
 import {getAccounts} from '../actions/accounts'
@@ -109,16 +110,17 @@ class AttendanceHistory extends Component {
 
   render(){
     return (
-      <View style={{flex:1}}>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#11011B', '#2B122C']}>
         <Header navigation={this.props.navigation}/>
-        <Text>Attendance History</Text>
         <AttendanceHistoryView span={this.state.dateSpan} changeWeeks={this.changeWeeks} dateMod={this.state.dateMod}/>
         <ScrollView style={{marginTop:10}}>
           {this.accountsToChildren().map( (child, i) => {
             return <AttendanceHistoryRow key={i} i={i} {...child} attendanceStatus={this.attendanceByChild(child.id)}/>
           })}
         </ScrollView>
-      </View>
+      </LinearGradient>
     )
   }
 }

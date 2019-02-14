@@ -184,7 +184,7 @@ class Child extends Component{
                 }
                 : null}
             >
-                <Text style={styles.nextText}>Add Another</Text>
+                <Text style={[styles.nextText, {textAlign:'left', marginLeft:10}]}>Add Another</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[{ flex: .5,  flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
               (!!this.state.f_name && !!this.state.l_name)

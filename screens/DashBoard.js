@@ -22,7 +22,8 @@ class DashBoard extends Component{ //can definitely be a functional component
   }
 
   componentDidMount = () => {
-    return Promise.all([this.props.addFees(), this.props.getAttendance()])
+    return Promise.all([this.props.addFees()])
+    //removed this.props.getAttendance() on 2/13
   }
 
   render(){

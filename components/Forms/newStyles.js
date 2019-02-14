@@ -99,6 +99,6 @@ export const styles = {
     marginVertical: 10,
     marginLeft:10,
     paddingLeft:10,
-
+    lineHeight:34
   }
 }

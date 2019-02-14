@@ -5,8 +5,10 @@ import{styles as cardStyles} from '../AccountCard/styles'
 
 export default function AttendanceHistoryRow(props){
   return (
-    <View style={[styles.attendanceRow, props.i % 2 === 0 ? styles.evenRow : null]}>
-      <View style={styles.child}>
+    <View>
+      
+    <View style={styles.attendanceRow}>
+      <View style={[styles.child, {marginRight:20}]}>
         {props.img_uri
           ? <View style={{width:70, height:70, borderRadius:35, zIndex:100, overflow:'hidden'}}>
             <Image
@@ -16,20 +18,21 @@ export default function AttendanceHistoryRow(props){
                 width: 70,
                 height: null,
                 resizeMode: 'cover',
-                borderColor: props.i % 2 === 0 ? '#fefefe' : 'white'
+                
               }}
             />
           </View>
-          : <Text style={[cardStyles.circle, { backgroundColor: '#ccc', marginRight: 10, marginTop: 0, marginLeft: 0, borderColor: props.i % 2 === 0 ? '#fefefe' : 'white' }]}>{props.f_name[0].toUpperCase()}</Text>}
-        <Text style={styles.name}>{props.f_name} {props.l_name}</Text>
-        
+          : <Text style={[cardStyles.circle, { backgroundColor: '#ccc', marginRight: 10, marginTop: 0, marginLeft: 0, borderWidth:0}]}>{props.f_name[0].toUpperCase()}</Text>}
+        <Text numberOfLines={1} style={styles.name}>{props.f_name} {props.l_name}</Text>
       </View>
       {props.attendanceStatus.map((date, i) => {
         return <View key={i} style={styles.dateStatusHolder}>
-          <View style={[styles.dateStatus, date ? {backgroundColor:'green'} : {backgroundColor:'#ccc'}]}></View>
+          <View style={[styles.dateStatus, date ? { backgroundColor:'#007C47'} : {backgroundColor:'white', opacity:0.5}]}></View>
         </View>
       })}
-
+    </View>
+      <View style={{height:1, marginHorizontal:10, backgroundColor:'white', opacity:0.5}}></View>
+      
     </View>
   )
 }

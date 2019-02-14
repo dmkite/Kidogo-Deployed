@@ -55,20 +55,26 @@ class CheckOut extends Component {
             ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.state.date.getMonth()] + ' ' +
             this.state.date.getFullYear()}
         </Text>
-        <Text>
-          {this.childrenHere().total === this.childrenHere().remaining ? 'No children have left' : this.childrenHere().remaining === 1 ? '1 child is still here' : this.childrenHere().remaining + ' children are still here'
-          }
-        </Text>
-        <ScrollView contentContainerStyle={styles.attendanceHolder}>
-          {this.props.attendance[this.returnToday()]
-            ? Object.keys(this.props.attendance[this.returnToday()]).map((id, i) => {
-              let cardDetails = this.props.attendance[this.returnToday()][id]
-              if(!!cardDetails.checkIn) return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkOut')} isMorning={false}/>
-              else return
-            })
-            : null
-          }
-        </ScrollView>
+        
+        {this.props.attendance && this.props.attendance[this.returnToday()]
+        ? <View>
+            <Text>
+              {this.childrenHere().total === this.childrenHere().remaining ? 'No children have left' : this.childrenHere().remaining === 1 ? '1 child is still here' : this.childrenHere().remaining + ' children are still here'
+              }
+            </Text>
+            <ScrollView contentContainerStyle={styles.attendanceHolder}>
+              {this.props.attendance[this.returnToday()]
+                ? Object.keys(this.props.attendance[this.returnToday()]).map((id, i) => {
+                  let cardDetails = this.props.attendance[this.returnToday()][id]
+                  if(!!cardDetails.checkIn) return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkOut')} isMorning={false}/>
+                  else return
+                })
+                : <Text style={ {fontSize:18, margin:10}}>No one was checked in today.</Text>
+              }
+            </ScrollView>
+        </View>
+          : <Text style={{ fontSize: 18, margin: 10 }}>Attendance was not taken today.</Text>
+        }
         </View>
     )
   }

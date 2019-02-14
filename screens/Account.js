@@ -202,6 +202,10 @@ class Account extends Component {
     }
   }
 
+  filterAndReturn = (type) => {
+
+  }
+  
   render(){
     return (
       <View style={{flex: 1}}>
