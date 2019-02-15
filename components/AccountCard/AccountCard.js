@@ -21,7 +21,6 @@ export default function AccountCard(props){
       <View style={styles.imgAndBalance}>
         <View style={styles.img}>
           {props.children.map((child, i) => {
-              console.log(child)
               if(child.f_name === null) return null
               let hex = hexify(i)
               

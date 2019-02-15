@@ -11,7 +11,7 @@ export const styles = {
   buttons: {
     flex:1,
     height:50,
-    backgroundColor: '#513',
+    backgroundColor: '#0C000E',
     flexDirection:'row',
     flexWrap:'nowrap'
   },

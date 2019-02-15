@@ -4,6 +4,7 @@ export const styles = {
     justifyContent:'space-between',
     marginTop:20,
     height:50,
+    opacity:0.5
   },
   editBtn: {
     margin:10,
@@ -11,17 +12,19 @@ export const styles = {
     right:0
   },
   name: {
-    lineHeight: 75
+    lineHeight: 75,
+    color:'white'
   },
   h1:{
     flex:.5,
     fontSize: 36,
     marginHorizontal: 10,
+    color:'white'
   },
   imgAndName:{
     flexDirection:'row',
     position:'relative',
-    paddingLeft: 5 //to offset -5 margin from 'circle'
+    paddingLeft: 15 //to offset -5 margin from 'circle'
   },
   row:{
     flexDirection:'row',
@@ -32,17 +35,21 @@ export const styles = {
   topic: {
     fontSize:18,
     fontWeight:'bold',
-    marginRight:10
+    marginRight:10,
+    color:'white'
   },
   text:{
-    fontSize:18
+    fontSize:18,
+    color:'white'
   },
   addBtn:{
     height:50,
-    backgroundColor:'#ccc',
+    backgroundColor:'white',
     borderRadius:5,
     margin:10,
-    paddingTop:7.5
+    paddingTop:7.5,
+    marginTop:50,
+    opacity:0.5
   },
   idHolder: {
     flexDirection:'row'
@@ -74,11 +81,15 @@ export const styles = {
     justifyContent:'center'
   },
   deleteWarning:{
-    height:150,
-    margin:10,
-    padding:10,
-    borderRadius:5,
-    borderWidth:2
+    padding:20,
+    position:'absolute',
+    top:40,
+    left:0,
+    flex:1, 
+    backgroundColor:'#ccc',
+    color:'white',
+    zIndex:120,
+    alignSelf:'stretch'
   },
   iconHolder:{
     flexDirection:'row',
@@ -92,7 +103,7 @@ export const styles = {
     color:'white'
   },
   balance: {
-    color:'red',
+    color: '#624',
     fontSize: 45,
     marginHorizontal: 10,
     marginVertical:20
@@ -104,7 +115,8 @@ export const styles = {
   },
   rateFreq:{
     margin:10,
-    fontSize:18
+    fontSize:18,
+    color:'white'
   },
   balanceDisplay:{
     flexDirection:'row',
@@ -112,6 +124,9 @@ export const styles = {
   balanceEdit:{
     flexDirection:'row',
     borderWidth:1,
+  },
+  childDetails:{
+    marginBottom:20,
   }
 
 }

@@ -6,14 +6,14 @@ import { styles } from './styles'
 export default function EmergencyContactDetails(props) {
   return (
     <View>
-      <TouchableOpacity style={styles.header} onPress={() => { props.openView('openE_contact') }}>
+      <TouchableOpacity style={styles.header} onPress={() => { props.openDetails('e_contacts') }}>
         <Text style={styles.h1}>Contacts</Text>
-        <Icon name={props.isOpen ? "expand-less" : "expand-more"} size={36} />
+        <Icon name={props.currentlyExpanded === 'e_contacts' ? "expand-less" : "expand-more"} size={36} color="white"/>
       </TouchableOpacity>
 
       <View style={{ height: 2, backgroundColor: '#ccc', margin: 20 }}></View>
 
-      {props.isOpen
+      {props.currentlyExpanded === 'e_contacts'
         ? <View>
         {props.e_contacts.map((eC, i) => {
           return (
@@ -34,7 +34,7 @@ export default function EmergencyContactDetails(props) {
             </View>
           )})
         }
-          <TouchableOpacity style={styles.addBtn} onPress={() => props.openAddMember('e_contacts')}>
+          <TouchableOpacity style={styles.addBtn} onPress={() => props.openForm('e_contacts')}>
             <Icon name="person-add" color="white" size={35} />
           </TouchableOpacity>
         </View> 

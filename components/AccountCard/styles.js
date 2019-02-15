@@ -1,12 +1,10 @@
 export const styles = {
   card:{
-    height:150, 
+    minHeight:150, 
     margin:10,
     padding:10,
     flex:1,
-    borderWidth:2,
-    borderColor:'#ccc',
-    borderRadius:5
+    backgroundColor:'#ffffff50'
   },
   imgAndBalance:{
     flex:1,
@@ -18,7 +16,7 @@ export const styles = {
   },
   balance:{
     fontSize:45,
-    color:'#de6789',
+    color:'#624',
     flex:.5,
     textAlign:'right',
     fontWeight:'100'
@@ -29,7 +27,7 @@ export const styles = {
     height:75, 
     width: 75, 
     marginRight: -25, 
-    borderColor: 'white', 
+    borderColor: '#ffffff50', 
     borderRadius: 37.5, 
     borderWidth: 5, 
     textAlign:'center',
@@ -47,9 +45,11 @@ export const styles = {
   },
   childName:{
     fontSize:18,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color:'white'
   },
   guardianName:{
-    fontSize:14
+    fontSize:14,
+    color:'white'
   }
 }

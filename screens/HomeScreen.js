@@ -26,10 +26,11 @@ export default class HomeScreen extends Component{
     }
   }
 
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }
@@ -77,7 +78,7 @@ export default class HomeScreen extends Component{
   }
 
   componentDidMount = async () => {
-    return this.props.navigation.navigate('Enrollment')
+    return this.props.navigation.navigate('Accounts')
     const signedIn = SecureStore.getItemAsync('_SIGNEDIN')
     if(signedIn) this.props.navigation.navigate('Dash')
   }

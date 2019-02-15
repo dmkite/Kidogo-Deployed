@@ -8,6 +8,7 @@ import AccountCard from '../components/AccountCard'
 import {styles} from '../components/FilterBlock/styles'
 import {getAccounts} from '../actions/accounts'
 import { bindActionCreators } from 'redux';
+import {LinearGradient} from 'expo'
 
 class Accounts extends Component{
   constructor(props){
@@ -18,11 +19,13 @@ class Accounts extends Component{
       searchTerm: ''
     }
   }
+  
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor:'#ff7e09',
-      height:0
+      backgroundColor: '#0C000E',
+      height: 0
     }
   }
 
@@ -84,7 +87,9 @@ class Accounts extends Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#11011B', '#1A011B']}>
         <Header navigation={this.props.navigation} />
         {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress} handleChangeText={this.handleChangeText}/> :  null}
         <TouchableOpacity style={styles.filterBtn} onPress={this.handleFilterOpen}>
@@ -111,7 +116,7 @@ class Accounts extends Component{
                 })
           }
         </ScrollView>
-      </View>
+      </LinearGradient>
     )
   }
 }

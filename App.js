@@ -96,6 +96,10 @@ class App extends Component{
   //   this.listenForNotifications()
   // }
 
+  componentWillMount(){
+    Notifications.dismissAllNotificationsAsync()
+  }
+
   render(){
     return (
       <Provider store={store}>

@@ -18,6 +18,15 @@ class Questions extends Component{
     }
   }
 
+
+  static navigationOptions = {
+    headerLeft: null,
+    headerStyle: {
+      backgroundColor: '#0C000E',
+      height: 0
+    }
+  }
+
   moveBack = () => {
     this.state.onQuestion == 1
       ? null
@@ -57,7 +66,6 @@ class Questions extends Component{
   render(){
     return (
       <View style={{flex:1, flexDirection:'row'}}>
-        {console.log(this.state)}
         <TouchableOpacity style={{ flex: .15 }} onPress={this.moveBack}> 
           <Icon name="chevron-left" size={48}/>
         </TouchableOpacity>

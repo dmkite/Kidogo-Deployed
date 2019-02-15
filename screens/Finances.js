@@ -15,10 +15,11 @@ class Finances extends Component{
     }
   }
   
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }

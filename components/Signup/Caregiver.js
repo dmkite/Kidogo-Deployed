@@ -28,7 +28,7 @@ export default class Caregiver extends Component{
     return (
       <ScrollView styles={styles.container}>
           <Image
-            source={require('../../assets/SIGNUP.png')}
+            source={require('../../assets/CAREGIVER.png')}
           style={{
             height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50, marginBottom: 10}}
           />

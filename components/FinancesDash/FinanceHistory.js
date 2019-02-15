@@ -15,8 +15,6 @@ export default function FinancesHistory(props){
       {!props.history
         ? <Text style={{ fontSize: 18 }}>You do not have any finance history</Text>
         : Object.keys(props.history).sort(byDate).map(date=> {
-          console.log(props.history)
-          console.log(props.history[date])
           return props.history[date].map((exp, i) => <FinanceHistoryRow key={i} even={(i + 1) % 2 === 0} {...exp} date={date} />)
         })
       }

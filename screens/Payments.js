@@ -14,14 +14,14 @@ class Payments extends Component{
       
   }
   
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }
-
   componentDidMount = () => {
     // if(!this.props.accounts.accounts[0].children.length) 
      
@@ -30,7 +30,6 @@ class Payments extends Component{
     const promiseArray = [this.props.getAccounts(), this.props.getPayments()]
 
     Promise.all(promiseArray)
-    // .then(() => console.log('worked?'))
   }
   
   findAccount = () => {

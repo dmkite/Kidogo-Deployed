@@ -28,11 +28,12 @@ class Enrollment extends Component{
     } 
   }
   
-   static navigationOptions = {
+
+  static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
-      height:0
+      backgroundColor: '#0C000E',
+      height: 0
     }
   }
 
@@ -117,7 +118,6 @@ class Enrollment extends Component{
      <LinearGradient
        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
        colors={['#11011B', '#1A011B']}>
-       {console.log(this.state.children)}
       <Header navigation={this.props.navigation}/>
         {this.state.questionFocus === 'child'
            ? <Child

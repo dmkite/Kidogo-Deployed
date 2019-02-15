@@ -7,21 +7,18 @@ import { styles as cardStyles} from '../AccountCard/styles'
 export default function ChildDetails(props){
   return (
     <View>
-      <TouchableOpacity style={styles.header} onPress={() => {props.openView('openChild')}}> 
+      <TouchableOpacity style={styles.header} onPress={() => {props.openDetails('children')}}> 
         <Text style={styles.h1}>Children</Text>
-        <Icon name={props.isOpen ? "expand-less" : "expand-more"} size={36}/>
+        <Icon name={props.currentlyExpanded === 'children' ? "expand-less" : "expand-more"} size={36} color="white"/>
       </TouchableOpacity>
       
       <View style={{ height: 2, backgroundColor: '#ccc', margin:20 }}></View>
       
-      {props.isOpen 
+      {props.currentlyExpanded === 'children'
        ? <View>
           {props.children.map((child, i) => {
             return (
               <View style={styles.childDetails} key={i}>
-                
-
-                      {/* style={[cardStyles.circle, cardStyles.img]}  */}
                 <View style={styles.imgAndName}>
                   {child.img_uri 
                     ? <View key={i} style={[cardStyles.circle, {marginRight:10}]}>
@@ -37,7 +34,7 @@ export default function ChildDetails(props){
                       </View>
                     : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: 0}]}>{child.f_name[0].toUpperCase()}</Text>}
                   <Text style={[styles.topic, styles.name]}>{child.f_name + ' ' + child.l_name}</Text>
-                  <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children'})}>
+                  <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children', updateAccount: props.updateAccount})}>
                     <Icon name="edit" color="#ccc" />
                   </TouchableOpacity>
                 
@@ -64,7 +61,7 @@ export default function ChildDetails(props){
               )
             })}
 
-          <TouchableOpacity style={styles.addBtn} onPress={() => props.openAddMember('children')}>
+          <TouchableOpacity style={styles.addBtn} onPress={() => props.openForm('children')}>
             <Icon name="person-add" color="white" size={35}/>
           </TouchableOpacity>
        </View>

@@ -25,10 +25,11 @@ class Signup extends Component{
     }
   }
 
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }
@@ -39,13 +40,10 @@ class Signup extends Component{
   }
 
   handlePassword = (text) => {
-    console.log(text)
     let password = this.state.password
     
     
-    console.log(password)
     text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
-    console.log(password)
     let hiddenPassword = ''
     for (let letter of password) {
       hiddenPassword += '*'

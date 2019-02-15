@@ -95,7 +95,29 @@ class EmergencyContact extends Component{
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>  
 
-        <View style={{ flexDirection: 'row' }}>
+        
+        
+        {this.props.accountAlreadyCreated
+          ? <View style={styles.nameHolder}>
+            <TouchableOpacity
+              style={[{ flex: .5, marginTop: 20 }, styles.ready]}
+              onPress={() => this.props.openForm('e_contacts')}>
+              <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name)
+              ? styles.ready
+              : styles.notReady]}
+              onPress={() => {
+                let e_contact = { ...this.state }
+                delete e_contact.focusedOn
+                this.props.addMember('e_contacts', e_contact)
+              }}>
+              <Text style={styles.nextText}>Add</Text>
+            </TouchableOpacity>
+
+          </View>
+          :<View style={{ flexDirection: 'row' }}>
           <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
             ? styles.ready
             : styles.notReady]}
@@ -131,6 +153,7 @@ class EmergencyContact extends Component{
             <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
           </TouchableOpacity>
         </View>
+        }
       </ScrollView>
     )
   }

@@ -49,7 +49,6 @@ class MorningQuestions extends Component {
               <Text style={{ fontSize: 18, marginVertical: 10 }}>Have you cleaned the centre and potties this morning?</Text>
             </View>
             : <View>
-              {console.log('hitting')}
               {this.state.question2.image}
               <Text style={{ fontSize: 18, marginVertical: 10 }}>{this.state.question2.question}</Text>
             </View>

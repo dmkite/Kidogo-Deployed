@@ -20,22 +20,25 @@ export default class GuardianDetails extends Component{
   render(){
     return (
       <View>
-        <TouchableOpacity style={styles.header} onPress={() => { this.props.openView('openGuardian') }}>
+        <TouchableOpacity style={styles.header} onPress={() => { this.props.openDetails('guardians') }}>
           <Text style={styles.h1}>Guardians</Text>
-          <Icon name={this.props.isOpen ? "expand-less" : "expand-more"} size={36} />
+          <Icon name={this.props.currentlyExpanded === 'guardians' ? "expand-less" : "expand-more"} size={36} color="white"/>
         </TouchableOpacity>
 
         <View style={{ height: 2, backgroundColor: '#ccc', margin: 20 }}></View>
 
-        {this.props.isOpen
+        {this.props.currentlyExpanded === 'guardians'
           ? <View>
             {this.props.guardians.map((g, i) => {
             return (
               <View style={styles.childDetails} key={i}>
 
                 <View style={styles.imgAndName}>
-                  <Text style={[styles.topic, styles.name]}>{g.f_name + ' ' + g.l_name}</Text>
-                  <TouchableOpacity style={styles.editBtn} onPress={() => this.props.navigation.navigate('EditMember', { editing: g, acctId: this.props.acctId, type: 'guardians' })}>
+                  <Text style={[styles.topic, styles.name, {marginLeft:10}]}>{g.f_name + ' ' + g.l_name}</Text>
+                  <TouchableOpacity 
+                    style={styles.editBtn} 
+                    onPress={() => this.props.navigation.navigate('EditMember', { editing: g, acctId: this.props.acctId, type: 'guardians' })}
+                  >
                     <Icon name="edit" color="#ccc" />
                   </TouchableOpacity>
                 </View>
@@ -54,13 +57,13 @@ export default class GuardianDetails extends Component{
                   <View style={styles.row}>
                     <Text style={styles.topic}>ID:</Text>
                     <View style={styles.idHolder}>
-                      <Text style={styles.text}>{
+                      <Text style={[styles.text, {width:150}]}>{
                         this.state.showId 
                           ? g.govt_id
-                          : 'XXX-XX-XXXX'
+                          : '*********'
                         }</Text>
-                        <TouchableOpacity style={styles.showId} onPress={this.showId}>
-                          <Text style={{color:'white'}}>{this.state.showId ? 'hide' : 'show'}</Text>
+                        <TouchableOpacity style={{opacity:0.5, marginLeft:20}} onPress={this.showId}>
+                          <Icon name={this.state.showId ? "visibility-off" : "visibility"} color="white"/>
                         </TouchableOpacity>
                     </View>
                   </View>
@@ -69,7 +72,7 @@ export default class GuardianDetails extends Component{
             )
           }
           )}
-            <TouchableOpacity style={styles.addBtn} onPress={() => this.props.openAddMember('guardians')}>
+            <TouchableOpacity style={styles.addBtn} onPress={() => this.props.openForm('guardians')}>
               <Icon name="person-add" color="white" size={35} />
             </TouchableOpacity>
             </View>
