@@ -31,6 +31,10 @@ export default function EmergencyContactDetails(props) {
                   <Text style={styles.text}>{eC.phone || 'unknown'}</Text>
                 </View>
               </View>
+              {i !== props.e_contacts.length - 1
+                ? <View style={{ height: 1, backgroundColor: 'white', opacity: 0.5, margin: 10 }}></View>
+                : null
+              }
             </View>
           )})
         }

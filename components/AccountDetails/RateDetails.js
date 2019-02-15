@@ -111,15 +111,15 @@ export default class RateDetails extends Component{
 
                 <View style={styles.buttonBlock}>
               
-                <TouchableOpacity style={[styles.rateBtn, { marginRight: 5 }]}>
-                  <Text style={styles.btnText} onPress={() => {
+                <TouchableOpacity style={{ marginRight: 5 }}>
+                  <Text style={fStyles.nextText} onPress={() => {
                     this.props.changeField('rate', this.state.newRate, 'frequency', this.state.newFrequency)
                     this.props.openForm('rate')
                     }}>Change</Text>
                 </TouchableOpacity>
   
-                <TouchableOpacity style={[styles.rateBtn, { marginLeft: 5 }]}>
-                  <Text style={styles.btnText} onPress={() => this.props.openForm('rate')}>Cancel</Text>
+                <TouchableOpacity style={{ marginLeft: 5 }}>
+                  <Text style={fStyles.nextText} onPress={() => this.props.openForm('rate')}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -128,12 +128,12 @@ export default class RateDetails extends Component{
         {this.props.currentForm === 'rate' 
           ? null
         : <View style={styles.buttonBlock}>
-          <TouchableOpacity style={[styles.rateBtn, {marginRight:5}]} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
-            <Text style={styles.btnText}>Make Payment</Text>
+          <TouchableOpacity style={{marginRight:5}} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
+            <Text style={fStyles.nextText}>Make Payment</Text>
           </TouchableOpacity>
   
-          <TouchableOpacity style={[styles.rateBtn, { marginLeft: 5 }]} onPress={() => this.props.openForm('rate')}>
-            <Text style={styles.btnText}>Change Rate</Text>
+          <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => this.props.openForm('rate')}>
+            <Text style={fStyles.nextText}>Change Rate</Text>
           </TouchableOpacity>
         </View>
         }

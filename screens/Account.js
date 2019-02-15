@@ -251,8 +251,6 @@ class Account extends Component {
             : null
           }
           
-         
-
           <TouchableOpacity 
             style={styles.deleteBtn} 
             onPress={() => {

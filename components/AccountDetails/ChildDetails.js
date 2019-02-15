@@ -56,7 +56,10 @@ export default function ChildDetails(props){
                     <Text style={styles.text}>{child.notes || 'none' }</Text>
                   </View>
               </View>
-              
+              {i !== props.children.length - 1
+                ? <View style={{height:1, backgroundColor:'white', opacity:0.5, margin:10}}></View>
+                : null
+              }
               </View>
               )
             })}
