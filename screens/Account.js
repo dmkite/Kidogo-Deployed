@@ -11,6 +11,7 @@ import {getAccounts, addMemberToAccount, changeField, deleteAccount} from '../ac
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 
+
 class Account extends Component {
   constructor(props){
     super(props)

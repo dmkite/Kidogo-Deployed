@@ -17,7 +17,7 @@ function Header(props){
         <TouchableOpacity onPress={() => navigate('Dash')} style={styles.button}>
           <Icon name="home" color="white" size={30}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
+        <TouchableOpacity onPress={() => null}>  >
           <Icon name="exit-to-app" color="white" size={30} />
         </TouchableOpacity>
       </View>
