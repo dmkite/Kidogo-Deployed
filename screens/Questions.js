@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import { Icon} from 'react-native-elements'
-import { MorningQuestions  } from '../components/Questions'
-import { SecureStore } from 'expo';
+import { MorningQuestions, AfternoonQuestions  } from '../components/Questions'
+import { SecureStore, LinearGradient } from 'expo';
 import Dates from '../utilities/dates';
 
 class Questions extends Component{
@@ -65,20 +65,22 @@ class Questions extends Component{
 
   render(){
     return (
-      <View style={{flex:1, flexDirection:'row'}}>
-        <TouchableOpacity style={{ flex: .15 }} onPress={this.moveBack}> 
-          <Icon name="chevron-left" size={48}/>
+      <LinearGradient
+        style={{ flex: 1, flexDirection:'row' }}
+        colors={['#11011B', '#3C233D']}>
+        <TouchableOpacity style={{ flex: .15,paddingTop:126 }} onPress={this.moveBack}> 
+          <Icon name="chevron-left" size={48} color='#ffffff80'/>
         </TouchableOpacity>
 
-        {this.state.date.getHours() < 15
+        {(this.state.date.getHours() < 15)
           ? <MorningQuestions onQuestion={this.state.onQuestion} answer={this.answer}/>
-         : null
+          : <AfternoonQuestions onQuestion={this.state.onQuestion} answer={this.answer} />
         }
-        <TouchableOpacity style={{flex:.15}} onPress={this.moveForward}>
-          <Icon name="chevron-right" size={48}/>
+        <TouchableOpacity style={{ flex: .15, paddingTop: 126}} onPress={this.moveForward}>
+          <Icon name="chevron-right" size={48} color='#ffffff80'/>
         </TouchableOpacity>
 
-      </View>
+      </LinearGradient>
     )
   }
 }

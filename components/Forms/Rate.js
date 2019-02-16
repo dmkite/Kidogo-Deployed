@@ -1,6 +1,6 @@
 import React from 'react'
 import {styles} from './newStyles'
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, Image, Picker} from 'react-native'
 import {Icon} from 'react-native-elements'
 
 export default function Rate(props){
@@ -29,7 +29,7 @@ export default function Rate(props){
         <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
           <Picker
             style={{ color: 'white', marginTop: -10 }}
-            selectedValue={this.state.frequency}
+            selectedValue={props.frequency}
             onValueChange={(itemValue, itemIndex) => props.pickerChange(itemValue)}>
             <Picker.Item label="daily" value="daily" />
             <Picker.Item label="weekly" value="weekly" />

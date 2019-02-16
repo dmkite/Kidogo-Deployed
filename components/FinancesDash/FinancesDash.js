@@ -14,7 +14,7 @@ function FinancesDash(props){
       <View style={styles.dash}>
         <View style={styles.expenses}>
           <Text style={[styles.dashText, { color: 'red' }]}>K{props.finances.net.expenses}</Text>
-          <Text>
+          <Text style={styles.subText}>
             {Number(props.finances.net.expenses) > 0
               ? 'You spent ' + String(props.finances.net.expenses) + ' Shillings to run your daycare this week'
               : 'You didn\'t spend any money this week'
@@ -24,7 +24,7 @@ function FinancesDash(props){
 
         <View style={styles.expenses}>
           <Text style={[styles.dashText, { color: 'green' }]}>K{props.finances.net.income}</Text>
-          <Text>
+          <Text style={styles.subText }>
             {Number(props.finances.net.income) > 0
               ? 'You were paid ' + String(props.finances.net.income) + ' Shillings this week'
               : 'You weren\'t paid this week'

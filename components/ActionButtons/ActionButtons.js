@@ -10,7 +10,7 @@ function ActionButtons(props){
           <ImageBackground
             style={styles.buttonImage}
             source={require('../../assets/ENROLLMENT.png')}>
-          <Text style={styles.actionText}>Enrollment</Text>
+          <Text style={styles.actionText}>Add a family</Text>
 
         </ImageBackground>
       </TouchableOpacity>

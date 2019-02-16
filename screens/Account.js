@@ -31,34 +31,6 @@ class Account extends Component {
         frequency: 'daily',
         balance: 0
       },
-
-      // children: {
-      //   status: false,
-      //   img_uri: null,
-      //   f_name: ' ',
-      //   l_name: ' ',
-      //   birthdate: null,
-      //   gender: null,
-      //   notes: null,
-      //   id: uuid()
-      // },
-      // guardians: {
-      //   status:false,
-      //   f_name: null,
-      //   l_name: null,
-      //   street: null,
-      //   city: null,
-      //   phone: null,
-      //   govt_id: null,
-      //   id: uuid()
-      // },
-      // e_contacts: {
-      //   status:false,
-      //   f_name: null,
-      //   l_name: null,
-      //   phone: null,
-      //   id: uuid()
-      // }
     }
   }
 
@@ -88,12 +60,6 @@ class Account extends Component {
       }
     })
   }
-
-  // changeBalance = (text) => {
-  //   this.setState({
-  //     newBalance: text
-  //   })
-  // }
 
   updateAccount = account => {
     this.setState({account})
@@ -145,7 +111,6 @@ class Account extends Component {
     return this.props.getAccounts().then(() => {
       const id = this.props.navigation.getParam('id')
       const [account] = this.props.accounts.accounts.filter(acct => acct.id === id)
-      console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
       this.setState({ account })
     })
   }
@@ -218,6 +183,7 @@ class Account extends Component {
             currentlyExpanded={this.state.currentlyExpanded}
             guardians={this.filterAndReturnType('guardians')} 
             navigation={this.props.navigation}
+            acctId={this.props.navigation.getParam('id')}
             openForm={this.openForm}
           />
 
@@ -252,7 +218,7 @@ class Account extends Component {
           }
           
           <TouchableOpacity 
-            style={styles.deleteBtn} 
+            style={styles.button} 
             onPress={() => {
               this.setState({deleteMessage: !this.state.deleteMessage})
               setTimeout(() => {
@@ -260,8 +226,8 @@ class Account extends Component {
               }, 5000)}}
             onLongPress={this.deleteAccount}
           >
-            <Icon name="delete" color="white"/>
-            <Text style={[styles.btnText, {lineHeight:100}]}>Delete</Text>
+            <Icon name="delete" color="white" style={{marginRight:5}}/>
+            <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
           </TouchableOpacity>
         </ScrollView>
       </LinearGradient>

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import AttendanceCard from '../components/AttendanceCard'
 import { styles } from '../components/AttendanceCard/styles'
 import { getAttendance, changeCheckInOut } from '../actions/attendance'
+import {LinearGradient} from 'expo'
 
 class CheckOut extends Component {
   constructor(props) {
@@ -48,9 +49,11 @@ class CheckOut extends Component {
   // changeCheckOut
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
-        <Text>
+        <Text style={{fontSize: 24, color: '#ffffff80', margin:10}}>
           {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][this.state.date.getDay()] + ', ' +
             this.state.date.getDate() + ', ' +
             ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.state.date.getMonth()] + ' ' +
@@ -59,7 +62,7 @@ class CheckOut extends Component {
         
         {this.props.attendance && this.props.attendance[this.returnToday()]
         ? <View>
-            <Text>
+            <Text style={{margin:10, fontSize:18, color:'#ffffff80', marginBottom:20}}>
               {this.childrenHere().total === this.childrenHere().remaining ? 'No children have left' : this.childrenHere().remaining === 1 ? '1 child is still here' : this.childrenHere().remaining + ' children are still here'
               }
             </Text>
@@ -70,13 +73,13 @@ class CheckOut extends Component {
                   if(!!cardDetails.checkIn) return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkOut')} isMorning={false}/>
                   else return
                 })
-                : <Text style={ {fontSize:18, margin:10}}>No one was checked in today.</Text>
+                : <Text style={ {fontSize:18, margin:10, color:'#ffffff80'}}>No one was checked in today.</Text>
               }
             </ScrollView>
         </View>
           : <Text style={{ fontSize: 18, margin: 10 }}>Attendance was not taken today.</Text>
         }
-        </View>
+        </LinearGradient>
     )
   }
 }

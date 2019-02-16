@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import AttendanceCard from '../components/AttendanceCard'
 import {styles} from '../components/AttendanceCard/styles'
 import {getAttendance, changeCheckInOut} from '../actions/attendance'
+import {LinearGradient} from 'expo'
 
 class CheckIn extends Component{
   constructor(props){
@@ -49,15 +50,17 @@ class CheckIn extends Component{
 
   render(){
     return (
-      <View style={{flex:1}}>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
-        <Text>
+        <Text style={{ color:'#ffffff80', fontSize:24, margin:10}}>
           {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][this.state.date.getDay()] + ', ' +
           this.state.date.getDate() + ', ' +
           ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.state.date.getMonth()] + ' ' +
           this.state.date.getFullYear()}
         </Text>
-        <Text>
+        <Text style={{color:'#ffffff80', fontSize:18, margin:10, marginBottom:20}}>
           {this.childrenHere().total === this.childrenHere().hereToday ? 'All children are here' : this.childrenHere().hereToday === 1 ? '1 child is here' : this.childrenHere().hereToday + ' children are here'
           }
         </Text>
@@ -71,7 +74,7 @@ class CheckIn extends Component{
           }
         </ScrollView>
 
-      </View>
+      </LinearGradient>
     )
   }
 }

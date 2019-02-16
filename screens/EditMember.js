@@ -96,7 +96,7 @@ class EditMember extends Component{
     const acctId = this.props.navigation.getParam('acctId')
     const memberId = this.props.navigation.getParam('editing').id
     const memberType = this.props.navigation.getParam('type')
-
+    
     await this.props.changeMember(changes, acctId, memberType, memberId)
     // edit NOTE: added an 'update account' function, but not sure I can use it.;
     await this.props.navigation.navigate('Account', { id: acctId })
@@ -134,7 +134,6 @@ class EditMember extends Component{
           : null
         }
         <ScrollView style={{paddingBottom:100}}>
-          
           <Text style={styles.h1}>Editing {this.props.navigation.getParam('editing').f_name}'s Information</Text>
           
           {this.state.img_uri
@@ -145,7 +144,13 @@ class EditMember extends Component{
               }}
             />
             : <Image
-              source={require('../assets/CHILD.png')}
+              source={
+                this.props.navigation.getParam('type') === 'children'
+                 ? require('../assets/CHILD.png')
+                 :this.props.navigation.getParam('type') === 'guardians'
+                    ? require('../assets/GUARDIAN.png')
+                    : require('../assets/E_CONTACT.png')
+                    }
               style={{
                 height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
               }}

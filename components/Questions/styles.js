@@ -13,14 +13,14 @@ export const styles = {
     justifyContent: 'space-between'
   },
   button: {
-    borderRadius: 5,
     height: 50,
     marginRight: 5,
     flex: .5,
-    fontSize: 18
+    borderWidth:1,
+    borderColor:'#ffffff80'
   },
   buttonText: {
-    color: 'white',
+    color: '#ffffff80',
     lineHeight: 50,
     textAlign: 'center'
   },

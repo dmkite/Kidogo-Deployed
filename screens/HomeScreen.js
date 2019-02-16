@@ -78,7 +78,8 @@ export default class HomeScreen extends Component{
   }
 
   componentDidMount = async () => {
-    return this.props.navigation.navigate('Accounts')
+    return this.props.navigation.navigate('Payments', {
+      id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
     const signedIn = SecureStore.getItemAsync('_SIGNEDIN')
     if(signedIn) this.props.navigation.navigate('Dash')
   }

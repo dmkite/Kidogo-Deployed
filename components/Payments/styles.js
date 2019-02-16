@@ -67,6 +67,13 @@ export const styles = {
   tableHeader:{
     flexDirection:'row',
     borderBottomWidth:1,
-    height:35
+    height:35,
+    backgroundColor: '#00000050',
+    paddingTop:5
+  },
+  textRow: {
+    color:'#ffffff80',
+    lineHeight:50,
+    flex:0.2
   }
 }

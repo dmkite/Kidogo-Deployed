@@ -33,14 +33,6 @@ export function addMessage(msg){
   }
 }
 
-// export const TAKE_TEMP_PIC = 'TAKE_TEMP_PIC'
-// export function takeTempPic(uri){
-//   return {
-//     type: TAKE_TEMP_PIC,
-//     payload: uri
-//   }
-// }
-
 export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
@@ -147,13 +139,16 @@ export function deleteMember(acctId, memberType, memberId){
 
 export function changeMember(changes, acctId, memberType, memberId){
   return async dispatch => {
+    console.log(changes, acctId, memberType, memberId)
     try {
       // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
+        console.log(acct.id, acctId)
         if (acct.id === acctId) {
           acct[memberType] = acct[memberType].map(member => {
+            console.log(member)
             if(member.id === memberId) member = {...member, ...changes}
             return member
           })

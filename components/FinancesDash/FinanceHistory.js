@@ -7,15 +7,15 @@ export default function FinancesHistory(props){
   return (
     <View>
       <View style={styles.tableHeader}>
-        <View style={{ flex: .19 }}></View>
-        <Text style={{ flex: .27, fontWeight: 'bold' }}>Date</Text>
-        <Text style={{ flex: .27, textAlign:'center', fontWeight: 'bold' }}>type</Text>
-        <Text style={{ flex: .27, textAlign: 'right', marginRight:10, fontWeight: 'bold' }}>Amount</Text>
+        <View style={[styles.tableRow, { flex: .19 }]}></View>
+        <Text style={[styles.tableRow, { fontWeight: 'bold' }]}>Date</Text>
+        <Text style={[styles.tableRow, {textAlign:'center', fontWeight: 'bold' }]}>type</Text>
+        <Text style={[styles.tableRow, {textAlign: 'right', marginRight:10, fontWeight: 'bold' }]}>Amount</Text>
       </View>
       {!props.history
         ? <Text style={{ fontSize: 18 }}>You do not have any finance history</Text>
-        : Object.keys(props.history).sort(byDate).map(date=> {
-          return props.history[date].map((exp, i) => <FinanceHistoryRow key={i} even={(i + 1) % 2 === 0} {...exp} date={date} />)
+        : Object.keys(props.history).sort(byDate).map(date => {
+          return props.history[date].map((exp, i) => <FinanceHistoryRow key={i}  {...exp} date={date} />)
         })
       }
     </View>

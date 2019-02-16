@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {addFees} from '../actions/payments'
 import {getAttendance} from '../actions/attendance'
+import {LinearGradient} from 'expo'
 
 class DashBoard extends Component{ //can definitely be a functional component
   constructor(props){
@@ -29,13 +30,15 @@ class DashBoard extends Component{ //can definitely be a functional component
 
   render(){
     return(
-      <View style={{flex:1}}>
+      <LinearGradient
+        style={{ flex: 1 }}
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <DashView navigation={this.props.navigation}/>
           <ActionButtons navigation={this.props.navigation}/>
         </ScrollView>
-      </View>
+      </LinearGradient>
     )
   }
 }

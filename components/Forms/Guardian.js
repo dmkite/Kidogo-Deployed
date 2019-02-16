@@ -3,6 +3,7 @@ import { ScrollView, TextInput, View, Text, Image, Picker, TouchableOpacity} fro
 import {Icon} from 'react-native-elements'
 import {styles} from './newStyles'
 import numberValidation from '../../utilities/numberValidation'
+import Rate from './Rate'
 
 class Guardian extends Component{
   constructor(props){
@@ -188,6 +189,7 @@ class Guardian extends Component{
             rate={this.state.rate}
             handleNumberChange={this.handleNumberChange}
             focusedOn={this.state.focusedOn}
+            frequency={this.state.frequency}
             />
         }
 

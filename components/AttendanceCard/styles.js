@@ -12,9 +12,8 @@ export const styles = {
     height:150,
     padding:10,
     position:'relative',
-    borderRadius:5,
-    borderWidth: 2,
-    borderColor: '#ccc',
+    borderWidth: 1,
+    borderColor: '#ffffff80',
     marginBottom:15,
     opacity:1
   },
@@ -28,14 +27,15 @@ export const styles = {
     top:-10,
     right:-10,
     borderWidth:2,
-    borderColor:'white',
+    borderColor:'#ffffff80',
     zIndex:101
   },
   img:{
     flex:1,
   },
   text:{
-    fontSize:18
+    fontSize:18,
+    color:'white'
   },
   selected:{
     // opacity:.3,

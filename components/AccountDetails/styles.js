@@ -71,14 +71,12 @@ export const styles = {
     flex: .5,
     height:50
   },
-  deleteBtn:{
-    flexDirection:'row',
-    backgroundColor:'red',
-    borderRadius:5,
-    height:100,
+  button:{
+    height:50,
+    borderWidth:1, 
+    borderColor:'#ffffff80',
     marginHorizontal:10,
-    marginVertical:50,
-    justifyContent:'center'
+    marginVertical:20
   },
   deleteWarning:{
     padding:20,

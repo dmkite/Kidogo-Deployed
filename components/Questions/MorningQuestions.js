@@ -15,27 +15,39 @@ class MorningQuestions extends Component {
   questionList = {
     1: {
       question: 'Does the centre have clean drinking water for kids?',
-      image: <Image source={require('../../assets/kes.png')}/>,
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50 }} />
     },
     2: {
       question: 'Is there enough play materials and books?',
-      image: 'kes.png',
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50 }} />
     },
     3: {
       question: 'Is the centre free of any obvious hazards?',
-      image: 'kes.png',
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50 }} />
     },
     4: {
       question: 'Does the centre have a hand washing station with soap?',
-      image: 'kes.png',
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50 }} />
     },
     5: {
-      question: 'Have you tracked your aHolderttendance and finances this week?',
-      image: 'kes.png',
+      question: 'Have you tracked your attendance and finances this week?',
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50}}/>
     },
     6: {
       question: 'Were there any accidents or injuries at the centre this week?',
-      image: 'kes.png',
+      image: <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50 }} />
     },
   }
 
@@ -45,25 +57,30 @@ class MorningQuestions extends Component {
         <View style={styles.questionHolder}>
           {this.props.onQuestion === 1
             ? <View>
-              <Image source={require('../../assets/kes.png')} style={{ alignSelf: 'center', marginTop: 50 }} />
-              <Text style={{ fontSize: 18, marginVertical: 10 }}>Have you cleaned the centre and potties this morning?</Text>
+              <Image
+                source={require('../../assets/CENTRE.png')}
+                style={{
+                  height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+                }}
+              />
+              <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>Have you cleaned the centre and potties this morning?</Text>
             </View>
             : <View>
               {this.state.question2.image}
-              <Text style={{ fontSize: 18, marginVertical: 10 }}>{this.state.question2.question}</Text>
+              <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>{this.state.question2.question}</Text>
             </View>
           }
         </View>
 
         <View style={styles.buttonBlock}>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: 'green' }]}
+            style={styles.button}
             onPress={() => this.props.answer('morn', 'yes')}
           >
             <Text style={styles.buttonText}>Yes</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: 'red', marginRight: 0, marginLeft: 5 }]}
+            style={[styles.button, { marginRight: 0, marginLeft: 5 }]}
             onPress={() => this.props.answer('morn', 'no')}
           >
             <Text style={styles.buttonText}>No</Text>
