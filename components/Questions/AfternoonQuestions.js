@@ -8,7 +8,7 @@ class AfternoonQuestions extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      val = null
+      val: null
     }
   }
   render(){
@@ -17,7 +17,7 @@ class AfternoonQuestions extends Component {
         {this.state.onQuestion == 1
           ? <View>
             <Image source={require('../../assets/kes.png')} style={{ alignSelf: 'center', marginTop: 50 }} />
-            <Text style={{ fontSize: 18, marginVertical: 10 }}>How many adults/caregivers were in th centre today?</Text>
+            <Text style={{ fontSize: 18, marginVertical: 10 }}>How many adults/caregivers were in the centre today?</Text>
             <View style={styles.inputHolder}>
               <TextInput
                 style={styles.numberInput}
