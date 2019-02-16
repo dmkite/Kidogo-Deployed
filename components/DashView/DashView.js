@@ -8,12 +8,13 @@ class DashView extends Component{
   constructor(props){
     super(props)
     this.state = {
-      time: null
+      time: null,
     }
   }
 
-  componentDidMount(){
+  componentDidMount = async () =>{
     const time = new Date()
+  
     const hours = time.getHours()
     this.setState({
       time: hours
@@ -51,7 +52,7 @@ class DashView extends Component{
               ? "Who's here today?"
               : this.state.time < 17
                 ? "Has anyone left?"
-                : "Do you buy anything today?"
+                : "Did you buy anything today?"
             }
               </Text>
         </View>
@@ -60,5 +61,5 @@ class DashView extends Component{
   }
 }
 
-const mapStateToProps = (state) => ({accounts:state.accounts, finances: state.finances})
+const mapStateToProps = (state) => ({accounts:state.accounts, finances: state.finances, attendance: state.attendance})
 export default connect(mapStateToProps)(DashView)

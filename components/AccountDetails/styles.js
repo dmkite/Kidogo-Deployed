@@ -76,7 +76,9 @@ export const styles = {
     borderWidth:1, 
     borderColor:'#ffffff80',
     marginHorizontal:10,
-    marginVertical:20
+    marginVertical:20,
+    flexDirection:'row',
+    justifyContent:'space-around'
   },
   deleteWarning:{
     padding:20,

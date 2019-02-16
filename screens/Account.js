@@ -11,6 +11,7 @@ import {getAccounts, addMemberToAccount, changeField, deleteAccount} from '../ac
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
 
+
 class Account extends Component {
   constructor(props){
     super(props)
@@ -226,8 +227,10 @@ class Account extends Component {
               }, 5000)}}
             onLongPress={this.deleteAccount}
           >
-            <Icon name="delete" color="white" style={{marginRight:5}}/>
-            <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
+            <View>
+              <Icon name="delete" color="white" style={{marginRight:5}}/>
+              <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
+            </View>
           </TouchableOpacity>
         </ScrollView>
       </LinearGradient>

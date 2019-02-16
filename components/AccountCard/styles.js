@@ -4,7 +4,9 @@ export const styles = {
     margin:10,
     padding:10,
     flex:1,
-    backgroundColor:'#ffffff50'
+    backgroundColor:'#635066',
+    borderWidth:1,
+    borderColor:'#ffffff80'
   },
   imgAndBalance:{
     flex:1,
@@ -27,7 +29,7 @@ export const styles = {
     height:75, 
     width: 75, 
     marginRight: -25, 
-    borderColor: '#ffffff50', 
+    borderColor: '#635066', 
     borderRadius: 37.5, 
     borderWidth: 5, 
     textAlign:'center',

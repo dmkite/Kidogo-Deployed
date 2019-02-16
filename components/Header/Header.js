@@ -9,7 +9,7 @@ function Header(props){
   return (
     <View style={{height:50}}>
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={() => navigate('Upload')} style={styles.button}>
           <Icon name="cloud-upload" color="white" size={30}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
@@ -22,6 +22,7 @@ function Header(props){
             await SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify(null))
             navigate('Home')
         }} style={styles.button}>
+
           <Icon name="exit-to-app" color="white" size={30} />
         </TouchableOpacity>
       </View>

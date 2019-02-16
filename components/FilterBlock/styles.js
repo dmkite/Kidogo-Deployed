@@ -1,9 +1,9 @@
 export const styles = {
   filterBlock:{
-    height:70,
+    height:60,
     flex:.4,
     borderBottomWidth:2,
-    borderBottomColor:'#ccc',
+    borderBottomColor:'#ffffff80',
     flexWrap:'wrap'
   },
   filterBtn:{
@@ -43,16 +43,17 @@ export const styles = {
     width:25,
     borderRadius:32,
     borderWidth:2,
-    borderColor:'#ccc',
+    borderColor:'#ffffff80',
     marginRight:10,
     marginTop:5
   },
   radioLabel:{
     fontSize:18,
-    lineHeight:35
+    lineHeight:35,
+    color:'#ffffff80'
   },
   selected:{
-    backgroundColor:'#ccc'
+    backgroundColor:'#ffffff80'
   }
 
 }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {Caregiver, Centre} from '../components/Signup'
 import {LinearGradient, SecureStore} from 'expo'
 import uuid from 'uuid'
+import {register} from '../cognito-user-pool-functions'
 
 // import bcrypt from 'bcrypt'
 
@@ -49,14 +50,14 @@ class Signup extends Component{
       hiddenPassword += '*'
     }
     this.setState({
-      password,
-      hiddenPassword
+      password : password.trim(),
+      hiddenPassword: hiddenPassword.trim()
     })
   }
 
   handleChangeText = (text, val) => {
     this.setState({
-      [val]: text
+      [val]: text.trim()
     })
   }
   
@@ -66,7 +67,13 @@ class Signup extends Component{
 
   }
 
+  success = () => console.log('++++++++++++++++++++++++++++++++++++++++++')
+  failure = () => console.log('------------------------------------------')
+
   storeAndNavigate = async () => {
+    console.log('hitting storeAndNAvigate')
+    await register(this.state.username, this.state.password, this.success, this.failure)
+    console.log('after register')
     const {username, password, f_name, l_name, centre_address_1, centre_address_2} = this.state
     const caregiverId = uuid()
     const centreId = uuid()

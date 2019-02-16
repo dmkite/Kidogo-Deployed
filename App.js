@@ -18,12 +18,12 @@ import Payments from './screens/Payments'
 import Finances from './screens/Finances'
 import Questions from './screens/Questions'
 import Signup from './screens/Signup'
+import Upload from './screens/Upload'
 import {Notifications} from 'expo'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Dash: DashBoard,
-  Enrollment: Enrollment,
   Camera: CameraScreen,
   CheckIn: CheckIn,
   CheckOut: CheckOut,
@@ -35,7 +35,8 @@ const AppNavigator = createStackNavigator({
   Payments: Payments,
   Finances: Finances,
   Questions: Questions,
-  Signup: Signup
+  Signup: Signup,
+  Enrollment: Enrollment
 },
 
 {
@@ -55,13 +56,13 @@ class App extends Component{
       }
     }
     const t = new Date()
-    if(t.getHours() > 8) t.setDate(t.getDate() + 1)
+    if(t.getHours() >= 8) t.setDate(t.getDate() + 1)
     t.setMinutes(0)
     t.setHours(8)
 
     const morningOptions = {
       time: t,
-      // repeat: 'day'
+      repeat: 'day'
     }
 
     const afternoonNotification = {
@@ -73,35 +74,37 @@ class App extends Component{
     }
     
     const t2 = new Date()
-    if (t2.getHours() > 15) t2.setDate(t2.getDate() + 1)
+
+    if (t2.getHours() >= 15) t2.setDate(t2.getDate() + 1)
     t2.setMinutes(0)
     t2.setHours(15)
     
     const afternoonOptions = {
       time: t2,
-      // repeat: 'day'
+
+      repeat: 'day'
+
     }
 
     Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
     Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
+    Notifications.dismissAllNotificationsAsync()
+
   }
 
   listenForNotifications = () => {
     Notifications.addListener(notification => {
-      if (notification.origin === 'received') {
-        Alert.alert('It\'s time to answer the daily questions');
-      }
+
+      if (notification.origin === 'received') Alert.alert('It\'s time to answer the daily questions');
+      else if (notification.origin === 'selected') this.props.navigation.navigate('Questions')
     });
   };
 
   componentWillMount(){
     this.listenForNotifications()
-    Notifications.dismissAllNotificationsAsync()
+
   }
 
-  // componentWillMount(){
-  //   Notifications.dismissAllNotificationsAsync()
-  // }
 
   render(){
     return (
