@@ -56,7 +56,7 @@ var WildRydes = window.WildRydes || {};
    * Cognito User Pool functions
    */
 
-  export function register(username, password, onSuccess, onFailure) {
+  function register(username, password, onSuccess, onFailure) {
     var dataUsername = {
       Name: 'username',
       Value: username

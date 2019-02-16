@@ -1,4 +1,4 @@
-window._config = {
+export const _config = {
   cognito: {
     userPoolId: 'us-west-2_fllomTUYB', // e.g. us-east-2_uXboG5pAb
     userPoolClientId: '74erg6h6rba5pahs1eh9g8i0im', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv

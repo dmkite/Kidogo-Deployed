@@ -74,7 +74,7 @@ export default class Caregiver extends Component {
                 ? this.props.storeAndNavigate
                 : null}
           >
-            <Text style={styles.nextText}>sign in</Text>
+            <Text style={styles.nextText}>go to sign in</Text>
             <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
           </TouchableOpacity>
         </View>
