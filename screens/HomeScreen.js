@@ -4,7 +4,7 @@ import Header from '../components/Header/'
 import DashBoard from './DashBoard'
 import uuid from 'uuid'
 import addData from '../seeds'
-import {Notification, Notifications} from 'expo'
+import {Audio} from 'expo'
 import {styles} from '../components/Signup/styles'
 import {LinearGradient, SecureStore} from 'expo'
 import {Icon} from 'react-native-elements'
@@ -22,7 +22,8 @@ export default class HomeScreen extends Component{
       avoidView: false,
       error: false,
       authorized:false,
-      caregivers: {}
+      caregivers: {},
+      showHelp: false
     }
   }
 
@@ -80,11 +81,24 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     // return this.props.navigation.navigate('Payments', {
     //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
+    setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
     let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
     if(signedIn) signedIn = JSON.parse(signedIn)
 
     if(signedIn) this.props.navigation.navigate('Dash')
   }
+
+  
+  playAudio = async () => {
+    const soundObject = new Audio.Sound()
+    try{
+      await soundObject.loadAsync(require('../assets/signin.mp3'))
+      await soundObject.playAsync()
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
 
   render(){
     const {navigate} = this.props.navigation
@@ -136,20 +150,19 @@ export default class HomeScreen extends Component{
         </View>
         <Text style={[styles.label, this.state.focusedOn === 'password' ? styles.focused : null]}>Password</Text>
         
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+        <View style={{flexDirection:'row', justifyContent:'space-between', height:50}}>
           <TouchableOpacity style={{margin:20, height:50, opacity:0.5}} onPress={() => navigate('Signup')}>
             <Text style={{fontSize:14, color:'white'}}>Sign up for an account</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={[{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
+          <TouchableOpacity style={[{ flexDirection: 'row', justifyContent: 'flex-end' },
             (!!this.state.username && !!this.state.password)
               ? styles.ready
               : styles.notReady]} 
             onPress={this.handleSignIn}>
             <Text style={styles.nextText}>sign in</Text>
-            <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop: 13 }}/>
+            <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop:15 }}/>
           </TouchableOpacity>
-
         </View>
 
         {!!this.state.error
@@ -158,6 +171,18 @@ export default class HomeScreen extends Component{
           </View>
           : null
         }
+
+        
+
+        {this.state.showHelp 
+          ? <TouchableOpacity style={{ backgroundColor: 'white', position: 'absolute', bottom: -75, right: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, right: 80 }}>
+              <Icon name="record-voice-over" color="#3C233D" size={36} />
+            </View>
+          </TouchableOpacity>
+          : null
+        }
+            
       </LinearGradient>
     )
   }

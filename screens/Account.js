@@ -227,8 +227,10 @@ class Account extends Component {
               }, 5000)}}
             onLongPress={this.deleteAccount}
           >
-            <Icon name="delete" color="white" style={{marginRight:5}}/>
-            <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
+            <View>
+              <Icon name="delete" color="white" style={{marginRight:5}}/>
+              <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
+            </View>
           </TouchableOpacity>
         </ScrollView>
       </LinearGradient>

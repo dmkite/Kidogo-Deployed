@@ -45,13 +45,20 @@ function byDate(a,b){
   }
 
   if (aAdding && !bAdding) {
-    if (b.balanceAfter >= a.balanceBefore) return -1
-    if (a.balanceBefore >= b.balanceAfter) return 1
+    // if (b.balanceAfter >= a.balanceBefore) return -1
+    // if (a.balanceBefore >= b.balanceAfter) return 1
+    if(a.balanceAfter >= b.balanceBefore) return 1
+    if(b.balanceBefore >= a.balanceAfter) return -1
   }
 
   if( !aAdding && bAdding){
     if(a.balanceAfter >= b.balanceBefore) return 1
     if(b.balanceBefore >= a.balanceAfter) return -1
+  }
+
+  if(!aAdding && !bAdding){
+    if(a.balanceAfter >= b.balanceBefore) return -1
+    if(b.balanceBefore >= a.balanceAfter) return 1
   }
   return 0
 }

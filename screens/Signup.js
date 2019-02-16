@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {Caregiver, Centre} from '../components/Signup'
 import {LinearGradient, SecureStore} from 'expo'
 import uuid from 'uuid'
+import {register} from '../cognito-auth'
 
 // import bcrypt from 'bcrypt'
 

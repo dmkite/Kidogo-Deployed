@@ -28,6 +28,7 @@ var WildRydes = window.WildRydes || {};
     AWSCognito.config.region = _config.cognito.region;
   }
 
+
   WildRydes.signOut = function signOut() {
     userPool.getCurrentUser().signOut();
   };
@@ -55,14 +56,14 @@ var WildRydes = window.WildRydes || {};
    * Cognito User Pool functions
    */
 
-  function register(email, password, onSuccess, onFailure) {
-    var dataEmail = {
-      Name: 'email',
-      Value: email
+  export function register(username, password, onSuccess, onFailure) {
+    var dataUsername = {
+      Name: 'username',
+      Value: username
     };
-    var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+    var attributeUsername = new AmazonCognitoIdentity.CognitoUserAttribute(dataUsername);
 
-    userPool.signUp(toUsername(email), password, [attributeEmail], null,
+    userPool.signUp(toUsername(username), password, [attributeUsername], null,
       function signUpCallback(err, result) {
         if (!err) {
           onSuccess(result);
@@ -142,7 +143,7 @@ var WildRydes = window.WildRydes || {};
       var cognitoUser = result.user;
       console.log('user name is ' + cognitoUser.getUsername());
       var confirmation = ('Registration successful. Please check your email inbox or spam folder for your verification code.');
-      if (confirmation) {
+      if (confirmation) {Email
         window.location.href = 'verify.html'; //props.navigation.navigate('Home')
       }
     };

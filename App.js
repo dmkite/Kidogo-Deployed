@@ -18,6 +18,7 @@ import Payments from './screens/Payments'
 import Finances from './screens/Finances'
 import Questions from './screens/Questions'
 import Signup from './screens/Signup'
+import Upload from './screens/Upload'
 import {Notifications} from 'expo'
 
 const AppNavigator = createStackNavigator({
@@ -34,7 +35,8 @@ const AppNavigator = createStackNavigator({
   Payments: Payments,
   Finances: Finances,
   Questions: Questions,
-  Signup: Signup
+  Signup: Signup,
+  Enrollment: Enrollment
 },
 
 {

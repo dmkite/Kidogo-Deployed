@@ -1,6 +1,8 @@
 import {SecureStore} from 'expo'
 import Dates from '../utilities/dates'
+import getAsync from '../utilities/getAsync'
 import { UPDATE_ACCOUNTS } from './accounts';
+
 
 export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
@@ -26,7 +28,7 @@ export function makePayment(id, amount, balance, date){
   return async dispatch => {
     try {
       
-      const {newPayments, newAccounts} = await getFromSecureStore(true, true)
+      const {newPayments, newAccounts} = await getAsync(true, true)
       const paymentDetails = {
         amount,
         balanceBefore: balance,
@@ -64,7 +66,7 @@ export function addFees(){
   return async dispatch => {
     try{
       const dates = new Dates()
-      const { newPayments, newAccounts, newAttendance } = await getFromSecureStore(true, true, true)
+      const { newPayments, newAccounts, newAttendance } = await getAsync(true, true, true)
       let { previousAttendance, dayToCheck, needsToPay } = checkIfPaymentNeeded(newAttendance, dates)
 
       if(needsToPay){
@@ -122,32 +124,6 @@ export function addFees(){
     return false
   }
 
-  const getFromSecureStore = async (payments, accounts, attendance) => {
-    const dataObj = {}
-    if(payments){
-      let payments = await SecureStore.getItemAsync('_PAYMENTS')
-      if (!payments) payments = {}
-      else payments = JSON.parse(payments)
-      const newPayments = { ...payments }
-      dataObj.newPayments = newPayments
-    }
-    if(accounts){
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      if (!accounts) accounts = []
-      else accounts = JSON.parse(accounts)
-      const newAccounts = [...accounts]
-      dataObj.newAccounts = newAccounts
-    }
-    if(attendance){
-      let attendance = await SecureStore.getItemAsync('_ATTENDANCE')
-      if (!attendance) attendance = {}
-      else attendance = JSON.parse(attendance)
-      const newAttendance = { ...attendance }
-      dataObj.newAttendance = newAttendance
-    }
-    return dataObj
-  }
-
   function checkIfPaymentNeeded(newAttendance, dates){
     const yesterday = dates.getDifferentDay('subtract')
     let needsToPay = true
@@ -175,7 +151,17 @@ function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
   let lastPaymentDate
   for(let i = paymentHistory.length - 1; i >= 0; i--){
     let {amount, balanceBefore, balanceAfter } = paymentHistory[i]
-    if (amount == acct.rate && balanceBefore < balanceAfter) lastPaymentDate = paymentHistory[i].date
+    if (amount == acct.rate && balanceBefore < balanceAfter){
+      if(!lastPaymentDate){
+        lastPaymentDate = paymentHistory[i].date
+        continue
+      }
+      let [d1, m1, y1] = lastPaymentDate.split('-')
+      let [d2, m2, y2] = paymentHistory[i].date.split('-')
+      if(Number(y2) > Number(y1) ) lastPaymentDate = paymentHistory[i]
+      else if(Number(y2) === Number(y1) && Number(m2) > Number(m1)) lastPaymentDate = paymentHistory[i]
+      else if(Number(y2) === Number(y1) && Number(m2) === Number(m1) && Number(d2) > Number(d1)) lastPaymentDate = paymentHistory[i]
+    }
   }
   if(!lastPaymentDate) return true
   const today = date.getToday()
