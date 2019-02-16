@@ -22,6 +22,7 @@ function Header(props){
             await SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify(null))
             navigate('Home')
         }} style={styles.button}>
+
           <Icon name="exit-to-app" color="white" size={30} />
         </TouchableOpacity>
       </View>
