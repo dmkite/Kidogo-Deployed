@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {View, TextInput, Text, TouchableOpacity, Picker} from 'react-native'
 import {Icon} from 'react-native-elements'
-import {styles as pStyles} from '../Payments/styles'
 import Dates from '../../utilities/dates';
 import {styles} from './styles'
-
+import numberValidation from '../../utilities/numberValidation'
 
 class EnterFinances extends Component {
   constructor(props){
@@ -12,34 +11,37 @@ class EnterFinances extends Component {
     this.state = {
       date: new Dates().getToday(),
       amount:'',
-      memo: 'rent'
+      memo: 'rent',
+      focusedOn: null
     }
   }
 
-  numberValidation = (text, field, num1, num2) => {
-    let charCode
-    if (text.length > 0) charCode = text[text.length - 1].charCodeAt(0)
-    if (text.length > 0 && (charCode < 48 || charCode > 57)) text = text.slice(0, (text.length - 1))
-    if (text.length > this.state[field].length) { //checks if deleting, don't add '-'
-      if ((num1 && text.length === num1) || (num2 && text.length === num2)) text += '-'
-    }
+  handleNumberChange = (text, field, num1, num2) => {
+    let length = 0
 
-    if (field === 'date' || field === 'birthdate') {
-      if (text.length === 1 && Number(text[0]) > 3) text = ''
-      if (text.length === 4 && Number(text[3] > 1)) text = text.slice(0, (text.length - 1))
-      if (text.length === 7 && Number(text[6] > 2)) text = text.slice(0, (text.length - 1))
-    }
-
-    this.setState({[field]: text})
+    if (this.state[field] && this.state[field].length) length = this.state[field].length
+    this.setState({
+      [field]: numberValidation(text, field, length, num1, num2)
+    })
   }
+
+  changeFocus = (action, type) => {
+    if (action === 'focus') this.setState({ focusedOn: type })
+    else this.setState({ focusedOn: null })
+  }
+
+  handleChangeText = (text, field) => {
+    this.setState({ [field]: text })
+  }
+
 
   render(){
     return (
       <View>
-        <View style={styles.pickerHolder}>
+        <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
           <Picker
             selectedValue={this.state.memo}
-            style={{height:50}}
+            style={{height:30, color:'white'}}
             onValueChange={(itemValue, itemIndex) => this.setState({memo: itemValue})}>
             <Picker.Item label="Rent" value="rent"/>
             <Picker.Item label="Water" value="water" />
@@ -49,29 +51,63 @@ class EnterFinances extends Component {
             <Picker.Item label="Salary" value="salary" />
           </Picker>
         </View>
-        <View style={pStyles.inputHolder}>
-          <Text style={pStyles.prefix}>K</Text>
-          <TextInput
-            style={[pStyles.input, pStyles.amountInput, { borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }]}
-            keyboardType="number-pad"
-            placeholder='amount'
-            value={this.state.amount}
-            onChangeText={(text) => this.numberValidation(text, 'amount')}
-          />
+        <Text style={styles.label}>Expense</Text>
 
-          <TextInput
-            style={[pStyles.input, pStyles.dateInput]}
-            maxLength={10}
-            keyboardType="number-pad"
-            placeholder="DD-MM-YYYY"
-            value={this.state.date}
-            onChangeText={(text) => this.numberValidation(text, 'date', 2, 5)}
-          />
+        
+          <View style={{flexDirection:'row'}}>
+            <View style={{ flex:0.5 }}>
+              
+              <View style={{flexDirection:'row'}}>
+                <Text style={[styles.prefix, this.state.focusedOn === 'rate' ? styles.focused : null]}>K</Text>
+                <TextInput
+                  style={[styles.input, { flex: .8, marginLeft: 0 }]}
+                  keyboardType="number-pad"
+                  value={this.state.amount}
+                  onChangeText={(text) => this.handleNumberChange(text, 'amount')}
+                  onFocus={() => {
+                    this.changeFocus('focus', 'amount')
+                    this.props.addMargin(-125)
+                  }}
+                  onBlur={() => {
+                    this.changeFocus('blur', null)
+                    this.props.addMargin(0)
+                  }} />
+              </View>
 
-        </View>
+            <Text style={[styles.label, this.state.focusedOn === 'amount' ? styles.focused : null]}>Amount</Text>
+            </View>
+         
+          <View style={{flex:0.5, marginLeft:5}}>
+            <TextInput
+              style={[styles.input, styles.dateInput]}
+              maxLength={10}
+              keyboardType="number-pad"
+              value={this.state.date}
+              onChangeText={(text) => this.handleNumberChange(text, 'date', 2, 5)}
+              onFocus={() => {
+                this.changeFocus('focus', 'date')
+                this.props.addMargin(-250)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }} />
+            <Text style={[styles.label, this.state.focusedOn === 'date' ? styles.focused : null]}>Date</Text>
+          </View>
+
+          </View>
+        
+         
+
+
+
         <TouchableOpacity style={styles.button} onPress={
           Number(this.state.amount) > 0
-            ? () => this.props.addExpense({...this.state})
+            ? () => this.props.addExpense({
+                date: this.state.date,
+                amount: this.state.amount,
+                memo: this.state.memo
+              })
             : null          
         }>
           <Text style={styles.buttonText}>Add Expense</Text>

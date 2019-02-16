@@ -10,7 +10,7 @@ function ActionButtons(props){
           <ImageBackground
             style={styles.buttonImage}
             source={require('../../assets/ENROLLMENT.png')}>
-          <Text style={styles.actionText}>Enrollment</Text>
+          <Text style={styles.actionText}>Add a family</Text>
 
         </ImageBackground>
       </TouchableOpacity>
@@ -29,7 +29,7 @@ function ActionButtons(props){
           <Text style={styles.actionText}>Finances</Text>
         </ImageBackground>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.actionButton}>
+    <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Questions')}>
           <ImageBackground
             style={styles.buttonImage} >
           <Text style={styles.actionText}>Daily Questions</Text>

@@ -6,22 +6,25 @@ import Header from '../components/Header'
 import {getAccounts, changeField} from '../actions/accounts'
 import {PaymentSection, PaymentHistory} from '../components/Payments'
 import{getPayments, makePayment} from '../actions/payments'
+import {LinearGradient} from 'expo'
 
 
 class Payments extends Component{
   constructor(props){
     super(props)
-      
+    this.state={
+      avoidView:0
+    }   
   }
   
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }
-
   componentDidMount = () => {
     // if(!this.props.accounts.accounts[0].children.length) 
      
@@ -30,7 +33,6 @@ class Payments extends Component{
     const promiseArray = [this.props.getAccounts(), this.props.getPayments()]
 
     Promise.all(promiseArray)
-    // .then(() => console.log('worked?'))
   }
   
   findAccount = () => {
@@ -38,23 +40,30 @@ class Payments extends Component{
     return this.props.accounts.accounts.filter(acct => acct.id === id)[0]
   }
 
+  addMargin = (num) => this.setState({ avoidView: num })
+
+  
+
   render(){
     return (
-      <View style={{flex:1}}>
+      <LinearGradient
+        style={[{ flex: 1,  }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
-          <Text style={{fontSize:36, margin:10, marginBottom:20}}>Make a Payment</Text>
+          <Text style={{fontSize:36, margin:10, marginBottom:20, color:'#ffffff80'}}>Make a Payment</Text>
           <PaymentSection 
             balance={this.findAccount() ? this.findAccount().balance : 0} 
             id={this.props.navigation.getParam('id')} 
             makePayment={this.props.makePayment} 
             changeField={this.props.changeField}
+            addMargin={this.addMargin}
           />
           <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
           
           <PaymentHistory paymentHistory={this.props.payments ? this.props.payments[this.props.navigation.getParam('id')] : []}/>
         </ScrollView>
-      </View>
+      </LinearGradient>
     )
   }
 }

@@ -8,8 +8,8 @@ function Header(props){
   return (
     <View style={{height:50}}>
       <View style={styles.buttons}>
-        <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
-          <Icon name="menu" color="white" size={30} />
+        <TouchableOpacity style={styles.button}>
+          <Icon name="cloud-upload" color="white" size={30}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
           <Icon name="people" color="white" size={30}/>
@@ -17,8 +17,8 @@ function Header(props){
         <TouchableOpacity onPress={() => navigate('Dash')} style={styles.button}>
           <Icon name="home" color="white" size={30}/>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Icon name="cloud-upload" color="white" size={30}/>
+        <TouchableOpacity onPress={() => navigate('Accounts')} style={styles.button} >
+          <Icon name="exit-to-app" color="white" size={30} />
         </TouchableOpacity>
       </View>
     </View>

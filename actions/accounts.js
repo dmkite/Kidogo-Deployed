@@ -33,14 +33,6 @@ export function addMessage(msg){
   }
 }
 
-// export const TAKE_TEMP_PIC = 'TAKE_TEMP_PIC'
-// export function takeTempPic(uri){
-//   return {
-//     type: TAKE_TEMP_PIC,
-//     payload: uri
-//   }
-// }
-
 export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
@@ -95,19 +87,21 @@ export function addMemberToAccount(newMember){
 }
 
 // export const CHANGE_FIELD = 'CHANGE_FIELD'
-export function changeField(fieldname, newValue, id){
+export function changeField(fieldname, newValue, id, fieldname2, newValue2){
+  
   return async dispatch => {
     try {
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
-      let newAccounts = accounts.map(acct => {
+      let newAccounts = accounts.map((acct, i) => {
         if (acct.id === id) {
           acct[fieldname] = newValue
+          if(fieldname2 !== undefined){
+            acct[fieldname2] = newValue2
+          }
         }
         return acct
       })
-      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
       await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
@@ -145,13 +139,16 @@ export function deleteMember(acctId, memberType, memberId){
 
 export function changeMember(changes, acctId, memberType, memberId){
   return async dispatch => {
+    console.log(changes, acctId, memberType, memberId)
     try {
       // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
       let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
       accounts = JSON.parse(accounts)
       let newAccounts = accounts.map(acct => {
+        console.log(acct.id, acctId)
         if (acct.id === acctId) {
           acct[memberType] = acct[memberType].map(member => {
+            console.log(member)
             if(member.id === memberId) member = {...member, ...changes}
             return member
           })

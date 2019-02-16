@@ -73,15 +73,15 @@ export const styles = {
   },
   error:{ 
     position: 'absolute', 
-    top: 10, 
-    right: 10, 
-    width: 175, 
+    top:0, 
+    right: 0,
+    left:0, 
     height: 75, 
-    padding: 10,
+    padding: 20,
     borderWidth:1,
-    borderColor:'white',
+    borderColor:'#ffffff80',
     backgroundColor:'#11011B',
-    opacity:0.5 
+    // opacity:0.5 
   },
   errorText:{
     color:"white",

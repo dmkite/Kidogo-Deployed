@@ -28,11 +28,12 @@ class Enrollment extends Component{
     } 
   }
   
-   static navigationOptions = {
+
+  static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
-      height:0
+      backgroundColor: '#0C000E',
+      height: 0
     }
   }
 
@@ -48,25 +49,17 @@ class Enrollment extends Component{
   addToAccount = (data, field) => {
     const newState = {...this.state}
     data.id = uuid()
+    if(field === 'guardians'){
+      newState.rate = data.rate,
+      newState.frequency = data.frequency
+      delete data.rate
+      delete data.frequency
+    }
     newState[field].push(data)
     this.setState({...newState})
   } 
 
-  handleFrequency = (upOrDown) => {
-    let frequency = this.state.frequency
-    if (upOrDown === 'up'){
-      if (frequency === 'daily') this.setState({ frequency: 'weekly' })
-      if (frequency === 'weekly') this.setState({ frequency: 'termly' })
-      if(frequency === 'termly') this.setState({frequency:'daily'})
-    }
-    else {
-      if (frequency === 'daily') this.setState({ frequency: 'termly' })
-      if (frequency === 'termly') this.setState({ frequency: 'weekly' })
-      if (frequency === 'weekly') this.setState({ frequency: 'daily' }) 
-    }
-  }
-
-  handleSubmit = async () => {
+  submitAccount = async () => {
     const message = []
     const children = this.state.children
     const guardians = this.state.guardians
@@ -81,9 +74,9 @@ class Enrollment extends Component{
     }
     const id = uuid()
     const account = {
-      children: [this.state.children],
-      guardians: [this.state.guardians],
-      e_contacts: [this.state.e_contacts],
+      children: [...this.state.children],
+      guardians: [...this.state.guardians],
+      e_contacts: [...this.state.e_contacts],
       rate: this.state.rate,
       frequency: this.state.frequency,
       id,
@@ -125,7 +118,6 @@ class Enrollment extends Component{
      <LinearGradient
        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
        colors={['#11011B', '#1A011B']}>
-       {console.log(this.state.children)}
       <Header navigation={this.props.navigation}/>
         {this.state.questionFocus === 'child'
            ? <Child
@@ -142,7 +134,9 @@ class Enrollment extends Component{
                 addToAccount={this.addToAccount}
              />
              : <EmergencyContact
-               handleChangeText={this.handleChangeText}
+               addMargin={this.addMargin}
+               addToAccount={this.addToAccount}
+               submitAccount={this.submitAccount}
              />
         }
         

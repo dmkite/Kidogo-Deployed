@@ -26,7 +26,7 @@ class AfternoonQuestions extends Component {
                 maxLength={2}
                 onChangeText={this.setState({val: numberValidation(text)})}
               />
-              <TouchableOpacity style={styles.submit}>
+              <TouchableOpacity style={styles.button}>
                 <Text>Submit</Text>
               </TouchableOpacity>
             </View>
@@ -36,13 +36,13 @@ class AfternoonQuestions extends Component {
             <Text style={{ fontSize: 18, marginVertical: 10 }}>Did all children get enough food today?</Text>
             <View style={styles.buttonBlock}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'green' }]}
+                style={styles.button }
                 onPress={() => this.answer('aft', 'yes')}
               >
                 <Text style={styles.buttonText}>Yes</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: 'red', marginRight: 0, marginLeft: 5 }]}
+                style={[styles.button, {marginRight: 0, marginLeft: 5 }]}
                 onPress={() => this.answer('aft', 'no')}
               >
                 <Text style={styles.buttonText}>No</Text>

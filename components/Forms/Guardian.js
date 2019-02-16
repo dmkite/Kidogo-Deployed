@@ -3,6 +3,7 @@ import { ScrollView, TextInput, View, Text, Image, Picker, TouchableOpacity} fro
 import {Icon} from 'react-native-elements'
 import {styles} from './newStyles'
 import numberValidation from '../../utilities/numberValidation'
+import Rate from './Rate'
 
 class Guardian extends Component{
   constructor(props){
@@ -58,11 +59,14 @@ class Guardian extends Component{
   showId = () => {
     this.setState({showId: !this.state.showId})
   }
+  
+  pickerChange = (itemValue) => {
+    this.setState({ frequency: itemValue })
+  }
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
-        {console.log(this.state)}
           <Image
             source={require('../../assets/GUARDIAN.png')}
             style={{
@@ -153,25 +157,9 @@ class Guardian extends Component{
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
 
-        {/* <TextInput
-          style={[styles.input, this.state.focusedOn === 'govt_id' ? styles.focused : null]}
-          maxLength={8}
-          value={this.state.govt_id}
-          keyboardType="number-pad"
-          onFocus={() => {
-            this.changeFocus('focus', 'govt_id')
-            this.props.addMargin(-425)
-          }}
-          onBlur={() => {
-            this.changeFocus('blur', null)
-            this.props.addMargin(0)
-          }}
-          onChangeText={(text) => this.handleNumberChange(text, 'govt_id')}
-        />
-        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> */}
-
         <View style={styles.passwordHolder}>
           <TextInput
+            keyboardType="number-pad"
             onFocus={() => {
               this.changeFocus('focus', 'govt_id')
               this.props.addMargin(-425)
@@ -193,40 +181,92 @@ class Guardian extends Component{
         </View>
         <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
 
-        <View style={styles.nameHolder}>
-          <View style={{ flex: .5, marginRight: 5}}>
-            <View style={{flexDirection:'row'}}>
-              <Text style={[styles.prefix, this.state.focusedOn === 'rate' ? styles.focused : null]}>K</Text>
-              <TextInput
-                style={[styles.input, {flex:.8, marginLeft: 0}]}
-                keyboardType="number-pad"
-                value={this.state.rate}
-                onChangeText={(text) => this.handleNumberChange(text, 'rate')}
-                onFocus={() => {
-                  this.changeFocus('focus', 'rate')
-                  this.props.addMargin(-425)
+        {this.props.accountAlreadyCreated 
+        ? null
+        : <Rate 
+            addMargin={this.props.addMargin} 
+            changeFocus={this.changeFocus} 
+            rate={this.state.rate}
+            handleNumberChange={this.handleNumberChange}
+            focusedOn={this.state.focusedOn}
+            frequency={this.state.frequency}
+            />
+        }
+
+        {this.props.accountAlreadyCreated
+          ? <View style={styles.nameHolder}>
+              <TouchableOpacity
+                style={[{ flex: .5, marginTop: 20 }, styles.ready]}
+                onPress={() => this.props.openForm('guardians')}>
+                <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name)
+                ? styles.ready
+                : styles.notReady]}
+                onPress={() => {
+                  let guardian = { ...this.state }
+                  delete guardian.focusedOn
+                  delete guardian.rate
+                  delete guardian.frequency
+                  delete guardian.hiddenId
+                  delete guardian.showId
+                  this.props.addMember('guardians', guardian)
+                }}>
+                <Text style={styles.nextText}>Add</Text>
+              </TouchableOpacity>
+
+            </View>
+            : <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
+                ? styles.ready
+                : styles.notReady]}
+                onPress={
+                  (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
+                    ? () => {
+                      this.state
+                      let guardian = { ...this.state }
+                      delete guardian.focusedOn
+                      this.props.addToAccount(guardian, 'guardians')
+                      this.setState({
+                        focusedOn: null,
+                        f_name: null,
+                        l_name: null,
+                        phone: null,
+                        govt_id: '',
+                        street: null,
+                        city: null,
+                        frequency: 'daily',
+                        rate: '100',
+                        hiddenId: '',
+                        showId: false
+                      })
+                    }
+                    : null}
+              >
+                <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Add Another</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[{ flex: .5, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
+              (!!this.state.f_name && !!this.state.l_name)
+                ? styles.ready
+                : styles.notReady]}
+                onPress={() => {
+                  this.state
+                  let guardian = { ...this.state }
+                  delete guardian.focusedOn
+                  delete guardian.hiddenId
+                  delete guardian.showId
+                  this.props.addToAccount(guardian, 'guardians')
+
+                  this.props.changeQuestionFocus('e_contact')
                 }}
-                onBlur={() => {
-                  this.changeFocus('blur', null)
-                  this.props.addMargin(0)
-                }} />
+              >
+                <Text style={styles.nextText}>Next</Text>
+                <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
+              </TouchableOpacity>
             </View>
-            <Text style={[styles.label, this.state.focusedOn === 'rate' ? styles.focused : null]}>Rate</Text>
-          </View>
-          <View style={{ flex: .5, marginLeft: 5 }}>
-            <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
-              <Picker
-                style={{ color: 'white', marginTop: -10 }}
-                selectedValue={this.state.frequency}
-                onValueChange={(itemValue, itemIndex) => this.setState({ frequency: itemValue })}>
-                <Picker.Item label="daily" value="daily" />
-                <Picker.Item label="weekly" value="weekly" />
-                <Picker.Item label="termly" value="termly" />
-              </Picker>
-            </View>
-            <Text style={styles.label}>frequency</Text>
-          </View>
-        </View>
+            
+            }
       </ScrollView>
     )
   }

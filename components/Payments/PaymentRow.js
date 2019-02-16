@@ -5,7 +5,7 @@ import {styles} from './styles'
 
 export default function PaymentRow(props){
   return(
-    <View style={[styles.paymentRow, props.even ? {backgroundColor:'#efefef'} : null]}>
+    <View style={[styles.paymentRow, props.even ? {backgroundColor:'#00000050'} : null]}>
       <View style={styles.iconHolder}>
         {props.balanceBefore > props.balanceAfter 
           ? <View style={[styles.entryIcon, {backgroundColor:'green'}]}>
@@ -16,10 +16,10 @@ export default function PaymentRow(props){
           </View>
           }
       </View>
-      <Text style={{lineHeight:50, flex:.25}}>{props.date}</Text>
-      <Text style={{ lineHeight: 50, flex: .2 }}>K {props.balanceBefore}</Text>
-      <Text style={{ lineHeight: 50, flex: .2, textAlign:'center' }}>K {props.amount}</Text>
-      <Text style={{ lineHeight: 50, flex: .2, textAlign:'right', marginRight:10 }}>K {props.balanceAfter}</Text>
+      <Text style={[styles.textRow, {flex:.25}]}>{props.date}</Text>
+      <Text style={styles.textRow }>K {props.balanceBefore}</Text>
+      <Text style={[styles.textRow, {textAlign:'center' }]}>K {props.amount}</Text>
+      <Text style={[styles.textRow, {textAlign:'right', marginRight:10 }]}>K {props.balanceAfter}</Text>
     </View>
   )
 }

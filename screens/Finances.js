@@ -6,19 +6,22 @@ import {getWeekBalances} from '../actions/finances'
 import Header from '../components/Header'
 import {FinancesDash, EnterFinances, FinanceHistory} from '../components/FinancesDash'
 import { addExpense } from '../actions/finances'
+import {LinearGradient} from 'expo'
 
 class Finances extends Component{
   constructor(props){
     super(props)
     this.state = {
-      celebrate: false
+      celebrate: false,
+      avoidView:0
     }
   }
   
+
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
-      backgroundColor: '#ff7e09',
+      backgroundColor: '#0C000E',
       height: 0
     }
   }
@@ -26,18 +29,22 @@ class Finances extends Component{
   componentDidMount = () => {
     this.props.getWeekBalances()
   }
+  
+  addMargin = (num) => this.setState({ avoidView: num })
 
   render(){
     return (
-      <View style={{flex:1}}> 
+      <LinearGradient
+        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <FinancesDash/>
-          <EnterFinances addExpense={this.props.addExpense}/>
+          <EnterFinances addExpense={this.props.addExpense} addMargin={this.addMargin}/>
           <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
           <FinanceHistory history={this.props.finances.history}/>
         </ScrollView>
-      </View>
+      </LinearGradient>
     )
   }
 }

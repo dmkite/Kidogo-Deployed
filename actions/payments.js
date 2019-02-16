@@ -25,12 +25,8 @@ export function makePayment(id, amount, balance, date){
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
-      // let payments = await SecureStore.getItemAsync('_PAYMENTS')
-      // let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
+      
       const {newPayments, newAccounts} = await getFromSecureStore(true, true)
-      // if (!payments) payments = {}
-      // else payments = JSON.parse(payments)
-      // const newPayments = Object.assign(payments)
       const paymentDetails = {
         amount,
         balanceBefore: balance,
@@ -111,7 +107,7 @@ export function addFees(){
 
     if(paymentHistory){
       for (let payment of paymentHistory) {
-        let {date, amount,balanceAfter, balanceBefore} = payment
+        let {date, amount, balanceAfter, balanceBefore} = payment
 
         if (date === expectedPaymentDay && balanceBefore < balanceAfter) return false
       }
@@ -119,7 +115,7 @@ export function addFees(){
     //check to see if any child was present on day in question
     if(previousAttendance){
       for(let child of acct.children){
-        if(previousAttendance[child.id].checkIn !== false) return true
+        if(previousAttendance && previousAttendance[child.id] && previousAttendance[child.id].checkIn !== false) return true
       }
     }
 

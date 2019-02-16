@@ -21,7 +21,7 @@ export default class Caregiver extends Component {
     return (
       <ScrollView>
         <Image
-          source={require('../../assets/SIGNUP.png')}
+          source={require('../../assets/CENTRE.png')}
           style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50, marginBottom: 10 }}
         />
         <TextInput
