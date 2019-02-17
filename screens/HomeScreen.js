@@ -1,9 +1,5 @@
 import React, {Component} from 'react'
 import {Text, View, TouchableOpacity, Image, TextInput, StyleSheet} from 'react-native'
-import Header from '../components/Header/'
-import DashBoard from './DashBoard'
-import uuid from 'uuid'
-import addData from '../seeds'
 import {Audio} from 'expo'
 import {styles} from '../components/Signup/styles'
 import {LinearGradient, SecureStore} from 'expo'
@@ -23,10 +19,10 @@ export default class HomeScreen extends Component{
       error: false,
       authorized:false,
       caregivers: {},
-      showHelp: false
+      showHelp: false,
+      playing: false
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,
@@ -54,8 +50,8 @@ export default class HomeScreen extends Component{
       hiddenPassword += '*'
     }
     this.setState({
-      password,
-      hiddenPassword
+      password: password.trim(),
+      hiddenPassword: hiddenPassword.trim()
     })
   }
 
@@ -90,6 +86,11 @@ export default class HomeScreen extends Component{
 
   
   playAudio = async () => {
+    if (this.state.playing === true) return
+    this.setState({ playing: true })
+    setTimeout(
+      () => this.setState({ playing: false }), 20000
+    )
     const soundObject = new Audio.Sound()
     try{
       await soundObject.loadAsync(require('../assets/signin.mp3'))
@@ -172,11 +173,9 @@ export default class HomeScreen extends Component{
           : null
         }
 
-        
-
         {this.state.showHelp 
-          ? <TouchableOpacity style={{ backgroundColor: 'white', position: 'absolute', bottom: -75, right: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
-            <View style={{ position: 'absolute', bottom: 85, right: 80 }}>
+          ? <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
               <Icon name="record-voice-over" color="#3C233D" size={36} />
             </View>
           </TouchableOpacity>

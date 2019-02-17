@@ -1,0 +1,8 @@
+{
+	"auth": {
+		"Kidogo": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

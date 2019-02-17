@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {View, Text, TextInput} from 'react-native'
 import {Icon} from 'react-native-elements'
 import { connect } from 'react-redux';
-import {Caregiver, Centre} from '../components/Signup'
+import {Caregiver, Centre, Confirm} from '../components/Signup'
 import {LinearGradient, SecureStore} from 'expo'
 import uuid from 'uuid'
-import {register} from '../cognito-user-pool-functions'
-
-// import bcrypt from 'bcrypt'
+import {signUp} from '../utilities/authentication'
+import bcrypt from 'react-native-bcrypt'
+import {styles} from '../components/Signup/styles'
+import getAsync from '../utilities/getAsync'
 
 class Signup extends Component{
   constructor(props){
@@ -35,9 +36,8 @@ class Signup extends Component{
     }
   }
 
-  changeQuestions = () => {
-    if (this.state.questionFocus === 'caregiver') this.setState({questionFocus: 'centre'})
-    else this.setState({questionFocus:'caregiver'})
+  changeQuestions = (focusType) => {
+    this.setState({questionFocus: focusType})
   }
 
   handlePassword = (text) => {
@@ -57,54 +57,79 @@ class Signup extends Component{
 
   handleChangeText = (text, val) => {
     this.setState({
-      [val]: text.trim()
+      [val]: text
     })
   }
   
   addMargin = (num) => this.setState({avoidView: num})
   
   componentDidMount = async () => {
-
+    // SecureStore.deleteItemAsync('_CENTRES')
+    const { newCaregivers, newCentres } = await getAsync(false, false, false, false, true, true)
+    console.log('newcaregivers: ', newCaregivers)
+    let centreFound = false
+    console.log('newCentres: ', newCentres)
+    newCentres.map(c => {
+      console.log(c)
+      return
+    })
   }
 
-  success = () => console.log('++++++++++++++++++++++++++++++++++++++++++')
-  failure = () => console.log('------------------------------------------')
+  getCode = () => {
+    const {username, password} = this.state
+    signUp(username.toLowerCase().trim(), password)
+    this.setState({questionFocus: 'confirm'})
+  }
+
+  setError = (err) => {
+    setTimeout(
+      () => this.setState({ error: false }),
+      5000
+    )
+    this.setState({ error: err })
+  }
 
   storeAndNavigate = async () => {
-    console.log('hitting storeAndNAvigate')
-    await register(this.state.username, this.state.password, this.success, this.failure)
-    console.log('after register')
-    const {username, password, f_name, l_name, centre_address_1, centre_address_2} = this.state
+    console.log('hitting sotreandnavigate')
+    let { username, password, f_name, l_name, centre_address_1, centre_address_2 } = this.state
+    username = username.toLowerCase()
     const caregiverId = uuid()
     const centreId = uuid()
-    const caregiver = {
-      id: caregiverId,
-      username,
-      password,
-      f_name,
-      l_name
-    }
-    
+
     const centre = {
       id: centreId,
       centre_address_1,
       centre_address_2
     }
-    //will make async server call here.
+    
     try{
-      let caregivers = await SecureStore.getItemAsync('_CAREGIVERS')
-      if(!caregivers) caregivers = {}
-      else caregivers = JSON.parse(caregivers)
-      const newCaregivers = {...caregivers}
-      if(newCaregivers[username]) return this.setState({error: `Username '${username}' is already taken`})
+      const { newCaregivers, newCentres} = await getAsync(false, false, false, false, true, true)
+      let centreFound = false
+      console.log(newCentres)
+      newCentres.map(c => {
+        if (c.centre_address_1 === centre.centre_address_1) centreFound = true
+        return 
+      })
+      if(!centreFound) newCentres.push(centre)
+      if(newCaregivers[username]) this.setError(`Username ${username} is already taken`)
       else {
+        let hashedPW
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            hashedPW = hash
+          })
+        })
+
         newCaregivers[username] = {
-          password, 
-          f_name,
-          l_name,
+          password: hashedPW, 
+          username: username.trim(),
+          f_name: f_name.trim(),
+          l_name: l_name.trim(),
           id: caregiverId
         }
+
         await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers))
+        await SecureStore.setItemAsync('_CENTRES', JSON.stringify(newCentres))
         this.props.navigation.navigate('Home')
       }
     }catch(err){
@@ -124,17 +149,31 @@ class Signup extends Component{
               handleChangeText={this.handleChangeText} 
               addMargin={this.addMargin} 
               {...this.state} 
-              changeQuestions={this.changeQuestions}/>
-          : <Centre 
-              handleChangeText={this.handleChangeText} 
-              addMargin={this.addMargin} 
-              {...this.state} 
-              changeQuestions={this.changeQuestions} 
-              storeAndNavigate={this.storeAndNavigate}/>
+              changeQuestions={this.changeQuestions}
+              handleChangeText={this.handleChangeText}  
+              setError={this.setError}
+            />
+          : this.state.questionFocus === 'centre' 
+            ? <Centre 
+                handleChangeText={this.handleChangeText} 
+                addMargin={this.addMargin} 
+                {...this.state} 
+                changeQuestions={this.changeQuestions} 
+                getCode={this.getCode}
+              setError={this.setError}
+              />
+            :<Confirm 
+                username={this.state.username.trim().toLowerCase()}
+                handleChangeText={this.handleChangeText}
+                navigation={this.props.navigation}
+                setError={this.setError}
+                storeAndNavigate={this.storeAndNavigate}
+              />
         }
         { !!this.state.error
-          ? <View style={{position:'absolute', top:10, right:10, width:150, height:75, padding:10,}}>
-              <Text>{this.state.error}</Text>            
+          ? <View style={styles.error}>
+              <Text style={styles.errorText}>{this.state.error}</Text>  
+              {console.log('error')}          
             </View>
           : null
           }

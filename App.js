@@ -20,6 +20,13 @@ import Questions from './screens/Questions'
 import Signup from './screens/Signup'
 import Upload from './screens/Upload'
 import {Notifications} from 'expo'
+import Amplify, {Auth} from 'aws-amplify'
+import awsmobile from './aws-exports'
+// import Auth from '@aws-amplify/auth'
+import awsconfig from './aws-exports'
+
+Auth.configure(awsconfig)
+Amplify.configure(awsmobile)
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -36,7 +43,8 @@ const AppNavigator = createStackNavigator({
   Finances: Finances,
   Questions: Questions,
   Signup: Signup,
-  Enrollment: Enrollment
+  Enrollment: Enrollment,
+  Upload: Upload
 },
 
 {
