@@ -11,7 +11,7 @@ export default class Caregiver extends Component {
     super(props)
     this.state = {
       focusedOn: null,
-      number: []
+      number: [],
     }
     this._2 = React.createRef()
     this._3 = React.createRef()
@@ -88,7 +88,7 @@ export default class Caregiver extends Component {
           />
         </View>
         <Text style={styles.label}>Code</Text>
-        
+
         <View style={{flexDirection:'row', margin:10}}>
           <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5 }]} onPress={() => resend(this.props.username)}>
             <Text style={styles.btnText}>Resend</Text>
@@ -96,14 +96,14 @@ export default class Caregiver extends Component {
 
           <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => {
             this.state.number.length === 6 
-              ? confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError)
+              ? Promise.all([ confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError),
+                this.props.handleChangeText(true, 'loading')])
               : this.props.setError('Enter the confirmation code')
-
           }}>
             <Text style={styles.btnText}>Confirm</Text>
           </TouchableOpacity>
         </View>
-
+        
       </View>
     )
   }

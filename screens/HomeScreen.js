@@ -5,6 +5,8 @@ import {styles} from '../components/Signup/styles'
 import {LinearGradient, SecureStore} from 'expo'
 import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
+import bcrypt from 'react-native-bcrypt'
+import Loading from '../components/Loading'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -20,7 +22,8 @@ export default class HomeScreen extends Component{
       authorized:false,
       caregivers: {},
       showHelp: false,
-      playing: false
+      playing: false,
+      loading:false
     }
   }
 
@@ -57,7 +60,7 @@ export default class HomeScreen extends Component{
 
   handleChangeText = (text, val) => {
     this.setState({
-      [val]: text
+      [val]: text.trim()
     })
   }
 
@@ -65,11 +68,21 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
-    if (!newCaregivers[this.state.username]) return this.setState({ error: `No username found for ${this.state.username}` })
-    else if (newCaregivers[this.state.username].password !== this.state.password) this.setState({ error: 'Incorrect password' })
+    if (!newCaregivers[this.state.username.toLowerCase()]) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
-      await SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
-      this.props.navigation.navigate('Dash')
+      console.log(this.state.password, newCaregivers[this.state.username.toLowerCase()])
+
+      return bcrypt.compare(this.state.password, newCaregivers[this.state.username.toLowerCase()].password, (err, res) => {
+        console.log('error: ', err, 'response :', res)
+        if(err || !res) return this.setState({ loading: false, error: 'Incorrect password' })
+        else{
+          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
+          .then(() => {
+            this.setState({loading: false})
+            this.props.navigation.navigate('Dash')
+          })
+        }
+      })
 
     } 
   }
@@ -160,7 +173,9 @@ export default class HomeScreen extends Component{
             (!!this.state.username && !!this.state.password)
               ? styles.ready
               : styles.notReady]} 
-            onPress={this.handleSignIn}>
+            onPress={() => {
+              return Promise.all([this.setState({loading:true}), this.handleSignIn()])
+              }}>
             <Text style={styles.nextText}>sign in</Text>
             <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop:15 }}/>
           </TouchableOpacity>
@@ -181,7 +196,12 @@ export default class HomeScreen extends Component{
           </TouchableOpacity>
           : null
         }
-            
+          {this.state.loading
+            ? <Loading />
+            : null
+          }
+        
+
       </LinearGradient>
     )
   }

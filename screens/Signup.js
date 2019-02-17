@@ -9,6 +9,7 @@ import {signUp} from '../utilities/authentication'
 import bcrypt from 'react-native-bcrypt'
 import {styles} from '../components/Signup/styles'
 import getAsync from '../utilities/getAsync'
+import Loading from '../components/Loading'
 
 class Signup extends Component{
   constructor(props){
@@ -23,7 +24,8 @@ class Signup extends Component{
       centre_address_2: null,
       questionFocus: 'caregiver',
       avoidView: false,
-      error:false
+      error:false,
+      loading:false
     }
   }
 
@@ -62,18 +64,6 @@ class Signup extends Component{
   }
   
   addMargin = (num) => this.setState({avoidView: num})
-  
-  componentDidMount = async () => {
-    // SecureStore.deleteItemAsync('_CENTRES')
-    const { newCaregivers, newCentres } = await getAsync(false, false, false, false, true, true)
-    console.log('newcaregivers: ', newCaregivers)
-    let centreFound = false
-    console.log('newCentres: ', newCentres)
-    newCentres.map(c => {
-      console.log(c)
-      return
-    })
-  }
 
   getCode = () => {
     const {username, password} = this.state
@@ -90,7 +80,6 @@ class Signup extends Component{
   }
 
   storeAndNavigate = async () => {
-    console.log('hitting sotreandnavigate')
     let { username, password, f_name, l_name, centre_address_1, centre_address_2 } = this.state
     username = username.toLowerCase()
     const caregiverId = uuid()
@@ -105,32 +94,33 @@ class Signup extends Component{
     try{
       const { newCaregivers, newCentres} = await getAsync(false, false, false, false, true, true)
       let centreFound = false
-      console.log(newCentres)
       newCentres.map(c => {
         if (c.centre_address_1 === centre.centre_address_1) centreFound = true
         return 
       })
       if(!centreFound) newCentres.push(centre)
-      if(newCaregivers[username]) this.setError(`Username ${username} is already taken`)
+      if(newCaregivers[username]) return Promise.all([this.setError(`Username ${username} is already taken`), this.setState({loading:false})])
       else {
         let hashedPW
-        bcrypt.genSalt(10, (err, salt) => {
+        return bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(password, salt, (err, hash) => {
+            if(err) return Promise.all([this.setError('Something went wrong when making your account'), this.setState({loading:false})])
             hashedPW = hash
+            newCaregivers[username] = {
+              password: hashedPW, 
+              username: username.trim(),
+              f_name: f_name.trim(),
+              l_name: l_name.trim(),
+              id: caregiverId
+            }
+            return Promise.all([
+              SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers)),
+              SecureStore.setItemAsync('_CENTRES', JSON.stringify(newCentres)),
+              this.setState({loading:false}),
+              this.props.navigation.navigate('Home')
+            ])
           })
         })
-
-        newCaregivers[username] = {
-          password: hashedPW, 
-          username: username.trim(),
-          f_name: f_name.trim(),
-          l_name: l_name.trim(),
-          id: caregiverId
-        }
-
-        await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers))
-        await SecureStore.setItemAsync('_CENTRES', JSON.stringify(newCentres))
-        this.props.navigation.navigate('Home')
       }
     }catch(err){
       console.error(err)
@@ -176,6 +166,10 @@ class Signup extends Component{
               {console.log('error')}          
             </View>
           : null
+          }
+          {this.state.loading
+            ? <Loading/>
+            : null
           }
       </LinearGradient>
     )

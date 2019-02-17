@@ -65,6 +65,7 @@ class App extends Component{
     }
     const t = new Date()
     if(t.getHours() >= 8) t.setDate(t.getDate() + 1)
+    t.setSeconds(0)
     t.setMinutes(0)
     t.setHours(8)
 
@@ -84,6 +85,7 @@ class App extends Component{
     const t2 = new Date()
 
     if (t2.getHours() >= 15) t2.setDate(t2.getDate() + 1)
+    t2.setSeconds(0)
     t2.setMinutes(0)
     t2.setHours(15)
     
