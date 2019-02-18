@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements'
 import axios from 'axios'
 import {LinearGradient, SecureStore} from 'expo'
 import Header from '../components/Header'
-import Amplify, { API } from 'aws-amplify';
+import Amplify, { API, Auth } from 'aws-amplify';
 import awsmobile from '../aws-exports';
 import {styles} from '../components/Signup/styles'
 import {signIn} from '../utilities/authentication'
@@ -59,8 +59,21 @@ class Upload extends Component{
   // state = { apiResponse: null };
 
   getSample = async () => {
+    const user = await Auth.currentAuthenticatedUser()
+    const token = user.signInUserSession.idToken.jwtToken
+    
+    const request = {
+      headers: {
+        Authorization: token
+      }
+    };
+    console.log(request.headers.Authorization)
     const path = "/centres"; // you can specify the path
-    const apiResponse = await API.get("Kidogo", path); //replace the API name
+    
+    const apiResponse = await API.get("Kidogo", path,) //request) //replace the API name
+    .catch(err => {
+      console.error(err)
+    })
     console.log('response:' + apiResponse);
     this.setState({ apiResponse });
   }
@@ -148,14 +161,14 @@ class Upload extends Component{
                   <Text style={styles.btnText}>sign in</Text>
                 </TouchableOpacity>
               </View>
-            : null
+            : <View>
+                <Button title="Send Request" onPress={this.getSample} />
+                <Text style={{ color: 'white', fontSize: 18 }}>Response: {this.state.apiResponse && JSON.stringify(this.state.apiResponse)}</Text>
+            </View>
             }
 
         </ScrollView>
-        {/* <View>
-          <Button title="Send Request" onPress={this.getSample} />
-          <Text style={{color:'white', fontSize:18}}>Response: {this.state.apiResponse && JSON.stringify(this.state.apiResponse)}</Text>
-        </View> */}
+        
         {!!this.state.error
           ? <View style={styles.error}>
               <Text style={styles.errorText}>{this.state.error}</Text>

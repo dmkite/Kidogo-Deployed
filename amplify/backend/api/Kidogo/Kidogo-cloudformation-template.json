@@ -475,7 +475,7 @@
         
         
         
-      "DeploymentAPIGWKidogo": {
+      "DeploymentAPIGWKidogoff164bf1": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",

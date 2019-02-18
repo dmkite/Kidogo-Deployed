@@ -30,7 +30,8 @@ app.use(function(req, res, next) {
 //WILL NOT NEED////////////////////////////////////////////////////////////////
 app.get('/centres', function(req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  // res.json({success: 'get call succeed!', url: req.url});
+  res.status(200).send({message:'WOOHOO!'})
 });
 ///////////////////////////////////////////////////////////////////////////////
 
