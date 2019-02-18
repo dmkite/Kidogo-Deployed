@@ -107,10 +107,11 @@ export default class Caregiver extends Component{
           (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username) 
             ? styles.ready  
             : styles.notReady]} 
-            onPress={
-            (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username)
-              ? this.props.changeQuestions
-              : null}
+            onPress={ () => 
+              (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username)
+                ? this.props.changeQuestions('centre')
+                : this.props.setError('Fill out a username, password, and your name')
+            }
           >
             <Text style={styles.nextText}>Next</Text>
             <Icon name="chevron-right" size={24} color='white' style={{flex:0.1, marginTop:13}}/>
@@ -120,4 +121,7 @@ export default class Caregiver extends Component{
   }
 }
 
+// {/* (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username)
+//   ? this.props.changeQuestions
+//   : null */}
 //style={[styles.next, (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username) ? {opacity:1} : null ]}

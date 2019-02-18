@@ -1,0 +1,36 @@
+{
+    "paths": [
+        {
+            "name": "/centres",
+            "lambdaFunction": "Kidogo",
+            "privacy": {
+                "private": true,
+                "auth": "rw"
+            }
+        }
+    ],
+    "resourceName": "Kidogo",
+    "apiName": "Kidogo",
+    "functionArns": [
+        {
+            "lambdaFunction": "Kidogo"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "kidogo-20190216133116-authRole",
+        "unAuthRoleName": "kidogo-20190216133116-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "Kidogo",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "ff164bf1"
+}

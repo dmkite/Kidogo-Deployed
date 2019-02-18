@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import {Text, View, TouchableOpacity, Image, TextInput, StyleSheet} from 'react-native'
-import Header from '../components/Header/'
-import DashBoard from './DashBoard'
-import uuid from 'uuid'
-import addData from '../seeds'
 import {Audio} from 'expo'
 import {styles} from '../components/Signup/styles'
 import {LinearGradient, SecureStore} from 'expo'
 import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
+import bcrypt from 'react-native-bcrypt'
+import Loading from '../components/Loading'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -23,10 +21,11 @@ export default class HomeScreen extends Component{
       error: false,
       authorized:false,
       caregivers: {},
-      showHelp: false
+      showHelp: false,
+      playing: false,
+      loading:false
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,
@@ -54,14 +53,14 @@ export default class HomeScreen extends Component{
       hiddenPassword += '*'
     }
     this.setState({
-      password,
-      hiddenPassword
+      password: password.trim(),
+      hiddenPassword: hiddenPassword.trim()
     })
   }
 
   handleChangeText = (text, val) => {
     this.setState({
-      [val]: text
+      [val]: text.trim()
     })
   }
 
@@ -69,11 +68,21 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
-    if (!newCaregivers[this.state.username]) return this.setState({ error: `No username found for ${this.state.username}` })
-    else if (newCaregivers[this.state.username].password !== this.state.password) this.setState({ error: 'Incorrect password' })
+    if (!newCaregivers[this.state.username.toLowerCase()]) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
-      await SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
-      this.props.navigation.navigate('Dash')
+      console.log(this.state.password, newCaregivers[this.state.username.toLowerCase()])
+
+      return bcrypt.compare(this.state.password, newCaregivers[this.state.username.toLowerCase()].password, (err, res) => {
+        console.log('error: ', err, 'response :', res)
+        if(err || !res) return this.setState({ loading: false, error: 'Incorrect password' })
+        else{
+          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
+          .then(() => {
+            this.setState({loading: false})
+            this.props.navigation.navigate('Dash')
+          })
+        }
+      })
 
     } 
   }
@@ -81,7 +90,10 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     // return this.props.navigation.navigate('Payments', {
     //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
+    return this.props.navigation.navigate('Upload')
+    let message = this.props.navigation.getParam('message')
     setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    if(message) this.setState({error:message})
     let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
     if(signedIn) signedIn = JSON.parse(signedIn)
 
@@ -90,6 +102,11 @@ export default class HomeScreen extends Component{
 
   
   playAudio = async () => {
+    if (this.state.playing === true) return
+    this.setState({ playing: true })
+    setTimeout(
+      () => this.setState({ playing: false }), 20000
+    )
     const soundObject = new Audio.Sound()
     try{
       await soundObject.loadAsync(require('../assets/signin.mp3'))
@@ -159,7 +176,9 @@ export default class HomeScreen extends Component{
             (!!this.state.username && !!this.state.password)
               ? styles.ready
               : styles.notReady]} 
-            onPress={this.handleSignIn}>
+            onPress={() => {
+              return Promise.all([this.setState({loading:true}), this.handleSignIn()])
+              }}>
             <Text style={styles.nextText}>sign in</Text>
             <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop:15 }}/>
           </TouchableOpacity>
@@ -172,17 +191,20 @@ export default class HomeScreen extends Component{
           : null
         }
 
-        
-
         {this.state.showHelp 
-          ? <TouchableOpacity style={{ backgroundColor: 'white', position: 'absolute', bottom: -75, right: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
-            <View style={{ position: 'absolute', bottom: 85, right: 80 }}>
+          ? <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
               <Icon name="record-voice-over" color="#3C233D" size={36} />
             </View>
           </TouchableOpacity>
           : null
         }
-            
+          {this.state.loading
+            ? <Loading />
+            : null
+          }
+        
+
       </LinearGradient>
     )
   }

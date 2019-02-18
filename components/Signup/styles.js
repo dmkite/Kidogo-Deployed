@@ -86,5 +86,19 @@ export const styles = {
   errorText:{
     color:"white",
     fontSize:18
+  },
+  button: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ffffff80',
+    paddingHorizontal: 10,
+    flex: 0.5,
+    marginVertical: 20
+  },
+  btnText: {
+    fontSize: 24,
+    lineHeight: 50,
+    color: '#ffffff80',
+    textAlign: 'center'
   }
 }

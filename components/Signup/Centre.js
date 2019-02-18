@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TextInput, Image, TouchableOpacity } from 'reac
 import { Icon } from 'react-native-elements'
 import { LinearGradient } from 'expo'
 import { styles } from './styles'
+import {signUp} from '../../utilities/authentication'
 
 export default class Caregiver extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ export default class Caregiver extends Component {
           (!!this.props.centre_address_1 && !!this.props.centre_address_2)
             ? styles.ready
             : styles.notReady]}
-            onPress={this.props.changeQuestions}
+            onPress={() => this.props.changeQuestions('caregiver')}
           >
             <Icon name="chevron-left" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
             <Text style={styles.nextText}>back</Text>
@@ -69,13 +70,14 @@ export default class Caregiver extends Component {
           (!!this.props.centre_address_1 && !!this.props.centre_address_2)
             ? styles.ready
             : styles.notReady]}
-            onPress={
+            onPress={() => {
               (!!this.props.centre_address_1 && !!this.props.centre_address_2)
-                ? this.props.storeAndNavigate
-                : null}
+                ? this.props.getCode()
+                : this.props.setError('Make sure to enter a street address and city')
+            }}
           >
-            <Text style={styles.nextText}>go to sign in</Text>
-            <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
+            <Text style={styles.nextText}>get code</Text>
+            {/* <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} /> */}
           </TouchableOpacity>
         </View>
       

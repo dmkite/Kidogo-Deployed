@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "kidogo-20190216133116-authRole",
+            "UnauthRoleArn": "arn:aws:iam::588236339892:role/kidogo-20190216133116-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::588236339892:role/kidogo-20190216133116-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "kidogo-20190216133116-deployment",
+            "UnauthRoleName": "kidogo-20190216133116-unauthRole",
+            "StackName": "kidogo-20190216133116",
+            "StackId": "arn:aws:cloudformation:us-west-2:588236339892:stack/kidogo-20190216133116/3175d430-3232-11e9-8121-06349f38bdd2"
+        },
+        "categories": {
+            "auth": {
+                "Kidogo": {}
+            }
+        }
+    }
+}

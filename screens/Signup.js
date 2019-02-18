@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import {View, Text, TextInput} from 'react-native'
 import {Icon} from 'react-native-elements'
 import { connect } from 'react-redux';
-import {Caregiver, Centre} from '../components/Signup'
+import {Caregiver, Centre, Confirm} from '../components/Signup'
 import {LinearGradient, SecureStore} from 'expo'
 import uuid from 'uuid'
-import {register} from '../cognito-user-pool-functions'
-
-// import bcrypt from 'bcrypt'
+import {signUp} from '../utilities/authentication'
+import bcrypt from 'react-native-bcrypt'
+import {styles} from '../components/Signup/styles'
+import getAsync from '../utilities/getAsync'
+import Loading from '../components/Loading'
 
 class Signup extends Component{
   constructor(props){
@@ -22,7 +24,8 @@ class Signup extends Component{
       centre_address_2: null,
       questionFocus: 'caregiver',
       avoidView: false,
-      error:false
+      error:false,
+      loading:false
     }
   }
 
@@ -35,9 +38,8 @@ class Signup extends Component{
     }
   }
 
-  changeQuestions = () => {
-    if (this.state.questionFocus === 'caregiver') this.setState({questionFocus: 'centre'})
-    else this.setState({questionFocus:'caregiver'})
+  changeQuestions = (focusType) => {
+    this.setState({questionFocus: focusType})
   }
 
   handlePassword = (text) => {
@@ -57,55 +59,68 @@ class Signup extends Component{
 
   handleChangeText = (text, val) => {
     this.setState({
-      [val]: text.trim()
+      [val]: text
     })
   }
   
   addMargin = (num) => this.setState({avoidView: num})
-  
-  componentDidMount = async () => {
 
+  getCode = () => {
+    const {username, password} = this.state
+    signUp(username.toLowerCase().trim(), password)
+    this.setState({questionFocus: 'confirm'})
   }
 
-  success = () => console.log('++++++++++++++++++++++++++++++++++++++++++')
-  failure = () => console.log('------------------------------------------')
+  setError = (err) => {
+    setTimeout(
+      () => this.setState({ error: false }),
+      5000
+    )
+    this.setState({ error: err })
+  }
 
   storeAndNavigate = async () => {
-    console.log('hitting storeAndNAvigate')
-    await register(this.state.username, this.state.password, this.success, this.failure)
-    console.log('after register')
-    const {username, password, f_name, l_name, centre_address_1, centre_address_2} = this.state
+    let { username, password, f_name, l_name, centre_address_1, centre_address_2 } = this.state
+    username = username.toLowerCase()
     const caregiverId = uuid()
     const centreId = uuid()
-    const caregiver = {
-      id: caregiverId,
-      username,
-      password,
-      f_name,
-      l_name
-    }
-    
+
     const centre = {
       id: centreId,
       centre_address_1,
       centre_address_2
     }
-    //will make async server call here.
+    
     try{
-      let caregivers = await SecureStore.getItemAsync('_CAREGIVERS')
-      if(!caregivers) caregivers = {}
-      else caregivers = JSON.parse(caregivers)
-      const newCaregivers = {...caregivers}
-      if(newCaregivers[username]) return this.setState({error: `Username '${username}' is already taken`})
+      const { newCaregivers, newCentres} = await getAsync(false, false, false, false, true, true)
+      let centreFound = false
+      newCentres.map(c => {
+        if (c.centre_address_1 === centre.centre_address_1) centreFound = true
+        return 
+      })
+      if(!centreFound) newCentres.push(centre)
+      if(newCaregivers[username]) return Promise.all([this.setError(`Username ${username} is already taken`), this.setState({loading:false})])
       else {
-        newCaregivers[username] = {
-          password, 
-          f_name,
-          l_name,
-          id: caregiverId
-        }
-        await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers))
-        this.props.navigation.navigate('Home')
+        let hashedPW
+        return bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            if(err) return Promise.all([this.setError('Something went wrong when making your account'), this.setState({loading:false})])
+            hashedPW = hash
+            newCaregivers[username] = {
+              password: hashedPW, 
+              username: username.trim(),
+              f_name: f_name.trim(),
+              l_name: l_name.trim(),
+              id: caregiverId
+            }
+            return Promise.all([
+              SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers)),
+              SecureStore.setItemAsync('_CENTRES', JSON.stringify(newCentres)),
+              this.setState({loading:false}),
+              this.props.navigation.navigate('Home')
+            ])
+          })
+        })
       }
     }catch(err){
       console.error(err)
@@ -124,19 +139,37 @@ class Signup extends Component{
               handleChangeText={this.handleChangeText} 
               addMargin={this.addMargin} 
               {...this.state} 
-              changeQuestions={this.changeQuestions}/>
-          : <Centre 
-              handleChangeText={this.handleChangeText} 
-              addMargin={this.addMargin} 
-              {...this.state} 
-              changeQuestions={this.changeQuestions} 
-              storeAndNavigate={this.storeAndNavigate}/>
+              changeQuestions={this.changeQuestions}
+              handleChangeText={this.handleChangeText}  
+              setError={this.setError}
+            />
+          : this.state.questionFocus === 'centre' 
+            ? <Centre 
+                handleChangeText={this.handleChangeText} 
+                addMargin={this.addMargin} 
+                {...this.state} 
+                changeQuestions={this.changeQuestions} 
+                getCode={this.getCode}
+              setError={this.setError}
+              />
+            :<Confirm 
+                username={this.state.username.trim().toLowerCase()}
+                handleChangeText={this.handleChangeText}
+                navigation={this.props.navigation}
+                setError={this.setError}
+                storeAndNavigate={this.storeAndNavigate}
+              />
         }
         { !!this.state.error
-          ? <View style={{position:'absolute', top:10, right:10, width:150, height:75, padding:10,}}>
-              <Text>{this.state.error}</Text>            
+          ? <View style={styles.error}>
+              <Text style={styles.errorText}>{this.state.error}</Text>  
+              {console.log('error')}          
             </View>
           : null
+          }
+          {this.state.loading
+            ? <Loading/>
+            : null
           }
       </LinearGradient>
     )
