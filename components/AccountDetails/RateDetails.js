@@ -128,7 +128,7 @@ export default class RateDetails extends Component{
         {this.props.currentForm === 'rate' 
           ? null
         : <View style={styles.buttonBlock}>
-            <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
+            <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight: 5 }]} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
               <Text style={[fStyles.btnText, { fontSize: 18 }]}>Make Payment</Text>
           </TouchableOpacity>
   

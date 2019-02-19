@@ -4,6 +4,12 @@ export const styles = {
     color:'red',
     margin:10
   },
+  h1: {
+    fontSize: 36,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    color: '#ffffff80'
+  },
   inputHolder:{
     flexDirection:'row'
   },
@@ -74,6 +80,13 @@ export const styles = {
   textRow: {
     color:'#ffffff80',
     lineHeight:50,
-    flex:0.2
+    flex:0.2,
+    fontSize:18
+  },
+  headerRow:{
+    flex:0.3,
+    color:'#ffffff80',
+    fontWeight:'bold',
+    fontSize:18
   }
 }

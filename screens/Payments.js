@@ -59,7 +59,6 @@ class Payments extends Component{
             changeField={this.props.changeField}
             addMargin={this.addMargin}
           />
-          <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
           
           <PaymentHistory paymentHistory={this.props.payments ? this.props.payments[this.props.navigation.getParam('id')] : []}/>
         </ScrollView>

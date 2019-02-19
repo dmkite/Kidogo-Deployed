@@ -30,6 +30,12 @@ export const styles = {
     textAlign:'center',
     fontSize:24
   },
+  btnText: {
+    color: '#ffffff80',
+    lineHeight: 50,
+    textAlign: 'center',
+    fontSize: 18
+  },
   input: {
     borderBottomWidth: 2,
     borderColor: 'white',
