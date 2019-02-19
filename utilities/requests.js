@@ -50,16 +50,14 @@ export const post = async(success, failure) => {
   const body = {
     body: await createBody()
   }
-  console.log(body, ']]]]]]]]]]]]]]')
   let apiName = 'Kidogo'
   let path = '/centres' 
-  let myInit = { body: JSON.stringify(body) }
   
   const apiResponse = await API.post(apiName, path, body)//, myInit)
-  .catch(err => console.error(err))
-  console.log(apiResponse)
-    // console.log(apiResponse)
-    // success(apiResponse)
-    // console.error(err)
-    // failure(err.error)
+  .then(res => success('Upload successful!'))
+  .catch(err => {
+    if(err.message) failure(err.message)
+    else if(err.error) failure(err.error)
+    else failure('Something went wrong. Try again later.')
+  })
 }

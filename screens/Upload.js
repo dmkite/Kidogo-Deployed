@@ -62,7 +62,7 @@ class Upload extends Component{
     this.setState({ error: err })
   }
 
-  storeRespone = (apiResponse) => {
+  storeResponse = (apiResponse) => {
     this.setState({apiResponse})
   }
 
