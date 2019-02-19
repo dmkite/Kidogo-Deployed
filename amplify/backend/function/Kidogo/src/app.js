@@ -46,7 +46,9 @@ app.get('/centres/*', function(req, res) {
 
 app.post('/centres', function(req, res) {
   // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  // const toStore = JSON.parse(req.body)
+  // res.status(200).json({message: Object.keys(toStore)})
+  res.status(200).send({message: JSON.stringify(req.body)})
 });
 
 ///////////////////////////////////////////////////////////////////////////////

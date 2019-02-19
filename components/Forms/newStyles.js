@@ -115,5 +115,10 @@ export const styles = {
     lineHeight:50,
     color:'#ffffff80',
     textAlign:'center'
+  },
+  h1:{
+    fontSize:36,
+    color:'#ffffff80',
+    margin:10
   }
 }

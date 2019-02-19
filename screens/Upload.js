@@ -28,7 +28,9 @@ class Upload extends Component{
       playing: false,
       loading: false,
       needSignIn: false,
-      token: null
+      token: null,
+      apiResponse: null,
+      eventId: ''
     }
   }
   
@@ -39,10 +41,14 @@ class Upload extends Component{
       height: 0
     }
   }
+  handleChangeEventId = (event) => {
+    this.setState({eventId: event})
+  }
 
   componentDidMount = async () => {
     // await SecureStore.deleteItemAsync('_TOKEN')
     let token = await SecureStore.getItemAsync('_TOKEN')
+    // console.log(token, '===============================')
     if(!token) this.setState({needSignIn: true})
     else this.setState({token: JSON.parse(token)})
 
@@ -54,6 +60,10 @@ class Upload extends Component{
       5000
     )
     this.setState({ error: err })
+  }
+
+  storeRespone = (apiResponse) => {
+    this.setState({apiResponse})
   }
 
   addMargin = (num) => this.setState({ avoidView: num })
@@ -114,6 +124,7 @@ class Upload extends Component{
         style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
+      
         <ScrollView>
           <Image
             source={require('../assets/UPLOAD.png')}
@@ -169,7 +180,7 @@ class Upload extends Component{
                 </TouchableOpacity>
               </View>
             : <View>
-                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={post}>
+                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => post(this.storeResponse, this.setError)}>
                   <Text style={styles.btnText}>Upload</Text>
                 </TouchableOpacity>
 

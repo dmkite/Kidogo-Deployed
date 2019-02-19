@@ -60,7 +60,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "kidogo-20190216133116-deployment",
-					"S3Key": "amplify-builds/Kidogo-1550447584-latest-build.zip"
+					"S3Key": "amplify-builds/Kidogo-1550603924-latest-build.zip"
 				}
 			}
 		},

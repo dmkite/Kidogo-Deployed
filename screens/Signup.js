@@ -29,7 +29,6 @@ class Signup extends Component{
     }
   }
 
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -44,8 +43,7 @@ class Signup extends Component{
 
   handlePassword = (text) => {
     let password = this.state.password
-    
-    
+  
     text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
     let hiddenPassword = ''
     for (let letter of password) {
@@ -111,7 +109,8 @@ class Signup extends Component{
               username: username.trim(),
               f_name: f_name.trim(),
               l_name: l_name.trim(),
-              id: caregiverId
+              id: caregiverId,
+              centre_id: centreId
             }
             return Promise.all([
               SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers)),

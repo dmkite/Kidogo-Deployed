@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import {connect} from 'react-redux' 
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
-import {styles} from '../components/Forms/styles'
+import {styles} from '../components/Forms/newStyles'
 import {addAccount} from '../actions/accounts'
 import {makePayment} from '../actions/payments'
 import uuid from 'uuid'
@@ -119,6 +119,7 @@ class Enrollment extends Component{
        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
        colors={['#11011B', '#3C233D']}>
       <Header navigation={this.props.navigation}/>
+        <Text style={styles.h1}>{this.state.questionFocus === 'child' ? 'Add a new child' : this.state.questionFocus === 'guardian' ? 'Add a guardian' : 'Add a contact'}</Text>      
         {this.state.questionFocus === 'child'
            ? <Child
              navigation={this.props.navigation}

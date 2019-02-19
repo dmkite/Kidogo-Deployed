@@ -58,21 +58,21 @@ class Child extends Component{
           ? <Image
             source={{uri:this.state.img_uri}}
             style={{
-              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 20
             }}
           />
           : <Image
             source={require('../../assets/CHILD.png')}
             style={{
-              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 20
             }}
           />
         }
             
            
   
-          <TouchableOpacity style={{width:50, opacity:0.5, margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
-            <Icon name="camera-alt" size={36} color="white"/>
+          <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
+            <Icon name="camera-alt" size={36} color="#ffffff80"/>
           </TouchableOpacity>
 
           <View style={styles.nameHolder}>

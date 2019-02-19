@@ -46,12 +46,16 @@ export default class HomeScreen extends Component{
 
   handlePassword = (text) => {
     let password = this.state.password
-
-    text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
-    let hiddenPassword = ''
-    for (let letter of password) {
-      hiddenPassword += '*'
-    }
+    let hiddenPassword = this.state.hiddenPassword
+    text.length > this.state.password.length 
+      ? (password += text[text.length - 1], 
+        hiddenPassword += '*')
+      : (password = password.slice(0, password.length - 1),
+        hiddenPassword = hiddenPassword.slice(0, hiddenPassword.length -1))
+    
+    // for (let letter of password) {
+    //   hiddenPassword += '*'
+    // }
     this.setState({
       password: password.trim(),
       hiddenPassword: hiddenPassword.trim()
@@ -68,15 +72,14 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
-    if (!newCaregivers[this.state.username.toLowerCase()]) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
+    const user = newCaregivers[this.state.username.toLowerCase()]
+    if (!user) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
-      console.log(this.state.password, newCaregivers[this.state.username.toLowerCase()])
-
-      return bcrypt.compare(this.state.password, newCaregivers[this.state.username.toLowerCase()].password, (err, res) => {
+      return bcrypt.compare(this.state.password, user.password, (err, res) => {
         console.log('error: ', err, 'response :', res)
         if(err || !res) return this.setState({ loading: false, error: 'Incorrect password' })
         else{
-          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
+          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user, time: Date.now()}))
           .then(() => {
             this.setState({loading: false})
             this.props.navigation.navigate('Dash')

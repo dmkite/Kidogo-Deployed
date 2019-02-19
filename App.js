@@ -98,7 +98,7 @@ class App extends Component{
 
     Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
     Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
-    Notifications.dismissAllNotificationsAsync()
+    // Notifications.dismissAllNotificationsAsync()
 
   }
 
