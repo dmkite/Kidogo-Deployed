@@ -16,8 +16,13 @@ class AfternoonQuestions extends Component {
       <View style={styles.questionHolder}>
         {this.state.onQuestion == 1
           ? <View>
-            <Image source={require('../../assets/kes.png')} style={{ alignSelf: 'center', marginTop: 50 }} />
-            <Text style={{ fontSize: 18, marginVertical: 10 }}>How many adults/caregivers were in the centre today?</Text>
+            <Image
+              source={require('../../assets/CAREGIVER.png')}
+              style={{
+                height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+              }}
+            />
+            <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>How many adults/caregivers were in the centre today?</Text>
             <View style={styles.inputHolder}>
               <TextInput
                 style={styles.numberInput}
@@ -32,8 +37,13 @@ class AfternoonQuestions extends Component {
             </View>
           </View>
           : <View>
-            <Image source={require('../../assets/kes.png')} style={{ alignSelf: 'center', marginTop: 50 }} />
-            <Text style={{ fontSize: 18, marginVertical: 10 }}>Did all children get enough food today?</Text>
+            <Image
+              source={require('../../assets/FOOD.png')}
+              style={{
+                height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+              }}
+            />
+            <Text style={{ fontSize: 18, marginVertical: 10, color: '#ffffff80' }}>Did all children get enough food today?</Text>
             <View style={styles.buttonBlock}>
               <TouchableOpacity
                 style={styles.button }

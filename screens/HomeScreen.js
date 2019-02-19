@@ -88,9 +88,9 @@ export default class HomeScreen extends Component{
   }
 
   componentDidMount = async () => {
-    return this.props.navigation.navigate('Account', {
-      id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
-    return this.props.navigation.navigate('Accounts')
+    // return this.props.navigation.navigate('Account', {
+    //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
+    // return this.props.navigation.navigate('Accounts')
     let message = this.props.navigation.getParam('message')
     setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if(message) this.setState({error:message})

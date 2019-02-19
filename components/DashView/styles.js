@@ -8,7 +8,7 @@ export const styles = {
   },
   dashFont:{
     zIndex:99,
-    fontSize: 36,
+    fontSize: 24,
     height:200,
     lineHeight:200,
     position: 'absolute',
