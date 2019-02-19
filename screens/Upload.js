@@ -46,9 +46,7 @@ class Upload extends Component{
   }
 
   componentDidMount = async () => {
-    // await SecureStore.deleteItemAsync('_TOKEN')
     let token = await SecureStore.getItemAsync('_TOKEN')
-    // console.log(token, '===============================')
     if(!token) this.setState({needSignIn: true})
     else this.setState({token: JSON.parse(token)})
 
@@ -69,25 +67,25 @@ class Upload extends Component{
   addMargin = (num) => this.setState({ avoidView: num })
   // state = { apiResponse: null };
 
-  getSample = async () => {
-    const user = await Auth.currentAuthenticatedUser()
-    const token = user.signInUserSession.idToken.jwtToken
+  // getSample = async () => {
+  //   const user = await Auth.currentAuthenticatedUser()
+  //   const token = user.signInUserSession.idToken.jwtToken
     
-    const request = {
-      headers: {
-        Authorization: token
-      }
-    };
-    console.log(request.headers.Authorization)
-    const path = "/centres"; // you can specify the path
+  //   const request = {
+  //     headers: {
+  //       Authorization: token
+  //     }
+  //   };
+  //   console.log(request.headers.Authorization)
+  //   const path = "/centres";
     
-    const apiResponse = await API.get("Kidogo", path,) //request) //replace the API name
-    .catch(err => {
-      console.error(err)
-    })
-    console.log('response:' + apiResponse);
-    this.setState({ apiResponse });
-  }
+  //   const apiResponse = await API.get("Kidogo", path,) 
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+  //   console.log('response:' + apiResponse);
+  //   this.setState({ apiResponse });
+  // }
 
   changeFocus = (action, type) => {
     if (action === 'focus') this.setState({ focusedOn: type })
@@ -191,10 +189,6 @@ class Upload extends Component{
               <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => this.handleChangeText(true, 'warning')}>
                   <Text style={styles.btnText}>Download</Text>
                 </TouchableOpacity>
-
-
-                <Button title="Send Request" onPress={this.getSample} />
-                <Text style={{ color: 'white', fontSize: 18 }}>Response: {this.state.apiResponse && JSON.stringify(this.state.apiResponse)}</Text>
             </View>
             }
 
@@ -211,7 +205,7 @@ class Upload extends Component{
                 <Text style={styles.btnText}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => this.handleChangeText(false, 'warning')}>
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => Promise.all([this.changeLoading(), get(this.setError, this.changeLoading), this.handleChangeText(false, 'warning')])}>
                 <Text style={styles.btnText}>Download</Text>
               </TouchableOpacity>
               </View>

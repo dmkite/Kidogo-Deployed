@@ -4,12 +4,18 @@ import Amplify, { API } from 'aws-amplify';
 import awsmobile from '../aws-exports';
 Amplify.configure(awsmobile);
 
-export const get = async () => {
-  const path = "/centres"; // you can specify the path
+export const get = async (addMessage, changeLoading) => {
+  let userInfo = await SecureStore.getItemAsync('_SIGNEDIN')
+  const { user:{centreId} } = JSON.parse(userInfo)
+  const apiName = 'KidogoApi'
+  const path = `/centres/${centreId}`
 
-  const apiResponse = await API.get("Kidogo", path) //request) //replace the API name
+  const apiResponse = await API.get(apiName, path)
+    .then(() => Promise.all([addMessage('Download successful!'), changeLoading()]))
     .catch(err => {
-      console.error(err)
+      console.log(err)
+      let error = err.message || err.error || 'Something went wrong. Try again later.'
+      return Promise.all([addMessage(error), changeLoading()])
     })
   console.log('response:' + apiResponse);
   // this.setState({ apiResponse })
@@ -54,10 +60,9 @@ export const post = async(addMessage, stopLoading) => {
   let path = '/centres' 
   
   const apiResponse = await API.post(apiName, path, body)//, myInit)
-  .then(res => Promise.all([addMessage('Upload successful!'), stopLoading()])
+  .then(res => Promise.all([addMessage('Upload successful!'), stopLoading()]))
   .catch(err => {
-    if(err.message) return Promise.all([addMessage(err.message), stopLoading()])
-    else if (err.error) return Promise.all([addMessage(err.error), stopLoading()])
-    else return Promise.all([addMessage("Something went wrong. Try again later."), stopLoading()])
+    let error = err.message || err.error || 'Something went wrong. Try again later.'
+    return Promise.all([addMessage(error), stopLoading()])
   })
 }
