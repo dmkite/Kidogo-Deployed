@@ -2,7 +2,7 @@ export const styles = {
   header: {
     flexDirection:'row',
     justifyContent:'space-between',
-    marginTop:10,
+    marginVertical:10,
     height:30,
   },
   editBtn: {
@@ -109,7 +109,7 @@ export const styles = {
     lineHeight:50,
     textAlign: 'center',
     fontSize:18,
-    color:'white'
+    color:'#ffffff80'
   },
   balance: {
     color: '#ffffff80',
@@ -119,7 +119,7 @@ export const styles = {
     // borderColor:'red'
   },
   editBtn:{
-    marginTop:5
+    marginRight:10
     // borderWidth:1,
     // borderColor:'green'
   },
@@ -141,8 +141,9 @@ export const styles = {
     flexDirection:'row',
     borderWidth:1,
   },
+
   childDetails:{
-    marginBottom:20,
+    marginVertical:20,
     position:'relative'
   }
 

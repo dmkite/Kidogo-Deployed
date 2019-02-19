@@ -21,11 +21,10 @@ export default class GuardianDetails extends Component{
     return (
       <View>
         <TouchableOpacity style={styles.header} onPress={() => { this.props.openDetails('guardians') }}>
-          <Text style={styles.h1}>Guardians</Text>
-          <Icon name={this.props.currentlyExpanded === 'guardians' ? "expand-less" : "expand-more"} size={36} color="white"/>
+          <Text style={styles.h2}>Guardians</Text>
+          <Icon name={this.props.currentlyExpanded === 'guardians' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
         </TouchableOpacity>
 
-        <View style={{ height: 2, backgroundColor: '#ccc', margin: 20 }}></View>
 
         {this.props.currentlyExpanded === 'guardians'
           ? <View>
@@ -33,13 +32,13 @@ export default class GuardianDetails extends Component{
             return (
               <View style={styles.childDetails} key={i}>
 
-                <View style={styles.imgAndName}>
-                  <Text style={[styles.topic, styles.name, {marginLeft:10}]}>{g.f_name + ' ' + g.l_name}</Text>
+                <View style={[styles.imgAndName, {height:50}]}>
+                  <Text style={[styles.name, {marginLeft:-5, lineHeight:50}]}>{g.f_name + ' ' + g.l_name}</Text>
                   <TouchableOpacity 
                     style={styles.editBtn} 
                     onPress={() => this.props.navigation.navigate('EditMember', { editing: g, acctId: this.props.acctId, type: 'guardians' })}
                   >
-                    <Icon name="edit" color="#ccc" />
+                    <Icon name="edit" color="#ffffff80" />
                   </TouchableOpacity>
                 </View>
 
@@ -56,7 +55,7 @@ export default class GuardianDetails extends Component{
 
                   <View style={styles.row}>
                     <Text style={styles.topic}>ID:</Text>
-                    <View style={styles.idHolder}>
+                    <View style={[styles.idHolder, {flex:0.7}]}>
                       <Text style={[styles.text, {width:150}]}>{
                         this.state.showId 
                           ? g.govt_id
@@ -68,20 +67,20 @@ export default class GuardianDetails extends Component{
                     </View>
                   </View>
                 </View>
-                {i !== this.props.guardians.length - 1
-                  ? <View style={{ height: 1, backgroundColor: 'white', opacity: 0.5, margin: 10 }}></View>
-                  : null
-                }
               </View>
             )
           }
           )}
-            <TouchableOpacity style={styles.addBtn} onPress={() => this.props.openForm('guardians')}>
-              <Icon name="person-add" color="white" size={35} />
+            <TouchableOpacity style={styles.button} onPress={() => this.props.openForm('guardians')}>
+              <View style={{flexDirection:'row'}}>
+                <Icon name="person-add" color="#ffffff80" size={18} style={{marginRight:5}}/>
+                <Text style={[styles.btnText, {fontSize:18, marginLeft:5}]}>Add Guardian</Text>
+              </View>
             </TouchableOpacity>
             </View>
           : null
         }
+        {/* <View style={{ height: 2, backgroundColor: '#fffff80', marginVertical: 20 }}></View> */}
       </View>
     )
 

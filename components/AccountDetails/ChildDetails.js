@@ -17,10 +17,11 @@ export default function ChildDetails(props){
        ? <View>
           {props.children.map((child, i) => {
             return (
-              <View style={[styles.childDetails, {borderWidth:1, borderColor:'green'}]} key={i}>
-                <View style={[styles.imgAndName, { borderWidth: 1, borderColor: 'red' }]}>
+              <View style={styles.childDetails} key={i}>
+                <View style={styles.imgAndName}>
+                 <View style={{flexDirection:'row'}}>
                   {child.img_uri 
-                    ? <View key={i} style={[cardStyles.circle, {marginRight:10}]}>
+                    ? <View key={i} style={[cardStyles.circle, {marginRight:10, borderWidth:0}]}>
                         <Image
                           source={{ uri: child.img_uri }}
                           style={{
@@ -31,8 +32,10 @@ export default function ChildDetails(props){
                           }}
                         />
                       </View>
-                    : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: 0}]}>{child.f_name[0].toUpperCase()}</Text>}
-                  <Text style={ styles.name}>{child.f_name + ' ' + child.l_name}</Text>
+                    : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: -10, borderWidth:0}]}>{child.f_name[0].toUpperCase()}</Text>}
+                  <Text style={ [styles.name, ]}>{child.f_name + ' ' + child.l_name}</Text>
+                 </View>
+                  
                   <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children', updateAccount: props.updateAccount})}>
                     <Icon name="edit" color="#ffffff80" />
                   </TouchableOpacity>
@@ -60,13 +63,18 @@ export default function ChildDetails(props){
               )
             })}
 
-          <TouchableOpacity style={styles.addBtn} onPress={() => props.openForm('children')}>
-            <Icon name="person-add" color="white" size={35}/>
+          <TouchableOpacity style={styles.button} onPress={() => props.openForm('children')}>
+            <View style={{flexDirection:'row'}}>
+              <Icon name="person-add" color="#ffffff80" size={18}/>
+              <Text style={styles.btnText}>Add child</Text>
+            </View>
           </TouchableOpacity>
+
        </View>
         
       : null
       }
+      {/* <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View> */}
     </View>
   )
 }

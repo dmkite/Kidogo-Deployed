@@ -163,7 +163,7 @@ class Account extends Component {
             acctId={this.props.navigation.getParam('id')}
             navigation={this.props.navigation}
           />
-            <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View>
+          <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View>
           <ChildDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -184,6 +184,8 @@ class Account extends Component {
               />
             : null
             }
+
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <GuardianDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -202,7 +204,7 @@ class Account extends Component {
                 />
             : null
           }
-
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <EmergencyContactDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -222,7 +224,7 @@ class Account extends Component {
               />
             : null
           }
-          
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <TouchableOpacity 
             style={styles.button } 
             onPress={() => {
@@ -233,7 +235,7 @@ class Account extends Component {
             onLongPress={this.deleteAccount}
           >
             <View style={{flexDirection:'row'}}>
-              <Icon name="delete" color="white" style={{marginRight:5}}/>
+              <Icon name="delete" color="#ffffff80" style={{marginRight:5}}/>
               <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
             </View>
           </TouchableOpacity>
