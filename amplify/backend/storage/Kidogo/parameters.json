@@ -1,5 +1,5 @@
 {
-    "tableName": "Centres",
-    "partitionKeyName": "CentreId",
+    "tableName": "centres",
+    "partitionKeyName": "id",
     "partitionKeyType": "S"
 }

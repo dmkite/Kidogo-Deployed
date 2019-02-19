@@ -34,7 +34,7 @@ const createBody = async () => {
   return {
     id: user.centre_id,
     accounts,
-    atendance: newAttendance,
+    attendance: newAttendance,
     finances: newFinances,
     caregiver: user,
     daily_questions: newQuestions,
@@ -47,24 +47,19 @@ const createBody = async () => {
 }
 
 export const post = async(success, failure) => {
-  const body = createBody()
-
-  let apiName = 'Kidogo'
-  let path = '/centres'
-  let myInit = { body: JSON.stringify(body) }
-  let data = {
-    body: {
-      id: 'here it goes'
-    }
+  const body = {
+    body: await createBody()
   }
-
+  console.log(body, ']]]]]]]]]]]]]]')
+  let apiName = 'Kidogo'
+  let path = '/centres' 
+  let myInit = { body: JSON.stringify(body) }
   
-  const apiResponse = await API.post(apiName, path, data)//, myInit)
+  const apiResponse = await API.post(apiName, path, body)//, myInit)
   .catch(err => console.error(err))
   console.log(apiResponse)
     // console.log(apiResponse)
     // success(apiResponse)
     // console.error(err)
     // failure(err.error)
-  
 }
