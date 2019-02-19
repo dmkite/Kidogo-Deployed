@@ -15,15 +15,15 @@
         },
     
     
-          "functionKidogoName": {
+          "functionKidogoLambdaName": {
             "Type": "String",
-            "Default": "functionKidogoName"
+            "Default": "functionKidogoLambdaName"
           },
         
           
-          "functionKidogoArn": {
+          "functionKidogoLambdaArn": {
             "Type": "String",
-            "Default": "functionKidogoArn"
+            "Default": "functionKidogoLambdaArn"
           }
         
           
@@ -43,13 +43,13 @@
     "Resources": {
         
         
-        "PolicyAPIGWKidogoauth": {
+        "PolicyAPIGWKidogoApiauth": {
             "DependsOn": [
-              "Kidogo"
+              "KidogoApi"
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-              "PolicyName": "PolicyAPIGWKidogoauth",
+              "PolicyName": "PolicyAPIGWKidogoApiauth",
               "Roles": [
                 {"Ref": "authRoleName"}
               ],
@@ -79,7 +79,7 @@
                             },
                             ":",
                             {
-                              "Ref": "Kidogo"
+                              "Ref": "KidogoApi"
                             },
                             "/",
                             {
@@ -110,7 +110,7 @@
                             },
                             ":",
                             {
-                              "Ref": "Kidogo"
+                              "Ref": "KidogoApi"
                             },
                             "/",
                             {
@@ -141,16 +141,16 @@
           },
         
         
-      "Kidogo": {
+      "KidogoApi": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "Kidogo",
+          "Name": "KidogoApi",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "Kidogo"
+              "title": "KidogoApi"
             },
             "host": {
                 "Fn::Join": [
@@ -278,7 +278,7 @@
                             
                             {
                                 
-                                "Ref": "functionKidogoArn"
+                                "Ref": "functionKidogoLambdaArn"
                             },
                             
                             "/invocations"
@@ -383,7 +383,7 @@
                           
                           {
                             
-                            "Ref": "functionKidogoArn"
+                            "Ref": "functionKidogoLambdaArn"
                           },
                           
                           "/invocations"
@@ -440,12 +440,12 @@
                   
         
         
-        "functionKidogoPermissionKidogo": {
+        "functionKidogoLambdaPermissionKidogoApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionKidogoName"
+                        "Ref":  "functionKidogoLambdaName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -464,7 +464,7 @@
                             },
                             ":",
                             {
-                                "Ref": "Kidogo"
+                                "Ref": "KidogoApi"
                             },
                             "/*/*/*"
                         ]
@@ -475,7 +475,7 @@
         
         
         
-      "DeploymentAPIGWKidogoc8b629be": {
+      "DeploymentAPIGWKidogoApi": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -489,7 +489,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "Kidogo"
+            "Ref": "KidogoApi"
           }
         }
       }
@@ -497,11 +497,11 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "Kidogo"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "KidogoApi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "Kidogo"
+          "Value": "KidogoApi"
         }
     }
   }

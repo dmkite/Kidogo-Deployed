@@ -46,18 +46,18 @@ const createBody = async () => {
   }
 }
 
-export const post = async(success, failure) => {
+export const post = async(addMessage, stopLoading) => {
   const body = {
     body: await createBody()
   }
-  let apiName = 'Kidogo'
+  let apiName = 'KidogoApi'
   let path = '/centres' 
   
   const apiResponse = await API.post(apiName, path, body)//, myInit)
-  .then(res => success('Upload successful!'))
+  .then(res => Promise.all([addMessage('Upload successful!'), stopLoading()])
   .catch(err => {
-    if(err.message) failure(err.message)
-    else if(err.error) failure(err.error)
-    else failure('Something went wrong. Try again later.')
+    if(err.message) return Promise.all([addMessage(err.message), stopLoading()])
+    else if (err.error) return Promise.all([addMessage(err.error), stopLoading()])
+    else return Promise.all([addMessage("Something went wrong. Try again later."), stopLoading()])
   })
 }

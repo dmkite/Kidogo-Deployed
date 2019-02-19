@@ -112,6 +112,10 @@ class Upload extends Component{
     })
   }
 
+  changeLoading = () => {
+    this.setState({loading: !this.state.loading})
+  }
+
   handleChangeText = (text, val) => {
     this.setState({
       [val]: text
@@ -180,7 +184,7 @@ class Upload extends Component{
                 </TouchableOpacity>
               </View>
             : <View>
-                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => post(this.storeResponse, this.setError)}>
+                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => Promise.all([this.changeLoading(), post(this.setError, this.changeLoading)])}>
                   <Text style={styles.btnText}>Upload</Text>
                 </TouchableOpacity>
 
