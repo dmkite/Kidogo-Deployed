@@ -137,7 +137,7 @@ export function addFees(){
     }
     if (!previousAttendance) {
       dayToCheck = dates.getDifferentDay('subtract', dayToCheck)
-      previousAttendance = newAttendance[daytoCheck]
+      previousAttendance = newAttendance[dayToCheck]
     }
     if (!previousAttendance) needsToPay = false
 
