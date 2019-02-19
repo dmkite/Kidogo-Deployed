@@ -113,7 +113,7 @@ export const styles = {
   btnText:{
     fontSize:24, 
     lineHeight:50,
-    color:'white',
+    color:'#ffffff80',
     textAlign:'center'
   }
 }

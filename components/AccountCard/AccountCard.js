@@ -19,6 +19,7 @@ export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
       <View style={styles.imgAndBalance}>
+      <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
         <View style={styles.img}>
           {props.children.map((child, i) => {
               if(child.f_name === null) return null
@@ -45,7 +46,6 @@ export default function AccountCard(props){
         </View>
 
 
-        <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
       </View>
       <View style={styles.members}>
         <Text style={styles.childName}>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView, Text, TouchableOpacity, Button, TextInput} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity, Button, TextInput, Image} from 'react-native'
 import {Icon} from 'react-native-elements'
 import axios from 'axios'
 import {LinearGradient, SecureStore} from 'expo'
@@ -9,6 +9,7 @@ import awsmobile from '../aws-exports';
 import {styles} from '../components/Signup/styles'
 import {signIn} from '../utilities/authentication'
 import Loading from '../components/Loading'
+import {get, post} from '../utilities/requests'
 
 Amplify.configure(awsmobile);
 
@@ -114,6 +115,12 @@ class Upload extends Component{
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
         <ScrollView>
+          <Image
+            source={require('../assets/UPLOAD.png')}
+            style={{
+              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
+            }}
+          />
           {this.state.needSignIn
             ? <View style={{marginTop: 10}}>
                 <TextInput
@@ -162,12 +169,41 @@ class Upload extends Component{
                 </TouchableOpacity>
               </View>
             : <View>
+                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={post}>
+                  <Text style={styles.btnText}>Upload</Text>
+                </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => this.handleChangeText(true, 'warning')}>
+                  <Text style={styles.btnText}>Download</Text>
+                </TouchableOpacity>
+
+
                 <Button title="Send Request" onPress={this.getSample} />
                 <Text style={{ color: 'white', fontSize: 18 }}>Response: {this.state.apiResponse && JSON.stringify(this.state.apiResponse)}</Text>
             </View>
             }
 
         </ScrollView>
+        {this.state.warning
+          ? <View style={{position:'absolute', top:0, left:0, right:0, bottom:0, backgroundColor:'#000000bb',}}>
+              <Text style={{fontSize:18, color:'#ffffff80', margin:10, marginTop:60}}> 
+                <Text style={{fontSize:18, color:'#ffffff80', fontWeight:'bold'}}>WARNING: </Text>
+                This will delete your Kidogo records and replace them. Do you wish to continue?
+              </Text>
+              <View style={{margin:10, marginTop:20, flexDirection:'row'}}>
+
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginRight:5}]} onPress={() => this.handleChangeText(false, 'warning')}>
+                <Text style={styles.btnText}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => this.handleChangeText(false, 'warning')}>
+                <Text style={styles.btnText}>Download</Text>
+              </TouchableOpacity>
+              </View>
+
+          </View>
+          : null
+        }
         
         {!!this.state.error
           ? <View style={styles.error}>

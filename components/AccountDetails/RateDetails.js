@@ -54,23 +54,23 @@ export default class RateDetails extends Component{
                 
                 <View style={styles.buttonBlock}>
                   
-                  <TouchableOpacity style={[styles.rateBtn, { marginRight: 5 }]}>
+                  <TouchableOpacity style={[styles.button, {flex:0.5, marginRight: 5 }]}>
                     <Text style={styles.btnText} onPress={() => {
                       this.props.changeField('balance', this.state.newBalance)
                       this.props.openForm('balance')  
                     }}>Change</Text>
                   </TouchableOpacity>
   
-                  <TouchableOpacity style={[styles.rateBtn, { marginLeft: 5 }]}>
+                  <TouchableOpacity style={[styles.button, { flex:0.5, marginLeft: 5 }]}>
                     <Text style={styles.btnText} onPress={() => this.props.openForm('balance')}>Cancel</Text>
                   </TouchableOpacity>
                 </View>
               </View>
-            : <Text style={styles.balance}> K {this.props.balance}</Text>
+            : <Text style={styles.balance}>Balance: K {this.props.balance || '0'}</Text>
           }
   
           <TouchableOpacity style={styles.editBtn} onPress={() => this.props.openForm('balance')}>
-            <Icon name="edit" size={24} color='#624'/>
+            <Icon name="edit" size={24} color='#ffffff80'/>
           </TouchableOpacity>
   
         </View>
@@ -111,15 +111,15 @@ export default class RateDetails extends Component{
 
                 <View style={styles.buttonBlock}>
               
-                <TouchableOpacity style={{ marginRight: 5 }}>
-                  <Text style={fStyles.nextText} onPress={() => {
+                <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]}>
+                  <Text style={[fStyles.btnText, {fontSize:18}]} onPress={() => {
                     this.props.changeField('rate', this.state.newRate, 'frequency', this.state.newFrequency)
                     this.props.openForm('rate')
                     }}>Change</Text>
                 </TouchableOpacity>
   
-                <TouchableOpacity style={{ marginLeft: 5 }}>
-                  <Text style={fStyles.nextText} onPress={() => this.props.openForm('rate')}>Cancel</Text>
+                <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]}>
+                <Text style={[fStyles.btnText, {fontSize:18}]} onPress={() => this.props.openForm('rate')}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -128,12 +128,12 @@ export default class RateDetails extends Component{
         {this.props.currentForm === 'rate' 
           ? null
         : <View style={styles.buttonBlock}>
-          <TouchableOpacity style={{marginRight:5}} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
-            <Text style={fStyles.nextText}>Make Payment</Text>
+            <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={() => this.props.navigation.navigate('Payments', {id:this.props.acctId})}>
+              <Text style={[fStyles.btnText, { fontSize: 18 }]}>Make Payment</Text>
           </TouchableOpacity>
   
-          <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => this.props.openForm('rate')}>
-            <Text style={fStyles.nextText}>Change Rate</Text>
+            <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={() => this.props.openForm('rate')}>
+            <Text style={[fStyles.btnText, {fontSize:18}]}>Change Rate</Text>
           </TouchableOpacity>
         </View>
         }

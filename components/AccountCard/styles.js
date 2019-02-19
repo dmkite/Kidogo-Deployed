@@ -10,18 +10,20 @@ export const styles = {
   },
   imgAndBalance:{
     flex:1,
-    flexDirection:'row'
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginBottom:-20
   },
   img:{
-    flex:.5,
-    flexDirection:'row'
+    // flex:.5,
+    marginRight:20,
+    flexDirection:'row',
   },
   balance:{
     fontSize:45,
-    color:'#624',
-    flex:.5,
-    textAlign:'right',
-    fontWeight:'100'
+    color:'#ffffff80',
+    
+    fontWeight:'100',
   },
   circle:{
     zIndex:101,
@@ -48,10 +50,10 @@ export const styles = {
   childName:{
     fontSize:18,
     fontWeight:'bold',
-    color:'white'
+    color: '#ffffff80'
   },
   guardianName:{
     fontSize:14,
-    color:'white'
+    color:'#ffffff80'
   }
 }

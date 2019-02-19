@@ -1,6 +1,6 @@
 import {SecureStore} from 'expo'
 
-export default getAsync = async (payments, accounts, attendance, finances, caregivers, centres) => {
+export default getAsync = async (payments, accounts, attendance, finances, caregivers, centres, questions) => {
   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
   signedIn  = JSON.parse(signedIn)
   let time
@@ -54,6 +54,14 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
     else centres = JSON.parse(centres)
     const newCentres = [ ...centres ]
     dataObj.newCentres = newCentres
+  }
+
+  if (questions) {
+    let questions = await SecureStore.getItemAsync('_QUESTIONS')
+    if (!questions) questions = {}
+    else questions = JSON.parse(questions)
+    const newQuestions = {...questions}
+    dataObj.newQuestions = newQuestions
   }
 
   return dataObj

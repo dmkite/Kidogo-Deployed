@@ -113,7 +113,7 @@ class AttendanceHistory extends Component {
     return (
       <LinearGradient
         style={{ flex: 1 }}
-        colors={['#11011B', '#2B122C']}>
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <AttendanceHistoryView span={this.state.dateSpan} changeWeeks={this.changeWeeks} dateMod={this.state.dateMod}/>
         <ScrollView style={{marginTop:10}}>

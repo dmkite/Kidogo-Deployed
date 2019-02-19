@@ -132,7 +132,7 @@ class Signup extends Component{
     return (
       <LinearGradient
         style={[{flex:1}, this.state.avoidView ? {marginTop:Number(this.state.avoidView)} : null]}
-        colors={['#11011B', '#1A011B']}>
+        colors={['#11011B', '#3C233D']}>
         {this.state.questionFocus === 'caregiver'
           ? <Caregiver 
               handlePassword={this.handlePassword} 

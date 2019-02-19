@@ -89,7 +89,7 @@ class Accounts extends Component{
     return(
       <LinearGradient
         style={{ flex: 1 }}
-        colors={['#11011B', '#1A011B']}>
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
         {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress} handleChangeText={this.handleChangeText}/> :  null}
         <TouchableOpacity style={styles.filterBtn} onPress={this.handleFilterOpen}>
@@ -101,7 +101,9 @@ class Accounts extends Component{
         </TouchableOpacity>
 
         <ScrollView style={{flex:1}}>
-          {this.props.accounts.accounts.length === 0 ? <View>
+          <Text style={styles.h1}>Accounts</Text>
+          {this.props.accounts.accounts.length === 0 
+            ? <View>
                 <Text style={{fontSize:18, margin:10}}>You have not added any accounts yet.</Text>
                 <TouchableOpacity style={{ flexDirection: 'row', margin: 10 }} onPress={() => this.props.navigation.navigate('Enrollment')}>
                   <Icon style={{flex:.1}} name='add-circle-outline' size={18} />

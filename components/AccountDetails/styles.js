@@ -2,9 +2,8 @@ export const styles = {
   header: {
     flexDirection:'row',
     justifyContent:'space-between',
-    marginTop:20,
-    height:50,
-    opacity:0.5
+    marginTop:10,
+    height:30,
   },
   editBtn: {
     margin:10,
@@ -13,22 +12,30 @@ export const styles = {
   },
   name: {
     lineHeight: 75,
-    color:'white'
+    fontSize:18,
+    fontWeight:'bold',
+    color:'#ffffff80'
   },
   h1:{
     flex:.5,
     fontSize: 36,
     marginHorizontal: 10,
-    color:'white'
+    color:'#ffffff80'
+  },
+  h2:{
+    color:'#ffffff80',
+    marginHorizontal:10,
+    fontSize:24
   },
   imgAndName:{
     flexDirection:'row',
     position:'relative',
+    justifyContent:'space-between',
     paddingLeft: 15 //to offset -5 margin from 'circle'
   },
   row:{
     flexDirection:'row',
-    marginTop:10,
+    // marginTop:10,
     marginHorizontal:10,
     fontSize:18
   },
@@ -36,11 +43,13 @@ export const styles = {
     fontSize:18,
     fontWeight:'bold',
     marginRight:10,
-    color:'white'
+    color:'#ffffff80',
+    flex:0.3
   },
   text:{
     fontSize:18,
-    color:'white'
+    color:'#ffffff80',
+    flex:0.7
   },
   addBtn:{
     height:50,
@@ -49,7 +58,6 @@ export const styles = {
     margin:10,
     paddingTop:7.5,
     marginTop:50,
-    opacity:0.5
   },
   idHolder: {
     flexDirection:'row'
@@ -63,7 +71,7 @@ export const styles = {
   buttonBlock: {
     flexDirection:'row',
     justifyContent: 'space-between',
-    margin:10
+    // marginHorizontal:10
   },
   rateBtn: {
     borderRadius:5,
@@ -104,10 +112,16 @@ export const styles = {
     color:'white'
   },
   balance: {
-    color: '#624',
-    fontSize: 45,
-    marginHorizontal: 10,
-    marginVertical:20
+    color: '#ffffff80',
+    fontSize: 24,
+    marginHorizontal:10,
+    // borderWidth:1,
+    // borderColor:'red'
+  },
+  editBtn:{
+    marginTop:5
+    // borderWidth:1,
+    // borderColor:'green'
   },
   balanceInput:{
     borderBottomWidth:2,
@@ -117,10 +131,11 @@ export const styles = {
   rateFreq:{
     margin:10,
     fontSize:18,
-    color:'white'
+    color:'#ffffff80'
   },
   balanceDisplay:{
     flexDirection:'row',
+    
   },
   balanceEdit:{
     flexDirection:'row',
@@ -128,6 +143,7 @@ export const styles = {
   },
   childDetails:{
     marginBottom:20,
+    position:'relative'
   }
 
 }
