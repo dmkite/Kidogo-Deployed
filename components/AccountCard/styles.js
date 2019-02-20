@@ -8,6 +8,10 @@ export const styles = {
     borderWidth:1,
     borderColor:'#ffffff80'
   },
+  h1:{
+    color:'#ffffff80',
+    fontSize:36
+  },
   imgAndBalance:{
     flex:1,
     flexDirection:'row',
@@ -20,9 +24,9 @@ export const styles = {
     flexDirection:'row',
   },
   balance:{
-    fontSize:45,
+    fontSize:36,
     color:'#ffffff80',
-    
+    lineHeight:70,
     fontWeight:'100',
   },
   circle:{

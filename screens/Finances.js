@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView, Text, TouchableOpacity, Image} from 'react-native'
+import {View, ScrollView} from 'react-native'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import {getWeekBalances} from '../actions/finances'
@@ -17,7 +17,6 @@ class Finances extends Component{
     }
   }
   
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {

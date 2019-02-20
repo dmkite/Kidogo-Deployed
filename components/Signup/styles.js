@@ -3,6 +3,11 @@ export const styles = {
     flex:1,
     padding:5
   },
+  h1:{
+    fontSize:36,
+    color:'#ffffff80',
+    margin:10
+  },
   input:{
     borderBottomWidth: 2,
     borderColor: 'white',

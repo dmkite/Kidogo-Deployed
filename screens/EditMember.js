@@ -30,7 +30,6 @@ class EditMember extends Component{
     }
   }
 
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {

@@ -93,7 +93,7 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     // return this.props.navigation.navigate('Account', {
     //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
-    // return this.props.navigation.navigate('Accounts')
+    return this.props.navigation.navigate('Enrollment')
     let message = this.props.navigation.getParam('message')
     setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if(message) this.setState({error:message})
@@ -170,23 +170,17 @@ export default class HomeScreen extends Component{
         </View>
         <Text style={[styles.label, this.state.focusedOn === 'password' ? styles.focused : null]}>Password</Text>
         
-        <View style={{flexDirection:'row', justifyContent:'space-between', height:50}}>
-          <TouchableOpacity style={{margin:20, height:50, opacity:0.5}} onPress={() => navigate('Signup')}>
-            <Text style={{fontSize:14, color:'white'}}>Sign up for an account</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity style={[{ flexDirection: 'row', justifyContent: 'flex-end' },
-            (!!this.state.username && !!this.state.password)
-              ? styles.ready
-              : styles.notReady]} 
-            onPress={() => {
-              return Promise.all([this.setState({loading:true}), this.handleSignIn()])
-              }}>
-            <Text style={styles.nextText}>sign in</Text>
-            <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop:15 }}/>
-          </TouchableOpacity>
-        </View>
-
+         <View style={{flexDirection:'row', marginHorizontal:10, height:50}}>
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginRight:5}]} onPress={() => navigate('Signup')}>
+                <Text style={styles.btnText}>sign up</Text>
+              </TouchableOpacity>
+          {this.state.password.length && this.state.username.length
+            ? <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} 
+                onPress={() => Promise.all([this.setState({loading:true}), this.handleSignIn()])}>
+                <Text style={styles.btnText}>sign in</Text>
+              </TouchableOpacity>
+          : null}
+            </View>
         {!!this.state.error
           ? <View style={styles.error}>
             <Text style={styles.errorText}>{this.state.error}</Text>

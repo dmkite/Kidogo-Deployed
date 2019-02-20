@@ -15,9 +15,20 @@ function hexify(x) {
   }
 }
 
+returnFamilyName = (child, guardian) => {
+  let l_name1
+  let l_name2
+  if(child) l_name1 = child.l_name
+  if(guardian) l_name2 = guardian.l_name
+  if(l_name1 === l_name2) return l_name1
+  if(l_name1 && l_name2) return l_name1 + '-' + l_name2
+  return l_name1 || l_name2
+}
+
 export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
+      <Text style={styles.h1}>{this.returnFamilyName(props.children[0], props.guardians[0])} Family</Text>
       <View style={styles.imgAndBalance}>
       <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
         <View style={styles.img}>

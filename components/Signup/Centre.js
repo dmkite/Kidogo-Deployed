@@ -3,7 +3,6 @@ import { View, Text, ScrollView, TextInput, Image, TouchableOpacity } from 'reac
 import { Icon } from 'react-native-elements'
 import { LinearGradient } from 'expo'
 import { styles } from './styles'
-import {signUp} from '../../utilities/authentication'
 
 export default class Caregiver extends Component {
   constructor(props) {
@@ -21,9 +20,10 @@ export default class Caregiver extends Component {
   render(){
     return (
       <ScrollView>
+        <Text style={styles.h1}>Add centre address</Text>
         <Image
           source={require('../../assets/CENTRE.png')}
-          style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50, marginBottom: 10 }}
+          style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginVertical:10 }}
         />
         <TextInput
           onFocus={() => {
@@ -54,32 +54,18 @@ export default class Caregiver extends Component {
           onChangeText={(text) => this.props.handleChangeText(text, 'centre_address_2')}
         />
         <Text style={[styles.label, this.state.focusedOn === 'centre_address_2' ? styles.focused : null]}>City </Text>
-        
-        <View style={{marginVertical:20, marginHorizontal:10, flexDirection:'row', justifyContent:'space-between'}}>
-          <TouchableOpacity style={[{ flexDirection: 'row', width:150 },
-          (!!this.props.centre_address_1 && !!this.props.centre_address_2)
-            ? styles.ready
-            : styles.notReady]}
-            onPress={() => this.props.changeQuestions('caregiver')}
-          >
-            <Icon name="chevron-left" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
-            <Text style={styles.nextText}>back</Text>
-          </TouchableOpacity>
+        {this.props.centre_address_1 && this.props.centre_address_2
+          ? <View style={{marginVertical:20, marginHorizontal:10, flexDirection:'row', justifyContent:'space-between'}}>
+              <TouchableOpacity style={[styles.button, { flex:0.5, marginRight:5}]} onPress={() => this.props.changeQuestions('caregiver')}>
+                <Text style={styles.btnText}>back</Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity style={[{ flexDirection: 'row', justifyContent: 'flex-end', width:150 },
-          (!!this.props.centre_address_1 && !!this.props.centre_address_2)
-            ? styles.ready
-            : styles.notReady]}
-            onPress={() => {
-              (!!this.props.centre_address_1 && !!this.props.centre_address_2)
-                ? this.props.getCode()
-                : this.props.setError('Make sure to enter a street address and city')
-            }}
-          >
-            <Text style={styles.nextText}>get code</Text>
-            {/* <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} /> */}
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={this.props.getCode}>
+                <Text style={styles.btnText}>get code</Text>
+              </TouchableOpacity>
+            </View>
+          : null
+        }
       
       </ScrollView>
     )

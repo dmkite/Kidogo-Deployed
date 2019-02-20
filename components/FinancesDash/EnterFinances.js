@@ -10,7 +10,7 @@ class EnterFinances extends Component {
     super(props)
     this.state = {
       date: new Dates().getToday(),
-      amount:'',
+      amount:'0',
       memo: 'rent',
       focusedOn: null
     }

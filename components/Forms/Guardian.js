@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { ScrollView, TextInput, View, Text, Image, Picker, TouchableOpacity} from 'react-native'
+import { ScrollView, TextInput, View, Text, Image, TouchableOpacity} from 'react-native'
 import {Icon} from 'react-native-elements'
 import {styles} from './newStyles'
 import numberValidation from '../../utilities/numberValidation'
@@ -10,28 +10,25 @@ class Guardian extends Component{
     super(props)
     this.state = {
       focusedOn: null,
-      f_name: null,
-      l_name:null,
-      phone: null,
-      govt_id: '',
+      f_name: '',
+      l_name: '',
+      phone: '',
+      govt_id: null,
       street: null,
       city: null,
       frequency: 'daily',
       rate: '100',
-      hiddenId: '',
+      hiddenId: null,
       showId: false
     }
   }
-
 
   changeFocus = (action, type) => {
     if (action === 'focus') this.setState({ focusedOn: type })
     else this.setState({ focusedOn: null })
   }
 
-  handleChangeText = (text, field) => {
-    this.setState({ [field]: text })
-  }
+  handleChangeText = (text, field) => this.setState({ [field]: text })
 
   handleNumberChange = (text, field, num1, num2) => {
     let length = 0
@@ -41,11 +38,12 @@ class Guardian extends Component{
     })
   }
 
-
   handleId = (text) => {
-    let govt_id = this.state.govt_id 
-    
-    text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
+    let govt_id = this.state.govt_id
+    if(this.state.govt_id && this.state.govt_id.length){
+      text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
+    }
+    else govt_id = text
     let hiddenId = ''
     for (let letter of govt_id) {
       hiddenId += '*'
@@ -56,23 +54,14 @@ class Guardian extends Component{
     })
   }
 
-  showId = () => {
-    this.setState({showId: !this.state.showId})
-  }
+  showId = () => this.setState({showId: !this.state.showId})
   
-  pickerChange = (itemValue) => {
-    this.setState({ frequency: itemValue })
-  }
+  pickerChange = (itemValue) => this.setState({ frequency: itemValue })
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
-          <Image
-            source={require('../../assets/GUARDIAN.png')}
-            style={{
-              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-            }}
-          />
+        <Image source={require('../../assets/GUARDIAN.png')} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10 }}/>
 
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
@@ -182,14 +171,14 @@ class Guardian extends Component{
         <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
 
         {this.props.accountAlreadyCreated 
-        ? null
-        : <Rate 
-            addMargin={this.props.addMargin} 
-            changeFocus={this.changeFocus} 
-            rate={this.state.rate}
-            handleNumberChange={this.handleNumberChange}
-            focusedOn={this.state.focusedOn}
-            frequency={this.state.frequency}
+          ? null
+          : <Rate 
+              addMargin={this.props.addMargin} 
+              changeFocus={this.changeFocus} 
+              rate={this.state.rate}
+              handleNumberChange={this.handleNumberChange}
+              focusedOn={this.state.focusedOn}
+              frequency={this.state.frequency}
             />
         }
 
@@ -200,72 +189,59 @@ class Guardian extends Component{
                 onPress={() => this.props.openForm('guardians')}>
                 <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name)
-                ? styles.ready
-                : styles.notReady]}
-                onPress={() => {
-                  let guardian = { ...this.state }
-                  delete guardian.focusedOn
-                  delete guardian.rate
-                  delete guardian.frequency
-                  delete guardian.hiddenId
-                  delete guardian.showId
-                  this.props.addMember('guardians', guardian)
-                }}>
-                <Text style={styles.nextText}>Add</Text>
-              </TouchableOpacity>
-
+              {this.state.f_name && this.state.l_name && this.state.phone.length === 11 
+                ? <TouchableOpacity style={[styles.button, { flex: .5, marginTop: 20 }]}
+                    onPress={() => {
+                      let guardian = { ...this.state }
+                      delete guardian.focusedOn
+                      delete guardian.rate
+                      delete guardian.frequency
+                      delete guardian.hiddenId
+                      delete guardian.showId
+                      this.props.addMember('guardians', guardian)
+                    }}>
+                    <Text style={styles.nextText}>Add</Text>
+                  </TouchableOpacity>
+                : null
+              }
             </View>
-            : <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
-                ? styles.ready
-                : styles.notReady]}
-                onPress={
-                  (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
-                    ? () => {
+            : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone.length === 11            
+              ? <View style={{ flexDirection: 'row', marginTop:20, marginHorizontal: 10 }}>
+                  <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5}]}
+                    onPress={ () => {
+                          let guardian = { ...this.state }
+                          delete guardian.focusedOn
+                          this.props.addToAccount(guardian, 'guardians')
+                          this.setState({
+                            focusedOn: null,
+                            f_name: '',
+                            l_name: '',
+                            phone: '',
+                            govt_id: '',
+                            street: null,
+                            city: null,
+                            frequency: 'daily',
+                            rate: '100',
+                            hiddenId: '',
+                            showId: false })
+                      }
+                    }>
+                      <Text style={styles.btnText}>Add Another</Text>
+                    </TouchableOpacity>
+                  <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft:5}]}
+                    onPress={() => {
                       this.state
                       let guardian = { ...this.state }
                       delete guardian.focusedOn
+                      delete guardian.hiddenId
+                      delete guardian.showId
                       this.props.addToAccount(guardian, 'guardians')
-                      this.setState({
-                        focusedOn: null,
-                        f_name: null,
-                        l_name: null,
-                        phone: null,
-                        govt_id: '',
-                        street: null,
-                        city: null,
-                        frequency: 'daily',
-                        rate: '100',
-                        hiddenId: '',
-                        showId: false
-                      })
-                    }
-                    : null}
-              >
-                <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Add Another</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[{ flex: .5, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
-              (!!this.state.f_name && !!this.state.l_name)
-                ? styles.ready
-                : styles.notReady]}
-                onPress={() => {
-                  this.state
-                  let guardian = { ...this.state }
-                  delete guardian.focusedOn
-                  delete guardian.hiddenId
-                  delete guardian.showId
-                  this.props.addToAccount(guardian, 'guardians')
-
-                  this.props.changeQuestionFocus('e_contact')
-                }}
-              >
-                <Text style={styles.nextText}>Next</Text>
-                <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
-              </TouchableOpacity>
-            </View>
-            
+                      this.props.changeQuestionFocus('e_contact')
+                    }}>
+                    <Text style={styles.btnText}>Next</Text>
+                  </TouchableOpacity>
+                </View>
+              : null
             }
       </ScrollView>
     )

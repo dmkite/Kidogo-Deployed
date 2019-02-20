@@ -9,6 +9,7 @@ import {signUp} from '../utilities/authentication'
 import bcrypt from 'react-native-bcrypt'
 import {styles} from '../components/Signup/styles'
 import getAsync from '../utilities/getAsync'
+import numberValidation from '../utilities/numberValidation'
 import Loading from '../components/Loading'
 
 class Signup extends Component{
@@ -20,6 +21,7 @@ class Signup extends Component{
       hiddenPassword: '',
       f_name: null,
       l_name: null,
+      phone: '',
       centre_address_1:null,
       centre_address_2: null,
       questionFocus: 'caregiver',
@@ -64,8 +66,8 @@ class Signup extends Component{
   addMargin = (num) => this.setState({avoidView: num})
 
   getCode = () => {
-    const {username, password} = this.state
-    signUp(username.toLowerCase().trim(), password)
+    const {username, password, phone} = this.state
+    signUp(username.toLowerCase().trim(), password, phone)
     this.setState({questionFocus: 'confirm'})
   }
 
@@ -126,6 +128,14 @@ class Signup extends Component{
       this.setState({error:'Something went wrong when making your account'})
     }
   }
+
+  handleNumberChange = (text, field, num1, num2) => {
+    let length = 0
+    if (this.state[field] && this.state[field].length) length = this.state[field].length
+    this.setState({
+      [field]: numberValidation(text, field, length, num1, num2)
+    })
+  }
   
   render(){
     return (
@@ -140,6 +150,7 @@ class Signup extends Component{
               {...this.state} 
               changeQuestions={this.changeQuestions}
               handleChangeText={this.handleChangeText}  
+              handleNumberChange={this.handleNumberChange}
               setError={this.setError}
             />
           : this.state.questionFocus === 'centre' 

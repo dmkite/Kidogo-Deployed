@@ -175,14 +175,14 @@ class Upload extends Component{
                 
                 <TouchableOpacity style={[styles.button, {margin:10}]} onPress={ () => {
                   (this.state.password && this.state.username)
-                    ? Promise.all([this.setState({loading: true}), signIn(this.state.username.toLowerCase(), this.state.password, this.handleChangeText, this.setError)])
+                    ? Promise.all([this.setState({loading: true}), signIn(this.state.username.toLowerCase(), this.state.password, this.handleChangeText, this.setError), this.setState({loading:false})])
                     : this.setError('Enter username and password')
                   }}>
                   <Text style={styles.btnText}>sign in</Text>
                 </TouchableOpacity>
               </View>
-            : <View>
-                <TouchableOpacity style={[styles.button, {margin:10}]} onPress={() => Promise.all([this.changeLoading(), post(this.setError, this.changeLoading)])}>
+            : <View style={{marginTop:10}}>
+                <TouchableOpacity style={[styles.button, {marginHorizontal:10}]} onPress={() => Promise.all([this.changeLoading(), post(this.setError, this.changeLoading)])}>
                   <Text style={styles.btnText}>Upload</Text>
                 </TouchableOpacity>
 
