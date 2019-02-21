@@ -8,12 +8,10 @@ export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
   return async dispatch => {
     try{
-      let payments = await SecureStore.getItemAsync('_PAYMENTS')
-      if(!payments) payments = {}
-      else payments = JSON.parse(payments)
+      let {newPayments} = await getAsync(true)
       dispatch({
         type: GET_PAYMENTS,
-        payload: payments
+        payload: newPayments
       })
     }catch(err){
       console.error(err)

@@ -120,5 +120,19 @@ export const styles = {
     fontSize:36,
     color:'#ffffff80',
     margin:10
+  },
+  deleteWarning:{
+    borderBottomWidth:1,
+    borderColor:'#ffffff80'
+  },
+  deleteWarningText:{
+    fontSize:18,
+    color:'#ffffff80',
+    margin:10
+  },
+  iconHolder:{
+    flexDirection:'row',
+    marginLeft:10,
+    marginBottom:10
   }
 }

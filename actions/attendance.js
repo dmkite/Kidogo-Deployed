@@ -1,20 +1,14 @@
 import {SecureStore} from 'expo'
-
+import getAsync from '../utilities/getAsync'
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
+
 export function getAttendance(today){
-  //get attendance from storage 
   return async dispatch => {
     const now = new Date().getTime()
     try{  
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      if(!accounts) accounts = []
-      else accounts = JSON.parse(accounts)
-      const attendance = await SecureStore.getItemAsync('_ATTENDANCE')
-      let newAttendance
-      if(!attendance) newAttendance = {}
-      else newAttendance = {...JSON.parse(attendance)}
+      let { newAccounts, newAttendance } = await getAsync(false, true, true)
       if (!newAttendance[today]){
-        const children = accounts.reduce((acc, acct) => {
+        const children = newAccounts.reduce((acc, acct) => {
           acct.children.forEach(child => {
             child.acctId = acct.id
             child.checkIn = now
@@ -50,9 +44,8 @@ export const CHANGE_CHECK_IN_OUT = 'CHANGE_CHECK_IN_OUT'
 export function changeCheckInOut(date, id, inOrOut){
   return async dispatch => {
     try{
-      let attendance = await SecureStore.getItemAsync('_ATTENDANCE')
-      attendance = JSON.parse(attendance)
-      let newAttendance = attendance[date]
+      let { newAccounts, newAttendance } = await getAsync(false, false, attendance)
+      newAttendance = newAttendance[date]
       if(!newAttendance[id][inOrOut]) newAttendance[id][inOrOut] = new Date().getTime()
       else newAttendance[id][inOrOut] = false
       attendance[date] = newAttendance
