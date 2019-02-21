@@ -60,6 +60,21 @@ export const styles = {
     color:'#ffffff80',
     margin:10,
     marginBottom:20
-  }
+  },
+  button: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ffffff80',
+    opacity: 0.5,
+    paddingHorizontal: 10,
+    flex: 0.5,
+    marginVertical: 20
+  },
+  btnText: {
+    fontSize: 24,
+    lineHeight: 50,
+    color: '#ffffff80',
+    textAlign: 'center'
+  },
 
 }

@@ -9,13 +9,14 @@ export default function AttendanceHistoryView(props){
   const date1 = Number(props.span[0].substring(0,2)) + ' ' + months[Number(props.span[0].substring(3,5)) - 1]
   const date2 = Number(props.span[props.span.length - 1].substring(0, 2)) + ' ' + months[Number(props.span[props.span.length - 1].substring(3,5)) - 1]
   return (
-    <View style={{ backgroundColor: '#00000090', opacity: 0.5, paddingBottom:10 }}>
+    <View style={{ backgroundColor: '#00000090', paddingBottom:10 }}>
+      <Text style={[styles.h1, {marginBottom:0}]}>Attendance History</Text>
       <View style={styles.dateHolder}>
         
         <TouchableOpacity onPress={() => props.changeWeeks('back')}>
           <Icon name="chevron-left" size={40} color="white"/>
         </TouchableOpacity>
-        <Text style={styles.h1}>{date1} - {date2}</Text>
+        <Text style={styles.h2}>{date1} - {date2}</Text>
         <TouchableOpacity 
           onPress={
             props.dateMod < 0

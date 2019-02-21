@@ -10,9 +10,9 @@ class Guardian extends Component{
     super(props)
     this.state = {
       focusedOn: null,
-      f_name: '',
-      l_name: '',
-      phone: '',
+      f_name: null,
+      l_name: null,
+      phone: null,
       govt_id: null,
       street: null,
       city: null,
@@ -189,7 +189,7 @@ class Guardian extends Component{
                 onPress={() => this.props.openForm('guardians')}>
                 <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
               </TouchableOpacity>
-              {this.state.f_name && this.state.l_name && this.state.phone.length === 11 
+              {this.state.f_name && this.state.l_name && this.state.phone && this.state.phone.length === 11 
                 ? <TouchableOpacity style={[styles.button, { flex: .5, marginTop: 20 }]}
                     onPress={() => {
                       let guardian = { ...this.state }
@@ -205,7 +205,7 @@ class Guardian extends Component{
                 : null
               }
             </View>
-            : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone.length === 11            
+            : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone && this.state.phone.length === 11            
               ? <View style={{ flexDirection: 'row', marginTop:20, marginHorizontal: 10 }}>
                   <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5}]}
                     onPress={ () => {
@@ -214,15 +214,15 @@ class Guardian extends Component{
                           this.props.addToAccount(guardian, 'guardians')
                           this.setState({
                             focusedOn: null,
-                            f_name: '',
-                            l_name: '',
-                            phone: '',
-                            govt_id: '',
+                            f_name: null,
+                            l_name: null,
+                            phone: null,
+                            govt_id: null,
                             street: null,
                             city: null,
                             frequency: 'daily',
                             rate: '100',
-                            hiddenId: '',
+                            hiddenId: null,
                             showId: false })
                       }
                     }>

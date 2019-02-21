@@ -41,10 +41,10 @@ class DashView extends Component{
         <View style={styles.dash}>
           <Image 
             source={this.state.time < 12
-            ? require('../../assets/sunrise.png')
+            ? require('../../assets/MORNING.png')
             : this.state.time < 17
-                ? require('../../assets/sunset.png')
-                : require('../../assets/nighttime.png')
+                ? require('../../assets/AFTERNOON.png')
+                : require('../../assets/EVENING.png')
             }
           />
           <Text style={[styles.dashFont, this.state.time >= 17 ? {color:'white'} : null]}>

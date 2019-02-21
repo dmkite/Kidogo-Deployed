@@ -90,20 +90,41 @@ export default class HomeScreen extends Component{
     } 
   }
 
+  
+
   componentDidMount = async () => {
+
+    // await SecureStore.deleteItemAsync('_ACCOUNTS')
+    // await SecureStore.deleteItemAsync('_FINANCES')
+    // await SecureStore.deleteItemAsync('_ATTENDANCE')
+    // await SecureStore.deleteItemAsync('_PAYMENTS')
+    // await SecureStore.deleteItemAsync('_QUESTIONS')
+
+
     // return this.props.navigation.navigate('Account', {
     //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
-    return this.props.navigation.navigate('Enrollment')
-    let message = this.props.navigation.getParam('message')
-    setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
-    if(message) this.setState({error:message})
-    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    if(signedIn) signedIn = JSON.parse(signedIn)
+    // return this.props.navigation.navigate('AttendanceHistory')
 
-    if(signedIn) this.props.navigation.navigate('Dash')
+    // let message = this.props.navigation.getParam('message')
+    // setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    // if(message) this.setState({error:message})
+    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    // if(signedIn) signedIn = JSON.parse(signedIn)
+
+    // if(signedIn) this.props.navigation.navigate('Dash')
+    await this.navigate()
   }
 
-  
+  navigate = async () => {
+    let message = this.props.navigation.getParam('message')
+    setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    if (message) this.setState({ error: message })
+    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    if (signedIn) signedIn = JSON.parse(signedIn)
+
+    if (signedIn) this.props.navigation.navigate('Dash')
+  }
+
   playAudio = async () => {
     if (this.state.playing === true) return
     this.setState({ playing: true })

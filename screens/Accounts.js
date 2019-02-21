@@ -110,10 +110,9 @@ class Accounts extends Component{
           <Text style={styles.h1}>Accounts</Text>
           {this.props.accounts.accounts.length === 0 
             ? <View>
-                <Text style={{fontSize:18, margin:10}}>You have not added any accounts yet.</Text>
-                <TouchableOpacity style={{ flexDirection: 'row', margin: 10 }} onPress={() => this.props.navigation.navigate('Enrollment')}>
-                  <Icon style={{flex:.1}} name='add-circle-outline' size={18} />
-                  <Text style={{flex: .9, fontSize:18}}> Add an account</Text>
+                <Text style={{fontSize:18, margin:10, color:'#ffffff80'}}>You have not added any accounts yet.</Text>
+              <TouchableOpacity style={[styles.button, { margin: 10 }]} onPress={() => this.props.navigation.navigate('Enrollment')}>
+                  <Text style={styles.btnText}> Add an account</Text>
                 </TouchableOpacity>
               </View>
             : this.props.accounts.accounts

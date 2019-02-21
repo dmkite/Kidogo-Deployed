@@ -14,6 +14,7 @@ export const get = async (addMessage, changeLoading) => {
   // const apiResponse = await 
   API.get(apiName, path)
     .then(res => {
+      console.log('||||||||||||||||||||||||||', res, '|||||||||||||||||||||')
       return Promise.all([addMessage('Download successful!'), changeLoading()])
     })  
     .catch(err => {
@@ -61,11 +62,11 @@ export const post = async(addMessage, stopLoading) => {
     body: await createBody()
   }
   let apiName = 'KidogoApi'
-  let path = '/centres' 
+  let path = `/centres${body.id}` 
   
   API.post(apiName, path, body)//, myInit)
   .then((res) => {
-    console.log(res)
+    console.log(path, res)
     return Promise.all([addMessage('Upload successful!'), stopLoading()])
   })
   .catch(err => {

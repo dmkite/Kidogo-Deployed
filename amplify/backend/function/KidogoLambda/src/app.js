@@ -78,9 +78,11 @@ app.get(path + hashKeyPath, function(req, res) {
 
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
-      res.status(200).send({path, hashKeyPath})//json({error: 'Could not load items: ' + err});
+      // res.status(200).send({path, hashKeyPath, queryParams})
+      json({error: 'Could not load items: ' + err});
     } else {
-      res.status(200).send({ path, hashKeyPath })//res.json(data.Items);
+      // res.status(200).send({ path, hashKeyPath, queryParams })
+      res.json(data.Items);
     }
   });
 });
@@ -119,9 +121,11 @@ app.get(path + hashKeyPath /*+ sortKeyPath*/, function(req, res) {
       res.status(200).send({ path, hashKeyPath });
     } else {
       if (data.Item) {
-        res.status(200).send({path, hashKeyPath})//json(data.Item);
+        // res.status(200).send({path, hashKeyPath, params})
+        res.json(data.Item);
       } else {
-        res.status(200).send({ path, hashKeyPath })//json(data) ;
+        // res.status(200).send({ path, hashKeyPath, params })
+        res.json(data) ;
       }
     }
   });

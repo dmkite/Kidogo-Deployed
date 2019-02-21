@@ -34,8 +34,3 @@ export default function FilterBlock(props){
     </View>
   )
 }
-
-/**
- 
-        
- */

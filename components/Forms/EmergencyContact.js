@@ -8,7 +8,7 @@ class EmergencyContact extends Component{
   constructor(props){
     super(props)
     this.state = {
-      phone: '',
+      phone: null,
       f_name: null,
       l_name: null,
       focusedOn: null
@@ -102,7 +102,7 @@ class EmergencyContact extends Component{
             <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]} onPress={() => this.props.openForm('e_contacts')}>
               <Text style={styles.btnText}>Cancel</Text>
             </TouchableOpacity>
-            {this.state.phone.length === 11 && this.state.f_name
+            {this.state.phone && this.state.phone.length === 11 && this.state.f_name
               ? <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]}
                   onPress={() => {
                     let e_contact = { ...this.state }
@@ -114,7 +114,7 @@ class EmergencyContact extends Component{
               : null
             }
           </View>
-          : this.state.phone.length === 11 && this.state.f_name
+          :  this.state.phone && this.state.phone.length === 11 && this.state.f_name
             ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>
                 <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 } ]}
                   onPress={() => {
@@ -122,7 +122,7 @@ class EmergencyContact extends Component{
                         delete e_contact.focusedOn
                         this.props.addToAccount(e_contact, 'e_contacts')
                         this.setState({
-                          phone: '',
+                          phone: null,
                           f_name: null,
                           l_name: null,
                           focusedOn: null

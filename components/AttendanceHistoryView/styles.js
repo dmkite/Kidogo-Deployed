@@ -1,18 +1,20 @@
-import { withNativeAd } from "expo/build/facebook-ads";
-
 export const styles = {
   dateHolder:{
     flexDirection:'row',
     justifyContent: 'space-between',
     margin:10,
-    marginTop:20,
-    marginBottom: 10,
+    marginTop:0,
     height:40,
   },
   h1:{
     fontSize:36,
-    lineHeight:40,
-    color:'white'
+    color:'#ffffff80',
+    margin:10
+  },
+  h2:{
+    fontSize:24,
+    lineHeight: 40,
+    color:'#ffffff80'
   },
   dates:{
     flexDirection:'row',
@@ -27,16 +29,15 @@ export const styles = {
     width:50,
     transform: [{ rotate: '-66deg' }],
     fontSize:16,
-    color:'white'
+    color:'#ffffff80'
   },
   child:{
     flex:.3
   },
-
   name:{
     fontSize:14,
     marginLeft:5,
-    color:'white'
+    color:'#ffffff80'
   },
   dateStatusHolder:{
     flex:.1,
