@@ -23,7 +23,8 @@ export default class HomeScreen extends Component{
       caregivers: {},
       showHelp: false,
       playing: false,
-      loading:false
+      loading:false,
+      soundObject: null
     }
   }
 
@@ -126,15 +127,18 @@ export default class HomeScreen extends Component{
   }
 
   playAudio = async () => {
-    if (this.state.playing === true) return
-    this.setState({ playing: true })
-    setTimeout(
-      () => this.setState({ playing: false }), 20000
-    )
-    const soundObject = new Audio.Sound()
     try{
-      await soundObject.loadAsync(require('../assets/signin.mp3'))
-      await soundObject.playAsync()
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/signin.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        // await this.state.soundObject.unloadAsync()
+        this.setState({soundObject: null})
+      }
     }catch(err){
       console.error(err)
       this.setState({error:'We could not play the audio file'})
