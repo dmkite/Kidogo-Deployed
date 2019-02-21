@@ -4,7 +4,7 @@ import Amplify, { API } from 'aws-amplify';
 import awsmobile from '../aws-exports';
 Amplify.configure(awsmobile);
 
-export const get = async (addMessage, changeLoading) => {
+export const get = async (addMessage, changeLoading, addPrompt) => {
   let userInfo = await SecureStore.getItemAsync('_SIGNEDIN')
   
   const { user:{centre_id} } = JSON.parse(userInfo)
@@ -14,16 +14,16 @@ export const get = async (addMessage, changeLoading) => {
   // const apiResponse = await 
   API.get(apiName, path)
     .then(res => {
-      console.log('||||||||||||||||||||||||||', res, '|||||||||||||||||||||')
-      return Promise.all([addMessage('Download successful!'), changeLoading()])
+      return returnDif(res)
+      .then(dif => {
+        return Promise.all([addMessage('Download successful!'), changeLoading(), addPrompt(dif, res)])
+      })
     })  
     .catch(err => {
       console.log(err)
       let error = err.message || err.error || 'Something went wrong. Try again later.'
       return Promise.all([addMessage(error), changeLoading()])
     })
-  // console.log(path)
-  // console.log(`|||||||||||${apiResponse}||||||||||`);
 }
 
 const createBody = async () => {
@@ -73,4 +73,26 @@ export const post = async(addMessage, stopLoading) => {
     let error = err.message || err.error || 'Something went wrong. Try again later.'
     return Promise.all([addMessage(error), stopLoading()])
   })
+}
+
+
+returnDif = async ([data]) => {
+  const { newAccounts, newAttendance, newFinances, newQuestions } = await getAsync(false, true, true, true, false, false, true) 
+  const {daily_questions, finances, accounts, attendance} = data
+  
+  return {
+    local:{
+      accounts: newAccounts.length,
+      attendance: Object.keys(newAttendance).length,
+      finances: Object.keys(newFinances).length,
+      questions: Object.keys(newQuestions).length
+    },
+    server:{
+      accounts: accounts.length,
+      attendance: Object.keys(attendance).length,
+      finances: Object.keys(finances).length,
+      questions: Object.keys(daily_questions).length
+    }
+  }
+
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native'
+import {TouchableOpacity} from 'react-native'
 import { Icon} from 'react-native-elements'
 import { MorningQuestions, AfternoonQuestions  } from '../components/Questions'
 import { SecureStore, LinearGradient } from 'expo';
@@ -17,7 +17,6 @@ class Questions extends Component{
       aftQuestion2Answer: null
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,

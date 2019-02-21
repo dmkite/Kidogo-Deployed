@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView, Text, TouchableOpacity, Button, TextInput, Image} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import {Icon} from 'react-native-elements'
 import axios from 'axios'
 import {LinearGradient, SecureStore} from 'expo'
@@ -7,9 +7,11 @@ import Header from '../components/Header'
 import Amplify, { API, Auth } from 'aws-amplify';
 import awsmobile from '../aws-exports';
 import {styles} from '../components/Signup/styles'
+import Modal from '../components/Upload/Modal'
 import {signIn} from '../utilities/authentication'
 import Loading from '../components/Loading'
 import {get, post} from '../utilities/requests'
+import setAsync from '../utilities/setAsync'
 
 Amplify.configure(awsmobile);
 
@@ -30,7 +32,10 @@ class Upload extends Component{
       needSignIn: false,
       token: null,
       apiResponse: null,
-      eventId: ''
+      eventId: '',
+      newData: null,
+      showDif: false,
+      // dif: null
     }
   }
   
@@ -53,39 +58,15 @@ class Upload extends Component{
   }
 
   setError = (err) => {
-    setTimeout(
-      () => this.setState({ error: false }),
-      5000
-    )
+    setTimeout( () => this.setState({ error: false }), 5000 )
     this.setState({ error: err })
   }
 
-  storeResponse = (apiResponse) => {
-    this.setState({apiResponse})
-  }
+  // storeResponse = (apiResponse) => {
+  //   this.setState({apiResponse})
+  // }
 
   addMargin = (num) => this.setState({ avoidView: num })
-  // state = { apiResponse: null };
-
-  // getSample = async () => {
-  //   const user = await Auth.currentAuthenticatedUser()
-  //   const token = user.signInUserSession.idToken.jwtToken
-    
-  //   const request = {
-  //     headers: {
-  //       Authorization: token
-  //     }
-  //   };
-  //   console.log(request.headers.Authorization)
-  //   const path = "/centres";
-    
-  //   const apiResponse = await API.get("Kidogo", path,) 
-  //   .catch(err => {
-  //     console.error(err)
-  //   })
-  //   console.log('response:' + apiResponse);
-  //   this.setState({ apiResponse });
-  // }
 
   changeFocus = (action, type) => {
     if (action === 'focus') this.setState({ focusedOn: type })
@@ -110,13 +91,22 @@ class Upload extends Component{
     })
   }
 
-  changeLoading = () => {
-    this.setState({loading: !this.state.loading})
+  changeLoading = (val) => {
+    if(!val) this.setState({loading: !this.state.loading})
+    else this.setState({loading: val})
   }
 
   handleChangeText = (text, val) => {
     this.setState({
       [val]: text
+    })
+  }
+
+  addPrompt = (dif, data) => {
+    this.setState({
+      dif, 
+      newData: data, 
+      showDif: true
     })
   }
 
@@ -194,7 +184,7 @@ class Upload extends Component{
 
         </ScrollView>
         {this.state.warning
-          ? <View style={{position:'absolute', top:0, left:0, right:0, bottom:0, backgroundColor:'#000000bb',}}>
+          ? <View style={styles.modal}>
               <Text style={{fontSize:18, color:'#ffffff80', margin:10, marginTop:60}}> 
                 <Text style={{fontSize:18, color:'#ffffff80', fontWeight:'bold'}}>WARNING: </Text>
                 This will delete your Kidogo records and replace them. Do you wish to continue?
@@ -205,7 +195,7 @@ class Upload extends Component{
                 <Text style={styles.btnText}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => Promise.all([this.changeLoading(), get(this.setError, this.changeLoading), this.handleChangeText(false, 'warning')])}>
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => Promise.all([this.changeLoading(), get(this.setError, this.changeLoading, this.addPrompt), this.handleChangeText(false, 'warning')])}>
                 <Text style={styles.btnText}>Download</Text>
               </TouchableOpacity>
               </View>
@@ -222,6 +212,16 @@ class Upload extends Component{
         }
         {this.state.loading
           ? <Loading />
+          : null
+        }
+        {this.state.showDif
+          ? <Modal
+              handleChangeText={this.handleChangeText}
+              dif={this.state.dif}
+              changeLoading={this.changeLoading}
+              setError={this.setError}
+              newData={this.state.newData}
+          />
           : null
         }
       </LinearGradient>
