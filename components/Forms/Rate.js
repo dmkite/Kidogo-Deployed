@@ -26,7 +26,7 @@ export default function Rate(props){
         <Text style={[styles.label, props.focusedOn === 'rate' ? styles.focused : null]}>Rate</Text>
       </View>
       <View style={{ flex: .5, marginLeft: 5 }}>
-        <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
+        <View style={[styles.input, props.focusedOn === 'rate' ? styles.focused : null, { height: 30, paddingLeft: 0 }]}>
           <Picker
             style={{ color: 'white', marginTop: -10 }}
             selectedValue={props.frequency}

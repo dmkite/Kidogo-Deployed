@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {View, ScrollView, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import {Icon} from 'react-native-elements'
-import axios from 'axios'
 import {LinearGradient, SecureStore} from 'expo'
 import Header from '../components/Header'
 import Amplify, { API, Auth } from 'aws-amplify';
