@@ -36,7 +36,7 @@ const createBody = async () => {
     newQuestions } = await getAsync(true, true, true, true, true, true, true)
   let userInfo = await SecureStore.getItemAsync('_SIGNEDIN')
   const { user } = JSON.parse(userInfo)
-
+    console.log(user)
   const accounts = newAccounts.map(acct => {
     acct.payments = newPayments[acct.id]
     return acct
@@ -53,7 +53,6 @@ const createBody = async () => {
       centre_address_1: centre.centre_address_1,
       centre_address_2: centre.centre_address_2
     }
-    
   }
 }
 
@@ -61,8 +60,10 @@ export const post = async(addMessage, stopLoading) => {
   const body = {
     body: await createBody()
   }
+  console.log(Object.keys(body))
   let apiName = 'KidogoApi'
-  let path = `/centres${body.id}` 
+  let path = `/centres` //${body.body.id}
+  console.log(path)
   
   API.post(apiName, path, body)//, myInit)
   .then((res) => {

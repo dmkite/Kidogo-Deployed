@@ -85,7 +85,7 @@ export function signUp(username, password, phone){
     password,
     attributes: {
       preferred_username: username,
-      phone_number: phone_number || '+19802260372'
+      phone_number: '+19802260372' //phone_number
     },
     validationData: []  //optional
   })
