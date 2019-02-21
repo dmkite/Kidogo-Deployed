@@ -9,7 +9,6 @@ import {AttendanceHistoryView, AttendanceHistoryRow} from '../components/Attenda
 import {getAccounts} from '../actions/accounts'
 import {getAttendance} from '../actions/attendance'
 
-
 class AttendanceHistory extends Component {
   constructor(props){
     super(props)
@@ -19,7 +18,6 @@ class AttendanceHistory extends Component {
     }
   }
   
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -29,7 +27,6 @@ class AttendanceHistory extends Component {
   }
 
   changeWeeks = (direction) => {
-
     let dateMod = this.state.dateMod
     if (direction === 'forward') dateMod += 7
     else dateMod -= 7
@@ -113,8 +110,9 @@ class AttendanceHistory extends Component {
     return (
       <LinearGradient
         style={{ flex: 1 }}
-        colors={['#11011B', '#2B122C']}>
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
+        
         <AttendanceHistoryView span={this.state.dateSpan} changeWeeks={this.changeWeeks} dateMod={this.state.dateMod}/>
         <ScrollView style={{marginTop:10}}>
           {this.accountsToChildren().map( (child, i) => {

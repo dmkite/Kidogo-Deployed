@@ -25,20 +25,7 @@ export const styles = {
     paddingLeft:20,
   },
   buttonImage:{
-    // alignSelf: '',
-    // top:0,npm 
-    // flex:1,
-    // width:null,
-    // height:150,
-    // flex:1,
     borderRadius:5,
-    height:150,
-    // zIndex:99,
-    // position:'absolute',
-    // right:0
-    // resizeMode:'center'
-    // flex:1,
-    // position:'absolute',
-    // zIndex:99
+    height:150
   }
 }

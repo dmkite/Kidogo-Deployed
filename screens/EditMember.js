@@ -13,14 +13,14 @@ class EditMember extends Component{
   constructor(props){
     super(props)
     this.state = {
-      f_name: '',
-      l_name:'',
+      f_name: null,
+      l_name:null,
       birthdate: null,
-      gender: '',
-      notes:'',
-      street: '',
-      city:'',
-      govt_id: '',
+      gender: null,
+      notes:null,
+      street: null,
+      city:null,
+      govt_id: null,
       phone: null,
       focusedOn: null,
       avoidView: 0,
@@ -29,7 +29,6 @@ class EditMember extends Component{
       showId:false
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,
@@ -90,7 +89,8 @@ class EditMember extends Component{
   changeMember = async () => {
     const changes = Object.keys(this.state).reduce((acc, field) => {
       if( field === 'showId' || field === 'avoidView' || field === 'hiddenId' || field === 'focusedOn') return acc
-      if(this.state[field]) acc[field] = this.state[field]
+      if(this.state[field] === '') acc[field] = null 
+      else if(this.state[field]) acc[field] = this.state[field]
       return acc
     }, {})
     const acctId = this.props.navigation.getParam('acctId')

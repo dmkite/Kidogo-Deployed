@@ -9,6 +9,7 @@ import {signUp} from '../utilities/authentication'
 import bcrypt from 'react-native-bcrypt'
 import {styles} from '../components/Signup/styles'
 import getAsync from '../utilities/getAsync'
+import numberValidation from '../utilities/numberValidation'
 import Loading from '../components/Loading'
 
 class Signup extends Component{
@@ -20,6 +21,7 @@ class Signup extends Component{
       hiddenPassword: '',
       f_name: null,
       l_name: null,
+      phone: '',
       centre_address_1:null,
       centre_address_2: null,
       questionFocus: 'caregiver',
@@ -28,7 +30,6 @@ class Signup extends Component{
       loading:false
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,
@@ -44,8 +45,7 @@ class Signup extends Component{
 
   handlePassword = (text) => {
     let password = this.state.password
-    
-    
+  
     text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
     let hiddenPassword = ''
     for (let letter of password) {
@@ -66,8 +66,8 @@ class Signup extends Component{
   addMargin = (num) => this.setState({avoidView: num})
 
   getCode = () => {
-    const {username, password} = this.state
-    signUp(username.toLowerCase().trim(), password)
+    const {username, password, phone} = this.state
+    signUp(username.toLowerCase().trim(), password, phone)
     this.setState({questionFocus: 'confirm'})
   }
 
@@ -111,7 +111,8 @@ class Signup extends Component{
               username: username.trim(),
               f_name: f_name.trim(),
               l_name: l_name.trim(),
-              id: caregiverId
+              id: caregiverId,
+              centre_id: centreId
             }
             return Promise.all([
               SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(newCaregivers)),
@@ -127,12 +128,20 @@ class Signup extends Component{
       this.setState({error:'Something went wrong when making your account'})
     }
   }
+
+  handleNumberChange = (text, field, num1, num2) => {
+    let length = 0
+    if (this.state[field] && this.state[field].length) length = this.state[field].length
+    this.setState({
+      [field]: numberValidation(text, field, length, num1, num2)
+    })
+  }
   
   render(){
     return (
       <LinearGradient
         style={[{flex:1}, this.state.avoidView ? {marginTop:Number(this.state.avoidView)} : null]}
-        colors={['#11011B', '#1A011B']}>
+        colors={['#11011B', '#3C233D']}>
         {this.state.questionFocus === 'caregiver'
           ? <Caregiver 
               handlePassword={this.handlePassword} 
@@ -141,6 +150,7 @@ class Signup extends Component{
               {...this.state} 
               changeQuestions={this.changeQuestions}
               handleChangeText={this.handleChangeText}  
+              handleNumberChange={this.handleNumberChange}
               setError={this.setError}
             />
           : this.state.questionFocus === 'centre' 

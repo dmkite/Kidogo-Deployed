@@ -20,7 +20,6 @@ class Accounts extends Component{
     }
   }
   
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -38,36 +37,43 @@ class Accounts extends Component{
       return b.balance - a.balance
     }
     if(this.state.filter === 'alphabetical'){
-      return b.children[0].l_name - a.children[0].l_name
+      if (b.children[0].l_name > a.children[0].l_name) return -1
+      else if (b.children[0].l_name < a.children[0].l_name) return 1
+      else return 0
     }
     
   }
-  
+  //NOTE: must complete filter function
   filterBy = (account) => {
     if(this.state.searchTerm.length > 0){
-      const childVals = account.children.reduce((acc, child) => {
-
-        delete child.birthdate 
-        delete child.notes
-        delete child.gender
-        delete child.img_uri
+      let children = [...account.children]
+      const childVals = children.reduce((acc, child) => {
+        // delete child.birthdate 
+        // delete child.notes
+        // delete child.gender
+        // delete child.img_uri
         acc = acc.concat(Object.values(child))
         return acc
       }, [])
-      const guardianVals = account.guardians.reduce((acc, guardian) => {
-        delete guardian.phone
-        delete guardian.city
-        delete guardian.street
-        delete guardian.govt_id
+      const guardians = [...account.guardians]
+      const guardianVals = guardians.reduce((acc, guardian) => {
+        // delete guardian.phone
+        // delete guardian.city
+        // delete guardian.street
+        // delete guardian.govt_id
         acc = acc.concat(Object.values(guardian))
         return acc
       }, [])
       for(let val of guardianVals.concat(childVals)){
-        if(val.toLowerCase().includes(this.state.searchTerm.toLowerCase())) return true
+        console.log(val)
+        if(typeof(val) === 'string'){
+          if(val.toLowerCase().trim().includes(this.state.searchTerm.toLowerCase().trim())) return true
+        }
       }
-      return false
+      // return false
     }
     return true
+    // return false
   }
 
   handleFilterOpen = () => {
@@ -89,7 +95,7 @@ class Accounts extends Component{
     return(
       <LinearGradient
         style={{ flex: 1 }}
-        colors={['#11011B', '#1A011B']}>
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
         {this.state.filterOpen ? <FilterBlock filter={this.state.filter} handlePress={this.handlePress} handleChangeText={this.handleChangeText}/> :  null}
         <TouchableOpacity style={styles.filterBtn} onPress={this.handleFilterOpen}>
@@ -101,11 +107,12 @@ class Accounts extends Component{
         </TouchableOpacity>
 
         <ScrollView style={{flex:1}}>
-          {this.props.accounts.accounts.length === 0 ? <View>
-                <Text style={{fontSize:18, margin:10}}>You have not added any accounts yet.</Text>
-                <TouchableOpacity style={{ flexDirection: 'row', margin: 10 }} onPress={() => this.props.navigation.navigate('Enrollment')}>
-                  <Icon style={{flex:.1}} name='add-circle-outline' size={18} />
-                  <Text style={{flex: .9, fontSize:18}}> Add an account</Text>
+          <Text style={styles.h1}>Accounts</Text>
+          {this.props.accounts.accounts.length === 0 
+            ? <View>
+                <Text style={{fontSize:18, margin:10, color:'#ffffff80'}}>You have not added any accounts yet.</Text>
+              <TouchableOpacity style={[styles.button, { margin: 10 }]} onPress={() => this.props.navigation.navigate('Enrollment')}>
+                  <Text style={styles.btnText}> Add an account</Text>
                 </TouchableOpacity>
               </View>
             : this.props.accounts.accounts

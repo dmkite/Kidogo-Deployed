@@ -130,7 +130,7 @@ class Account extends Component {
     return (
       <LinearGradient
         style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
-        colors={['#11011B', '#1A011B']}>
+        colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         {this.state.deleteMessage
           ? <View style={styles.deleteWarning}>
@@ -144,7 +144,12 @@ class Account extends Component {
           : null
         }
         <ScrollView>
-          
+          <Text style={styles.h1}>
+            {this.state.account.children[0]
+              ? `${this.state.account.children[0].l_name || ''} Family`
+              : 'Account'
+            }
+          </Text>
           <RateDetails 
             currentlyExpanded={this.state.currentlyExpanded}
             changeBalance={this.changeBalance}
@@ -158,7 +163,7 @@ class Account extends Component {
             acctId={this.props.navigation.getParam('id')}
             navigation={this.props.navigation}
           />
-            
+          <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View>
           <ChildDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -179,6 +184,8 @@ class Account extends Component {
               />
             : null
             }
+
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <GuardianDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -197,7 +204,7 @@ class Account extends Component {
                 />
             : null
           }
-
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <EmergencyContactDetails 
             openDetails={this.openDetails}
             currentlyExpanded={this.state.currentlyExpanded}
@@ -217,9 +224,9 @@ class Account extends Component {
               />
             : null
           }
-          
+          <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View>
           <TouchableOpacity 
-            style={styles.button} 
+            style={styles.button } 
             onPress={() => {
               this.setState({deleteMessage: !this.state.deleteMessage})
               setTimeout(() => {
@@ -227,8 +234,8 @@ class Account extends Component {
               }, 5000)}}
             onLongPress={this.deleteAccount}
           >
-            <View>
-              <Icon name="delete" color="white" style={{marginRight:5}}/>
+            <View style={{flexDirection:'row'}}>
+              <Icon name="delete" color="#ffffff80" style={{marginRight:5}}/>
               <Text style={[styles.btnText, {marginLeft:5}]}>Delete</Text>
             </View>
           </TouchableOpacity>

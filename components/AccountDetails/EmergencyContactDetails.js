@@ -7,19 +7,17 @@ export default function EmergencyContactDetails(props) {
   return (
     <View>
       <TouchableOpacity style={styles.header} onPress={() => { props.openDetails('e_contacts') }}>
-        <Text style={styles.h1}>Contacts</Text>
-        <Icon name={props.currentlyExpanded === 'e_contacts' ? "expand-less" : "expand-more"} size={36} color="white"/>
+        <Text style={styles.h2}>Contacts</Text>
+        <Icon name={props.currentlyExpanded === 'e_contacts' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
       </TouchableOpacity>
-
-      <View style={{ height: 2, backgroundColor: '#ccc', margin: 20 }}></View>
 
       {props.currentlyExpanded === 'e_contacts'
         ? <View>
         {props.e_contacts.map((eC, i) => {
           return (
             <View style={styles.childDetails} key={i}>
-              <View style={styles.imgAndName}>
-                <Text style={[styles.topic, styles.name]}>{eC.f_name + ' ' + eC.l_name}</Text>
+              <View style={[styles.imgAndName, { height: 50 }]}>
+                <Text style={[styles.name, { marginLeft: -5, lineHeight: 50 }]}>{eC.f_name + ' ' + eC.l_name}</Text>
                 <TouchableOpacity style={styles.editBtn} onPress={ () => props.navigation.navigate('EditMember', {editing: eC, acctId: props.acctId, type:'e_contacts'})}>
                   <Icon name="edit" color="#ccc" />
                 </TouchableOpacity>
@@ -31,19 +29,19 @@ export default function EmergencyContactDetails(props) {
                   <Text style={styles.text}>{eC.phone || 'unknown'}</Text>
                 </View>
               </View>
-              {i !== props.e_contacts.length - 1
-                ? <View style={{ height: 1, backgroundColor: 'white', opacity: 0.5, margin: 10 }}></View>
-                : null
-              }
             </View>
           )})
         }
-          <TouchableOpacity style={styles.addBtn} onPress={() => props.openForm('e_contacts')}>
-            <Icon name="person-add" color="white" size={35} />
+          <TouchableOpacity style={styles.button} onPress={() => props.openForm('e_contacts')}>
+            <View style={{flexDirection:'row'}}>
+              <Icon name="person-add" color="#ffffff80" size={18} style={{marginRight:5}} />
+              <Text style={[styles.btnText, {marginLeft:5}]}>Add contact</Text>
+            </View>
           </TouchableOpacity>
         </View> 
         : null
       }
+      {/* <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View> */}
 
     </View>
   )

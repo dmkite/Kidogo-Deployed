@@ -8,7 +8,7 @@ export default function AttendanceHistoryRow(props){
     <View>
       
     <View style={styles.attendanceRow}>
-      <View style={[styles.child, {marginRight:20}]}>
+      <View style={[styles.child]}>
         {props.img_uri
           ? <View style={{width:70, height:70, borderRadius:35, zIndex:100, overflow:'hidden'}}>
             <Image
@@ -31,8 +31,6 @@ export default function AttendanceHistoryRow(props){
         </View>
       })}
     </View>
-      <View style={{height:1, marginHorizontal:10, backgroundColor:'white', opacity:0.5}}></View>
-      
     </View>
   )
 }

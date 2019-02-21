@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
-import {Picker, View, Text, ScrollView, TextInput, TouchableHighlight, Image, TouchableOpacity} from 'react-native'
-import {FormLabel, FormInput, Button, Icon} from 'react-native-elements'
+import {Picker, View, Text, ScrollView, TextInput, Image, TouchableOpacity} from 'react-native'
+import {Icon} from 'react-native-elements'
 import {styles} from './newStyles'
 import numberValidation from '../../utilities/numberValidation'
-import {LinearGradient} from 'expo'
-import { WHEN_PASSCODE_SET_THIS_DEVICE_ONLY } from 'expo/build/SecureStore/SecureStore';
 
 class Child extends Component{
   constructor (props){
@@ -46,8 +44,7 @@ class Child extends Component{
     this.setState({[field]: text})
   }
 
-
-  addURI = (userData) => { //adding uri reverted state
+  addURI = (userData) => { 
     this.setState({ ...userData })
   }
 
@@ -55,24 +52,12 @@ class Child extends Component{
     return (
       <ScrollView style = {{ flex:1}} >
         {this.state.img_uri
-          ? <Image
-            source={{uri:this.state.img_uri}}
-            style={{
-              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-            }}
-          />
-          : <Image
-            source={require('../../assets/CHILD.png')}
-            style={{
-              height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-            }}
-          />
+          ? <Image source={{uri:this.state.img_uri}} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10}}/>
+          : <Image source={require('../../assets/CHILD.png')} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10}}/>
         }
             
-           
-  
-          <TouchableOpacity style={{width:50, opacity:0.5, margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
-            <Icon name="camera-alt" size={36} color="white"/>
+          <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
+            <Icon name="camera-alt" size={36} color="#ffffff80"/>
           </TouchableOpacity>
 
           <View style={styles.nameHolder}>
@@ -159,7 +144,8 @@ class Child extends Component{
             this.props.addMargin(0)
           }} />
       
-        <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Notes</Text>
+        <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Notes about {this.state.f_name}</Text>
+
           {this.props.accountAlreadyCreated
             ? <View style={styles.nameHolder}>
                 <TouchableOpacity 
@@ -167,79 +153,51 @@ class Child extends Component{
                   onPress={() => this.props.openForm('children')}>
                   <Text style={[styles.nextText, {textAlign:'left', marginLeft: 10}]}>Cancel</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name)
-                  ? styles.ready
-                  : styles.notReady]}
-                  onPress={() => {
-                  let child = {...this.state}
-                  delete child.focusedOn
-                  this.props.addMember('children', child)
-                  }}>
-                  <Text style={styles.nextText}>Add</Text>
-                </TouchableOpacity>
-
+                {this.state.f_name && this.state.l_name
+                  ? <TouchableOpacity style={[styles.button, { flex: .5, marginRight: 5 }]}
+                      onPress={() => {
+                      let child = {...this.state}
+                      delete child.focusedOn
+                      this.props.addMember('children', child)
+                      }}>
+                      <Text style={styles.nextText}>Add</Text>
+                    </TouchableOpacity>
+                  : null }
               </View>
-            : <View style={{ flexDirection:'row'}}>
-              <TouchableOpacity style={[{flex: .5, marginTop:20}, (!!this.state.f_name && !!this.state.l_name)
-                              ? styles.ready
-                              : styles.notReady]}
-                  onPress={
-                (!!this.state.f_name && !!this.state.l_name)
-                  ? () => {
-                    this.state
-                    let child = { ...this.state }
-                    delete child.focusedOn
-                    this.props.addToAccount(child, 'children')
-                    this.setState({
-                      focusedOn: null,
-                      img_uri: null,
-                      f_name: null,
-                      l_name: null,
-                      birthdate: null,
-                      gender: null,
-                      notes: null
-                    })
-                  }
-                  : null}
-              >
-                  <Text style={[styles.nextText, {textAlign:'left', marginLeft:10}]}>Add Another</Text>
+            : this.state.f_name && this.state.l_name 
+            ? <View style={{ flexDirection:'row', margin:10}}>
+                <TouchableOpacity style={[styles.button, {flex: .5, marginRight:5}]}
+                    onPress={ () => {
+                      let child = { ...this.state }
+                      delete child.focusedOn
+                      this.props.addToAccount(child, 'children')
+                      this.setState({
+                        focusedOn: null,
+                        img_uri: null,
+                        f_name: null,
+                        l_name: null,
+                        birthdate: null,
+                        gender: null,
+                        notes: null
+                      })
+                    }}>
+                  <Text style={styles.btnText}>Add Another</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[{ flex: .5,  flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
-                (!!this.state.f_name && !!this.state.l_name)
-                  ? styles.ready
-                  : styles.notReady]}
+              <TouchableOpacity style={[styles.button, {flex: .5, marginLeft:5}]}
                   onPress={ () => {
-                        this.state
                         let child = {...this.state}
                         delete child.focusedOn
                         this.props.addToAccount(child, 'children')
                         this.props.changeQuestionFocus('guardian')
-                      }}
-                >
-                  <Text style={styles.nextText}>Next</Text>
-                <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
+                      }}>
+                  <Text style={styles.btnText}>Next</Text>
               </TouchableOpacity>
             </View>
+            : null
           }
         </ScrollView > 
     )
   }
 }
-
-/**
- onPress={
-                  (!!this.state.f_name && !!this.state.l_name)
-                    ? () => {
-                      this.state
-                      let child = {...this.state}
-                      delete child.focusedOn
-                      this.props.addToAccount(child, 'children')
-                      this.props.changeQuestionFocus('guardian')
-                    }
-                    : null}
-
-                    ADD THIS BACK TO TOUCHABLEOPACITY
- */
 
 export default Child

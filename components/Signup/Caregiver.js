@@ -4,6 +4,7 @@ import {Icon} from 'react-native-elements'
 import {LinearGradient} from 'expo'
 import {styles} from './styles'
 
+
 export default class Caregiver extends Component{
   constructor(props){
     super(props)
@@ -23,14 +24,14 @@ export default class Caregiver extends Component{
     this.setState({showPassword: !this.state.showPassword})
   }
 
-
   render(){
     return (
       <ScrollView styles={styles.container}>
+          <Text style={styles.h1}>Add your information</Text>
           <Image
             source={require('../../assets/CAREGIVER.png')}
           style={{
-            height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50, marginBottom: 10}}
+            height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginVertical: 10}}
           />
           <TextInput
             onFocus={() => {
@@ -53,10 +54,13 @@ export default class Caregiver extends Component{
                 this.changeFocus('focus', 'password')
                 this.props.addMargin(-100)
                 }}
-              onBlur={() =>{
-                 this.changeFocus('blur', null)
-                 this.props.addMargin(0)
-                 }}
+              onBlur={() => Promise.all([
+                 this.changeFocus('blur', null),
+                 this.props.addMargin(0),
+                  this.props.password.length < 8
+                    ? this.props.setError('Password must be at least 8 characters long')
+                    : null
+                ])}
               style={[styles.input, {flex:0.9, marginRight:0}, this.state.focusedOn === 'password' ? styles.focused : null]}
               value={this.state.showPassword ? this.props.password : this.props.hiddenPassword}
               onChangeText={(text) => this.props.handlePassword(text)}
@@ -102,20 +106,34 @@ export default class Caregiver extends Component{
               />
               <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
             </View>
+
           </View>
-          <TouchableOpacity style={[{flexDirection:'row', justifyContent:'flex-end', marginTop:20},
-          (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username) 
-            ? styles.ready  
-            : styles.notReady]} 
-            onPress={ () => 
-              (!!this.props.f_name && !!this.props.l_name && !!this.props.password && !!this.props.username)
-                ? this.props.changeQuestions('centre')
-                : this.props.setError('Fill out a username, password, and your name')
+          <TextInput
+            style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
+            value={this.props.phone}
+            keyboardType="number-pad"
+            maxLength={11}
+            minLength={11}
+            onFocus={() => {
+              this.changeFocus('focus', 'phone')
+              this.props.addMargin(-375)
+            }}
+            onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+            }}
+            onChangeText={(text) => this.props.handleNumberChange(text, 'phone', 2, 6)}
+          />
+          <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
+          {(!!this.props.f_name && !!this.props.l_name && this.props.password.length >= 8 && !!this.props.username && this.props.phone.length === 11)
+            ? <View style={{flexDirection:'row', height:50, margin:10}} >
+                <View style={{flex:0.5}}></View>
+                <TouchableOpacity style={[ styles.button, {marginVertical:20, flex:0.5, alignSelf:'flex-end'}]} onPress={ () => this.props.changeQuestions('centre')}>
+                  <Text style={styles.btnText}>next</Text>
+                </TouchableOpacity>
+            </View>
+            :null
             }
-          >
-            <Text style={styles.nextText}>Next</Text>
-            <Icon name="chevron-right" size={24} color='white' style={{flex:0.1, marginTop:13}}/>
-          </TouchableOpacity>
       </ScrollView>
     )
   }

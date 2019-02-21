@@ -31,6 +31,7 @@ function ActionButtons(props){
       </TouchableOpacity>
     <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Questions')}>
           <ImageBackground
+            source={require('../../assets/QUESTIONS.png')}
             style={styles.buttonImage} >
           <Text style={styles.actionText}>Daily Questions</Text>
           </ImageBackground>

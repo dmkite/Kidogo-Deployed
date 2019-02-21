@@ -33,7 +33,7 @@
                 "AttributeDefinitions": [
                   
                   {
-                      "AttributeName": "CentreId",
+                      "AttributeName": "id",
                       "AttributeType": "S"
                   } 
                   
@@ -41,7 +41,7 @@
                 "KeySchema": [
                   
                   {
-                    "AttributeName": "CentreId",
+                    "AttributeName": "id",
                     "KeyType": "HASH"
                   } 
                   

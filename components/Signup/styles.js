@@ -3,6 +3,16 @@ export const styles = {
     flex:1,
     padding:5
   },
+  h1:{
+    fontSize:36,
+    color:'#ffffff80',
+    margin:10
+  },
+  h2: {
+    fontSize: 24,
+    color: '#ffffff80',
+    margin: 10
+  },
   input:{
     borderBottomWidth: 2,
     borderColor: 'white',
@@ -100,5 +110,27 @@ export const styles = {
     lineHeight: 50,
     color: '#ffffff80',
     textAlign: 'center'
+  },
+  modal: {
+    position: 'absolute', 
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    backgroundColor: '#000000dd'
+  },
+  title:{
+    fontSize:18,
+    fontWeight:'bold',
+    flex:0.4,
+    color:'#ffffff80',
+    marginLeft:10
+  },
+  content:{
+    fontSize:18, 
+    color:'#ffffff80',
+    flex:0.6,
+    marginLeft:10
   }
+
 }

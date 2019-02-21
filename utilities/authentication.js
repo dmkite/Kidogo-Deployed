@@ -77,13 +77,15 @@ export const signIn = async (username, password, success, failure) => {
     });
 }
 
-export function signUp(username, password){
+export function signUp(username, password, phone){
+  const phone_number = '+254' + phone.split('-').join('')
+  
   Auth.signUp({
     username,
     password,
     attributes: {
       preferred_username: username,
-      phone_number:'+19802260372'
+      phone_number: phone_number || '+19802260372'
     },
     validationData: []  //optional
   })

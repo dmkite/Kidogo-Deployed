@@ -8,7 +8,7 @@ class EmergencyContact extends Component{
   constructor(props){
     super(props)
     this.state = {
-      phone: '',
+      phone: null,
       f_name: null,
       l_name: null,
       focusedOn: null
@@ -98,61 +98,49 @@ class EmergencyContact extends Component{
         
         
         {this.props.accountAlreadyCreated
-          ? <View style={styles.nameHolder}>
-            <TouchableOpacity
-              style={[{ flex: .5, marginTop: 20 }, styles.ready]}
-              onPress={() => this.props.openForm('e_contacts')}>
-              <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
+          ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>
+            <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]} onPress={() => this.props.openForm('e_contacts')}>
+              <Text style={styles.btnText}>Cancel</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name)
-              ? styles.ready
-              : styles.notReady]}
-              onPress={() => {
-                let e_contact = { ...this.state }
-                delete e_contact.focusedOn
-                this.props.addMember('e_contacts', e_contact)
-              }}>
-              <Text style={styles.nextText}>Add</Text>
-            </TouchableOpacity>
-
+            {this.state.phone && this.state.phone.length === 11 && this.state.f_name
+              ? <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]}
+                  onPress={() => {
+                    let e_contact = { ...this.state }
+                    delete e_contact.focusedOn
+                    this.props.addMember('e_contacts', e_contact)
+                  }}>
+                  <Text style={styles.btnText}>Add</Text>
+                </TouchableOpacity>
+              : null
+            }
           </View>
-          :<View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity style={[{ flex: .5, marginTop: 20 }, (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
-            ? styles.ready
-            : styles.notReady]}
-            onPress={
-              (!!this.state.f_name && !!this.state.l_name && !!this.state.phone)
-                ? () => {
-                  let e_contact = { ...this.state }
-                  delete e_contact.focusedOn
-                  this.props.addToAccount(e_contact, 'e_contacts')
-                  this.setState({
-                    phone: '',
-                    f_name: null,
-                    l_name: null,
-                    focusedOn: null
-                  })
-                }
-                : null}
-          >
-            <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Add Another</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[{ flex: .5, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 },
-          (!!this.state.f_name && !!this.state.l_name)
-            ? styles.ready
-            : styles.notReady]}
-            onPress={() => {
-              let e_contact = { ...this.state }
-              delete e_contact.focusedOn
-              this.props.addToAccount(e_contact, 'e_contacts')
-              this.props.submitAccount()
-            }}
-          >
-            <Text style={styles.nextText}>Next</Text>
-            <Icon name="chevron-right" size={24} color='white' style={{ flex: 0.1, marginTop: 13 }} />
-          </TouchableOpacity>
-        </View>
+          :  this.state.phone && this.state.phone.length === 11 && this.state.f_name
+            ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>
+                <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 } ]}
+                  onPress={() => {
+                        let e_contact = { ...this.state }
+                        delete e_contact.focusedOn
+                        this.props.addToAccount(e_contact, 'e_contacts')
+                        this.setState({
+                          phone: null,
+                          f_name: null,
+                          l_name: null,
+                          focusedOn: null
+                })}}>
+                  <Text style={styles.btnText}>Add Another</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]}
+                  onPress={() => {
+                    let e_contact = { ...this.state }
+                    delete e_contact.focusedOn
+                    this.props.addToAccount(e_contact, 'e_contacts')
+                    this.props.submitAccount()
+                  }}>
+                  <Text style={styles.btnText}>Next</Text>
+                </TouchableOpacity>
+              </View>
+            : null
+          
         }
       </ScrollView>
     )

@@ -8,11 +8,10 @@ export default function ChildDetails(props){
   return (
     <View>
       <TouchableOpacity style={styles.header} onPress={() => {props.openDetails('children')}}> 
-        <Text style={styles.h1}>Children</Text>
-        <Icon name={props.currentlyExpanded === 'children' ? "expand-less" : "expand-more"} size={36} color="white"/>
+        <Text style={styles.h2}>Children</Text>
+        <Icon name={props.currentlyExpanded === 'children' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
       </TouchableOpacity>
       
-      <View style={{ height: 2, backgroundColor: '#ccc', margin:20 }}></View>
       
       {props.currentlyExpanded === 'children'
        ? <View>
@@ -20,8 +19,9 @@ export default function ChildDetails(props){
             return (
               <View style={styles.childDetails} key={i}>
                 <View style={styles.imgAndName}>
+                 <View style={{flexDirection:'row'}}>
                   {child.img_uri 
-                    ? <View key={i} style={[cardStyles.circle, {marginRight:10}]}>
+                    ? <View key={i} style={[cardStyles.circle, {marginRight:10, borderWidth:0}]}>
                         <Image
                           source={{ uri: child.img_uri }}
                           style={{
@@ -32,10 +32,12 @@ export default function ChildDetails(props){
                           }}
                         />
                       </View>
-                    : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: 0}]}>{child.f_name[0].toUpperCase()}</Text>}
-                  <Text style={[styles.topic, styles.name]}>{child.f_name + ' ' + child.l_name}</Text>
+                    : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: -10, borderWidth:0}]}>{child.f_name[0].toUpperCase()}</Text>}
+                  <Text style={ [styles.name, ]}>{child.f_name + ' ' + child.l_name}</Text>
+                 </View>
+                  
                   <TouchableOpacity style={styles.editBtn} onPress={() => props.navigation.navigate('EditMember', {editing: child, acctId: props.acctId, type:'children', updateAccount: props.updateAccount})}>
-                    <Icon name="edit" color="#ccc" />
+                    <Icon name="edit" color="#ffffff80" />
                   </TouchableOpacity>
                 
                 </View>
@@ -56,21 +58,23 @@ export default function ChildDetails(props){
                     <Text style={styles.text}>{child.notes || 'none' }</Text>
                   </View>
               </View>
-              {i !== props.children.length - 1
-                ? <View style={{height:1, backgroundColor:'white', opacity:0.5, margin:10}}></View>
-                : null
-              }
+              
               </View>
               )
             })}
 
-          <TouchableOpacity style={styles.addBtn} onPress={() => props.openForm('children')}>
-            <Icon name="person-add" color="white" size={35}/>
+          <TouchableOpacity style={styles.button} onPress={() => props.openForm('children')}>
+            <View style={{flexDirection:'row'}}>
+              <Icon name="person-add" color="#ffffff80" size={18}/>
+              <Text style={styles.btnText}>Add child</Text>
+            </View>
           </TouchableOpacity>
+
        </View>
         
       : null
       }
+      {/* <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View> */}
     </View>
   )
 }

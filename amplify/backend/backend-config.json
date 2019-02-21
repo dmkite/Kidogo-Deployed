@@ -6,27 +6,36 @@
         }
     },
     "storage": {
-        "Kidogo": {
+        "KidogoDB": {
             "service": "DynamoDB",
             "providerPlugin": "awscloudformation"
         }
     },
     "function": {
-        "Kidogo": {
+        "KidogoLambda": {
             "service": "Lambda",
             "providerPlugin": "awscloudformation",
             "build": true,
-            "dependsOn": []
+            "dependsOn": [
+                {
+                    "category": "storage",
+                    "resourceName": "KidogoDB",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                }
+            ]
         }
     },
     "api": {
-        "Kidogo": {
+        "KidogoApi": {
             "service": "API Gateway",
             "providerPlugin": "awscloudformation",
             "dependsOn": [
                 {
                     "category": "function",
-                    "resourceName": "Kidogo",
+                    "resourceName": "KidogoLambda",
                     "attributes": [
                         "Name",
                         "Arn"

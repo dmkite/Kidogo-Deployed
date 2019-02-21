@@ -23,7 +23,8 @@ export default class HomeScreen extends Component{
       caregivers: {},
       showHelp: false,
       playing: false,
-      loading:false
+      loading:false,
+      soundObject: null
     }
   }
 
@@ -46,12 +47,16 @@ export default class HomeScreen extends Component{
 
   handlePassword = (text) => {
     let password = this.state.password
-
-    text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
-    let hiddenPassword = ''
-    for (let letter of password) {
-      hiddenPassword += '*'
-    }
+    let hiddenPassword = this.state.hiddenPassword
+    text.length > this.state.password.length 
+      ? (password += text[text.length - 1], 
+        hiddenPassword += '*')
+      : (password = password.slice(0, password.length - 1),
+        hiddenPassword = hiddenPassword.slice(0, hiddenPassword.length -1))
+    
+    // for (let letter of password) {
+    //   hiddenPassword += '*'
+    // }
     this.setState({
       password: password.trim(),
       hiddenPassword: hiddenPassword.trim()
@@ -68,15 +73,14 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
-    if (!newCaregivers[this.state.username.toLowerCase()]) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
+    const user = newCaregivers[this.state.username.toLowerCase()]
+    if (!user) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
-      console.log(this.state.password, newCaregivers[this.state.username.toLowerCase()])
-
-      return bcrypt.compare(this.state.password, newCaregivers[this.state.username.toLowerCase()].password, (err, res) => {
+      return bcrypt.compare(this.state.password, user.password, (err, res) => {
         console.log('error: ', err, 'response :', res)
         if(err || !res) return this.setState({ loading: false, error: 'Incorrect password' })
         else{
-          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user: this.state.username, time: Date.now()}))
+          SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user, time: Date.now()}))
           .then(() => {
             this.setState({loading: false})
             this.props.navigation.navigate('Dash')
@@ -87,30 +91,54 @@ export default class HomeScreen extends Component{
     } 
   }
 
-  componentDidMount = async () => {
-    // return this.props.navigation.navigate('Payments', {
-    //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
-    return this.props.navigation.navigate('Upload')
-    let message = this.props.navigation.getParam('message')
-    setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
-    if(message) this.setState({error:message})
-    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    if(signedIn) signedIn = JSON.parse(signedIn)
+  
 
-    if(signedIn) this.props.navigation.navigate('Dash')
+  componentDidMount = async () => {
+
+    // await SecureStore.deleteItemAsync('_ACCOUNTS')
+    // await SecureStore.deleteItemAsync('_FINANCES')
+    // await SecureStore.deleteItemAsync('_ATTENDANCE')
+    // await SecureStore.deleteItemAsync('_PAYMENTS')
+    // await SecureStore.deleteItemAsync('_QUESTIONS')
+
+
+    // return this.props.navigation.navigate('Account', {
+    //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
+    // return this.props.navigation.navigate('AttendanceHistory')
+
+    // let message = this.props.navigation.getParam('message')
+    // setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    // if(message) this.setState({error:message})
+    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    // if(signedIn) signedIn = JSON.parse(signedIn)
+
+    // if(signedIn) this.props.navigation.navigate('Dash')
+    await this.navigate()
   }
 
-  
+  navigate = async () => {
+    let message = this.props.navigation.getParam('message')
+    setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    if (message) this.setState({ error: message })
+    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    if (signedIn) signedIn = JSON.parse(signedIn)
+
+    if (signedIn) this.props.navigation.navigate('Dash')
+  }
+
   playAudio = async () => {
-    if (this.state.playing === true) return
-    this.setState({ playing: true })
-    setTimeout(
-      () => this.setState({ playing: false }), 20000
-    )
-    const soundObject = new Audio.Sound()
     try{
-      await soundObject.loadAsync(require('../assets/signin.mp3'))
-      await soundObject.playAsync()
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/signin.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        // await this.state.soundObject.unloadAsync()
+        this.setState({soundObject: null})
+      }
     }catch(err){
       console.error(err)
       this.setState({error:'We could not play the audio file'})
@@ -167,23 +195,17 @@ export default class HomeScreen extends Component{
         </View>
         <Text style={[styles.label, this.state.focusedOn === 'password' ? styles.focused : null]}>Password</Text>
         
-        <View style={{flexDirection:'row', justifyContent:'space-between', height:50}}>
-          <TouchableOpacity style={{margin:20, height:50, opacity:0.5}} onPress={() => navigate('Signup')}>
-            <Text style={{fontSize:14, color:'white'}}>Sign up for an account</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity style={[{ flexDirection: 'row', justifyContent: 'flex-end' },
-            (!!this.state.username && !!this.state.password)
-              ? styles.ready
-              : styles.notReady]} 
-            onPress={() => {
-              return Promise.all([this.setState({loading:true}), this.handleSignIn()])
-              }}>
-            <Text style={styles.nextText}>sign in</Text>
-            <Icon name="chevron-right" size={24} color="white" style={{ flex: 0.1, marginTop:15 }}/>
-          </TouchableOpacity>
-        </View>
-
+         <View style={{flexDirection:'row', marginHorizontal:10, height:50}}>
+              <TouchableOpacity style={[styles.button, {flex:0.5, marginRight:5}]} onPress={() => navigate('Signup')}>
+                <Text style={styles.btnText}>sign up</Text>
+              </TouchableOpacity>
+          {this.state.password.length && this.state.username.length
+            ? <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} 
+                onPress={() => Promise.all([this.setState({loading:true}), this.handleSignIn()])}>
+                <Text style={styles.btnText}>sign in</Text>
+              </TouchableOpacity>
+          : null}
+            </View>
         {!!this.state.error
           ? <View style={styles.error}>
             <Text style={styles.errorText}>{this.state.error}</Text>
