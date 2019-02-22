@@ -1,18 +1,14 @@
-import {AsyncStorage} from 'react-native'
 import {SecureStore} from 'expo'
+import getAsync from '../utilities/getAsync'
 
 export const GET_ACCOUNTS = 'GET_ACCOUNTS'
 export function getAccounts(){
   try{
     return async dispatch => {
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-
-      if(!accounts) accounts = []
-      else accounts = JSON.parse(accounts)
+      let {newAccounts} = await getAsync(false, true)
       dispatch({
         type:GET_ACCOUNTS,
-        payload: accounts
+        payload: newAccounts
       })
     }
   }catch(err){
@@ -20,64 +16,59 @@ export function getAccounts(){
   }
 }
 
-export const GET_ONE_ACCOUNT = 'GET_ONE_ACCOUNT'
-export function getOneAccount(id){
+// export const GET_ONE_ACCOUNT = 'GET_ONE_ACCOUNT'
+// export function getOneAccount(id){
   
-}
+// }
 
-export const ADD_MESSAGE = 'ADD_MESSAGE'
-export function addMessage(msg){
-  return {
-    type: ADD_MESSAGE,
-    payload: msg
-  }
-}
+// export const ADD_MESSAGE = 'ADD_MESSAGE'
+// export function addMessage(msg){
+//   return {
+//     type: ADD_MESSAGE,
+//     payload: msg
+//   }
+// }
 
 export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
     try{
       account.balance = 0
-      let newAccounts
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      if(!accounts) newAccounts = [account]
-      else{
-        accounts = JSON.parse(accounts)
-        newAccounts = [...accounts, account]
-      }
+      let { newAccounts } = await getAsync(false, true)
+      
+      newAccounts.push(account)
+      
       newAccounts = JSON.stringify(newAccounts)
-      // await AsyncStorage.setItem('_ACCOUNTS', newAccounts)
-      await SecureStore.setItemAsync('_ACCOUNTS', newAccounts)
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const {user:{id}} = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, newAccounts)
       dispatch({
         type: UPDATE_ACCOUNTS,
         payload: JSON.parse(newAccounts)
       })
     }catch(err){
-      //error handling goes here
-      console.error(err, '!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      console.error(err)
     }
 
   }
 }
 
-// export const ADD_MEMBER_TO_ACCOUNT = 'ADD_MEMBER_TO_ACCOUNT'
 export function addMemberToAccount(newMember){
   return async dispatch => {
     try{
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
-      let newAccounts = accounts.map(acct => {
+      let { newAccounts } = await getAsync(false, true)
+      newAccounts = newAccounts.map(acct => {
         if(acct.id === newMember.id){
           acct[newMember.type].push(newMember.content)
         }
         return acct
       })
-      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      
+      await SecureStore.setItemAsync(`_ACCOUNTS_${ id }`, JSON.stringify(newAccounts))
       dispatch({
-        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS, 
         payload: newAccounts
       })
     }catch(err){
@@ -86,15 +77,13 @@ export function addMemberToAccount(newMember){
   }
 }
 
-// export const CHANGE_FIELD = 'CHANGE_FIELD'
-export function changeField(fieldname, newValue, id, fieldname2, newValue2){
+export function changeField(fieldname, newValue, acctId, fieldname2, newValue2){
   
   return async dispatch => {
     try {
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
-      let newAccounts = accounts.map((acct, i) => {
-        if (acct.id === id) {
+      let { newAccounts } = await getAsync(false, true)
+      newAccounts = newAccounts.map((acct, i) => {
+        if (acct.id === acctId) {
           acct[fieldname] = newValue
           if(fieldname2 !== undefined){
             acct[fieldname2] = newValue2
@@ -102,9 +91,12 @@ export function changeField(fieldname, newValue, id, fieldname2, newValue2){
         }
         return acct
       })
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
-        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS,
         payload: newAccounts
       })
     } catch (err) {
@@ -116,19 +108,18 @@ export function changeField(fieldname, newValue, id, fieldname2, newValue2){
 export function deleteMember(acctId, memberType, memberId){
   return async dispatch => {
     try {
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
-      let newAccounts = accounts.map(acct => {
+      let { newAccounts } = await getAsync(false, true)
+      newAccounts = newAccounts.map(acct => {
         if (acct.id === acctId) {
           acct[memberType] = acct[memberType].filter(member => member.id !== memberId)
         }
         return acct
       })
-      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
-        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS,
         payload: newAccounts
       })
     } catch (err) {
@@ -139,26 +130,22 @@ export function deleteMember(acctId, memberType, memberId){
 
 export function changeMember(changes, acctId, memberType, memberId){
   return async dispatch => {
-    console.log(changes, acctId, memberType, memberId)
     try {
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
-      let newAccounts = accounts.map(acct => {
-        console.log(acct.id, acctId)
+      let { newAccounts } = await getAsync(false, true)
+      newAccounts = newAccounts.map(acct => {
         if (acct.id === acctId) {
           acct[memberType] = acct[memberType].map(member => {
-            console.log(member)
             if(member.id === memberId) member = {...member, ...changes}
             return member
           })
         }
         return acct
       })
-      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
-        type: UPDATE_ACCOUNTS, //this would have the exact same functionality as ADD_MEMBER_TO_ACCOUNT
+        type: UPDATE_ACCOUNTS,
         payload: newAccounts
       })
     } catch (err) {
@@ -167,15 +154,17 @@ export function changeMember(changes, acctId, memberType, memberId){
   }
 }
 
-export function deleteAccount(id){
+export function deleteAccount(acctId){
   return async dispatch => {
     try {
-      // let accounts = await AsyncStorage.getItem('_ACCOUNTS')
-      let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-      accounts = JSON.parse(accounts)
-      let newAccounts = accounts.filter(acct => acct.id !== id)
-      // await AsyncStorage.setItem('_ACCOUNTS', JSON.stringify(newAccounts))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let { newAccounts } = await getAsync(false, true)
+      console.log(newAccounts.length)
+      newAccounts = newAccounts.filter(acct => acct.id !== acctId)
+      console.log(newAccounts.length)
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
+      console.log(newAccounts.length)
       dispatch({
         type: UPDATE_ACCOUNTS, 
         payload: newAccounts

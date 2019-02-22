@@ -179,6 +179,7 @@ class Guardian extends Component{
               handleNumberChange={this.handleNumberChange}
               focusedOn={this.state.focusedOn}
               frequency={this.state.frequency}
+              pickerChange={this.pickerChange}
             />
         }
 

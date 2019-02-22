@@ -92,7 +92,7 @@ class PaymentSection extends Component{
 
               <TouchableOpacity style={styles.button} onPress={() => {
                 return Number(this.state.amount) > 0
-                  ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date)])
+                  ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date), this.openPayments()])
                   : null}}>
                 <Text style={styles.btnText}>Make Payment</Text>
               </TouchableOpacity>
@@ -101,11 +101,9 @@ class PaymentSection extends Component{
           : <TouchableOpacity style={styles.button} onPress={this.openPayments}>
               <Text style={styles.btnText}>Make Payment</Text>
             </TouchableOpacity>
-        }
-              
+        }    
       </View>
     )
-
   }
 }
 

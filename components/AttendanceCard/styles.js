@@ -35,7 +35,7 @@ export const styles = {
   },
   text:{
     fontSize:18,
-    color:'white'
+    color:'#ffffff80'
   },
   selected:{
     // opacity:.3,
@@ -53,6 +53,10 @@ export const styles = {
     color:'white',
     lineHeight:80,
     textAlign:'center'
-  }
+  },
+  h2:{ 
+    color:'#ffffff80', 
+    fontSize:24, 
+    margin:10}
 
 }

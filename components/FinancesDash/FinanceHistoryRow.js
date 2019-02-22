@@ -8,7 +8,7 @@ export default function FinanceHistoryRow(props){
     rent: 'home',
     electricity: 'bolt',
     fuel: 'fire',
-    food: 'apple',
+    food: 'spoon',
     water: 'tint',
     salary: 'money'
 

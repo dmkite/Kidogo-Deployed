@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, View, Text, TouchableOpacity, Alert} from 'react-native'
-import {SecureStore, LinearGradient} from 'expo'
+import {LinearGradient} from 'expo'
 import {Icon} from 'react-native-elements'
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
 import { bindActionCreators } from 'redux';
@@ -10,7 +10,6 @@ import Header from '../components/Header'
 import {getAccounts, addMemberToAccount, changeField, deleteAccount} from '../actions/accounts'
 import {styles} from '../components/AccountDetails/styles'
 import uuid from 'uuid'
-
 
 class Account extends Component {
   constructor(props){
@@ -98,18 +97,8 @@ class Account extends Component {
   }
 
   componentDidMount = async () => {
-    //should cahnge this to an action!
-    // const id = this.props.navigation.getParam('id')
-    // try{
-    //   const accounts = await SecureStore.getItemAsync('_ACCOUNTS')
-    //   const [account] = JSON.parse(accounts).filter(acct => acct.id === id)
-    //   this.setState({ account })
-
-    // }catch(err){
-    //   console.error(err,'----------------------')
-    // }
-
     return this.props.getAccounts().then(() => {
+      
       const id = this.props.navigation.getParam('id')
       const [account] = this.props.accounts.accounts.filter(acct => acct.id === id)
       this.setState({ account })

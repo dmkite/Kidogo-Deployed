@@ -42,8 +42,9 @@ export function addExpense(expense){
         memo: expense.memo,
         amount: expense.amount
       })
-
-      SecureStore.setItemAsync('_FINANCES', JSON.stringify(newFinances))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      SecureStore.setItemAsync(`_FINANCES_${id}`, JSON.stringify(newFinances))
       dispatch({
         type: ADD_EXPENSE,
         payload:{history: newFinances, amount: expense.amount}

@@ -77,13 +77,21 @@ export default class HomeScreen extends Component{
     if (!user) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
       return bcrypt.compare(this.state.password, user.password, (err, res) => {
-        console.log('error: ', err, 'response :', res)
         if(err || !res) return this.setState({ loading: false, error: 'Incorrect password' })
         else{
           SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user, time: Date.now()}))
           .then(() => {
-            this.setState({loading: false})
+            this.setState({
+              loading: false,
+              username: '',
+              password: '',
+              hiddenPassword: ''
+             })
             this.props.navigation.navigate('Dash')
+          })
+          .catch(err =>{
+            console.log(err)
+            this.setState({loading:false, error:'Something went wrong.'})
           })
         }
       })
@@ -94,12 +102,16 @@ export default class HomeScreen extends Component{
   
 
   componentDidMount = async () => {
-
-    // await SecureStore.deleteItemAsync('_ACCOUNTS')
+    // console.log('HOME')
     // await SecureStore.deleteItemAsync('_FINANCES')
-    // await SecureStore.deleteItemAsync('_ATTENDANCE')
-    // await SecureStore.deleteItemAsync('_PAYMENTS')
-    // await SecureStore.deleteItemAsync('_QUESTIONS')
+    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    // let {user: {id}} = JSON.parse(signedIn)
+    // console.log(id)
+    // await SecureStore.deleteItemAsync(`_ACCOUNTS_${id}`)
+    // await SecureStore.deleteItemAsync(`_ATTENDANCE_${id}`)
+    // await SecureStore.deleteItemAsync(`_ATTENDANCE`)
+    // await SecureStore.deleteItemAsync(`_PAYMENTS_${id}`)
+    // await SecureStore.deleteItemAsync(`_QUESTIONS_${id}`)
 
 
     // return this.props.navigation.navigate('Account', {
@@ -113,18 +125,28 @@ export default class HomeScreen extends Component{
     // if(signedIn) signedIn = JSON.parse(signedIn)
 
     // if(signedIn) this.props.navigation.navigate('Dash')
-    await this.navigate()
-  }
-
-  navigate = async () => {
+    // await this.navigate()
     let message = this.props.navigation.getParam('message')
     setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if (message) this.setState({ error: message })
-    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    if (signedIn) signedIn = JSON.parse(signedIn)
-
-    if (signedIn) this.props.navigation.navigate('Dash')
+    try{
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      if (signedIn) signedIn = JSON.parse(signedIn)
+      if (signedIn) this.props.navigation.navigate('Dash')
+    }catch(err){
+      this.setState({error:err})
+    }
   }
+
+  // navigate = async () => {
+  //   let message = this.props.navigation.getParam('message')
+  //   setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+  //   if (message) this.setState({ error: message })
+  //   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+  //   if (signedIn) signedIn = JSON.parse(signedIn)
+
+  //   if (signedIn) this.props.navigation.navigate('Dash')
+  // }
 
   playAudio = async () => {
     try{

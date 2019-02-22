@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView} from 'react-native'
+import {View, ScrollView, TouchableOpacity, Text} from 'react-native'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import {getWeekBalances} from '../actions/finances'
@@ -7,13 +7,15 @@ import Header from '../components/Header'
 import {FinancesDash, EnterFinances, FinanceHistory} from '../components/FinancesDash'
 import { addExpense } from '../actions/finances'
 import {LinearGradient} from 'expo'
+import {styles} from '../components/FinancesDash/styles'
 
 class Finances extends Component{
   constructor(props){
     super(props)
     this.state = {
       celebrate: false,
-      avoidView:0
+      avoidView:0,
+      openView: false
     }
   }
   
@@ -30,6 +32,8 @@ class Finances extends Component{
   }
   
   addMargin = (num) => this.setState({ avoidView: num })
+  
+  changeView = () => this.setState({openView: !this.state.openView})
 
   render(){
     return (
@@ -39,8 +43,14 @@ class Finances extends Component{
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <FinancesDash/>
-          <EnterFinances addExpense={this.props.addExpense} addMargin={this.addMargin}/>
-          <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
+          {this.state.openView 
+            ? <EnterFinances addExpense={this.props.addExpense} addMargin={this.addMargin} changeView={this.changeView}/>
+            : <TouchableOpacity style={styles.button} onPress={this.changeView}>
+                <Text style={styles.btnText}>Add Expense</Text>
+              </TouchableOpacity>
+          
+          }
+          
           <FinanceHistory history={this.props.finances.history}/>
         </ScrollView>
       </LinearGradient>

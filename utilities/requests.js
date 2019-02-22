@@ -65,12 +65,12 @@ export const post = async(addMessage, stopLoading) => {
   let path = `/centres` //${body.body.id}
   console.log(path)
   
-  API.post(apiName, path, body)//, myInit)
+  API.post(apiName, path, body)
   .then((res) => {
-    console.log(path, res)
     return Promise.all([addMessage('Upload successful!'), stopLoading()])
   })
   .catch(err => {
+    console.error(err)
     let error = err.message || err.error || 'Something went wrong. Try again later.'
     return Promise.all([addMessage(error), stopLoading()])
   })

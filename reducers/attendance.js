@@ -9,9 +9,9 @@ const attendance = (state = INITIAL_STATE, {type, payload}) => {
     case GET_ATTENDANCE:
       return payload
     case CHANGE_CHECK_IN_OUT:
-      newState = {...state}
-      newState[payload.date] = payload.newAttendance
-      return newState
+      // newState = {...state}
+
+      return payload
     default: 
       return state
   }

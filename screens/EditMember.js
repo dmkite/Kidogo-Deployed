@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {View, ScrollView, Text, TextInput, TouchableOpacity, Picker, Image} from 'react-native'
-// import {styles} from '../components/AccountDetails/styles'
 import {styles} from '../components/Forms/newStyles'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -48,8 +47,13 @@ class EditMember extends Component{
 
   handleId = (text) => {
     let govt_id = this.state.govt_id
+    if(govt_id){
+      text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
+    }
+    else{
+      govt_id = text[text.length - 1]
+    }
 
-    text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
     let hiddenId = ''
     for (let letter of govt_id) {
       hiddenId += '*'
@@ -124,11 +128,11 @@ class EditMember extends Component{
         colors={['#11011B', '#3C233D']}>
         {this.state.deleteMessage
           ? <View style={styles.deleteWarning}>
-            <Text>Hold the button down to delete</Text>
+            <Text style={styles.deleteWarningText}>Hold the button down to delete</Text>
             <View style={styles.iconHolder}>
-              <Icon name="touch-app" />
-              <Icon name="timer" />
-              <Icon name="timer-3" />
+              <Icon name="touch-app" color="#ffffff80" />
+              <Icon name="timer" color="#ffffff80" />
+              <Icon name="timer-3" color="#ffffff80"/>
             </View>
           </View>
           : null

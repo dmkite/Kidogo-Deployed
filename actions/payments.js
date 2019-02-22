@@ -8,12 +8,10 @@ export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
   return async dispatch => {
     try{
-      let payments = await SecureStore.getItemAsync('_PAYMENTS')
-      if(!payments) payments = {}
-      else payments = JSON.parse(payments)
+      let {newPayments} = await getAsync(true)
       dispatch({
         type: GET_PAYMENTS,
-        payload: payments
+        payload: newPayments
       })
     }catch(err){
       console.error(err)
@@ -23,7 +21,7 @@ export function getPayments() {
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
 export const UPDATE_FINANCES = 'UPDATE_FINANCES'
-export function makePayment(id, amount, balance, date){
+export function makePayment(acctId, amount, balance, date){
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
@@ -35,13 +33,15 @@ export function makePayment(id, amount, balance, date){
         balanceAfter: Number(balance) - Number(amount),
         date
       }
-      if(!newPayments[id]) newPayments[id] = []
-      newPayments[id].push(paymentDetails)
+      if(!newPayments[acctId]) newPayments[acctId] = []
+      newPayments[acctId].push(paymentDetails)
       newAccounts.forEach(acct => {
-        if(acct.id === id) acct.balance = Number(acct.balance) - Number(amount)
+        if(acct.id === acctId) acct.balance = Number(acct.balance) - Number(amount)
       })
-      await SecureStore.setItemAsync('_PAYMENTS', JSON.stringify(newPayments))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(newPayments))
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
         type: GET_PAYMENTS,
         payload: newPayments
@@ -90,9 +90,10 @@ export function addFees(){
           }
         })
       }
-
-      await SecureStore.setItemAsync('_PAYMENTS', JSON.stringify(newPayments))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(newPayments))
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
           type: ADD_FEES,
           payload:{payments: newPayments, accounts:newAccounts}
@@ -151,7 +152,7 @@ function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
   let lastPaymentDate
   for(let i = paymentHistory.length - 1; i >= 0; i--){
     let {amount, balanceBefore, balanceAfter } = paymentHistory[i]
-    if (amount == acct.rate && balanceBefore < balanceAfter){
+    if ((amount == acct.rate || amount == -Number(acct.rate)) && balanceBefore < balanceAfter){ //when account is initialized a negative payment is added to an account
       if(!lastPaymentDate){
         lastPaymentDate = paymentHistory[i].date
         continue

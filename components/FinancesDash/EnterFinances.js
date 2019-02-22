@@ -34,7 +34,6 @@ class EnterFinances extends Component {
     this.setState({ [field]: text })
   }
 
-
   render(){
     return (
       <View>
@@ -66,7 +65,7 @@ class EnterFinances extends Component {
                   onChangeText={(text) => this.handleNumberChange(text, 'amount')}
                   onFocus={() => {
                     this.changeFocus('focus', 'amount')
-                    this.props.addMargin(-125)
+                    this.props.addMargin(-225)
                   }}
                   onBlur={() => {
                     this.changeFocus('blur', null)
@@ -86,7 +85,7 @@ class EnterFinances extends Component {
               onChangeText={(text) => this.handleNumberChange(text, 'date', 2, 5)}
               onFocus={() => {
                 this.changeFocus('focus', 'date')
-                this.props.addMargin(-250)
+                this.props.addMargin(-225)
               }}
               onBlur={() => {
                 this.changeFocus('blur', null)
@@ -94,26 +93,23 @@ class EnterFinances extends Component {
               }} />
             <Text style={[styles.label, this.state.focusedOn === 'date' ? styles.focused : null]}>Date</Text>
           </View>
-
           </View>
         
-         
-
-
-
-        <TouchableOpacity style={styles.button} onPress={
-          Number(this.state.amount) > 0
-            ? () => this.props.addExpense({
-                date: this.state.date,
-                amount: this.state.amount,
-                memo: this.state.memo
-              })
-            : null          
-        }>
-          <Text style={styles.buttonText}>Add Expense</Text>
-        </TouchableOpacity>
-      
-             
+          <View style={{margin:10, flexDirection:'row'}}>
+            <TouchableOpacity style={[styles.button, {flex:0.5, marginRight:5}]} onPress={this.props.changeView}>
+              <Text style={styles.btnText}>Cancel</Text>
+            </TouchableOpacity>
+            {Number(this.state.amount) > 0
+              ? <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={ () => this.props.addExpense({
+                      date: this.state.date,
+                      amount: this.state.amount,
+                      memo: this.state.memo
+                })}>
+                  <Text style={styles.btnText}>Add Expense</Text>
+                </TouchableOpacity>
+              : null                
+              }
+          </View>     
       </View>
     )
   }
