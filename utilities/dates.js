@@ -66,4 +66,40 @@ export default class Dates {
     date2 = new Date(Number(y2), Number(m2) - 1, Number(d2))
     return dateMath.diff(date2, date1, 'day')
   }
+
+  getSpan = (dateMod) => {
+    const self = this
+    const year = self.date.getFullYear()
+    const month = self.date.getMonth()
+    const day = self.date.getDate()
+    const dayOfWeek = self.date.getDay()
+    let today = new Date(year, month, day)
+    if (dateMod < 0) dateMod = -dateMod
+    today = dateMath.subtract(today, dateMod, 'day')
+    const upper = dateMath.add(today, 6 - dayOfWeek, 'day')
+    const lower = dateMath.subtract(today, dayOfWeek, 'day')
+    const endSpan = []
+    let endDate = upper.getDate()
+    while (endDate > 0 && endSpan.length < 7) {
+      let day = endDate < 10 ? '0' + endDate : endDate
+      let month = upper.getMonth() + 1 < 10 ? '0' + (upper.getMonth() + 1) : upper.getMonth() + 1
+      let year = upper.getFullYear()
+      endSpan.unshift(`${day}-${month}-${year}`)
+      endDate--
+    }
+    if (endSpan.length === 7) return endSpan
+    else {
+      let startDateLength = 7 - endSpan.length
+      let startDate = lower.getDate()
+      let startSpan = []
+      while (startSpan.length !== startDateLength) {
+        let day = startDate < 10 ? '0' + startDate : startDate
+        let month = lower.getMonth() + 1 < 10 ? '0' + (lower.getMonth() + 1) : lower.getMonth() + 1
+        let year = lower.getFullYear()
+        startSpan.push(`${day}-${month}-${year}`)
+        startDate++
+      }
+      return startSpan.concat(endSpan)
+    }
+  }
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import {styles} from './newStyles'
-import {View, Text, TextInput, TouchableOpacity, Image, Picker} from 'react-native'
-import {Icon} from 'react-native-elements'
+import {View, Text, TextInput, Picker} from 'react-native'
 
 export default function Rate(props){
   return (

@@ -16,7 +16,6 @@ const finances = (state=INITIAL_STATE, {type, payload}) => {
       return {...state, history: payload}
     case GET_WEEK_BALANCE:
       return payload
-
     case ADD_EXPENSE: 
       newNet = {...state.net}
       newNet.expenses = Number(newNet.expenses) + Number(payload.amount)

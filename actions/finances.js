@@ -1,6 +1,7 @@
 import getAsync from '../utilities/getAsync'
 import dateMath from 'date-arithmetic'
 import { SecureStore } from 'expo';
+import Dates from '../utilties/dates'
 
 export const GET_FINANCES = 'GET_FINANCES'
 export function getFinances(){

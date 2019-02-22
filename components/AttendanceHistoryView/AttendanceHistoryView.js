@@ -39,7 +39,6 @@ export default function AttendanceHistoryView(props){
             <Text style={styles.dateText}>
               {Number(date.substring(0,2)) + '/' + Number(date.substring(3,5))}
             </Text>
-
           </View>
         })}
       </View>

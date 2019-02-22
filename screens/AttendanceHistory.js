@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import dateMath from 'date-arithmetic'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,13 +8,15 @@ import Header from '../components/Header'
 import {AttendanceHistoryView, AttendanceHistoryRow} from '../components/AttendanceHistoryView'
 import {getAccounts} from '../actions/accounts'
 import {getAttendance} from '../actions/attendance'
+import Dates from '../utilities/dates'
 
 class AttendanceHistory extends Component {
   constructor(props){
     super(props)
     this.state = {
       dateMod: 0,
-      dateSpan: []
+      dateSpan: [],
+      d: new Dates()
     }
   }
   
@@ -37,8 +39,9 @@ class AttendanceHistory extends Component {
 
   componentDidMount(){
     if(!Object.keys(this.props.attendance).length) this.props.getAttendance()
-    if(!this.props.accounts.accounts[0].children.length) this.props.getAccounts()
-    this.dateSpan(this.state.dateMod)
+    if(!this.props.accounts[0].children.length) this.props.getAccounts()
+    this.state.d.getSpan(this.state.dateMod)
+    // this.dateSpan(this.state.dateMod)
   }
 
   dateSpan = (dateMod) => {
@@ -46,9 +49,7 @@ class AttendanceHistory extends Component {
     const year = date.getFullYear()
     const month = date.getMonth()
     const day = date.getDate()
-
     const dayOfWeek = date.getDay()
-
     let today = new Date(year, month, day)
     if(dateMod < 0) dateMod = -dateMod
     today = dateMath.subtract(today, dateMod, 'day')
@@ -67,7 +68,6 @@ class AttendanceHistory extends Component {
       this.setState({dateSpan:endSpan})
       return
     }
-    
     else {
       let startDateLength = 7 - endSpan.length
       let startDate = lower.getDate()
@@ -79,14 +79,12 @@ class AttendanceHistory extends Component {
         startSpan.push(`${day}-${month}-${year}`)
         startDate++ 
       }
-      
       this.setState({dateSpan: startSpan.concat(endSpan)})
     }
   }
 
   attendanceByChild = (id) => {
     let attendance = this.props.attendance
-    
     return this.state.dateSpan.map((date, i) => {
       if (!attendance[date] || !attendance[date][id] || !attendance[date][id].checkIn) return false
       return true
@@ -94,8 +92,8 @@ class AttendanceHistory extends Component {
   }
 
   accountsToChildren = () => {
-    if(!this.props.accounts.accounts) return []
-    return this.props.accounts.accounts.reduce((acc, acct) => {
+    if(!this.props.accounts.length) return []
+    return this.props.accounts.reduce((acc, acct) => {
       acct.children.forEach(child => {
         delete child.notes
         delete child.gender

@@ -75,6 +75,5 @@ export const styles = {
     lineHeight: 50,
     color: '#ffffff80',
     textAlign: 'center'
-  },
-
+  }
 }

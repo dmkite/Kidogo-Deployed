@@ -24,8 +24,6 @@ export default class GuardianDetails extends Component{
           <Text style={styles.h2}>Guardians</Text>
           <Icon name={this.props.currentlyExpanded === 'guardians' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
         </TouchableOpacity>
-
-
         {this.props.currentlyExpanded === 'guardians'
           ? <View>
             {this.props.guardians.map((g, i) => {
@@ -80,9 +78,7 @@ export default class GuardianDetails extends Component{
             </View>
           : null
         }
-        {/* <View style={{ height: 2, backgroundColor: '#fffff80', marginVertical: 20 }}></View> */}
       </View>
     )
-
   }
 }

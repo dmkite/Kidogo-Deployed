@@ -38,7 +38,7 @@ class Guardian extends Component{
     })
   }
 
-  handleId = (text) => {
+  handleId = text => {
     let govt_id = this.state.govt_id
     if(this.state.govt_id && this.state.govt_id.length){
       text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
@@ -56,13 +56,12 @@ class Guardian extends Component{
 
   showId = () => this.setState({showId: !this.state.showId})
   
-  pickerChange = (itemValue) => this.setState({ frequency: itemValue })
+  pickerChange = itemValue => this.setState({ frequency: itemValue })
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
-        <Image source={require('../../assets/GUARDIAN.png')} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10 }}/>
-
+        <Image source={require('../../assets/GUARDIAN.png')} style={styles.img}/>
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
             <TextInput

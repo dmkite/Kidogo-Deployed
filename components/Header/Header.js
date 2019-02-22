@@ -1,6 +1,5 @@
 import React from 'react'
-import {styles} from './styles'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
 import {Icon} from 'react-native-elements'
 import {SecureStore} from 'expo'
 import { Auth } from 'aws-amplify';
@@ -34,5 +33,19 @@ function Header(props){
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  buttons: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#0C000E',
+    flexDirection: 'row',
+    flexWrap: 'nowrap'
+  },
+  button: {
+    flex: .25,
+    paddingTop: 10
+  }
+})
 
 export default Header

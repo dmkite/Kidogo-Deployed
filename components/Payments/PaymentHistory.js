@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text } from 'react-native'
 import PaymentRow from './PaymentRow'
 import {styles} from './styles'
 
@@ -42,19 +42,14 @@ function byDate(a,b){
     if (a.balanceAfter > b.balanceAfter) return 1
     if (b.balanceAfter > a.balanceAfter) return -1
   }
-
   if (aAdding && !bAdding) {
-    // if (b.balanceAfter >= a.balanceBefore) return -1
-    // if (a.balanceBefore >= b.balanceAfter) return 1
     if(a.balanceAfter >= b.balanceBefore) return 1
     if(b.balanceBefore >= a.balanceAfter) return -1
   }
-
   if( !aAdding && bAdding){
     if(a.balanceAfter >= b.balanceBefore) return 1
     if(b.balanceBefore >= a.balanceAfter) return -1
   }
-
   if(!aAdding && !bAdding){
     if(a.balanceAfter >= b.balanceBefore) return -1
     if(b.balanceBefore >= a.balanceAfter) return 1

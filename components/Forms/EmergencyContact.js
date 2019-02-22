@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {TextInput, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native'
 import {styles} from './newStyles'
-import {Icon } from 'react-native-elements'
 import numberValidation from '../../utilities/numberValidation'
 
 class EmergencyContact extends Component{
@@ -35,13 +34,7 @@ class EmergencyContact extends Component{
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
-        <Image
-          source={require('../../assets/E_CONTACT.png')}
-          style={{
-            height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-          }}
-        />
-
+        <Image source={require('../../assets/E_CONTACT.png')} style={styles.img}/>
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
             <TextInput
@@ -95,8 +88,6 @@ class EmergencyContact extends Component{
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>  
 
-        
-        
         {this.props.accountAlreadyCreated
           ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>
             <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]} onPress={() => this.props.openForm('e_contacts')}>
@@ -139,8 +130,7 @@ class EmergencyContact extends Component{
                   <Text style={styles.btnText}>Next</Text>
                 </TouchableOpacity>
               </View>
-            : null
-          
+            : null      
         }
       </ScrollView>
     )

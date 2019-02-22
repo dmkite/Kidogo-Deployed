@@ -1,23 +1,15 @@
 import React, {Component} from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 
-
 export default class Loading extends Component {
-
-
-
   render() {
-
       return (
         <View style={[styles.container, styles.horizontal]}>
           <ActivityIndicator size="large" color="#ffffff80" />
-
         </View>
       )
     }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

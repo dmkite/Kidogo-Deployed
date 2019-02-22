@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, TouchableOpacity, Alert} from 'react-native'
+import {ScrollView, View, Text, TouchableOpacity} from 'react-native'
 import {LinearGradient} from 'expo'
 import {Icon} from 'react-native-elements'
 import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
@@ -61,9 +61,7 @@ class Account extends Component {
     })
   }
 
-  updateAccount = account => {
-    this.setState({account})
-  }
+  updateAccount = account => this.setState({account})
   
   changeField = (fieldname, newValue, fieldname2, newValue2) => {
     if (fieldname2 !== undefined && newValue2 !== undefined) this.props.changeField(fieldname, newValue, this.props.navigation.getParam('id'), fieldname2, newValue2)
@@ -100,7 +98,7 @@ class Account extends Component {
     return this.props.getAccounts().then(() => {
       
       const id = this.props.navigation.getParam('id')
-      const [account] = this.props.accounts.accounts.filter(acct => acct.id === id)
+      const [account] = this.props.accounts.filter(acct => acct.id === id)
       this.setState({ account })
     })
   }
@@ -108,7 +106,7 @@ class Account extends Component {
   addMargin = (num) => this.setState({ avoidView: num })
   
   filterAndReturnType = type => {
-   const [account] = this.props.accounts.accounts.filter(acct => {
+   const [account] = this.props.accounts.filter(acct => {
      return acct.id === this.props.navigation.getParam('id')
     })
     if(account && account[type]) return account[type]

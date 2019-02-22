@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {View, Text, TouchableHighlight, Image} from 'react-native'
 import {styles} from './styles'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {Font} from 'expo'
 
 class DashView extends Component{
@@ -33,9 +32,7 @@ class DashView extends Component{
             : this.state.time < 17
                 ? this.props.navigation.navigate('CheckOut')
                 : this.props.navigation.navigate('Finances')
-          }
-        }
-      >
+      }}>
         <View style={styles.dash}>
           {console.log(this.state.fontLoaded)}
           <Image 

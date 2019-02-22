@@ -1,5 +1,3 @@
-
-
 export const styles = {
   actionsContainer: {
     flex:1,
@@ -12,7 +10,6 @@ export const styles = {
     zIndex:100,
     overFlow:'hidden',
     borderRadius:5,
-
     position:'relative'
   },
   actionText:{

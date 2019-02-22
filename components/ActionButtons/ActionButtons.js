@@ -11,7 +11,6 @@ function ActionButtons(props){
             style={styles.buttonImage}
             source={require('../../assets/ENROLLMENT.png')}>
           <Text style={styles.actionText}>Add a family</Text>
-
         </ImageBackground>
       </TouchableOpacity>
 
@@ -22,6 +21,7 @@ function ActionButtons(props){
           <Text style={styles.actionText}>Attendance</Text>
         </ImageBackground>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.actionButton} onPress={()=> navigate('Finances')}>
           <ImageBackground
             style={styles.buttonImage} 
@@ -29,7 +29,8 @@ function ActionButtons(props){
           <Text style={styles.actionText}>Finances</Text>
         </ImageBackground>
       </TouchableOpacity>
-    <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Questions')}>
+
+      <TouchableOpacity style={styles.actionButton} onPress={() => navigate('Questions')}>
           <ImageBackground
             source={require('../../assets/QUESTIONS.png')}
             style={styles.buttonImage} >

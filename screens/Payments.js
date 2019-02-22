@@ -26,10 +26,6 @@ class Payments extends Component{
     }
   }
   componentDidMount = () => {
-    // if(!this.props.accounts.accounts[0].children.length) 
-     
-    // this.props.getPayments()
-    // this.props.getAccounts()
     const promiseArray = [this.props.getAccounts(), this.props.getPayments()]
 
     Promise.all(promiseArray)
@@ -37,7 +33,7 @@ class Payments extends Component{
   
   findAccount = () => {
     const id = this.props.navigation.getParam('id')
-    return this.props.accounts.accounts.filter(acct => acct.id === id)[0]
+    return this.props.accounts.filter(acct => acct.id === id)[0]
   }
 
   addMargin = (num) => this.setState({ avoidView: num })

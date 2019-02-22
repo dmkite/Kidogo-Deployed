@@ -152,5 +152,4 @@ export const styles = {
     backgroundColor:'#ccc',
     height:20   
   }
-
 }

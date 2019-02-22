@@ -18,7 +18,7 @@ class Child extends Component{
     }
   }
 
-  selectBadge = (gender) => {
+  selectBadge = gender => {
     const newState = {...this.state}
     for(let key in newState.gender){
       if(key === gender) newState[key] = true
@@ -27,7 +27,7 @@ class Child extends Component{
     this.setState({...newState})
   }
 
-  handleDate = (text) => {
+  handleDate = text => {
     let length = 0
     if(this.state.birthdate && this.state.birthdate.length) length = this.state.birthdate.length 
     this.setState({
@@ -40,61 +40,57 @@ class Child extends Component{
     else this.setState({ focusedOn: null })
   }
 
-  handleChangeText = (text, field) => {
-    this.setState({[field]: text})
-  }
+  handleChangeText = (text, field) => this.setState({[field]: text})
 
-  addURI = (userData) => { 
-    this.setState({ ...userData })
-  }
+  addURI = userData => this.setState({ ...userData })
 
   render(){
     return (
       <ScrollView style = {{ flex:1}} >
         {this.state.img_uri
-          ? <Image source={{uri:this.state.img_uri}} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10}}/>
-          : <Image source={require('../../assets/CHILD.png')} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10}}/>
+          ? <Image source={{uri:this.state.img_uri}} style={styles.img}/>
+          : <Image source={require('../../assets/CHILD.png')} style={styles.img}/>
         }
-            
-          <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
-            <Icon name="camera-alt" size={36} color="#ffffff80"/>
-          </TouchableOpacity>
+  
+        <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
+          <Icon name="camera-alt" size={36} color="#ffffff80"/>
+        </TouchableOpacity>
 
-          <View style={styles.nameHolder}>
-            <View style={{ flex: .5, marginRight: 5 }}>
-              <TextInput
-                onFocus={() => {
-                  this.changeFocus('focus', 'f_name')
-                  this.props.addMargin(-175)
-                }}
-                onBlur={() => {
-                  this.changeFocus('blur', null)
-                  this.props.addMargin(0)
-                }}
-                style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
-                value={this.state.f_name}
-                onChangeText={(text) => this.handleChangeText(text, 'f_name')}
-              />
-              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
-            </View>
-
-            <View style={{ flex: .5, marginLeft: 5 }}>
-              <TextInput
-                onFocus={() => {
-                  this.changeFocus('focus', 'l_name')
-                  this.props.addMargin(-175)
-                }}
-                onBlur={() => {
-                  this.changeFocus('blur', null)
-                  this.props.addMargin(0)
-                }}
-                style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
-                value={this.state.l_name}
-                onChangeText={(text) => this.handleChangeText(text, 'l_name')}
-              />
-              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
-            </View>
+        <View style={styles.nameHolder}>
+          <View style={{ flex: .5, marginRight: 5 }}>
+            <TextInput
+              onFocus={() => {
+                this.changeFocus('focus', 'f_name')
+                this.props.addMargin(-175)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }}
+              style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
+              value={this.state.f_name}
+              onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+            />
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
           </View>
+
+          <View style={{ flex: .5, marginLeft: 5 }}>
+            <TextInput
+              onFocus={() => {
+                this.changeFocus('focus', 'l_name')
+                this.props.addMargin(-175)
+              }}
+              onBlur={() => {
+                this.changeFocus('blur', null)
+                this.props.addMargin(0)
+              }}
+              style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
+              value={this.state.l_name}
+              onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+            />
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+          </View>
+        </View>
 
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>

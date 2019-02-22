@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
-import { Icon } from 'react-native-elements'
-import { LinearGradient } from 'expo'
 import { styles } from './styles'
 
 export default class Caregiver extends Component {
@@ -23,7 +21,7 @@ export default class Caregiver extends Component {
         <Text style={styles.h1}>Add centre address</Text>
         <Image
           source={require('../../assets/CENTRE.png')}
-          style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginVertical:10 }}
+          style={styles.img}
         />
         <TextInput
           onFocus={() => {
@@ -66,7 +64,6 @@ export default class Caregiver extends Component {
             </View>
           : null
         }
-      
       </ScrollView>
     )
   }

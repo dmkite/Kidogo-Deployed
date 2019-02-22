@@ -101,6 +101,5 @@ export const styles = {
     lineHeight: 50,
     flex:.27, 
     color:'#ffffff80'
-  },
-  
+  }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, Button, Image, TextInput, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import Header from '../components/Header/'
 import {LinearGradient} from 'expo'
 
@@ -15,6 +15,7 @@ export default class Attendance extends Component{
       height: 0
     }
   }
+  
   render(){
     return (
       <LinearGradient

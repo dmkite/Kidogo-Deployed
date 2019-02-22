@@ -1,6 +1,5 @@
 export const styles = {
   attendanceHolder:{
-    // flex:1,
     flexDirection:'row',
     justifyContent:'space-between',
     padding:10,
@@ -38,7 +37,6 @@ export const styles = {
     color:'#ffffff80'
   },
   selected:{
-    // opacity:.3,
     scaleX: .7,
     scaleY: .7
   },
@@ -57,6 +55,6 @@ export const styles = {
   h2:{ 
     color:'#ffffff80', 
     fontSize:24, 
-    margin:10}
-
+    margin:10
+  }
 }

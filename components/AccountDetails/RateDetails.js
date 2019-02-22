@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, TextInput, Picker} from 'react-native'
 import {styles} from './styles'
 import {Icon} from 'react-native-elements'
-import {Rate} from '../Forms'
 import {styles as fStyles} from '../Forms/newStyles'
 import numberValidation from '../../utilities/numberValidation'
 
@@ -19,7 +18,6 @@ export default class RateDetails extends Component{
     }
   }
 
-
   changeFocus = (action, type) => {
     if (action === 'focus') this.setState({ focusedOn: type })
     else this.setState({ focusedOn: null })
@@ -32,7 +30,6 @@ export default class RateDetails extends Component{
       [field]: numberValidation(text, field, length, num1, num2)
     })
   }
-
 
   render(){
     return (
@@ -49,11 +46,9 @@ export default class RateDetails extends Component{
                     onChangeText={(text) => this.handleNumberChange(text, 'newBalance')} 
                     placeholder={String(this.props.balance)}
                   />
-  
                 </View>
                 
                 <View style={styles.buttonBlock}>
-                  
                   <TouchableOpacity style={[styles.button, {flex:0.5, marginRight: 5 }]}>
                     <Text style={styles.btnText} onPress={() => {
                       this.props.changeField('balance', this.state.newBalance)
@@ -68,7 +63,6 @@ export default class RateDetails extends Component{
               </View>
             : <Text style={styles.balance}>Balance: K {this.props.balance || '0'}</Text>
           }
-  
           <TouchableOpacity style={styles.editBtn} onPress={() => this.props.openForm('balance')}>
             <Icon name="edit" size={24} color='#ffffff80'/>
           </TouchableOpacity>
@@ -99,7 +93,7 @@ export default class RateDetails extends Component{
                       <Picker
                         style={{ color: 'white', marginTop: -10 }}
                         selectedValue={this.state.newFrequency}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ newFrequency: itemValue })}>
+                        onValueChange={itemValue => this.setState({ newFrequency: itemValue })}>
                         <Picker.Item label="daily" value="daily" />
                         <Picker.Item label="weekly" value="weekly" />
                         <Picker.Item label="termly" value="termly" />
@@ -140,6 +134,5 @@ export default class RateDetails extends Component{
         
       </View>
     )
-
   }
 }

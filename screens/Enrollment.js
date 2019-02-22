@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native'
+import {Text} from 'react-native'
 import { bindActionCreators } from 'redux'
 import {LinearGradient} from 'expo'
-
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
-import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
+import {Child, Guardian, EmergencyContact} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
 import {styles} from '../components/Forms/newStyles'
 import {addAccount} from '../actions/accounts'
