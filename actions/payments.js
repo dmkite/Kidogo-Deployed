@@ -3,7 +3,6 @@ import Dates from '../utilities/dates'
 import getAsync from '../utilities/getAsync'
 import { UPDATE_ACCOUNTS } from './accounts';
 
-
 export const GET_PAYMENTS = 'GET_PAYMENTS'
 export function getPayments() {
   return async dispatch => {
@@ -25,7 +24,6 @@ export function makePayment(acctId, amount, balance, date){
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
-      
       const {newPayments, newAccounts} = await getAsync(true, true)
       const paymentDetails = {
         amount,
@@ -54,7 +52,6 @@ export function makePayment(acctId, amount, balance, date){
         type:UPDATE_FINANCES,
         payload:{income:amount}
       })
-      
     } catch (err) {
       console.error(err)
     }
@@ -68,16 +65,13 @@ export function addFees(){
       const dates = new Dates()
       const { newPayments, newAccounts, newAttendance } = await getAsync(true, true, true)
       let { previousAttendance, dayToCheck, needsToPay } = checkIfPaymentNeeded(newAttendance, dates)
-
       if(needsToPay){
         newAccounts.forEach((acct) => {
           const paymentHistory = newPayments[acct.id]
           let paymentNeeded
-          
           if(acct.frequency === 'daily') paymentNeeded = needToPayDailyFee(paymentHistory, dayToCheck, acct, previousAttendance) 
           else if(acct.frequency === 'weekly') paymentNeeded = needToPayWeeklyOrTermlyFee(paymentHistory, acct, 7)
           else paymentNeeded = needToPayWeeklyOrTermlyFee(paymentHistory, acct, 90) //NOTE: this assumes a 90 day term
-
           if(paymentNeeded){
             if(!newPayments[acct.id]) newPayments[acct.id] = []
             newPayments[acct.id].push({
@@ -107,7 +101,6 @@ export function addFees(){
   function needToPayDailyFee(paymentHistory, dayToCheck, acct, previousAttendance){
     //if fee was already added, return false
     let expectedPaymentDay = new Dates().getDifferentDay('add', dayToCheck)
-
     if(paymentHistory){
       for (let payment of paymentHistory) {
         let {date, amount, balanceAfter, balanceBefore} = payment
@@ -121,17 +114,14 @@ export function addFees(){
         if(previousAttendance && previousAttendance[child.id] && previousAttendance[child.id].checkIn !== false) return true
       }
     }
-
     return false
   }
 
   function checkIfPaymentNeeded(newAttendance, dates){
     const yesterday = dates.getDifferentDay('subtract')
     let needsToPay = true
-
     let dayToCheck = yesterday
     let previousAttendance = newAttendance[dayToCheck]
-
     if (!newAttendance[yesterday]) {
       dayToCheck = dates.getDifferentDay('subtract', yesterday)
       previousAttendance = newAttendance[dayToCheck]
@@ -141,9 +131,7 @@ export function addFees(){
       previousAttendance = newAttendance[dayToCheck]
     }
     if (!previousAttendance) needsToPay = false
-
     return {previousAttendance, dayToCheck, needsToPay}
-
   }
 
 function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
@@ -166,7 +154,6 @@ function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
   }
   if(!lastPaymentDate) return true
   const today = date.getToday()
-  
   let difference = date.compareDates(today, lastPaymentDate)
   if(difference >= days) return true
   return false

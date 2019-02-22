@@ -19,7 +19,6 @@ export const styles = {
     marginBottom:-20
   },
   img:{
-    // flex:.5,
     marginRight:20,
     flexDirection:'row',
   },

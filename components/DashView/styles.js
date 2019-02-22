@@ -15,10 +15,12 @@ export const styles = {
     top: 0,
     left: 0,
     right:0,
-    // textAlign:'center',
     paddingLeft:30,
     flex:1,
     fontWeight:'bold',
-    color:'white'
+    color:'white',
+  },
+  raleway:{
+    fontFamily: 'Raleway'
   }
 }

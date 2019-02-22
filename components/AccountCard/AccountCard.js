@@ -34,8 +34,7 @@ export default function AccountCard(props){
         <View style={styles.img}>
           {props.children.map((child, i) => {
               if(child.f_name === null) return null
-              let hex = hexify(i)
-              
+              let hex = hexify(i)     
               return child.img_uri
                 ? <View key={i} style={[styles.circle, {zIndex: (100 - i)}]}>
                     <Image
@@ -55,8 +54,6 @@ export default function AccountCard(props){
                   </Text>})
           }
         </View>
-
-
       </View>
       <View style={styles.members}>
         <Text style={styles.childName}>
@@ -65,15 +62,12 @@ export default function AccountCard(props){
             return acc
           },[]).join(', ')}
         </Text>
-        
-        
         <Text style={styles.guardianName}>
           {props.guardians.reduce((acc, g) => {
             acc.push(g.f_name + ' ' + g.l_name)
             return acc
           }, []).join(', ')}
         </Text>
-
       </View>
     </TouchableOpacity>
   )

@@ -2,7 +2,6 @@ import getAsync from '../utilities/getAsync'
 import dateMath from 'date-arithmetic'
 import { SecureStore } from 'expo';
 
-
 export const GET_FINANCES = 'GET_FINANCES'
 export function getFinances(){
   return async dispatch => {
@@ -60,10 +59,8 @@ const dateSpan = (dateMod = 0) => {
   const year = date.getFullYear()
   const month = date.getMonth()
   const day = date.getDate()
-
   const dayOfWeek = date.getDay()
   let today = new Date(year, month, day)
-  
   if (dateMod < 0) dateMod = -dateMod
   today = dateMath.subtract(today, dateMod, 'day')
   const upper = dateMath.add(today, 6 - dayOfWeek, 'day')
@@ -80,7 +77,6 @@ const dateSpan = (dateMod = 0) => {
   if (endSpan.length === 7) {
     return endSpan
   }
-
   else {
     let startDateLength = 7 - endSpan.length
     let startDate = lower.getDate()
@@ -92,7 +88,6 @@ const dateSpan = (dateMod = 0) => {
       startSpan.push(`${day}-${month}-${year}`)
       startDate++
     }
-
     return startSpan.concat(endSpan) 
   }
 }

@@ -3,30 +3,28 @@ import {View, Text, TouchableHighlight, Image} from 'react-native'
 import {styles} from './styles'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {Font} from 'expo'
 
 class DashView extends Component{
   constructor(props){
     super(props)
     this.state = {
       time: null,
+      fontLoaded:false
     }
   }
 
   componentDidMount = async () =>{
     const time = new Date()
-  
     const hours = time.getHours()
-    this.setState({
-      time: hours
+      
+    await Font.loadAsync({
+      'Raleway': require('../../assets/fonts/Raleway-Bold.ttf')
     })
+    this.setState({fontLoaded:true, time: hours})
   }
 
   render(){
-    // const numChildren = this.props.accounts.reduce((acc,acct) => {
-    //   acc += acct.children.length
-    //   return acc
-    //  }, 0)
-    const net = this.props.finances.net
     return (
       <TouchableHighlight
         onPress={ () => {
@@ -39,6 +37,7 @@ class DashView extends Component{
         }
       >
         <View style={styles.dash}>
+          {console.log(this.state.fontLoaded)}
           <Image 
             source={this.state.time < 12
             ? require('../../assets/MORNING.png')
@@ -47,7 +46,7 @@ class DashView extends Component{
                 : require('../../assets/EVENING.png')
             }
           />
-          <Text style={[styles.dashFont, this.state.time >= 17 ? {color:'white'} : null]}>
+          <Text style={[styles.dashFont, this.state.fontLoaded ?  styles.raleway : null, this.state.time >= 17 ? {color:'white'} : null]}>
             { this.state.time < 12
               ? "Who's here today?"
               : this.state.time < 17
