@@ -2,7 +2,7 @@ import {SecureStore} from 'expo'
 import getAsync from '../utilities/getAsync'
 export const GET_ATTENDANCE = 'GET_ATTENDANCE'
 
-export function getAttendance(today){
+export function getAttendance(today, isCheckout){
   return async dispatch => {
     const now = new Date().getTime()
     try{  
@@ -12,6 +12,7 @@ export function getAttendance(today){
           acct.children.forEach(child => {
             child.acctId = acct.id
             child.checkIn = now
+            if (isCheckout) child.checkIn = false
             child.checkOut = false
             delete child.notes
             delete child.gender

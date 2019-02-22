@@ -12,8 +12,8 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
     if(signedIn){
       time = signedIn.time
     }
-    // if(!time || Date.now() - time > 60480) console.log('reset')
   }
+  else return null
   const dataObj = {}
 
   if (payments ) {

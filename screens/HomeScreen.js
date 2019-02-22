@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, TouchableOpacity, Image, TextInput, StyleSheet} from 'react-native'
+import {Text, View, TouchableOpacity, Image, TextInput} from 'react-native'
 import {Audio} from 'expo'
 import {styles} from '../components/Signup/styles'
 import {LinearGradient, SecureStore} from 'expo'
@@ -53,23 +53,15 @@ export default class HomeScreen extends Component{
         hiddenPassword += '*')
       : (password = password.slice(0, password.length - 1),
         hiddenPassword = hiddenPassword.slice(0, hiddenPassword.length -1))
-    
-    // for (let letter of password) {
-    //   hiddenPassword += '*'
-    // }
     this.setState({
       password: password.trim(),
       hiddenPassword: hiddenPassword.trim()
     })
   }
 
-  handleChangeText = (text, val) => {
-    this.setState({
-      [val]: text.trim()
-    })
-  }
+  handleChangeText = (text, val) => this.setState({[val]: text.trim()})
 
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
@@ -89,43 +81,13 @@ export default class HomeScreen extends Component{
              })
             this.props.navigation.navigate('Dash')
           })
-          .catch(err =>{
-            console.log(err)
-            this.setState({loading:false, error:'Something went wrong.'})
-          })
+          .catch(() => this.setState({loading:false, error:'Something went wrong.'}) )
         }
       })
-
     } 
   }
 
-  
-
   componentDidMount = async () => {
-    // console.log('HOME')
-    // await SecureStore.deleteItemAsync('_FINANCES')
-    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    // let {user: {id}} = JSON.parse(signedIn)
-    // console.log(id)
-    // await SecureStore.deleteItemAsync(`_ACCOUNTS_${id}`)
-    // await SecureStore.deleteItemAsync(`_ATTENDANCE_${id}`)
-    // await SecureStore.deleteItemAsync(`_ATTENDANCE`)
-    // await SecureStore.deleteItemAsync(`_PAYMENTS_${id}`)
-    // await SecureStore.deleteItemAsync(`_QUESTIONS_${id}`)
-
-
-    // return this.props.navigation.navigate('Account', {
-    //   id: '3c3737b7-2bae-46ea-a065-d4d334e9bb0f'})
-    // return this.props.navigation.navigate('AttendanceHistory')
-
-    // let message = this.props.navigation.getParam('message')
-    // setTimeout( () => this.setState({ showHelp: !this.state.showHelp }), 15000)
-    // if(message) this.setState({error:message})
-    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    // if(signedIn) signedIn = JSON.parse(signedIn)
-
-    // if(signedIn) this.props.navigation.navigate('Dash')
-    // await this.navigate()
     let message = this.props.navigation.getParam('message')
     setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if (message) this.setState({ error: message })
@@ -138,16 +100,6 @@ export default class HomeScreen extends Component{
     }
   }
 
-  // navigate = async () => {
-  //   let message = this.props.navigation.getParam('message')
-  //   setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
-  //   if (message) this.setState({ error: message })
-  //   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-  //   if (signedIn) signedIn = JSON.parse(signedIn)
-
-  //   if (signedIn) this.props.navigation.navigate('Dash')
-  // }
-
   playAudio = async () => {
     try{
       if(!this.state.soundObject){
@@ -158,7 +110,6 @@ export default class HomeScreen extends Component{
       }
       else{   
         await this.state.soundObject.stopAsync()
-        // await this.state.soundObject.unloadAsync()
         this.setState({soundObject: null})
       }
     }catch(err){
@@ -179,7 +130,6 @@ export default class HomeScreen extends Component{
             style={{width:180, height:180, margin:20}}
             />
         </View>
-
         <TextInput
           onFocus={() => {
             this.changeFocus('focus', 'username')
@@ -243,12 +193,10 @@ export default class HomeScreen extends Component{
           </TouchableOpacity>
           : null
         }
-          {this.state.loading
-            ? <Loading />
-            : null
-          }
-        
-
+        {this.state.loading
+          ? <Loading />
+          : null
+        }
       </LinearGradient>
     )
   }

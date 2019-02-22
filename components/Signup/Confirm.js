@@ -93,7 +93,7 @@ export default class Caregiver extends Component {
 
           <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => {
             this.state.number.length === 6 
-              ? Promise.all([ confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError),
+              ? Promise.all([ confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError, this.props.handleChangeText),
                 this.props.handleChangeText(true, 'loading')])
               : this.props.setError('Enter the confirmation code')
           }}>

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { bindActionCreators } from 'redux';
-// import {addMessage, takeTempPic} from '../actions/accounts'
 import Header from '../components/Header'
 import { connect } from 'react-redux'
-import { Expo, Camera, Permissions } from 'expo'
+import { Camera, Permissions } from 'expo'
 import { Icon } from 'react-native-elements'
 
 class CameraScreen extends Component {
@@ -15,7 +13,6 @@ class CameraScreen extends Component {
       type: Camera.Constants.Type.back
     }
   }
-
 
   static navigationOptions = {
     headerLeft: null,
@@ -33,18 +30,15 @@ class CameraScreen extends Component {
   takePicture = () => {
     return this.camera.takePictureAsync({quality:0.5})
       .then(pic => {
-        // this.props.takeTempPic(pic.uri)
         const addURI = this.props.navigation.getParam('addURI')
         const userData = this.props.navigation.getParam('userData')
         userData.img_uri = pic.uri
         addURI(userData)
-        // this.props.navigation.navigate('Enrollment')
         this.props.navigation.goBack()
       })
       .catch(err => {
         const addMessage = this.props.navigation.getParam('addMessage')
         addMessage('Something went wrong, we couldnt take a picture.')
-        // this.props.navigation.navigate('Enrollment')
         console.error(err)
         this.props.navigation.goBack()
       })
@@ -87,5 +81,5 @@ class CameraScreen extends Component {
 }
 
 const mapStateToProps = state => ({ accounts: state.accounts })
-// const mapDispatchToProps = dispatch => bindActionCreators({addMessage, takeTempPic}, dispatch)
+
 export default connect(mapStateToProps)(CameraScreen)

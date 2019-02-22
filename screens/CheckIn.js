@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { Text, ScrollView } from 'react-native'
 import Header from '../components/Header'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -25,13 +25,7 @@ class CheckIn extends Component{
     }
   }
 
-  // returnToday = () => {    
-  //   return (
-  //     `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date.getDate()}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
-  // }
-  
   componentDidMount = () => {
-    // const today = this.returnToday()
     if(!this.props.attendance[this.state.d.getToday()]){
       this.props.getAttendance(this.state.d.getToday())
     }
@@ -48,8 +42,6 @@ class CheckIn extends Component{
     }, {total: 0, hereToday: 0})
   }
 
-  
-
   render(){
     return (
       <LinearGradient
@@ -59,8 +51,12 @@ class CheckIn extends Component{
         <Text style={styles.h2}>
           {`${this.state.d.getDay()}, ${this.state.d.getDate()}, ${this.state.d.getMonth()} ${this.state.d.getYear()}`}
         </Text>
-        <Text style={[styles.text, {marginBottom:20}]}>
-          {this.childrenHere().total === this.childrenHere().hereToday ? 'All children are here' : this.childrenHere().hereToday === 1 ? '1 child is here' : this.childrenHere().hereToday + ' children are here'
+        <Text style={[styles.text, {marginLeft:10, marginBottom:20}]}>
+          {this.childrenHere().total === this.childrenHere().hereToday 
+            ? 'All children are here' 
+            : this.childrenHere().hereToday === 1 
+              ? '1 child is here' 
+              : this.childrenHere().hereToday + ' children are here'
           }
         </Text>
         <ScrollView contentContainerStyle={styles.attendanceHolder}>
@@ -78,7 +74,7 @@ class CheckIn extends Component{
   }
 }
 
-
 const mapStateToProps = state => ({attendance:state.attendance})
 const mapDispatchToProps = dispatch => bindActionCreators({getAttendance, changeCheckInOut}, dispatch)
+
 export default connect(mapStateToProps, mapDispatchToProps)(CheckIn)

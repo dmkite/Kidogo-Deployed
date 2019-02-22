@@ -53,7 +53,6 @@ export default class Dates {
     previousDay = self.constructDate(day, month, year)
     return previousDay
   }
-
   
   constructDate = (day, month, year) => {
     return `${Number(day) < 10 ? '0' + day : day}-${Number(month) + 1 < 10 ? '0' + Number((month) + 1) : Number(month) + 1}-${year}`

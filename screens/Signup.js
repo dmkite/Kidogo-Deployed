@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput} from 'react-native'
-import {Icon} from 'react-native-elements'
-import { connect } from 'react-redux';
+import {View, Text} from 'react-native'
 import {Caregiver, Centre, Confirm} from '../components/Signup'
 import {LinearGradient, SecureStore} from 'expo'
 import uuid from 'uuid'
@@ -39,10 +37,8 @@ class Signup extends Component{
     }
   }
 
-  changeQuestions = (focusType) => {
-    this.setState({questionFocus: focusType})
-  }
-
+  changeQuestions = focusType => this.setState({questionFocus: focusType})
+  
   handlePassword = (text) => {
     let password = this.state.password
   
@@ -57,13 +53,9 @@ class Signup extends Component{
     })
   }
 
-  handleChangeText = (text, val) => {
-    this.setState({
-      [val]: text
-    })
-  }
+  handleChangeText = (text, val) => this.setState({[val]: text})
   
-  addMargin = (num) => this.setState({avoidView: num})
+  addMargin = num => this.setState({avoidView: num})
 
   getCode = () => {
     const {username, password, phone} = this.state
@@ -172,8 +164,7 @@ class Signup extends Component{
         }
         { !!this.state.error
           ? <View style={styles.error}>
-              <Text style={styles.errorText}>{this.state.error}</Text>  
-              {console.log('error')}          
+              <Text style={styles.errorText}>{this.state.error}</Text>          
             </View>
           : null
           }
@@ -186,7 +177,4 @@ class Signup extends Component{
   }
 }
 
-// const mapStateToProps = state
-
-// export default connect(mapStateToProps)(Signup)
 export default Signup

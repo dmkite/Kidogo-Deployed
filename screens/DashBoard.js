@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import Header from '../components/Header'
 import DashView from '../components/DashView'
 import ActionButtons from '../components/ActionButtons'
@@ -9,7 +9,7 @@ import {addFees} from '../actions/payments'
 import {getAttendance} from '../actions/attendance'
 import {LinearGradient} from 'expo'
 
-class DashBoard extends Component{ //can definitely be a functional component
+class DashBoard extends Component{ 
   constructor(props){
     super(props)
   }
@@ -22,11 +22,8 @@ class DashBoard extends Component{ //can definitely be a functional component
     }
   }
 
-  componentDidMount = () => {
-    return Promise.all([this.props.addFees()])
-    //removed this.props.getAttendance() on 2/13
-  }
-
+  componentDidMount = () => this.props.addFees()
+    
   render(){
     return(
       <LinearGradient

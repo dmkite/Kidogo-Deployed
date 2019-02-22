@@ -1,7 +1,7 @@
 import getAsync from '../utilities/getAsync'
 import dateMath from 'date-arithmetic'
 import { SecureStore } from 'expo';
-import Dates from '../utilties/dates'
+import Dates from '../utilities/dates'
 
 export const GET_FINANCES = 'GET_FINANCES'
 export function getFinances(){
@@ -21,8 +21,10 @@ export function getFinances(){
 export const GET_WEEK_BALANCE = 'GET_WEEK_BALANCE'
 export function getWeekBalances(dateMod = 0){
   return async dispatch => {
+    const d = new Dates()
     const {newPayments, newFinances} = await getAsync(true, false, false, true)
-    const week = dateSpan(dateMod)
+    // const week = dateSpan(dateMod)
+    const week = d.getSpan(dateMod)
     const income = getIncome(newPayments, week)
     const expenses = getExpenses(newFinances, week)
     dispatch({
@@ -55,43 +57,43 @@ export function addExpense(expense){
   }
 }
 
-const dateSpan = (dateMod = 0) => {
-  const date = new Date()
-  const year = date.getFullYear()
-  const month = date.getMonth()
-  const day = date.getDate()
-  const dayOfWeek = date.getDay()
-  let today = new Date(year, month, day)
-  if (dateMod < 0) dateMod = -dateMod
-  today = dateMath.subtract(today, dateMod, 'day')
-  const upper = dateMath.add(today, 6 - dayOfWeek, 'day')
-  const lower = dateMath.subtract(today, dayOfWeek, 'day')
-  const endSpan = []
-  let endDate = upper.getDate()
-  while (endDate > 0 && endSpan.length < 7) {
-    let day = endDate < 10 ? '0' + endDate : endDate
-    let month = upper.getMonth() + 1 < 10 ? '0' + (upper.getMonth() + 1) : upper.getMonth() + 1
-    let year = upper.getFullYear()
-    endSpan.unshift(`${day}-${month}-${year}`)
-    endDate--
-  }
-  if (endSpan.length === 7) {
-    return endSpan
-  }
-  else {
-    let startDateLength = 7 - endSpan.length
-    let startDate = lower.getDate()
-    let startSpan = []
-    while (startSpan.length !== startDateLength) {
-      let day = startDate < 10 ? '0' + startDate : startDate
-      let month = lower.getMonth() + 1 < 10 ? '0' + (lower.getMonth() + 1) : lower.getMonth() + 1
-      let year = lower.getFullYear()
-      startSpan.push(`${day}-${month}-${year}`)
-      startDate++
-    }
-    return startSpan.concat(endSpan) 
-  }
-}
+// const dateSpan = (dateMod = 0) => {
+//   const date = new Date()
+//   const year = date.getFullYear()
+//   const month = date.getMonth()
+//   const day = date.getDate()
+//   const dayOfWeek = date.getDay()
+//   let today = new Date(year, month, day)
+//   if (dateMod < 0) dateMod = -dateMod
+//   today = dateMath.subtract(today, dateMod, 'day')
+//   const upper = dateMath.add(today, 6 - dayOfWeek, 'day')
+//   const lower = dateMath.subtract(today, dayOfWeek, 'day')
+//   const endSpan = []
+//   let endDate = upper.getDate()
+//   while (endDate > 0 && endSpan.length < 7) {
+//     let day = endDate < 10 ? '0' + endDate : endDate
+//     let month = upper.getMonth() + 1 < 10 ? '0' + (upper.getMonth() + 1) : upper.getMonth() + 1
+//     let year = upper.getFullYear()
+//     endSpan.unshift(`${day}-${month}-${year}`)
+//     endDate--
+//   }
+//   if (endSpan.length === 7) {
+//     return endSpan
+//   }
+//   else {
+//     let startDateLength = 7 - endSpan.length
+//     let startDate = lower.getDate()
+//     let startSpan = []
+//     while (startSpan.length !== startDateLength) {
+//       let day = startDate < 10 ? '0' + startDate : startDate
+//       let month = lower.getMonth() + 1 < 10 ? '0' + (lower.getMonth() + 1) : lower.getMonth() + 1
+//       let year = lower.getFullYear()
+//       startSpan.push(`${day}-${month}-${year}`)
+//       startDate++
+//     }
+//     return startSpan.concat(endSpan) 
+//   }
+// }
 
 function getIncome(paymentObj, week){
   return Object.keys(paymentObj).reduce((acc, acctId) => {

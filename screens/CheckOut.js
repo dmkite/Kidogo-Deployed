@@ -25,13 +25,8 @@ class CheckOut extends Component {
     }
   }
 
-  // returnToday = () => {
-  //   return (
-  //     `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date.getDate()}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
-  // }
-
   componentDidMount = () => {
-    this.props.getAttendance(this.state.d.getToday())
+    this.props.getAttendance(this.state.d.getToday(), 'checkout')
   }
 
   childrenHere = () => {
@@ -57,8 +52,12 @@ class CheckOut extends Component {
         
         {this.props.attendance && this.props.attendance[this.state.d.getToday()]
         ? <View>
-            <Text style={[styles.text, {marginBottom:20}]}>
-              {this.childrenHere().total === this.childrenHere().remaining ? 'No children have left' : this.childrenHere().remaining === 1 ? '1 child is still here' : this.childrenHere().remaining + ' children are still here'
+            <Text style={[styles.text, {marginLeft:10, marginBottom:20}]}>
+              {this.childrenHere().total === this.childrenHere().remaining 
+                ? 'No children have left' 
+                : this.childrenHere().remaining === 1 
+                  ? '1 child is still here' 
+                  : this.childrenHere().remaining + ' children are still here'
               }
             </Text>
             <ScrollView contentContainerStyle={styles.attendanceHolder}>
@@ -68,11 +67,11 @@ class CheckOut extends Component {
                   if(!!cardDetails.checkIn) return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.state.d.getToday(), id, 'checkOut')} isMorning={false}/>
                   else return
                 })
-                : <Text style={styles.text}>No one was checked in today.</Text>
+                : <Text style={[styles.text, {marginLeft:10}]}>No one was checked in today.</Text>
               }
             </ScrollView>
-        </View>
-          : <Text style={styles.text}>Attendance was not taken today.</Text>
+          </View>
+        : <Text style={styles.text}>Attendance was not taken today.</Text>
         }
         </LinearGradient>
     )

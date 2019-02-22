@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native'
+import {Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header'
@@ -7,7 +7,6 @@ import {getAccounts, changeField} from '../actions/accounts'
 import {PaymentSection, PaymentHistory} from '../components/Payments'
 import{getPayments, makePayment} from '../actions/payments'
 import {LinearGradient} from 'expo'
-
 
 class Payments extends Component{
   constructor(props){
@@ -17,7 +16,6 @@ class Payments extends Component{
     }   
   }
   
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -25,20 +23,15 @@ class Payments extends Component{
       height: 0
     }
   }
-  componentDidMount = () => {
-    const promiseArray = [this.props.getAccounts(), this.props.getPayments()]
 
-    Promise.all(promiseArray)
-  }
+  componentDidMount = () => Promise.all([this.props.getAccounts(), this.props.getPayments()])
   
   findAccount = () => {
     const id = this.props.navigation.getParam('id')
     return this.props.accounts.filter(acct => acct.id === id)[0]
   }
 
-  addMargin = (num) => this.setState({ avoidView: num })
-
-  
+  addMargin = num => this.setState({ avoidView: num })
 
   render(){
     return (
@@ -55,7 +48,6 @@ class Payments extends Component{
             changeField={this.props.changeField}
             addMargin={this.addMargin}
           />
-          
           <PaymentHistory paymentHistory={this.props.payments ? this.props.payments[this.props.navigation.getParam('id')] : []}/>
         </ScrollView>
       </LinearGradient>

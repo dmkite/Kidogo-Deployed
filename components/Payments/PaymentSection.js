@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, Text, TextInput, TouchableOpacity} from 'react-native'
 import {styles} from '../FinancesDash/styles'
 import Dates from '../../utilities/dates'
-import numberValidation from '../../utilities/dates'
+import numberValidation from '../../utilities/numberValidation'
 
 class PaymentSection extends Component{
   constructor(props){

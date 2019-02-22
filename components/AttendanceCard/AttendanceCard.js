@@ -6,7 +6,6 @@ import {styles} from './styles'
 export default function AttendanceCard(props){
   return (
     <TouchableOpacity style={[styles.attendanceCard, (props.checkIn && props.isMorning) || (props.checkOut && !props.isMorning) ? styles.selected : null ]} onPress={props.onPress}>
-      {console.log(props.f_name)}
       {props.checkIn && props.isMorning
         ? <View style={styles.present}>
             <Icon name="check-circle" color="white" size={20}/>

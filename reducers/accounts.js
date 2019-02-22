@@ -17,7 +17,6 @@ const INITIAL_STATE = [
 const accounts = (state=INITIAL_STATE, {type, payload}) => {
   switch (type){
     case GET_ACCOUNTS:
-      console.log(typeof(payload))
       return payload
     case ADD_MESSAGE:
       return payload

@@ -34,7 +34,6 @@ class DashView extends Component{
                 : this.props.navigation.navigate('Finances')
       }}>
         <View style={styles.dash}>
-          {console.log(this.state.fontLoaded)}
           <Image 
             source={this.state.time < 12
             ? require('../../assets/MORNING.png')

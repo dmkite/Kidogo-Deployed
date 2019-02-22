@@ -24,7 +24,7 @@ function Header(props){
             SecureStore.deleteItemAsync('_TOKEN'),
             Auth.signOut(),
             navigate('Home')
-          ]).catch(err => console.log(err));
+          ]).catch(err => console.error(err));
         }} style={styles.button}>
 
           <Icon name="exit-to-app" color="white" size={30} />

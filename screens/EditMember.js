@@ -45,15 +45,12 @@ class EditMember extends Component{
     this.props.navigation.navigate('Account', {id: acctId})
   }
 
-  handleId = (text) => {
+  handleId = text => {
     let govt_id = this.state.govt_id
-    if(govt_id){
+    if (this.state.govt_id && this.state.govt_id.length) {
       text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
     }
-    else{
-      govt_id = text[text.length - 1]
-    }
-
+    else govt_id = text
     let hiddenId = ''
     for (let letter of govt_id) {
       hiddenId += '*'
@@ -64,11 +61,8 @@ class EditMember extends Component{
     })
   }
 
-  showId = () => {
-    this.setState({
-      showId: !this.state.showId
-    })
-  }
+  showId = () => this.setState({showId: !this.state.showId})
+  
 
   componentDidMount = () => {
     const editing = this.props.navigation.getParam('editing')
@@ -100,9 +94,7 @@ class EditMember extends Component{
     const acctId = this.props.navigation.getParam('acctId')
     const memberId = this.props.navigation.getParam('editing').id
     const memberType = this.props.navigation.getParam('type')
-    
     await this.props.changeMember(changes, acctId, memberType, memberId)
-    // edit NOTE: added an 'update account' function, but not sure I can use it.;
     await this.props.navigation.navigate('Account', { id: acctId })
   }
 
@@ -119,7 +111,7 @@ class EditMember extends Component{
     else this.setState({ focusedOn: null })
   }
   
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
 
   render(){
     return (
@@ -143,21 +135,17 @@ class EditMember extends Component{
           {this.state.img_uri
             ? <Image
               source={{ uri: this.state.img_uri }}
-              style={{
-                height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-              }}
+              style={styles.img}
             />
             : <Image
               source={
                 this.props.navigation.getParam('type') === 'children'
                  ? require('../assets/CHILD.png')
-                 :this.props.navigation.getParam('type') === 'guardians'
+                 : this.props.navigation.getParam('type') === 'guardians'
                     ? require('../assets/GUARDIAN.png')
                     : require('../assets/E_CONTACT.png')
-                    }
-              style={{
-                height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
-              }}
+              }
+              style={styles.img}
             />
           }
 
@@ -199,7 +187,6 @@ class EditMember extends Component{
             </View>
           </View>
 
-          
           {this.state.birthdate !== undefined 
             ? <View style={styles.nameHolder}>
               <View style={{ flex: .5, marginRight: 5 }}>

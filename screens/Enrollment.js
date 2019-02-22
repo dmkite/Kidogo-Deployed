@@ -26,7 +26,6 @@ class Enrollment extends Component{
       message: null,
     } 
   }
-  
 
   static navigationOptions = {
     headerLeft: null,
@@ -59,18 +58,6 @@ class Enrollment extends Component{
   } 
 
   submitAccount = async () => {
-    const message = []
-    const children = this.state.children
-    const guardians = this.state.guardians
-    // if(!children.f_name || !children.l_name || !guardians.f_name || !guardians.l_name) message.push('Guardians and children need first and last names')
-    // if(!guardians.phone) message.push('You need to add a phone number for guarians')
-    // if(!this.state.rate) message.push('You need to include a rate')
-    if(message.length){
-      this.setState({
-        message: message.join('<br>')
-      })
-      return
-    }
     const id = uuid()
     const account = {
       children: [...this.state.children],
@@ -82,15 +69,10 @@ class Enrollment extends Component{
       balance: 0
     }
 
-    //NOTE: for some reason the below doesn't work. it navigates, but the fee is not added
     await this.props.addAccount(account)
-    
     if(this.state.frequency !== 'daily'){
-      
       await this.props.makePayment(id, -Number(this.state.rate), 0) //negative payment will process as fee
-      
     }
-    
     await this.props.navigation.navigate('Account', {id})
   }
   
@@ -102,15 +84,11 @@ class Enrollment extends Component{
     })
   }
 
-  addMessage = (message) => {
-    this.setState({message})
-  }
+  addMessage = message => this.setState({message})
 
-  changeQuestionFocus = (type) => {
-    this.setState({questionFocus: type})
-  }
+  changeQuestionFocus = type => this.setState({questionFocus: type})
   
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
 
   render(){
    return (
@@ -139,14 +117,10 @@ class Enrollment extends Component{
                submitAccount={this.submitAccount}
              />
         }
-        
-
-
         {this.state.message
           ?  <ErrorMessage error={this.state.message}/>
           : null
         }
-
      </LinearGradient>
    )
   }
@@ -154,4 +128,5 @@ class Enrollment extends Component{
 
 const mapStateToProps = state => ({accounts: state.accounts})
 const mapDispatchToProps = dispatch => bindActionCreators({addAccount, makePayment}, dispatch)
+
 export default connect(mapStateToProps, mapDispatchToProps)(Enrollment)
