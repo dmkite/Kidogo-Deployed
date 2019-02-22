@@ -3,12 +3,32 @@ import dateMath from 'date-arithmetic'
 export default class Dates {
   constructor(){}
   date = new Date()
-
+  
   getToday = () => {
       const self = this
       const result = `${self.date.getDate() < 10 ? '0' + self.date.getDate() : self.date.getDate()}-${Number(self.date.getMonth()) + 1 < 10 ? '0' + Number((self.date.getMonth()) + 1) : Number(self.date.getMonth()) + 1}-${self.date.getFullYear()}`
       return result
   }  
+  
+  getMonth = () => {
+    const self = this
+    return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][self.date.getMonth()]
+  }
+
+  getDay = () => {
+    const self = this
+    return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][self.date.getDay()]
+  }
+
+  getYear = () => {
+    const self = this
+    return self.date.getFullYear()
+  }
+
+  getDate = () => {
+    const self = this
+    return self.date.getDate()
+  }
 
   getDifferentDay = (addOrSub, date, amt = 1) => {
     const self = this

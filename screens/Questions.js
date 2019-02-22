@@ -51,7 +51,10 @@ class Questions extends Component{
     TOD === 'morn' 
       ? newQuestions[today].morning = {question1: this.state.mornQuestion1Answer, question2: this.state.mornQuestion2Answer}
       : newQuestions[today].afternoon = { question1: this.state.aftQuestion1Answer, question2: this.state.aftQuestion2Answer }
-    SecureStore.setItemAsync('_QUESTIONS', JSON.stringify(newQuestions))
+    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    const { user: { id } } = JSON.parse(signedIn)
+  
+    SecureStore.setItemAsync(`_QUESTIONS_${id}`, JSON.stringify(newQuestions))
     
     this.setState({
       [`${TOD}Question${this.state.onQuestion}Answer`]: answer,

@@ -27,7 +27,10 @@ export function getAttendance(today){
         }, {})
       }
 
-      await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(newAttendance))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      
+      await SecureStore.setItemAsync(`_ATTENDANCE_${id}`, JSON.stringify(newAttendance))
       
       dispatch({
         type: GET_ATTENDANCE,
@@ -41,15 +44,32 @@ export function getAttendance(today){
 }
 
 export const CHANGE_CHECK_IN_OUT = 'CHANGE_CHECK_IN_OUT'
-export function changeCheckInOut(date, id, inOrOut){
+export function changeCheckInOut(date, cid, inOrOut){
   return async dispatch => {
     try{
-      let { newAccounts, newAttendance } = await getAsync(false, false, attendance)
-      newAttendance = newAttendance[date]
-      if(!newAttendance[id][inOrOut]) newAttendance[id][inOrOut] = new Date().getTime()
-      else newAttendance[id][inOrOut] = false
-      attendance[date] = newAttendance
-      await SecureStore.setItemAsync('_ATTENDANCE', JSON.stringify(attendance))
+      let { newAttendance } = await getAsync(false, false, true)
+      // console.log(newAttendance)
+      if (newAttendance[date][cid][inOrOut]) newAttendance[date][cid][inOrOut] = false
+      else newAttendance[date][cid][inOrOut] = new Date().getTime()
+      // let specificDay = newAttendance[date]
+      // console.log(specificDay)
+      // console.log('--------------------')
+      // console.log(specificDay[cid])
+      // console.log('--------------------')
+      // console.log(specificDay[cid][inOrOut])
+      // console.log('--------------------')
+      // // if(!specificDay) specificDay = {}
+      // // if(!specificDay[cid]) specificDay[cid] = {}
+      // // if(!specificDay[cid][inOrOut]) specificDay[cid][inOrOut] = new Date().getTime()
+      // // else specificDay[cid][inOrOut] = false
+      // if (!specificDay[cid][inOrOut]) specificDay[cid][inOrOut] = new Date().getTime()
+      // else specificDay[cid][inOrOut] = false
+      // console.log(specificDay)
+      // newAttendance[date] = specificDay
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      
+      await SecureStore.setItemAsync(`_ATTENDANCE_${id}`, JSON.stringify(newAttendance))
 
       dispatch({
         type: CHANGE_CHECK_IN_OUT,

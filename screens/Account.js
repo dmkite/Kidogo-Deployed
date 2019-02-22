@@ -98,6 +98,7 @@ class Account extends Component {
 
   componentDidMount = async () => {
     return this.props.getAccounts().then(() => {
+      
       const id = this.props.navigation.getParam('id')
       const [account] = this.props.accounts.accounts.filter(acct => acct.id === id)
       this.setState({ account })

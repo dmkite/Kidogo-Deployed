@@ -4,28 +4,29 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
   signedIn  = JSON.parse(signedIn)
   let time
+  const id = signedIn.user.id
   if(signedIn){
     time = signedIn.time
   }
-  if(!time || Date.now() - time > 60480) console.log('reset')
+  // if(!time || Date.now() - time > 60480) console.log('reset')
   const dataObj = {}
 
   if (payments) {
-    let payments = await SecureStore.getItemAsync('_PAYMENTS')
+    let payments = await SecureStore.getItemAsync(`_PAYMENTS_${id}`)
     if (!payments) payments = {}
     else payments = JSON.parse(payments)
     const newPayments = { ...payments }
     dataObj.newPayments = newPayments
   }
   if (accounts) {
-    let accounts = await SecureStore.getItemAsync('_ACCOUNTS')
+    let accounts = await SecureStore.getItemAsync(`_ACCOUNTS_${id}`)
     if (!accounts) accounts = []
     else accounts = JSON.parse(accounts)
     const newAccounts = [...accounts]
     dataObj.newAccounts = newAccounts
   }
   if (attendance) {
-    let attendance = await SecureStore.getItemAsync('_ATTENDANCE')
+    let attendance = await SecureStore.getItemAsync(`_ATTENDANCE_${id}`)
     if (!attendance) attendance = {}
     else attendance = JSON.parse(attendance)
     const newAttendance = { ...attendance }
@@ -33,7 +34,7 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   }
 
   if(finances){
-    let finances = await SecureStore.getItemAsync('_FINANCES')
+    let finances = await SecureStore.getItemAsync(`_FINANCES_${id}`)
     if (!finances) finances = {}
     else finances = JSON.parse(finances)
     const newFinances = { ...finances }
@@ -41,7 +42,7 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   }
 
   if(caregivers){
-    let caregivers = await SecureStore.getItemAsync('_CAREGIVERS')
+    let caregivers = await SecureStore.getItemAsync(`_CAREGIVERS`)
     if (!caregivers) caregivers = {}
     else caregivers = JSON.parse(caregivers)
     const newCaregivers = { ...caregivers }
@@ -49,7 +50,7 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   }
 
   if (centres) {
-    let centres = await SecureStore.getItemAsync('_CENTRES')
+    let centres = await SecureStore.getItemAsync(`_CENTRES`)
     if (!centres) centres = []
     else centres = JSON.parse(centres)
     const newCentres = [ ...centres ]
@@ -57,7 +58,7 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   }
 
   if (questions) {
-    let questions = await SecureStore.getItemAsync('_QUESTIONS')
+    let questions = await SecureStore.getItemAsync(`_QUESTIONS_${id}`)
     if (!questions) questions = {}
     else questions = JSON.parse(questions)
     const newQuestions = {...questions}
@@ -65,4 +66,4 @@ export default getAsync = async (payments, accounts, attendance, finances, careg
   }
 
   return dataObj
-}
+} 

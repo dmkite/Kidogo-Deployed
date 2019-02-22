@@ -21,7 +21,7 @@ export function getPayments() {
 
 export const MAKE_PAYMENT = 'MAKE_PAYMENT'
 export const UPDATE_FINANCES = 'UPDATE_FINANCES'
-export function makePayment(id, amount, balance, date){
+export function makePayment(acctId, amount, balance, date){
   if(!date) date = new Dates().getToday()
   return async dispatch => {
     try {
@@ -33,13 +33,15 @@ export function makePayment(id, amount, balance, date){
         balanceAfter: Number(balance) - Number(amount),
         date
       }
-      if(!newPayments[id]) newPayments[id] = []
-      newPayments[id].push(paymentDetails)
+      if(!newPayments[acctId]) newPayments[acctId] = []
+      newPayments[acctId].push(paymentDetails)
       newAccounts.forEach(acct => {
-        if(acct.id === id) acct.balance = Number(acct.balance) - Number(amount)
+        if(acct.id === acctId) acct.balance = Number(acct.balance) - Number(amount)
       })
-      await SecureStore.setItemAsync('_PAYMENTS', JSON.stringify(newPayments))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(newPayments))
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
         type: GET_PAYMENTS,
         payload: newPayments
@@ -88,9 +90,10 @@ export function addFees(){
           }
         })
       }
-
-      await SecureStore.setItemAsync('_PAYMENTS', JSON.stringify(newPayments))
-      await SecureStore.setItemAsync('_ACCOUNTS', JSON.stringify(newAccounts))
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      const { user: { id } } = JSON.parse(signedIn)
+      await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(newPayments))
+      await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
       dispatch({
           type: ADD_FEES,
           payload:{payments: newPayments, accounts:newAccounts}

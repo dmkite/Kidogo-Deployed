@@ -7,15 +7,15 @@ import AttendanceCard from '../components/AttendanceCard'
 import {styles} from '../components/AttendanceCard/styles'
 import {getAttendance, changeCheckInOut} from '../actions/attendance'
 import {LinearGradient} from 'expo'
+import Dates from '../utilities/dates'
 
 class CheckIn extends Component{
   constructor(props){
     super(props)
     this.state = { 
-      date: new Date(),
+      d: new Dates()
     }
   }
-  
 
   static navigationOptions = {
     headerLeft: null,
@@ -25,18 +25,20 @@ class CheckIn extends Component{
     }
   }
 
-  returnToday = () => {    
-    return (
-      `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date.getDate()}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
-  }
+  // returnToday = () => {    
+  //   return (
+  //     `${this.state.date.getDate() < 10 ? '0' + this.state.date.getDate() : this.state.date.getDate()}-${Number(this.state.date.getMonth()) + 1 < 10 ? '0' + Number((this.state.date.getMonth()) + 1) : Number(this.state.date.getMonth()) + 1}-${this.state.date.getFullYear()}`)
+  // }
   
   componentDidMount = () => {
-    const today = this.returnToday()
-    this.props.getAttendance(today)
+    // const today = this.returnToday()
+    if(!this.props.attendance[this.state.d.getToday()]){
+      this.props.getAttendance(this.state.d.getToday())
+    }
   }
 
   childrenHere = () => {
-    const today = this.returnToday()
+    const today = this.state.d.getToday()
     if(!this.props.attendance[today]) return {total: 0, hereToday: 0}
     return Object.keys(this.props.attendance[today]).reduce((acc, id) => {
       childHere = this.props.attendance[today][id].checkIn
@@ -54,21 +56,19 @@ class CheckIn extends Component{
         style={{ flex: 1 }}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
+              {console.log(this.props.attendance)}
         <Text style={{ color:'#ffffff80', fontSize:24, margin:10}}>
-          {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][this.state.date.getDay()] + ', ' +
-          this.state.date.getDate() + ', ' +
-          ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.state.date.getMonth()] + ' ' +
-          this.state.date.getFullYear()}
+          {`${this.state.d.getDay()}, ${this.state.d.getDate()}, ${this.state.d.getMonth()} ${this.state.d.getYear()}`}
         </Text>
         <Text style={{color:'#ffffff80', fontSize:18, margin:10, marginBottom:20}}>
           {this.childrenHere().total === this.childrenHere().hereToday ? 'All children are here' : this.childrenHere().hereToday === 1 ? '1 child is here' : this.childrenHere().hereToday + ' children are here'
           }
         </Text>
         <ScrollView contentContainerStyle={styles.attendanceHolder}>
-          { this.props.attendance[this.returnToday()]
-            ? Object.keys(this.props.attendance[this.returnToday()]).map( (id, i) =>{
-              let cardDetails = this.props.attendance[this.returnToday()][id]
-              return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.returnToday(), id, 'checkIn')} isMorning={true}/>
+          {this.props.attendance[this.state.d.getToday()]
+            ? Object.keys(this.props.attendance[this.state.d.getToday()]).map( (id, i) =>{
+              let cardDetails = this.props.attendance[this.state.d.getToday()][id]
+                return <AttendanceCard key={i} {...cardDetails} onPress={() => this.props.changeCheckInOut(this.state.d.getToday(), id, 'checkIn')} isMorning={true}/>
             })
             : null
           }
