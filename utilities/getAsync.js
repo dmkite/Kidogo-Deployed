@@ -3,15 +3,20 @@ import {SecureStore} from 'expo'
 export default getAsync = async (payments, accounts, attendance, finances, caregivers, centres, questions) => {
   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
   signedIn  = JSON.parse(signedIn)
-  let time
-  const id = signedIn.user.id
+  let id
   if(signedIn){
-    time = signedIn.time
+    let time
+    if(signedIn.user){
+      id = signedIn.user.id
+    }
+    if(signedIn){
+      time = signedIn.time
+    }
+    // if(!time || Date.now() - time > 60480) console.log('reset')
   }
-  // if(!time || Date.now() - time > 60480) console.log('reset')
   const dataObj = {}
 
-  if (payments) {
+  if (payments ) {
     let payments = await SecureStore.getItemAsync(`_PAYMENTS_${id}`)
     if (!payments) payments = {}
     else payments = JSON.parse(payments)

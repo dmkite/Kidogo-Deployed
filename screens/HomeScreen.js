@@ -84,6 +84,10 @@ export default class HomeScreen extends Component{
             this.setState({loading: false})
             this.props.navigation.navigate('Dash')
           })
+          .catch(err =>{
+            console.log(err)
+            this.setState({loading:false, error:'Something went wrong.'})
+          })
         }
       })
 
@@ -95,8 +99,8 @@ export default class HomeScreen extends Component{
   componentDidMount = async () => {
     // console.log('HOME')
     // await SecureStore.deleteItemAsync('_FINANCES')
-    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    let {user: {id}} = JSON.parse(signedIn)
+    // let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+    // let {user: {id}} = JSON.parse(signedIn)
     // console.log(id)
     // await SecureStore.deleteItemAsync(`_ACCOUNTS_${id}`)
     // await SecureStore.deleteItemAsync(`_ATTENDANCE_${id}`)
@@ -116,18 +120,28 @@ export default class HomeScreen extends Component{
     // if(signedIn) signedIn = JSON.parse(signedIn)
 
     // if(signedIn) this.props.navigation.navigate('Dash')
-    await this.navigate()
-  }
-
-  navigate = async () => {
+    // await this.navigate()
     let message = this.props.navigation.getParam('message')
     setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if (message) this.setState({ error: message })
-    let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
-    if (signedIn) signedIn = JSON.parse(signedIn)
-
-    if (signedIn) this.props.navigation.navigate('Dash')
+    try{
+      let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+      if (signedIn) signedIn = JSON.parse(signedIn)
+      if (signedIn) this.props.navigation.navigate('Dash')
+    }catch(err){
+      this.setState({error:err})
+    }
   }
+
+  // navigate = async () => {
+  //   let message = this.props.navigation.getParam('message')
+  //   setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+  //   if (message) this.setState({ error: message })
+  //   let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
+  //   if (signedIn) signedIn = JSON.parse(signedIn)
+
+  //   if (signedIn) this.props.navigation.navigate('Dash')
+  // }
 
   playAudio = async () => {
     try{

@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import {FinancesDash, EnterFinances, FinanceHistory} from '../components/FinancesDash'
 import { addExpense } from '../actions/finances'
 import {LinearGradient} from 'expo'
-import {styles} from '../components/Finances/styles'
+import {styles} from '../components/FinancesDash/styles'
 
 class Finances extends Component{
   constructor(props){
