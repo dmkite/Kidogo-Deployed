@@ -56,11 +56,10 @@ class CheckIn extends Component{
         style={{ flex: 1 }}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
-              {console.log(this.props.attendance)}
-        <Text style={{ color:'#ffffff80', fontSize:24, margin:10}}>
+        <Text style={styles.h2}>
           {`${this.state.d.getDay()}, ${this.state.d.getDate()}, ${this.state.d.getMonth()} ${this.state.d.getYear()}`}
         </Text>
-        <Text style={{color:'#ffffff80', fontSize:18, margin:10, marginBottom:20}}>
+        <Text style={[styles.text, {marginBottom:20}]}>
           {this.childrenHere().total === this.childrenHere().hereToday ? 'All children are here' : this.childrenHere().hereToday === 1 ? '1 child is here' : this.childrenHere().hereToday + ' children are here'
           }
         </Text>

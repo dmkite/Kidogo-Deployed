@@ -73,7 +73,7 @@ export function changeCheckInOut(date, cid, inOrOut){
 
       dispatch({
         type: CHANGE_CHECK_IN_OUT,
-        payload: {newAttendance, date}
+        payload: newAttendance
       })
     }catch(err){
       console.error(err)

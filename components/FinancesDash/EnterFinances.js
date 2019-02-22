@@ -34,7 +34,6 @@ class EnterFinances extends Component {
     this.setState({ [field]: text })
   }
 
-
   render(){
     return (
       <View>

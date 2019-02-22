@@ -7,13 +7,15 @@ import Header from '../components/Header'
 import {FinancesDash, EnterFinances, FinanceHistory} from '../components/FinancesDash'
 import { addExpense } from '../actions/finances'
 import {LinearGradient} from 'expo'
+import {styles} from '../components/Finances/styles'
 
 class Finances extends Component{
   constructor(props){
     super(props)
     this.state = {
       celebrate: false,
-      avoidView:0
+      avoidView:0,
+      openView: false
     }
   }
   
@@ -39,7 +41,14 @@ class Finances extends Component{
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <FinancesDash/>
-          <EnterFinances addExpense={this.props.addExpense} addMargin={this.addMargin}/>
+          {this.state.openView 
+            ? <EnterFinances addExpense={this.props.addExpense} addMargin={this.addMargin}/>
+            : <TouchableOpacity style={styles.button}>
+              <Text style={styles.btnText}>Add Expense</Text>
+            </TouchableOpacity>
+          
+          }
+          
           <View style={{ height: 2, backgroundColor: '#ccc', marginHorizontal: 20, marginVertical: 40 }}></View>
           <FinanceHistory history={this.props.finances.history}/>
         </ScrollView>
