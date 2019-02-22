@@ -152,7 +152,7 @@ function needToPayWeeklyOrTermlyFee(paymentHistory, acct, days){
   let lastPaymentDate
   for(let i = paymentHistory.length - 1; i >= 0; i--){
     let {amount, balanceBefore, balanceAfter } = paymentHistory[i]
-    if (amount == acct.rate && balanceBefore < balanceAfter){
+    if ((amount == acct.rate || amount == -Number(acct.rate)) && balanceBefore < balanceAfter){ //when account is initialized a negative payment is added to an account
       if(!lastPaymentDate){
         lastPaymentDate = paymentHistory[i].date
         continue

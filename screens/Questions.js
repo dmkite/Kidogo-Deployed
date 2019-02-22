@@ -4,6 +4,7 @@ import { Icon} from 'react-native-elements'
 import { MorningQuestions, AfternoonQuestions  } from '../components/Questions'
 import { SecureStore, LinearGradient } from 'expo';
 import Dates from '../utilities/dates';
+import getAsync from '../utilities/getAsync';
 
 class Questions extends Component{
   constructor(props){
@@ -41,13 +42,8 @@ class Questions extends Component{
   answer = async (TOD, answer) => {
     const today = new Dates().getToday()
     const onQ = this.state.onQuestion
-    
-    let questions = await SecureStore.getItemAsync('_QUESTIONS')
-    
-    if(!questions) questions = {}
-    else questions = JSON.parse(questions)
-    const newQuestions = {...questions}
-    if(!newQuestions[today]) newQuestions[today] = {morning: {}, afternoon:{}}
+    let {newQuestions} = await getAsync(false, false, false, false, false, false, true)
+    if (!newQuestions[today]) newQuestions[today] = { morning: { question1: null, question2: null }, afternoon: { question1: null, question2: null}}
     TOD === 'morn' 
       ? newQuestions[today].morning = {question1: this.state.mornQuestion1Answer, question2: this.state.mornQuestion2Answer}
       : newQuestions[today].afternoon = { question1: this.state.aftQuestion1Answer, question2: this.state.aftQuestion2Answer }

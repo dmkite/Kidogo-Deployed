@@ -81,7 +81,12 @@ export default class HomeScreen extends Component{
         else{
           SecureStore.setItemAsync('_SIGNEDIN', JSON.stringify({user, time: Date.now()}))
           .then(() => {
-            this.setState({loading: false})
+            this.setState({
+              loading: false,
+              username: '',
+              password: '',
+              hiddenPassword: ''
+             })
             this.props.navigation.navigate('Dash')
           })
           .catch(err =>{

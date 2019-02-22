@@ -10,7 +10,7 @@ export default function Rate(props){
         <View style={{ flexDirection: 'row' }}>
           <Text style={[styles.prefix, props.focusedOn === 'rate' ? styles.focused : null]}>K</Text>
           <TextInput
-            style={[styles.input, { flex: .8, marginLeft: 0 }]}
+            style={[styles.input, props.focusedOn === 'rate' ? styles.focused : null, { flex: .8, marginLeft: 0 }]}
             keyboardType="number-pad"
             value={props.rate}
             onChangeText={(text) => props.handleNumberChange(text, 'rate')}

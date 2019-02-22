@@ -5,7 +5,7 @@ import FinanceHistoryRow from './FinanceHistoryRow'
 
 export default function FinancesHistory(props){
   return (
-    <View>
+    <View style={{marginTop:50}}>
       <View style={styles.tableHeader}>
         <View style={[styles.tableRow, { flex: .19 }]}></View>
         <Text style={[styles.tableRow, { fontWeight: 'bold' }]}>Date</Text>
