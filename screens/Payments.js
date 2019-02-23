@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native'
+import {Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header'
@@ -7,7 +7,7 @@ import {getAccounts, changeField} from '../actions/accounts'
 import {PaymentSection, PaymentHistory} from '../components/Payments'
 import{getPayments, makePayment} from '../actions/payments'
 import {LinearGradient} from 'expo'
-
+import {styles} from '../components/Payments/styles'
 
 class Payments extends Component{
   constructor(props){
@@ -17,7 +17,6 @@ class Payments extends Component{
     }   
   }
   
-
   static navigationOptions = {
     headerLeft: null,
     headerStyle: {
@@ -25,24 +24,15 @@ class Payments extends Component{
       height: 0
     }
   }
-  componentDidMount = () => {
-    // if(!this.props.accounts.accounts[0].children.length) 
-     
-    // this.props.getPayments()
-    // this.props.getAccounts()
-    const promiseArray = [this.props.getAccounts(), this.props.getPayments()]
 
-    Promise.all(promiseArray)
-  }
+  componentDidMount = () => Promise.all([this.props.getAccounts(), this.props.getPayments()])
   
   findAccount = () => {
     const id = this.props.navigation.getParam('id')
-    return this.props.accounts.accounts.filter(acct => acct.id === id)[0]
+    return this.props.accounts.filter(acct => acct.id === id)[0]
   }
 
-  addMargin = (num) => this.setState({ avoidView: num })
-
-  
+  addMargin = num => this.setState({ avoidView: num })
 
   render(){
     return (
@@ -51,7 +41,7 @@ class Payments extends Component{
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
-          <Text style={{fontSize:36, margin:10, marginBottom:20, color:'#ffffff80'}}>Make a Payment</Text>
+          <Text style={[styles.h1, styles.raleway]}>Make a Payment</Text>
           <PaymentSection 
             balance={this.findAccount() ? this.findAccount().balance : 0} 
             id={this.props.navigation.getParam('id')} 
@@ -59,7 +49,6 @@ class Payments extends Component{
             changeField={this.props.changeField}
             addMargin={this.addMargin}
           />
-          
           <PaymentHistory paymentHistory={this.props.payments ? this.props.payments[this.props.navigation.getParam('id')] : []}/>
         </ScrollView>
       </LinearGradient>

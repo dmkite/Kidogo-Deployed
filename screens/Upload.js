@@ -3,14 +3,13 @@ import {View, ScrollView, Text, TouchableOpacity, TextInput, Image} from 'react-
 import {Icon} from 'react-native-elements'
 import {LinearGradient, SecureStore} from 'expo'
 import Header from '../components/Header'
-import Amplify, { API, Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import awsmobile from '../aws-exports';
 import {styles} from '../components/Signup/styles'
 import Modal from '../components/Upload/Modal'
 import {signIn} from '../utilities/authentication'
 import Loading from '../components/Loading'
 import {get, post} from '../utilities/requests'
-import setAsync from '../utilities/setAsync'
 
 Amplify.configure(awsmobile);
 
@@ -34,7 +33,6 @@ class Upload extends Component{
       eventId: '',
       newData: null,
       showDif: false,
-      // dif: null
     }
   }
   
@@ -45,9 +43,8 @@ class Upload extends Component{
       height: 0
     }
   }
-  handleChangeEventId = (event) => {
-    this.setState({eventId: event})
-  }
+
+  handleChangeEventId = event => this.setState({eventId: event})
 
   componentDidMount = async () => {
     let token = await SecureStore.getItemAsync('_TOKEN')
@@ -61,24 +58,17 @@ class Upload extends Component{
     this.setState({ error: err })
   }
 
-  // storeResponse = (apiResponse) => {
-  //   this.setState({apiResponse})
-  // }
-
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
 
   changeFocus = (action, type) => {
     if (action === 'focus') this.setState({ focusedOn: type })
     else this.setState({ focusedOn: null })
   }
 
-  showPassword = () => {
-    this.setState({ showPassword: !this.state.showPassword })
-  }
+  showPassword = () => this.setState({ showPassword: !this.state.showPassword })
 
   handlePassword = (text) => {
     let password = this.state.password
-
     text.length > this.state.password.length ? password += text[text.length - 1] : password = password.slice(0, password.length - 1)
     let hiddenPassword = ''
     for (let letter of password) {
@@ -95,11 +85,7 @@ class Upload extends Component{
     else this.setState({loading: val})
   }
 
-  handleChangeText = (text, val) => {
-    this.setState({
-      [val]: text
-    })
-  }
+  handleChangeText = (text, val) => this.setState({[val]: text})
 
   addPrompt = (dif, data) => {
     this.setState({
@@ -115,7 +101,6 @@ class Upload extends Component{
         style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
-      
         <ScrollView>
           <Image
             source={require('../assets/UPLOAD.png')}
@@ -198,7 +183,6 @@ class Upload extends Component{
                 <Text style={styles.btnText}>Download</Text>
               </TouchableOpacity>
               </View>
-
           </View>
           : null
         }

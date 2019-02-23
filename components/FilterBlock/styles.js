@@ -68,7 +68,8 @@ export const styles = {
     opacity: 0.5,
     paddingHorizontal: 10,
     flex: 0.5,
-    marginVertical: 20
+    marginVertical: 20,
+    borderRadius:2
   },
   btnText: {
     fontSize: 24,
@@ -76,5 +77,7 @@ export const styles = {
     color: '#ffffff80',
     textAlign: 'center'
   },
-
+  raleway:{
+    fontFamily:'Raleway-Bold'
+  }
 }

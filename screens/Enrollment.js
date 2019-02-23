@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import {ScrollView, View, Text, Image, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native'
+import {Text} from 'react-native'
 import { bindActionCreators } from 'redux'
 import {LinearGradient} from 'expo'
-
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
-import {Child, Guardian, EmergencyContact, Rate} from '../components/Forms'
+import {Child, Guardian, EmergencyContact} from '../components/Forms'
 import ErrorMessage from '../components/ErrorMessage'
 import {styles} from '../components/Forms/newStyles'
 import {addAccount} from '../actions/accounts'
@@ -27,7 +26,6 @@ class Enrollment extends Component{
       message: null,
     } 
   }
-  
 
   static navigationOptions = {
     headerLeft: null,
@@ -60,18 +58,6 @@ class Enrollment extends Component{
   } 
 
   submitAccount = async () => {
-    const message = []
-    const children = this.state.children
-    const guardians = this.state.guardians
-    // if(!children.f_name || !children.l_name || !guardians.f_name || !guardians.l_name) message.push('Guardians and children need first and last names')
-    // if(!guardians.phone) message.push('You need to add a phone number for guarians')
-    // if(!this.state.rate) message.push('You need to include a rate')
-    if(message.length){
-      this.setState({
-        message: message.join('<br>')
-      })
-      return
-    }
     const id = uuid()
     const account = {
       children: [...this.state.children],
@@ -83,15 +69,10 @@ class Enrollment extends Component{
       balance: 0
     }
 
-    //NOTE: for some reason the below doesn't work. it navigates, but the fee is not added
     await this.props.addAccount(account)
-    
     if(this.state.frequency !== 'daily'){
-      
       await this.props.makePayment(id, -Number(this.state.rate), 0) //negative payment will process as fee
-      
     }
-    
     await this.props.navigation.navigate('Account', {id})
   }
   
@@ -103,15 +84,11 @@ class Enrollment extends Component{
     })
   }
 
-  addMessage = (message) => {
-    this.setState({message})
-  }
+  addMessage = message => this.setState({message})
 
-  changeQuestionFocus = (type) => {
-    this.setState({questionFocus: type})
-  }
+  changeQuestionFocus = type => this.setState({questionFocus: type})
   
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
 
   render(){
    return (
@@ -119,7 +96,7 @@ class Enrollment extends Component{
        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
        colors={['#11011B', '#3C233D']}>
       <Header navigation={this.props.navigation}/>
-        <Text style={styles.h1}>{this.state.questionFocus === 'child' ? 'Add a new child' : this.state.questionFocus === 'guardian' ? 'Add a guardian' : 'Add a contact'}</Text>      
+        <Text style={[styles.h1, styles.raleway]}>{this.state.questionFocus === 'child' ? 'Add a new child' : this.state.questionFocus === 'guardian' ? 'Add a guardian' : 'Add a contact'}</Text>      
         {this.state.questionFocus === 'child'
            ? <Child
              navigation={this.props.navigation}
@@ -140,14 +117,10 @@ class Enrollment extends Component{
                submitAccount={this.submitAccount}
              />
         }
-        
-
-
         {this.state.message
           ?  <ErrorMessage error={this.state.message}/>
           : null
         }
-
      </LinearGradient>
    )
   }
@@ -155,4 +128,5 @@ class Enrollment extends Component{
 
 const mapStateToProps = state => ({accounts: state.accounts})
 const mapDispatchToProps = dispatch => bindActionCreators({addAccount, makePayment}, dispatch)
+
 export default connect(mapStateToProps, mapDispatchToProps)(Enrollment)

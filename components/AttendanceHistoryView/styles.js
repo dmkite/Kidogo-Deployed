@@ -52,5 +52,8 @@ export const styles = {
   attendanceRow:{
     flexDirection:'row',
     padding: 5
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

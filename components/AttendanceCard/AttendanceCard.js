@@ -6,21 +6,18 @@ import {styles} from './styles'
 export default function AttendanceCard(props){
   return (
     <TouchableOpacity style={[styles.attendanceCard, (props.checkIn && props.isMorning) || (props.checkOut && !props.isMorning) ? styles.selected : null ]} onPress={props.onPress}>
-      {console.log(props.f_name)}
       {props.checkIn && props.isMorning
         ? <View style={styles.present}>
             <Icon name="check-circle" color="white" size={20}/>
         </View>
         : null
       }
-
       {props.checkOut && !props.isMorning
         ? <View style={styles.present}>
           <Icon name="check-circle" color="white" size={20} />
         </View>
         : null
       }
-
       <View style={[styles.imgNameHolder, props.img_uri ? null : {backgroundColor:'#ccc'}]}>
         {props.img_uri
           ? <Image 
@@ -34,7 +31,6 @@ export default function AttendanceCard(props){
             />
           : <Text style={styles.letter}>{props.f_name ? props.f_name[0].toUpperCase() : null}</Text>
         }
-
       </View>
       <Text style={styles.text}>{props.f_name} {props.l_name || ' '}</Text>
     </TouchableOpacity>

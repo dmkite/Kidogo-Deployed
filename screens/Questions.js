@@ -58,7 +58,6 @@ class Questions extends Component{
     })
       
     if(onQ == 2) this.props.navigation.navigate('Dash')
-  
   }
 
   render(){
@@ -69,7 +68,6 @@ class Questions extends Component{
         <TouchableOpacity style={{ flex: .15,paddingTop:126 }} onPress={this.moveBack}> 
           <Icon name="chevron-left" size={48} color='#ffffff80'/>
         </TouchableOpacity>
-
         {(this.state.date.getHours() < 15)
           ? <MorningQuestions onQuestion={this.state.onQuestion} answer={this.answer}/>
           : <AfternoonQuestions onQuestion={this.state.onQuestion} answer={this.answer} />

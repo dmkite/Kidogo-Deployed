@@ -38,7 +38,7 @@ class Guardian extends Component{
     })
   }
 
-  handleId = (text) => {
+  handleId = text => {
     let govt_id = this.state.govt_id
     if(this.state.govt_id && this.state.govt_id.length){
       text.length > this.state.govt_id.length ? govt_id += text[text.length - 1] : govt_id = govt_id.slice(0, govt_id.length - 1)
@@ -56,13 +56,12 @@ class Guardian extends Component{
 
   showId = () => this.setState({showId: !this.state.showId})
   
-  pickerChange = (itemValue) => this.setState({ frequency: itemValue })
+  pickerChange = itemValue => this.setState({ frequency: itemValue })
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
-        <Image source={require('../../assets/GUARDIAN.png')} style={{ height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 10 }}/>
-
+        <Image source={require('../../assets/GUARDIAN.png')} style={styles.img}/>
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
             <TextInput
@@ -78,7 +77,7 @@ class Guardian extends Component{
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
 
           <View style={{ flex: .5, marginLeft: 5 }}>
@@ -95,7 +94,7 @@ class Guardian extends Component{
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
           </View>
         </View>
 
@@ -112,7 +111,7 @@ class Guardian extends Component{
             this.props.addMargin(0)
           }}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Address</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>   
 
         <TextInput
           value={this.state.city}
@@ -127,7 +126,7 @@ class Guardian extends Component{
             this.props.addMargin(0)
           }}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>City</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>Mji</Text>   
 
         <TextInput
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
@@ -144,7 +143,7 @@ class Guardian extends Component{
           }}
           onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>   
 
         <View style={styles.passwordHolder}>
           <TextInput
@@ -168,7 +167,7 @@ class Guardian extends Component{
             </TouchableOpacity> 
           </View>
         </View>
-        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
+        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Nambari ya Kitambulisho</Text> 
 
         {this.props.accountAlreadyCreated 
           ? null

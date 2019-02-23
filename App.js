@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Alert} from 'react-native';
+import {Alert} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import store from './store'
 import {Provider} from 'react-redux'
@@ -22,7 +22,7 @@ import Upload from './screens/Upload'
 import {Notifications} from 'expo'
 import Amplify, {Auth, API} from 'aws-amplify'
 import awsmobile from './aws-exports'
-// import Auth from '@aws-amplify/auth'
+
 import awsconfig from './aws-exports'
 
 Auth.configure(awsconfig)
@@ -64,17 +64,11 @@ class App extends Component{
       }
     }
     const t = new Date()
-    // if(t.getHours() >= 8) t.setDate(t.getDate() + 1)
     t.setMilliseconds(0)
     t.setSeconds(0)
     t.setMinutes(0)
     t.setHours(8)
-
-    const morningOptions = {
-      time: t,
-      // repeat: 'day'
-    }
-
+    const morningOptions = { time: t }
     const afternoonNotification = {
       title: 'Time to Answer Questions',
       body: 'There are 2 questions for you to answer this afternoon',
@@ -82,24 +76,14 @@ class App extends Component{
         sound: true, color: 'red', priority: 'max', vibrate: true
       }
     }
-    
     const t2 = new Date()
-
-    // if (t2.getHours() >= 15) t2.setDate(t2.getDate() + 1)
     t2.setMilliseconds(0)
     t2.setSeconds(0)
     t2.setMinutes(0)
     t2.setHours(15)
-    
-    const afternoonOptions = {
-      time: t2,
-      // repeat: 'day'
-    }
-
+    const afternoonOptions = { time: t2 }
     if (t.getHours() < 8) Notifications.scheduleLocalNotificationAsync(morningNotification, morningOptions)
     if(t2.getHours() < 15) Notifications.scheduleLocalNotificationAsync(afternoonNotification, afternoonOptions)
-    // Notifications.dismissAllNotificationsAsync()
-
   }
 
   listenForNotifications = () => {
@@ -112,10 +96,8 @@ class App extends Component{
 
   componentWillMount(){
     this.listenForNotifications()
-
   }
-
-
+  
   render(){
     return (
       <Provider store={store}>

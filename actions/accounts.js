@@ -16,28 +16,13 @@ export function getAccounts(){
   }
 }
 
-// export const GET_ONE_ACCOUNT = 'GET_ONE_ACCOUNT'
-// export function getOneAccount(id){
-  
-// }
-
-// export const ADD_MESSAGE = 'ADD_MESSAGE'
-// export function addMessage(msg){
-//   return {
-//     type: ADD_MESSAGE,
-//     payload: msg
-//   }
-// }
-
 export const UPDATE_ACCOUNTS = 'UPDATE_ACCOUNTS'
 export function addAccount(account){
   return async dispatch => {
     try{
       account.balance = 0
-      let { newAccounts } = await getAsync(false, true)
-      
+      let { newAccounts } = await getAsync(false, true)      
       newAccounts.push(account)
-      
       newAccounts = JSON.stringify(newAccounts)
       let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
       const {user:{id}} = JSON.parse(signedIn)
@@ -49,7 +34,6 @@ export function addAccount(account){
     }catch(err){
       console.error(err)
     }
-
   }
 }
 
@@ -65,7 +49,6 @@ export function addMemberToAccount(newMember){
       })
       let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
       const { user: { id } } = JSON.parse(signedIn)
-      
       await SecureStore.setItemAsync(`_ACCOUNTS_${ id }`, JSON.stringify(newAccounts))
       dispatch({
         type: UPDATE_ACCOUNTS, 
@@ -78,7 +61,6 @@ export function addMemberToAccount(newMember){
 }
 
 export function changeField(fieldname, newValue, acctId, fieldname2, newValue2){
-  
   return async dispatch => {
     try {
       let { newAccounts } = await getAsync(false, true)
@@ -91,7 +73,6 @@ export function changeField(fieldname, newValue, acctId, fieldname2, newValue2){
         }
         return acct
       })
-
       let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
       const { user: { id } } = JSON.parse(signedIn)
       await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
@@ -158,13 +139,10 @@ export function deleteAccount(acctId){
   return async dispatch => {
     try {
       let { newAccounts } = await getAsync(false, true)
-      console.log(newAccounts.length)
       newAccounts = newAccounts.filter(acct => acct.id !== acctId)
-      console.log(newAccounts.length)
       let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
       const { user: { id } } = JSON.parse(signedIn)
       await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(newAccounts))
-      console.log(newAccounts.length)
       dispatch({
         type: UPDATE_ACCOUNTS, 
         payload: newAccounts

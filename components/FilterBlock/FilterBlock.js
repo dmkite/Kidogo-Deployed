@@ -7,7 +7,6 @@ import {Icon} from 'react-native-elements'
 export default function FilterBlock(props){
   return (
     <View style={styles.filterBlock}>
-      {/* <TextInput style={styles.search} placeholder="search" onChangeText={(text) => {props.handleChangeText(text)}} /> */}
       <View style={{ flexDirection: 'row', marginHorizontal:10 }}>
           <View style={[formStyles.prefix, props.focusedOn === 'rate' ? formStyles.focused : null]}>
             <Icon  name="search" color="#ffffff80"/>
@@ -20,7 +19,6 @@ export default function FilterBlock(props){
         </View>
       
       <View style={styles.filterHolders}>
-        
         <View style={styles.filterOption}>
           <TouchableOpacity style={[styles.radio, props.filter === 'balance' ? styles.selected : null]} onPress={()=>props.handlePress('balance')} />
           <Text style={styles.radioLabel}>Balance</Text>

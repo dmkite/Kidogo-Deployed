@@ -1,23 +1,18 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, TouchableOpacity} from 'react-native'
 import {styles} from '../FinancesDash/styles'
+import Dates from '../../utilities/dates'
+import numberValidation from '../../utilities/numberValidation'
 
 class PaymentSection extends Component{
   constructor(props){
     super(props)
     this.state={
-      date: this.returnToday(),
       amount: null,
       focusedOn: null,
-      openPayments: false
+      openPayments: false,
+      d: new Dates()
     }
-  }
-
-  returnToday = () => {
-    const date = new Date()
-    return (
-      `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}-${Number(date.getMonth()) + 1 < 10 ? '0' + Number((date.getMonth()) + 1) : Number(date.getMonth()) + 1}-${date.getFullYear()}`
-      )
   }
 
   handleNumberChange = (text, field, num1, num2) => {
@@ -33,9 +28,7 @@ class PaymentSection extends Component{
     else this.setState({ focusedOn: null })
   }
 
-  openPayments = () => {
-    this.setState({openPayments: !this.state.openPayments})
-  }
+  openPayments = () => this.setState({openPayments: !this.state.openPayments})
 
   render(){
     return (
@@ -72,7 +65,7 @@ class PaymentSection extends Component{
                     style={[styles.input, styles.dateInput]}
                     maxLength={10}
                     keyboardType="number-pad"
-                    value={this.state.date}
+                    value={this.state.d.getToday()}
                     onChangeText={(text) => this.handleNumberChange(text, 'date', 2, 5)}
                     onFocus={() => {
                       this.changeFocus('focus', 'date')
@@ -92,7 +85,7 @@ class PaymentSection extends Component{
 
               <TouchableOpacity style={styles.button} onPress={() => {
                 return Number(this.state.amount) > 0
-                  ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.date), this.openPayments()])
+                  ? Promise.all([this.setState({ amount: null }), this.props.makePayment(this.props.id, this.state.amount, this.props.balance, this.state.d.getToday()), this.openPayments()])
                   : null}}>
                 <Text style={styles.btnText}>Make Payment</Text>
               </TouchableOpacity>

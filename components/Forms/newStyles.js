@@ -46,7 +46,6 @@ export const styles = {
     borderColor: 'white',
     height: 50,
     width: 250,
-
   },
   nextText: {
     fontSize: 24,
@@ -63,7 +62,6 @@ export const styles = {
     opacity: 1
   },
   imageHolder: {
-    // backgroundColor:'#D1F1FC',
     height: 220,
     width: 220,
     borderRadius: 110,
@@ -108,7 +106,8 @@ export const styles = {
     opacity:0.5,
     paddingHorizontal:10,
     flex:0.5,
-    marginVertical:20
+    marginVertical:20,
+    borderRadius:2
   },
   btnText:{
     fontSize:24, 
@@ -134,5 +133,15 @@ export const styles = {
     flexDirection:'row',
     marginLeft:10,
     marginBottom:10
+  },
+  img: { 
+    height: 200, 
+    width: 200, 
+    alignSelf: 'center', 
+    borderRadius: 100, 
+    marginTop: 10 
+  },
+  raleway:{
+    fontFamily: 'Raleway-Bold'
   }
 }

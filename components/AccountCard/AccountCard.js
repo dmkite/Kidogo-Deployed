@@ -28,14 +28,13 @@ returnFamilyName = (child, guardian) => {
 export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
-      <Text style={styles.h1}>{this.returnFamilyName(props.children[0], props.guardians[0])} Family</Text>
+      <Text style={[styles.h1, styles.raleway]}>{this.returnFamilyName(props.children[0], props.guardians[0])} Family</Text>
       <View style={styles.imgAndBalance}>
       <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
         <View style={styles.img}>
           {props.children.map((child, i) => {
               if(child.f_name === null) return null
-              let hex = hexify(i)
-              
+              let hex = hexify(i)     
               return child.img_uri
                 ? <View key={i} style={[styles.circle, {zIndex: (100 - i)}]}>
                     <Image
@@ -55,8 +54,6 @@ export default function AccountCard(props){
                   </Text>})
           }
         </View>
-
-
       </View>
       <View style={styles.members}>
         <Text style={styles.childName}>
@@ -65,15 +62,12 @@ export default function AccountCard(props){
             return acc
           },[]).join(', ')}
         </Text>
-        
-        
         <Text style={styles.guardianName}>
           {props.guardians.reduce((acc, g) => {
             acc.push(g.f_name + ' ' + g.l_name)
             return acc
           }, []).join(', ')}
         </Text>
-
       </View>
     </TouchableOpacity>
   )

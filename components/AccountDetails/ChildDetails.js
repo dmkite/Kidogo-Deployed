@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Image, Text, TouchableOpacity} from 'react-native'
 import {Icon} from 'react-native-elements'
 import { styles } from './styles'
-import { styles as cardStyles} from '../AccountCard/styles'
 
 export default function ChildDetails(props){
   return (
@@ -11,8 +10,6 @@ export default function ChildDetails(props){
         <Text style={styles.h2}>Children</Text>
         <Icon name={props.currentlyExpanded === 'children' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
       </TouchableOpacity>
-      
-      
       {props.currentlyExpanded === 'children'
        ? <View>
           {props.children.map((child, i) => {
@@ -21,7 +18,7 @@ export default function ChildDetails(props){
                 <View style={styles.imgAndName}>
                  <View style={{flexDirection:'row'}}>
                   {child.img_uri 
-                    ? <View key={i} style={[cardStyles.circle, {marginRight:10, borderWidth:0}]}>
+                    ? <View key={i} style={styles.circle}>
                         <Image
                           source={{ uri: child.img_uri }}
                           style={{
@@ -32,7 +29,7 @@ export default function ChildDetails(props){
                           }}
                         />
                       </View>
-                    : <Text style={[cardStyles.circle, {backgroundColor:'#ccc', marginRight: 10, marginTop: 0, marginLeft: -10, borderWidth:0}]}>{child.f_name[0].toUpperCase()}</Text>}
+                    : <Text style={styles.circle}>{child.f_name[0].toUpperCase()}</Text>}
                   <Text style={ [styles.name, ]}>{child.f_name + ' ' + child.l_name}</Text>
                  </View>
                   
@@ -41,7 +38,6 @@ export default function ChildDetails(props){
                   </TouchableOpacity>
                 
                 </View>
-
                 <View style={styles.generalDetails}>
                   <View style={styles.row}>
                     <Text style={styles.topic}>Birthdate:</Text>  
@@ -57,24 +53,19 @@ export default function ChildDetails(props){
                     <Text style={styles.topic}>Notes:</Text>
                     <Text style={styles.text}>{child.notes || 'none' }</Text>
                   </View>
-              </View>
-              
+                </View>
               </View>
               )
             })}
-
           <TouchableOpacity style={styles.button} onPress={() => props.openForm('children')}>
             <View style={{flexDirection:'row'}}>
               <Icon name="person-add" color="#ffffff80" size={18}/>
               <Text style={styles.btnText}>Add child</Text>
             </View>
           </TouchableOpacity>
-
        </View>
-        
       : null
       }
-      {/* <View style={{height:2, backgroundColor:'#ffffff80', marginVertical:20}}></View> */}
     </View>
   )
 }

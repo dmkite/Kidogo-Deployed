@@ -73,7 +73,6 @@ export const styles = {
     opacity:1
   },
   imageHolder:{
-    // backgroundColor:'#D1F1FC',
     height:220,
     width:220,
     borderRadius:110,
@@ -91,7 +90,6 @@ export const styles = {
     borderWidth:1,
     borderColor:'#ffffff80',
     backgroundColor:'#11011B',
-    // opacity:0.5 
   },
   errorText:{
     color:"white",
@@ -103,7 +101,8 @@ export const styles = {
     borderColor: '#ffffff80',
     paddingHorizontal: 10,
     flex: 0.5,
-    marginVertical: 20
+    marginVertical: 20,
+    borderRadius:2
   },
   btnText: {
     fontSize: 24,
@@ -131,6 +130,12 @@ export const styles = {
     color:'#ffffff80',
     flex:0.6,
     marginLeft:10
+  },
+  img: { 
+    height: 200, 
+    width: 200, 
+    alignSelf: 'center', 
+    borderRadius: 100, 
+    marginVertical: 10 
   }
-
 }

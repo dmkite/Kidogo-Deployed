@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
-import { Icon } from 'react-native-elements'
-import { LinearGradient } from 'expo'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from './styles'
 import numberValidation from '../../utilities/numberValidation'
 import {confirm, resend} from '../../utilities/authentication'
@@ -27,7 +25,6 @@ export default class Caregiver extends Component {
       this['_' + (num + 1)].current.focus()
     }
   }
-
 
   render(){
     return (
@@ -96,14 +93,13 @@ export default class Caregiver extends Component {
 
           <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={() => {
             this.state.number.length === 6 
-              ? Promise.all([ confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError),
+              ? Promise.all([ confirm(this.props.username, this.state.number.join(''), this.props.storeAndNavigate, this.props.setError, this.props.handleChangeText),
                 this.props.handleChangeText(true, 'loading')])
               : this.props.setError('Enter the confirmation code')
           }}>
             <Text style={styles.btnText}>Confirm</Text>
           </TouchableOpacity>
-        </View>
-        
+        </View> 
       </View>
     )
   }

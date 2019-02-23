@@ -1,5 +1,3 @@
-
-
 export const styles = {
   actionsContainer: {
     flex:1,
@@ -12,7 +10,6 @@ export const styles = {
     zIndex:100,
     overFlow:'hidden',
     borderRadius:5,
-
     position:'relative'
   },
   actionText:{
@@ -21,11 +18,14 @@ export const styles = {
     top:0,
     height:150,
     lineHeight:150,
-    fontWeight:'bold',
     paddingLeft:20,
+    color:'#333'
   },
   buttonImage:{
     borderRadius:5,
     height:150
+  },
+  raleway:{
+    fontFamily: 'Raleway-Bold'
   }
 }

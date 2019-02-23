@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import {styles} from './styles'
 
 
@@ -63,11 +62,11 @@ class MorningQuestions extends Component {
                   height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
                 }}
               />
-              <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>Have you cleaned the centre and potties this morning?</Text>
+              <Text style={styles.questionText}>Have you cleaned the centre and potties this morning?</Text>
             </View>
             : <View>
               {this.state.question2.image}
-              <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>{this.state.question2.question}</Text>
+              <Text style={styles.questionText}>{this.state.question2.question}</Text>
             </View>
           }
         </View>
@@ -87,7 +86,6 @@ class MorningQuestions extends Component {
           </TouchableOpacity>
         </View>
       </View>
-
     )
   }
 }

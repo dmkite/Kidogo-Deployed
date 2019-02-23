@@ -11,8 +11,8 @@ export default function FinanceHistoryRow(props){
     food: 'spoon',
     water: 'tint',
     salary: 'money'
-
   }
+  
   return(
     <View>
       <View style={styles.financeRow}>

@@ -7,11 +7,12 @@ import {Icon} from 'react-native-elements'
 function FinancesDash(props){
   return (
     <View>
-      <Text style={styles.net}>{
-        Number(props.finances.net.income) > Number(props.finances.net.expenses)
+      <Text style={styles.net}>
+        {Number(props.finances.net.income) > Number(props.finances.net.expenses)
           ? 'You earned ' + String(Number(props.finances.net.income) - Number(props.finances.net.expenses)) + ' Shillings this week!'
           : 'You lost ' + String(-(Number(props.finances.net.income) - Number(props.finances.net.expenses))) + ' Shillings this week'
-      }</Text>
+        }
+      </Text>
       <View style={styles.dash}>
         <View style={styles.expenses}>
             <View style={{flexDirection:'row'}}>
@@ -39,7 +40,6 @@ function FinancesDash(props){
           </Text>
         </View>
       </View>
-
     </View>
   )
 }

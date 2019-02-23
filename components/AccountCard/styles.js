@@ -19,7 +19,6 @@ export const styles = {
     marginBottom:-20
   },
   img:{
-    // flex:.5,
     marginRight:20,
     flexDirection:'row',
   },
@@ -59,5 +58,8 @@ export const styles = {
   guardianName:{
     fontSize:14,
     color:'#ffffff80'
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

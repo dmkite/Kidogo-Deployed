@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView, TouchableOpacity, Text} from 'react-native'
+import {ScrollView, TouchableOpacity, Text} from 'react-native'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import {getWeekBalances} from '../actions/finances'
@@ -27,11 +27,9 @@ class Finances extends Component{
     }
   }
 
-  componentDidMount = () => {
-    this.props.getWeekBalances()
-  }
+  componentDidMount = () => this.props.getWeekBalances()
   
-  addMargin = (num) => this.setState({ avoidView: num })
+  addMargin = num => this.setState({ avoidView: num })
   
   changeView = () => this.setState({openView: !this.state.openView})
 
@@ -48,9 +46,7 @@ class Finances extends Component{
             : <TouchableOpacity style={styles.button} onPress={this.changeView}>
                 <Text style={styles.btnText}>Add Expense</Text>
               </TouchableOpacity>
-          
           }
-          
           <FinanceHistory history={this.props.finances.history}/>
         </ScrollView>
       </LinearGradient>

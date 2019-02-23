@@ -31,11 +31,10 @@ export const styles = {
     flexDirection:'row',
     position:'relative',
     justifyContent:'space-between',
-    paddingLeft: 15 //to offset -5 margin from 'circle'
+    paddingLeft: 15
   },
   row:{
     flexDirection:'row',
-    // marginTop:10,
     marginHorizontal:10,
     fontSize:18
   },
@@ -70,8 +69,7 @@ export const styles = {
   },
   buttonBlock: {
     flexDirection:'row',
-    justifyContent: 'space-between',
-    // marginHorizontal:10
+    justifyContent: 'space-between'
   },
   rateBtn: {
     borderRadius:5,
@@ -86,7 +84,8 @@ export const styles = {
     marginHorizontal:10,
     marginVertical:20,
     flexDirection:'row',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    borderRadius:2
   },
   deleteWarning:{
     padding:20,
@@ -103,7 +102,6 @@ export const styles = {
   iconHolder:{
     flexDirection:'row',
     justifyContent: 'space-between',
-
   },
   btnText:{
     lineHeight:50,
@@ -115,13 +113,9 @@ export const styles = {
     color: '#ffffff80',
     fontSize: 24,
     marginHorizontal:10,
-    // borderWidth:1,
-    // borderColor:'red'
   },
   editBtn:{
     marginRight:10
-    // borderWidth:1,
-    // borderColor:'green'
   },
   balanceInput:{
     borderBottomWidth:2,
@@ -141,10 +135,24 @@ export const styles = {
     flexDirection:'row',
     borderWidth:1,
   },
-
   childDetails:{
     marginVertical:20,
     position:'relative'
+  },
+  circle: {
+    zIndex: 101,
+    overflow: 'hidden',
+    height: 75,
+    width: 75,
+    borderRadius: 37.5,
+    textAlign: 'center',
+    lineHeight: 75,
+    fontSize: 24,
+    color: 'white',
+    backgroundColor:'#ccc',
+    marginRight:10
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
-
 }

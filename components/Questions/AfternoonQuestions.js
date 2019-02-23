@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Image} from 'react-native'
-import { Icon } from 'react-native-elements'
 import {styles} from './styles'
 import numberValidation from '../../utilities/numberValidation'
 
@@ -17,12 +16,12 @@ class AfternoonQuestions extends Component {
         {this.state.onQuestion == 1
           ? <View>
             <Image
-              source={require('../../assets/CAREGIVER.png')}
+              source={require('../../assets/ADULTS.png')}
               style={{
                 height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
               }}
             />
-            <Text style={{ fontSize: 18, marginVertical: 10, color:'#ffffff80' }}>How many adults/caregivers were in the centre today?</Text>
+            <Text style={status.questionText}>How many adults/caregivers were in the centre today?</Text>
             <View style={styles.inputHolder}>
               <TextInput
                 style={styles.numberInput}
@@ -43,7 +42,7 @@ class AfternoonQuestions extends Component {
                 height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
               }}
             />
-            <Text style={{ fontSize: 18, marginVertical: 10, color: '#ffffff80' }}>Did all children get enough food today?</Text>
+            <Text style={styles.questionText}>Did all children get enough food today?</Text>
             <View style={styles.buttonBlock}>
               <TouchableOpacity
                 style={styles.button }

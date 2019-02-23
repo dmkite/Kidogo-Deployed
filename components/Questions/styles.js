@@ -6,7 +6,6 @@ export const styles = {
   nextPrev: {
     flex: .15,
     borderWidth: 1,
-
   },
   buttonBlock: {
     flexDirection: 'row',
@@ -31,9 +30,10 @@ export const styles = {
   numberInput:{
     flex:.2,
     height:50,
-    
   },
-  submit:{
-
+  questionText: {
+    fontSize: 18, 
+    marginVertical: 10, 
+    color: '#ffffff80' 
   }
 }

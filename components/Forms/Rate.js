@@ -1,7 +1,6 @@
 import React from 'react'
 import {styles} from './newStyles'
-import {View, Text, TextInput, TouchableOpacity, Image, Picker} from 'react-native'
-import {Icon} from 'react-native-elements'
+import {View, Text, TextInput, Picker} from 'react-native'
 
 export default function Rate(props){
   return (
@@ -23,7 +22,7 @@ export default function Rate(props){
               props.addMargin(0)
             }} />
         </View>
-        <Text style={[styles.label, props.focusedOn === 'rate' ? styles.focused : null]}>Rate</Text>
+        <Text style={[styles.label, props.focusedOn === 'rate' ? styles.focused : null]}>Kiwango</Text>
       </View>
       <View style={{ flex: .5, marginLeft: 5 }}>
         <View style={[styles.input, props.focusedOn === 'rate' ? styles.focused : null, { height: 30, paddingLeft: 0 }]}>
@@ -31,12 +30,12 @@ export default function Rate(props){
             style={{ color: 'white', marginTop: -10 }}
             selectedValue={props.frequency}
             onValueChange={(itemValue, itemIndex) => props.pickerChange(itemValue)}>
-            <Picker.Item label="daily" value="daily" />
-            <Picker.Item label="weekly" value="weekly" />
-            <Picker.Item label="termly" value="termly" />
+            <Picker.Item label="Kila siku" value="daily" />
+            <Picker.Item label="Kila wiki" value="weekly" />
+            <Picker.Item label="Kila Muhula" value="termly" />
           </Picker>
         </View>
-        <Text style={styles.label}>frequency</Text>
+        <Text style={styles.label}>Mara ngapi</Text>
       </View>
     </View>
   )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import Header from '../components/Header'
 import DashView from '../components/DashView'
 import ActionButtons from '../components/ActionButtons'
@@ -7,11 +7,14 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {addFees} from '../actions/payments'
 import {getAttendance} from '../actions/attendance'
-import {LinearGradient} from 'expo'
+import {LinearGradient, Font} from 'expo'
 
-class DashBoard extends Component{ //can definitely be a functional component
+class DashBoard extends Component{ 
   constructor(props){
     super(props)
+    this.state={
+      fontLoaded: false
+    }
   }
   
   static navigationOptions = {
@@ -22,11 +25,15 @@ class DashBoard extends Component{ //can definitely be a functional component
     }
   }
 
-  componentDidMount = () => {
-    return Promise.all([this.props.addFees()])
-    //removed this.props.getAttendance() on 2/13
-  }
-
+  componentDidMount = async () => {
+    await Font.loadAsync({
+      'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
+    })
+    this.setState({fontLoaded:true})
+    this.props.addFees()
+    
+    }
+    
   render(){
     return(
       <LinearGradient
@@ -35,7 +42,7 @@ class DashBoard extends Component{ //can definitely be a functional component
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <DashView navigation={this.props.navigation}/>
-          <ActionButtons navigation={this.props.navigation}/>
+          <ActionButtons navigation={this.props.navigation} fontLoaded={this.state.fontLoaded}/>
         </ScrollView>
       </LinearGradient>
     )

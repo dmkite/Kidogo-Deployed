@@ -6,12 +6,9 @@ Amplify.configure(awsmobile);
 
 export const get = async (addMessage, changeLoading, addPrompt) => {
   let userInfo = await SecureStore.getItemAsync('_SIGNEDIN')
-  
   const { user:{centre_id} } = JSON.parse(userInfo)
   const apiName = 'KidogoApi'
   const path = `/centres/${centre_id}`
-
-  // const apiResponse = await 
   API.get(apiName, path)
     .then(res => {
       return returnDif(res)
@@ -20,7 +17,6 @@ export const get = async (addMessage, changeLoading, addPrompt) => {
       })
     })  
     .catch(err => {
-      console.log(err)
       let error = err.message || err.error || 'Something went wrong. Try again later.'
       return Promise.all([addMessage(error), changeLoading()])
     })
@@ -31,12 +27,10 @@ const createBody = async () => {
     newAccounts,
     newAttendance,
     newFinances,
-    newCaregivers,
     newCentres,
     newQuestions } = await getAsync(true, true, true, true, true, true, true)
   let userInfo = await SecureStore.getItemAsync('_SIGNEDIN')
   const { user } = JSON.parse(userInfo)
-    console.log(user)
   const accounts = newAccounts.map(acct => {
     acct.payments = newPayments[acct.id]
     return acct
@@ -60,10 +54,8 @@ export const post = async(addMessage, stopLoading) => {
   const body = {
     body: await createBody()
   }
-  console.log(Object.keys(body))
   let apiName = 'KidogoApi'
-  let path = `/centres` //${body.body.id}
-  console.log(path)
+  let path = `/centres`
   
   API.post(apiName, path, body)
   .then((res) => {

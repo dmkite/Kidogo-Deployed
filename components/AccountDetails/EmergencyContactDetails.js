@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { styles } from './styles'
 
@@ -10,7 +10,6 @@ export default function EmergencyContactDetails(props) {
         <Text style={styles.h2}>Contacts</Text>
         <Icon name={props.currentlyExpanded === 'e_contacts' ? "expand-less" : "expand-more"} size={36} color="#ffffff80"/>
       </TouchableOpacity>
-
       {props.currentlyExpanded === 'e_contacts'
         ? <View>
         {props.e_contacts.map((eC, i) => {
@@ -41,8 +40,6 @@ export default function EmergencyContactDetails(props) {
         </View> 
         : null
       }
-      {/* <View style={{ height: 2, backgroundColor: '#ffffff80', marginVertical: 20 }}></View> */}
-
     </View>
   )
 }

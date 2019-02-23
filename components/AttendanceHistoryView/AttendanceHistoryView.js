@@ -10,7 +10,7 @@ export default function AttendanceHistoryView(props){
   const date2 = Number(props.span[props.span.length - 1].substring(0, 2)) + ' ' + months[Number(props.span[props.span.length - 1].substring(3,5)) - 1]
   return (
     <View style={{ backgroundColor: '#00000090', paddingBottom:10 }}>
-      <Text style={[styles.h1, {marginBottom:0}]}>Attendance History</Text>
+      <Text style={[styles.h1, styles.raleway, {marginBottom:0}]}>Attendance History</Text>
       <View style={styles.dateHolder}>
         
         <TouchableOpacity onPress={() => props.changeWeeks('back')}>
@@ -39,7 +39,6 @@ export default function AttendanceHistoryView(props){
             <Text style={styles.dateText}>
               {Number(date.substring(0,2)) + '/' + Number(date.substring(3,5))}
             </Text>
-
           </View>
         })}
       </View>

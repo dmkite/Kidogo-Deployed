@@ -22,7 +22,8 @@ export const styles = {
     height:50,
     borderWidth:1,
     borderColor:'#ffffff80',
-    margin:10
+    margin:10,
+    borderRadius:2
   },
   buttonText:{
     color:'#ffffff80',
@@ -101,6 +102,5 @@ export const styles = {
     lineHeight: 50,
     flex:.27, 
     color:'#ffffff80'
-  },
-  
+  }
 }
