@@ -96,7 +96,7 @@ class Enrollment extends Component{
        style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
        colors={['#11011B', '#3C233D']}>
       <Header navigation={this.props.navigation}/>
-        <Text style={styles.h1}>{this.state.questionFocus === 'child' ? 'Add a new child' : this.state.questionFocus === 'guardian' ? 'Add a guardian' : 'Add a contact'}</Text>      
+        <Text style={[styles.h1, styles.raleway]}>{this.state.questionFocus === 'child' ? 'Add a new child' : this.state.questionFocus === 'guardian' ? 'Add a guardian' : 'Add a contact'}</Text>      
         {this.state.questionFocus === 'child'
            ? <Child
              navigation={this.props.navigation}

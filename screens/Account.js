@@ -94,14 +94,6 @@ class Account extends Component {
     this.props.navigation.navigate('Accounts')
   }
 
-  componentDidMount = async () => {
-    return this.props.getAccounts().then(() => {
-      
-      const id = this.props.navigation.getParam('id')
-      const [account] = this.props.accounts.filter(acct => acct.id === id)
-      this.setState({ account })
-    })
-  }
 
   addMargin = (num) => this.setState({ avoidView: num })
   
@@ -113,6 +105,14 @@ class Account extends Component {
     return []
   }
   
+  componentDidMount = async () => {
+    this.setState({fontLoaded:true})
+    return this.props.getAccounts().then(() => {   
+      const id = this.props.navigation.getParam('id')
+      const [account] = this.props.accounts.filter(acct => acct.id === id)
+      this.setState({ account})
+    })
+  }
   render(){
     return (
       <LinearGradient
@@ -131,7 +131,7 @@ class Account extends Component {
           : null
         }
         <ScrollView>
-          <Text style={styles.h1}>
+          <Text style={[styles.h1, this.state.fontLoaded ? styles.raleway : null]}>
             {this.state.account.children[0]
               ? `${this.state.account.children[0].l_name || ''} Family`
               : 'Account'

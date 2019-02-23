@@ -38,12 +38,12 @@ class EnterFinances extends Component {
             selectedValue={this.state.memo}
             style={{height:30, color:'white'}}
             onValueChange={(itemValue, itemIndex) => this.setState({memo: itemValue})}>
-            <Picker.Item label="Rent" value="rent"/>
-            <Picker.Item label="Water" value="water" />
-            <Picker.Item label="Food" value="food" />
-            <Picker.Item label="Fuel" value="fuel" />
-            <Picker.Item label="Electricity" value="electricity" />
-            <Picker.Item label="Salary" value="salary" />
+            <Picker.Item label="Kodi ya Nyumba" value="rent"/>
+            <Picker.Item label="Maji" value="water" />
+            <Picker.Item label="Chakula" value="food" />
+            <Picker.Item label="Mafuta anayotumia" value="fuel" />
+            <Picker.Item label="Umeme" value="electricity" />
+            <Picker.Item label="Mushahara" value="salary" />
           </Picker>
         </View>
         <Text style={styles.label}>Expense</Text>

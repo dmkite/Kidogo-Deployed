@@ -88,5 +88,8 @@ export const styles = {
     color:'#ffffff80',
     fontWeight:'bold',
     fontSize:18
+  },
+    raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

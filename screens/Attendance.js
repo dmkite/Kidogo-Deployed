@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, ImageBackground } from 'react-native'
 import Header from '../components/Header/'
 import {LinearGradient} from 'expo'
+import {styles} from '../components/ActionButtons/styles'
 
 export default class Attendance extends Component{
   constructor(props){
@@ -19,19 +20,31 @@ export default class Attendance extends Component{
   render(){
     return (
       <LinearGradient
-        style={{ flex: 1 }}
+        style={[styles.actionContainer, { flex: 1, padding:10 }]}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
-        <TouchableOpacity style={{flex:1, borderWidth:2}} onPress={() => this.props.navigation.navigate('CheckIn')}>
-          <Text>Check In</Text>
+        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('CheckIn')}>
+            <ImageBackground
+              style={styles.buttonImage}
+              source={require('../assets/CHECKIN.png')}>
+            <Text style={[styles.actionText, styles.raleway]}>Check In</Text>
+          </ImageBackground>
         </TouchableOpacity>
-  
-        <TouchableOpacity style={{ flex: 1, borderWidth: 2 }} onPress={() => this.props.navigation.navigate('CheckOut')}>
-          <Text>Check Out</Text>
+
+        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('CheckOut')}>
+            <ImageBackground
+              style={styles.buttonImage}
+              source={require('../assets/CHECKOUT.png')}>
+            <Text style={[styles.actionText, styles.raleway]}>Check Out</Text>
+          </ImageBackground>
         </TouchableOpacity>
-  
-        <TouchableOpacity style={{ flex: 1, borderWidth: 2 }} onPress={() => this.props.navigation.navigate('AttendanceHistory')}>
-          <Text>History</Text>
+
+        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('AttendanceHistory')}>
+            <ImageBackground
+              style={styles.buttonImage}
+              source={require('../assets/HISTORY.png')}>
+            <Text style={[styles.actionText, styles.raleway]}>History</Text>
+          </ImageBackground>
         </TouchableOpacity>
       </LinearGradient>
     )

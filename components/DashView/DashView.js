@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {View, Text, TouchableHighlight, Image} from 'react-native'
 import {styles} from './styles'
 import {connect} from 'react-redux'
-import {Font} from 'expo'
 
 class DashView extends Component{
   constructor(props){
@@ -16,11 +15,7 @@ class DashView extends Component{
   componentDidMount = async () =>{
     const time = new Date()
     const hours = time.getHours()
-      
-    await Font.loadAsync({
-      'Raleway': require('../../assets/fonts/Raleway-Bold.ttf')
-    })
-    this.setState({fontLoaded:true, time: hours})
+    this.setState({time: hours})
   }
 
   render(){
@@ -42,12 +37,12 @@ class DashView extends Component{
                 : require('../../assets/EVENING.png')
             }
           />
-          <Text style={[styles.dashFont, this.state.fontLoaded ?  styles.raleway : null, this.state.time >= 17 ? {color:'white'} : null]}>
+          <Text style={[styles.dashFont, this.state.fontLoaded ?  styles.raleway : null, this.state.time >= 17 ? {fontSize:24} : null]}>
             { this.state.time < 12
-              ? "Who's here today?"
+              ? "Nani hako Leo?"
               : this.state.time < 17
-                ? "Has anyone left?"
-                : "Did you buy anything today?"
+                ? "Kuna aliyetoka?"
+                : "Uli nunua kitu chochote leo?"
             }
               </Text>
         </View>

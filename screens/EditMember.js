@@ -130,7 +130,7 @@ class EditMember extends Component{
           : null
         }
         <ScrollView style={{paddingBottom:100}}>
-          <Text style={styles.h1}>Editing {this.props.navigation.getParam('editing').f_name}'s Information</Text>
+          <Text style={[styles.h1, styles.raleway]}>Editing {this.props.navigation.getParam('editing').f_name}'s Information</Text>
           
           {this.state.img_uri
             ? <Image
@@ -165,7 +165,7 @@ class EditMember extends Component{
                 onChangeText={(text) => this.handleChangeText(text, 'f_name')}
                 placeholder={this.props.navigation.getParam('editing').f_name} 
               />
-              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
             </View>
 
             <View style={{ flex: .5, marginLeft: 5 }}>
@@ -183,7 +183,7 @@ class EditMember extends Component{
                 onChangeText={(text) => this.handleChangeText(text, 'l_name')}
                 placeholder={this.props.navigation.getParam('editing').l_name} 
               />
-              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
             </View>
           </View>
 
@@ -205,7 +205,7 @@ class EditMember extends Component{
                     this.changeFocus('blur', null)
                     this.addMargin(0)
                   }} />
-                <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Birthday <Text style={{ fontSize: 10 }}>(DD-MM-YYYY)</Text></Text>
+                <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Siku ya Kuzaliwa</Text>
               </View>
               <View style={{ flex: .5, marginLeft: 5 }}>
                 <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
@@ -219,7 +219,7 @@ class EditMember extends Component{
                     <Picker.Item label="other" value="other" />
                   </Picker>
                 </View>
-                <Text style={styles.label}>Gender</Text>
+                <Text style={styles.label}>Mvulana au Msichana</Text>
               </View>
             </View>
             :null
@@ -241,7 +241,7 @@ class EditMember extends Component{
                   this.addMargin(0)
                 }} />
 
-              <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Notes</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Kitu chochote unaweza elezea</Text>
             </View>
             :null
           }
@@ -264,7 +264,7 @@ class EditMember extends Component{
                 placeholder={this.props.navigation.getParam('editing').phone}
                 onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
               />
-              <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
+              <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>   
               </View>
             : null
           }
@@ -284,7 +284,7 @@ class EditMember extends Component{
                     this.addMargin(0)
                   }}
                 />
-                <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Address</Text>
+                <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>
 
                 <TextInput
                   value={this.state.city}
@@ -299,7 +299,7 @@ class EditMember extends Component{
                     this.addMargin(0)
                   }}
                 />
-                <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>City</Text>   
+                <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>Mji</Text>   
             </View>
             : null
           }
@@ -329,7 +329,7 @@ class EditMember extends Component{
                   </TouchableOpacity>
                 </View>
               </View>
-              <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
+              <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Nambari ya Kitambulisho</Text> 
             </View>
             : null
           }

@@ -28,7 +28,7 @@ returnFamilyName = (child, guardian) => {
 export default function AccountCard(props){
   return(
     <TouchableOpacity style={styles.card} onPress={() => props.navigate('Account', {id: props.id})}>
-      <Text style={styles.h1}>{this.returnFamilyName(props.children[0], props.guardians[0])} Family</Text>
+      <Text style={[styles.h1, styles.raleway]}>{this.returnFamilyName(props.children[0], props.guardians[0])} Family</Text>
       <View style={styles.imgAndBalance}>
       <Text style={[styles.balance, props.balance ? null : {color:'#ccc'}]}>K {props.balance || '0'}</Text>
         <View style={styles.img}>

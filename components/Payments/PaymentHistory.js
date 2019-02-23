@@ -6,10 +6,10 @@ import {styles} from './styles'
 export default function PaymentHistory(props) {
   return (
     <View>
-      <Text style={styles.h1}>Payment History</Text>
+      <Text style={[styles.h1, styles.raleway]}>Payment History</Text>
       <View style={styles.tableHeader}>
         <Text style={[styles.headerRow, {marginLeft:10, flex:0.2}]}>Date</Text>
-        <Text style={[styles.headerRow, {textAlign:'center'}]}>Amount</Text>
+        <Text style={[styles.headerRow, {flex:0.3}]}>Amount</Text>
         <Text style={[styles.headerRow, {flex:0.5}]}>Balance</Text>
       </View>
       {!props.paymentHistory
@@ -37,18 +37,21 @@ function byDate(a,b){
   
   const aAdding = a.balanceBefore > a.balanceAfter
   const bAdding = b.balanceBefore > b.balanceAfter
+
+  if (Number(a.amount) < 0) a.amount = -Number(a.amount)
+  if (Number(b.amount) < 0) b.amount = -Number(b.amount)
   
   if(aAdding && bAdding){
     if (a.balanceAfter > b.balanceAfter) return 1
     if (b.balanceAfter > a.balanceAfter) return -1
   }
   if (aAdding && !bAdding) {
-    if(a.balanceAfter >= b.balanceBefore) return 1
-    if(b.balanceBefore >= a.balanceAfter) return -1
+    if(a.balanceAfter >= b.balanceBefore) return -1
+    if(b.balanceBefore >= a.balanceAfter) return 1
   }
   if( !aAdding && bAdding){
-    if(a.balanceAfter >= b.balanceBefore) return 1
-    if(b.balanceBefore >= a.balanceAfter) return -1
+    if(a.balanceAfter >= b.balanceBefore) return -1
+    if(b.balanceBefore >= a.balanceAfter) return 1
   }
   if(!aAdding && !bAdding){
     if(a.balanceAfter >= b.balanceBefore) return -1

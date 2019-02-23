@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Text, View, TouchableOpacity, Image, TextInput} from 'react-native'
 import {Audio} from 'expo'
 import {styles} from '../components/Signup/styles'
-import {LinearGradient, SecureStore} from 'expo'
+import {LinearGradient, SecureStore, Font} from 'expo'
 import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
 import bcrypt from 'react-native-bcrypt'
@@ -88,6 +88,10 @@ export default class HomeScreen extends Component{
   }
 
   componentDidMount = async () => {
+    await Font.loadAsync({
+      'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
+    })
+
     let message = this.props.navigation.getParam('message')
     setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
     if (message) this.setState({ error: message })

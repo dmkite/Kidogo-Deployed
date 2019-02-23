@@ -8,7 +8,7 @@ export const styles = {
   },
   dashFont:{
     zIndex:99,
-    fontSize: 24,
+    fontSize: 36,
     height:200,
     lineHeight:200,
     position: 'absolute',
@@ -17,10 +17,10 @@ export const styles = {
     right:0,
     paddingLeft:30,
     flex:1,
-    fontWeight:'bold',
+    // fontWeight:'bold',
     color:'white',
   },
   raleway:{
-    fontFamily: 'Raleway'
+    fontFamily: 'Raleway-Bold'
   }
 }

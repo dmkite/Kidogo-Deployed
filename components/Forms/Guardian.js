@@ -77,7 +77,7 @@ class Guardian extends Component{
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
 
           <View style={{ flex: .5, marginLeft: 5 }}>
@@ -94,7 +94,7 @@ class Guardian extends Component{
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
           </View>
         </View>
 
@@ -111,7 +111,7 @@ class Guardian extends Component{
             this.props.addMargin(0)
           }}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Address</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>   
 
         <TextInput
           value={this.state.city}
@@ -126,7 +126,7 @@ class Guardian extends Component{
             this.props.addMargin(0)
           }}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>City</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>Mji</Text>   
 
         <TextInput
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
@@ -143,7 +143,7 @@ class Guardian extends Component{
           }}
           onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>   
 
         <View style={styles.passwordHolder}>
           <TextInput
@@ -167,7 +167,7 @@ class Guardian extends Component{
             </TouchableOpacity> 
           </View>
         </View>
-        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Government ID</Text> 
+        <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Nambari ya Kitambulisho</Text> 
 
         {this.props.accountAlreadyCreated 
           ? null

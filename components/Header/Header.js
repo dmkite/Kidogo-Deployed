@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: .25,
-    paddingTop: 10
+    paddingTop: 10,
   }
 })
 

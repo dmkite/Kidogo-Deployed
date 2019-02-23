@@ -90,7 +90,7 @@ class Accounts extends Component{
         </TouchableOpacity>
 
         <ScrollView style={{flex:1}}>
-          <Text style={styles.h1}>Accounts</Text>
+          <Text style={[styles.h1, styles.raleway]}>Accounts</Text>
           {!this.props.accounts.length
             ? <View>
                 <Text style={{fontSize:18, margin:10, color:'#ffffff80'}}>You have not added any accounts yet.</Text>

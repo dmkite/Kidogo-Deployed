@@ -101,7 +101,8 @@ export const styles = {
     borderColor: '#ffffff80',
     paddingHorizontal: 10,
     flex: 0.5,
-    marginVertical: 20
+    marginVertical: 20,
+    borderRadius:2
   },
   btnText: {
     fontSize: 24,

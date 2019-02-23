@@ -7,6 +7,7 @@ import {getAccounts, changeField} from '../actions/accounts'
 import {PaymentSection, PaymentHistory} from '../components/Payments'
 import{getPayments, makePayment} from '../actions/payments'
 import {LinearGradient} from 'expo'
+import {styles} from '../components/Payments/styles'
 
 class Payments extends Component{
   constructor(props){
@@ -40,7 +41,7 @@ class Payments extends Component{
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
         <ScrollView>
-          <Text style={{fontSize:36, margin:10, marginBottom:20, color:'#ffffff80'}}>Make a Payment</Text>
+          <Text style={[styles.h1, styles.raleway]}>Make a Payment</Text>
           <PaymentSection 
             balance={this.findAccount() ? this.findAccount().balance : 0} 
             id={this.props.navigation.getParam('id')} 

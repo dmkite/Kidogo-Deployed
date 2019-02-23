@@ -50,7 +50,7 @@ class EmergencyContact extends Component{
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
 
           <View style={{ flex: .5, marginLeft: 5 }}>
@@ -67,7 +67,8 @@ class EmergencyContact extends Component{
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia
+</Text>
           </View>
         </View>
 
@@ -86,7 +87,7 @@ class EmergencyContact extends Component{
           }}
           onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>  
+        <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>  
 
         {this.props.accountAlreadyCreated
           ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>

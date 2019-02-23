@@ -46,6 +46,7 @@ class CheckOut extends Component {
         style={{ flex: 1 }}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation} />
+        <Text style={[styles.h1, styles.raleway]}>Check Out</Text>
        <Text style={styles.h2}>
           {`${this.state.d.getDay()}, ${this.state.d.getDate()}, ${this.state.d.getMonth()} ${this.state.d.getYear()}`}
         </Text>

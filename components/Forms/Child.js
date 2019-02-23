@@ -71,7 +71,7 @@ class Child extends Component{
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Name</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
 
           <View style={{ flex: .5, marginLeft: 5 }}>
@@ -88,7 +88,7 @@ class Child extends Component{
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Surname</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
           </View>
         </View>
 
@@ -108,7 +108,7 @@ class Child extends Component{
                 this.changeFocus('blur', null)
                 this.props.addMargin(0)
               }}/>
-              <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Birthday <Text style={{fontSize:10}}>(DD-MM-YYYY)</Text></Text>
+              <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Siku ya Kuzaliwa</Text>
           </View>
           <View style={{ flex: .5, marginLeft: 5}}>
             <View style={[styles.input, { height:30, paddingLeft:0}] }>
@@ -122,7 +122,7 @@ class Child extends Component{
                 <Picker.Item label="other" value="other" />
               </Picker>
             </View>
-            <Text style={styles.label}>Gender</Text>
+            <Text style={styles.label}>Mvulana au Msichana</Text>
           </View>
         </View>
           
@@ -140,7 +140,7 @@ class Child extends Component{
             this.props.addMargin(0)
           }} />
       
-        <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Notes about {this.state.f_name}</Text>
+        <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Kitu chochote unaweza elezea</Text>
 
           {this.props.accountAlreadyCreated
             ? <View style={styles.nameHolder}>

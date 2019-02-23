@@ -58,5 +58,8 @@ export const styles = {
   guardianName:{
     fontSize:14,
     color:'#ffffff80'
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

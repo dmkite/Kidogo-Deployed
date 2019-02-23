@@ -7,11 +7,14 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {addFees} from '../actions/payments'
 import {getAttendance} from '../actions/attendance'
-import {LinearGradient} from 'expo'
+import {LinearGradient, Font} from 'expo'
 
 class DashBoard extends Component{ 
   constructor(props){
     super(props)
+    this.state={
+      fontLoaded: false
+    }
   }
   
   static navigationOptions = {
@@ -22,7 +25,14 @@ class DashBoard extends Component{
     }
   }
 
-  componentDidMount = () => this.props.addFees()
+  componentDidMount = async () => {
+    await Font.loadAsync({
+      'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
+    })
+    this.setState({fontLoaded:true})
+    this.props.addFees()
+    
+    }
     
   render(){
     return(
@@ -32,7 +42,7 @@ class DashBoard extends Component{
         <Header navigation={this.props.navigation}/>
         <ScrollView>
           <DashView navigation={this.props.navigation}/>
-          <ActionButtons navigation={this.props.navigation}/>
+          <ActionButtons navigation={this.props.navigation} fontLoaded={this.state.fontLoaded}/>
         </ScrollView>
       </LinearGradient>
     )

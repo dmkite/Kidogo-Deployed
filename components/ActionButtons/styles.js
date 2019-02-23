@@ -18,11 +18,14 @@ export const styles = {
     top:0,
     height:150,
     lineHeight:150,
-    fontWeight:'bold',
     paddingLeft:20,
+    color:'#333'
   },
   buttonImage:{
     borderRadius:5,
     height:150
+  },
+  raleway:{
+    fontFamily: 'Raleway-Bold'
   }
 }

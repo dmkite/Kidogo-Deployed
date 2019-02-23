@@ -16,7 +16,7 @@ class AfternoonQuestions extends Component {
         {this.state.onQuestion == 1
           ? <View>
             <Image
-              source={require('../../assets/CAREGIVER.png')}
+              source={require('../../assets/ADULTS.png')}
               style={{
                 height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
               }}

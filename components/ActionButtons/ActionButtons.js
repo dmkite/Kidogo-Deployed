@@ -10,7 +10,7 @@ function ActionButtons(props){
           <ImageBackground
             style={styles.buttonImage}
             source={require('../../assets/ENROLLMENT.png')}>
-          <Text style={styles.actionText}>Add a family</Text>
+          <Text style={[styles.actionText, props.fontLoaded ?  styles.raleway : null]}>Add a family</Text>
         </ImageBackground>
       </TouchableOpacity>
 
@@ -18,7 +18,7 @@ function ActionButtons(props){
           <ImageBackground
             style={styles.buttonImage} 
             source={require('../../assets/ATTENDANCE.png')}>
-          <Text style={styles.actionText}>Attendance</Text>
+          <Text style={[styles.actionText, props.fontLoaded ?  styles.raleway : null]}>Attendance</Text>
         </ImageBackground>
       </TouchableOpacity>
 
@@ -26,7 +26,7 @@ function ActionButtons(props){
           <ImageBackground
             style={styles.buttonImage} 
             source={require('../../assets/FINANCES.png')}>
-          <Text style={styles.actionText}>Finances</Text>
+          <Text style={[styles.actionText, props.fontLoaded ?  styles.raleway : null]}>Finances</Text>
         </ImageBackground>
       </TouchableOpacity>
 
@@ -34,7 +34,7 @@ function ActionButtons(props){
           <ImageBackground
             source={require('../../assets/QUESTIONS.png')}
             style={styles.buttonImage} >
-          <Text style={styles.actionText}>Daily Questions</Text>
+          <Text style={[styles.actionText, props.fontLoaded ?  styles.raleway : null]}>Daily Questions</Text>
           </ImageBackground>
       </TouchableOpacity>
     </View>

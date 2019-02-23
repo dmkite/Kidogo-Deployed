@@ -84,7 +84,8 @@ export const styles = {
     marginHorizontal:10,
     marginVertical:20,
     flexDirection:'row',
-    justifyContent:'space-around'
+    justifyContent:'space-around',
+    borderRadius:2
   },
   deleteWarning:{
     padding:20,
@@ -150,5 +151,8 @@ export const styles = {
     color: 'white',
     backgroundColor:'#ccc',
     marginRight:10
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

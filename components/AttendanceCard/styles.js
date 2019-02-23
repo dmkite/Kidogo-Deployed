@@ -56,5 +56,14 @@ export const styles = {
     color:'#ffffff80', 
     fontSize:24, 
     margin:10
+  },
+  h1:{
+    color:'#ffffff80',
+    fontSize:36,
+    marginLeft:10,
+    marginTop:10,
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }
