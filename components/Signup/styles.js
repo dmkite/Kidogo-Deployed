@@ -1,7 +1,8 @@
 export const styles = {
   container:{
     flex:1,
-    padding:5
+    padding:5,
+    paddingBottom:50
   },
   h1:{
     fontSize:36,
@@ -137,5 +138,8 @@ export const styles = {
     alignSelf: 'center', 
     borderRadius: 100, 
     marginVertical: 10 
+  },
+  raleway:{
+    fontFamily:'Raleway-Bold'
   }
 }

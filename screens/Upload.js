@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, ScrollView, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import {Icon} from 'react-native-elements'
-import {LinearGradient, SecureStore} from 'expo'
+import {LinearGradient, SecureStore, Audio} from 'expo'
 import Header from '../components/Header'
 import Amplify from 'aws-amplify';
 import awsmobile from '../aws-exports';
@@ -25,7 +25,6 @@ class Upload extends Component{
       avoidView: false,
       error: false,
       authorized: false,
-      playing: false,
       loading: false,
       needSignIn: false,
       token: null,
@@ -33,6 +32,8 @@ class Upload extends Component{
       eventId: '',
       newData: null,
       showDif: false,
+      showHelp: false,
+      soundObject: null
     }
   }
   
@@ -46,12 +47,6 @@ class Upload extends Component{
 
   handleChangeEventId = event => this.setState({eventId: event})
 
-  componentDidMount = async () => {
-    let token = await SecureStore.getItemAsync('_TOKEN')
-    if(!token) this.setState({needSignIn: true})
-    else this.setState({token: JSON.parse(token)})
-
-  }
 
   setError = (err) => {
     setTimeout( () => this.setState({ error: false }), 5000 )
@@ -93,6 +88,31 @@ class Upload extends Component{
       newData: data, 
       showDif: true
     })
+  }
+
+  playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/audio/upload.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
+
+  componentDidMount = async () => {
+    setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+    let token = await SecureStore.getItemAsync('_TOKEN')
+    if(!token) this.setState({needSignIn: true})
+    else this.setState({token: JSON.parse(token)})
   }
 
   render(){
@@ -205,6 +225,14 @@ class Upload extends Component{
               setError={this.setError}
               newData={this.state.newData}
           />
+          : null
+        }
+        {this.state.showHelp 
+          ? <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
+              <Icon name="record-voice-over" color="#3C233D" size={36} />
+            </View>
+          </TouchableOpacity>
           : null
         }
       </LinearGradient>

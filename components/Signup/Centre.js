@@ -64,7 +64,8 @@ export default class Caregiver extends Component {
             </View>
           : null
         }
-      </ScrollView>
+        <View style={{height:75}}></View> {/*spacer */}
+      </ScrollView> 
     )
   }
 }

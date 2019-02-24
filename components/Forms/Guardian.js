@@ -19,7 +19,7 @@ class Guardian extends Component{
       frequency: 'daily',
       rate: '100',
       hiddenId: null,
-      showId: false
+      showId: false,
     }
   }
 

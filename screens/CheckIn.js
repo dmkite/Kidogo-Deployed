@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
-import { Text, ScrollView } from 'react-native'
-import Header from '../components/Header'
+import { Text, ScrollView, TouchableOpacity, View } from 'react-native'
+import {Icon} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import AttendanceCard from '../components/AttendanceCard'
-import {styles} from '../components/AttendanceCard/styles'
+import {LinearGradient, Audio} from 'expo'
 import {getAttendance, changeCheckInOut} from '../actions/attendance'
-import {LinearGradient} from 'expo'
+import {styles} from '../components/AttendanceCard/styles'
+import AttendanceCard from '../components/AttendanceCard'
+import Header from '../components/Header'
 import Dates from '../utilities/dates'
 
 class CheckIn extends Component{
   constructor(props){
     super(props)
     this.state = { 
-      d: new Dates()
+      d: new Dates(),
+      soundObject: null
     }
   }
 
@@ -22,12 +24,6 @@ class CheckIn extends Component{
     headerStyle: {
       backgroundColor: '#0C000E',
       height: 0
-    }
-  }
-
-  componentDidMount = () => {
-    if(!this.props.attendance[this.state.d.getToday()]){
-      this.props.getAttendance(this.state.d.getToday())
     }
   }
 
@@ -40,6 +36,30 @@ class CheckIn extends Component{
       acc.total++
       return acc
     }, {total: 0, hereToday: 0})
+  }
+
+  playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/audio/attendance.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
+
+  componentDidMount = () => {
+    if(!this.props.attendance[this.state.d.getToday()]){
+      this.props.getAttendance(this.state.d.getToday())
+    }
   }
 
   render(){
@@ -69,6 +89,11 @@ class CheckIn extends Component{
             : null
           }
         </ScrollView>
+        <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
+              <Icon name="record-voice-over" color="#3C233D" size={36} />
+            </View>
+          </TouchableOpacity>
 
       </LinearGradient>
     )

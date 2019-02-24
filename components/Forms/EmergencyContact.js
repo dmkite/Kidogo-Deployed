@@ -10,7 +10,9 @@ class EmergencyContact extends Component{
       phone: null,
       f_name: null,
       l_name: null,
-      focusedOn: null
+      focusedOn: null,
+      showHelp:false,
+      soundObject: null
     }
   }
 
