@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, TouchableOpacity} from 'react-native'
+import {Icon} from 'react-native-elements'
 import {Caregiver, Centre, Confirm} from '../components/Signup'
-import {LinearGradient, SecureStore} from 'expo'
+import {LinearGradient, SecureStore, Audio} from 'expo'
 import uuid from 'uuid'
 import {signUp} from '../utilities/authentication'
 import bcrypt from 'react-native-bcrypt'
@@ -25,7 +26,11 @@ class Signup extends Component{
       questionFocus: 'caregiver',
       avoidView: false,
       error:false,
-      loading:false
+      loading:false,
+      showHelp: false,
+      playing: false,
+      loading:false,
+      soundObject: null
     }
   }
 
@@ -128,7 +133,27 @@ class Signup extends Component{
       [field]: numberValidation(text, field, length, num1, num2)
     })
   }
-  
+
+    playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/audio/signup.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
+
+  componentDidMount = async () => setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+   
   render(){
     return (
       <LinearGradient
@@ -172,6 +197,14 @@ class Signup extends Component{
             ? <Loading/>
             : null
           }
+          {this.state.showHelp 
+          ? <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+            <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
+              <Icon name="record-voice-over" color="#3C233D" size={36} />
+            </View>
+          </TouchableOpacity>
+          : null
+        }
       </LinearGradient>
     )
   }

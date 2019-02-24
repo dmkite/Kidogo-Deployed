@@ -7,6 +7,7 @@ import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
 import bcrypt from 'react-native-bcrypt'
 import Loading from '../components/Loading'
+import addData from '../seeds'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -87,7 +88,27 @@ export default class HomeScreen extends Component{
     } 
   }
 
+
+  playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../assets/audio/signin.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
+
   componentDidMount = async () => {
+    await addData()
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })
@@ -103,25 +124,7 @@ export default class HomeScreen extends Component{
       this.setState({error:err})
     }
   }
-
-  playAudio = async () => {
-    try{
-      if(!this.state.soundObject){
-        const soundObject = new Audio.Sound()
-        await soundObject.loadAsync(require('../assets/signin.mp3'))
-        await soundObject.playAsync()
-        this.setState({ soundObject })
-      }
-      else{   
-        await this.state.soundObject.stopAsync()
-        this.setState({soundObject: null})
-      }
-    }catch(err){
-      console.error(err)
-      this.setState({error:'We could not play the audio file'})
-    }
-  }  
-
+  
   render(){
     const {navigate} = this.props.navigation
     return (

@@ -14,7 +14,9 @@ class Child extends Component{
       l_name: null,
       birthdate: null,
       gender: null,
-      notes: null
+      notes: null,
+      soundObject: null,
+      showHelp:false
     }
   }
 
@@ -43,6 +45,24 @@ class Child extends Component{
   handleChangeText = (text, field) => this.setState({[field]: text})
 
   addURI = userData => this.setState({ ...userData })
+
+   playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        await soundObject.loadAsync(require('../../assets/audio/children.mp3'))
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
 
   render(){
     return (

@@ -22,7 +22,7 @@ export default class Caregiver extends Component{
   render(){
     return (
       <ScrollView styles={styles.container}>
-        <Text style={styles.h1}>Add your information</Text>
+        <Text style={[styles.h1, {fontSize: 35}, styles.raleway]}>Add your information</Text>
         <Image source={require('../../assets/CAREGIVER.png')} style={styles.img}/>
         <TextInput
           onFocus={() => {
@@ -126,6 +126,7 @@ export default class Caregiver extends Component{
           </View>
           :null
           }
+          <View style={{height:75}}></View>
       </ScrollView>
     )
   }

@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {addFees} from '../actions/payments'
 import {getAttendance} from '../actions/attendance'
-import {LinearGradient, Font} from 'expo'
+import {LinearGradient, Font, SecureStore} from 'expo'
 
 class DashBoard extends Component{ 
   constructor(props){
@@ -26,14 +26,18 @@ class DashBoard extends Component{
   }
 
   componentDidMount = async () => {
+    this.getInfo()
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })
     this.setState({fontLoaded:true})
     this.props.addFees()
-    
     }
     
+  getInfo = async () => {
+    console.log( await SecureStore.getItemAsync('_SIGNEDIN'))
+  }
+
   render(){
     return(
       <LinearGradient

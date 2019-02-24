@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Text} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
+import {Icon} from 'react-native-elements'
 import { bindActionCreators } from 'redux'
-import {LinearGradient} from 'expo'
+import {LinearGradient, Audio} from 'expo'
 import Header from '../components/Header'
 import {connect} from 'react-redux' 
 import {Child, Guardian, EmergencyContact} from '../components/Forms'
@@ -24,6 +25,7 @@ class Enrollment extends Component{
       frequency: 'daily',
       balance: 0,
       message: null,
+      soundObject:null
     } 
   }
 
@@ -90,6 +92,29 @@ class Enrollment extends Component{
   
   addMargin = num => this.setState({ avoidView: num })
 
+   playAudio = async () => {
+    try{
+      if(!this.state.soundObject){
+        const soundObject = new Audio.Sound()
+        if (this.state.questionFocus === 'child') await soundObject.loadAsync(require('../assets/audio/children.mp3'))
+        else if (this.state.questionFocus === 'guardian') await soundObject.loadAsync(require('../assets/audio/guardians.mp3'))
+        else await soundObject.loadAsync(require('../assets/audio/contacts.mp3'))
+        
+        await soundObject.playAsync()
+        this.setState({ soundObject })
+      }
+      else{   
+        await this.state.soundObject.stopAsync()
+        this.setState({soundObject: null})
+      }
+    }catch(err){
+      console.error(err)
+      this.setState({error:'We could not play the audio file'})
+    }
+  }  
+
+  componentDidMount = async () => setTimeout(() => this.setState({ showHelp: !this.state.showHelp }), 15000)
+
   render(){
    return (
      <LinearGradient
@@ -121,6 +146,14 @@ class Enrollment extends Component{
           ?  <ErrorMessage error={this.state.message}/>
           : null
         }
+        {this.state.showHelp 
+            ? <TouchableOpacity style={{ backgroundColor: '#ffffff80', position: 'absolute', bottom: -75, left: -75, width: 150, height: 150, borderRadius: 75 }} onPress={this.playAudio}>
+              <View style={{ position: 'absolute', bottom: 85, left: 80 }}>
+                <Icon name="record-voice-over" color="#3C233D" size={36} />
+              </View>
+            </TouchableOpacity>
+            : null
+          }
      </LinearGradient>
    )
   }
