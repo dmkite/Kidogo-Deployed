@@ -13,7 +13,7 @@ export default addData = async () => {
           f_name: 'Michael',
           gender: 'male',
           id: '1',
-          img_uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/Camera/9074ecf8-7b47-48ec-bc07-22b9230b50fd.jpg',
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/a27b8406-699b-4b68-ab15-4e5942953414.jpg',
           l_name: 'Scott',
           notes: null
         }
@@ -50,9 +50,9 @@ export default addData = async () => {
           f_name: 'Dwight',
           gender: 'male',
           id: '10',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/10f6af1f-5847-4c44-a497-33388fa318ec.jpg',
           l_name: 'Schrute',
-          notes: null
+          notes: 'Beets. Bears. Battlestar Galactica.'
         }
       ],
       e_contacts: [
@@ -86,7 +86,7 @@ export default addData = async () => {
           f_name: 'Jim',
           gender: 'male',
           id: '100',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/ca39027a-1ee9-4ca8-b217-4dbfd4816eec.jpg',
           l_name: 'Halpert',
           notes: 'Watch out for pranks'
         },
@@ -95,7 +95,7 @@ export default addData = async () => {
           f_name: 'Tom',
           gender: 'male',
           id: '110',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/f6e09869-517b-4416-9dfc-f3ebb0bcff10.jpg',
           l_name: 'Halpert',
           notes: null
         },
@@ -104,7 +104,7 @@ export default addData = async () => {
           f_name: 'Pete',
           gender: 'male',
           id: '120',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/49574c90-bdd7-4de9-a1b3-8a0869d6105e.jpg',
           l_name: 'Halpert',
           notes: ''
         }
@@ -140,7 +140,7 @@ export default addData = async () => {
           f_name: 'Kelly',
           gender: 'male',
           id: '1000',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/083e0a6c-fc49-4c15-bee1-0fa9b92064ff.jpg',
           l_name: 'Kapoor',
           notes: ''
         }
@@ -176,7 +176,7 @@ export default addData = async () => {
           f_name: 'Andy',
           gender: 'male',
           id: '10000',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/4ed708e2-6b92-4ac1-b673-ac7c208949a6.jpg',
           l_name: 'Bernard',
           notes: ''
         },
@@ -185,7 +185,7 @@ export default addData = async () => {
           f_name: 'Walter',
           gender: 'male',
           id: '11000',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/3aac7f08-be37-4398-85ed-0f2811e9afdd.jpg',
           l_name: 'Bernard',
           notes: ''
         }
@@ -221,7 +221,7 @@ export default addData = async () => {
           f_name: 'Gabe',
           gender: 'male',
           id: '100000',
-          img_uri: null,
+          img_uri: 'file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FKidogo-b4e6163c-0f9c-4fc1-aa4c-c6ad3ecc2e09/ImagePicker/5a105ffa-4648-4160-b898-29af57e54e4b.jpg',
           l_name: 'Lewis',
           notes: ''
         }

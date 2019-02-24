@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Picker, View, Text, ScrollView, TextInput, Image, TouchableOpacity} from 'react-native'
+import {ImagePicker} from 'expo'
 import {Icon} from 'react-native-elements'
 import {styles} from './newStyles'
 import numberValidation from '../../utilities/numberValidation'
@@ -64,6 +65,13 @@ class Child extends Component{
     }
   }  
 
+  openImages = () => {
+    ImagePicker.launchImageLibraryAsync()
+    .then(pic => {
+      console.log(pic.uri)
+      return this.setState({img_uri:pic.uri})})
+  }
+
   render(){
     return (
       <ScrollView style = {{ flex:1}} >
@@ -71,10 +79,16 @@ class Child extends Component{
           ? <Image source={{uri:this.state.img_uri}} style={styles.img}/>
           : <Image source={require('../../assets/CHILD.png')} style={styles.img}/>
         }
-  
-        <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
-          <Icon name="camera-alt" size={36} color="#ffffff80"/>
-        </TouchableOpacity>
+
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state, addMessage:this.props.addMessage})}>
+            <Icon name="camera-alt" size={36} color="#ffffff80"/>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{width:50,  margin:10}} onPress={this.openImages}>
+            <Icon name="photo" size={36} color="#ffffff80"/>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
