@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kidogo.kidogo"
+    },
+    "android": {
+      "package": "com.kidogo.kidogo"
     }
   }
 }
