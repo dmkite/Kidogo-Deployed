@@ -6,7 +6,7 @@ const id = user.id
 export default addData = async () => {
   let accts = await SecureStore.getItemAsync(`_ACCOUNTS_${id}`)
   if(accts){
-    accts = JSON.parse(accounts)
+    accts = JSON.parse(accts)
     if(accts.length) return
   }
   
