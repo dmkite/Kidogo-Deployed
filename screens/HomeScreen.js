@@ -66,6 +66,7 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
+    console.log(newCaregivers)
     const user = newCaregivers[this.state.username.toLowerCase()]
     if (!user) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{

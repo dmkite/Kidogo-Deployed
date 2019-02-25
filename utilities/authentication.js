@@ -20,7 +20,7 @@ export const signIn = async (username, password, success, failure) => {
     });
 }
 
-export function signUp(username, password, phone){
+export function signUp(username, password, phone, failure){
   const phone_number = '+254' + phone.split('-').join('')
   
   Auth.signUp({
@@ -32,8 +32,11 @@ export function signUp(username, password, phone){
     },
     validationData: []  
   })
-    .then(data => console.error(data))
-    .catch(err => console.error(err));
+    .then(data => console.log(data))
+    .catch(err => {
+      failure(err.message || 'Something went wrong')
+      // console.error(err)
+      });
 }
 
 export function confirm(username, code, success, failure, changeLoading){
@@ -52,11 +55,11 @@ export function confirm(username, code, success, failure, changeLoading){
     });
 
 }
-  export function resend(username){
+  export function resend(username, failure){
     Auth.resendSignUp(username).then(() => {
       console.log('code resent successfully');
     }).catch(err => {
-      console.error(err);
+      failure(err)
     });
   }
   

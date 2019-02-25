@@ -1200,7 +1200,7 @@ export default addData = async () => {
         }
       ]
   }
-  await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(user))
+  await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify({'username': user}))
   await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(accounts))
   await SecureStore.setItemAsync(`_ATTENDANCE_${id}`, JSON.stringify(attendance))
   await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(payments))

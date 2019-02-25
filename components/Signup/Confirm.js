@@ -87,7 +87,7 @@ export default class Caregiver extends Component {
         <Text style={styles.label}>Code</Text>
 
         <View style={{flexDirection:'row', margin:10}}>
-          <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5 }]} onPress={() => resend(this.props.username)}>
+          <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5 }]} onPress={() => resend(this.props.username, this.props.setError)}>
             <Text style={styles.btnText}>Resend</Text>
           </TouchableOpacity>
 
