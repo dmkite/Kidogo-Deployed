@@ -4,7 +4,7 @@ import {styles} from '../components/Forms/newStyles'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {deleteMember, changeMember} from '../actions/accounts'
-import {LinearGradient} from 'expo'
+import {LinearGradient, ImagePicker} from 'expo'
 import numberValidation from '../utilities/numberValidation'
 import {Icon} from 'react-native-elements'
 
@@ -62,21 +62,7 @@ class EditMember extends Component{
   }
 
   showId = () => this.setState({showId: !this.state.showId})
-  
 
-  componentDidMount = () => {
-    const editing = this.props.navigation.getParam('editing')
-    editing.focusedOn = null
-    editing.avoidView = 0
-    editing.hiddenId = '********',
-    editing.showId = false
-    Object.keys(this.state).forEach(key => {
-      
-      if(!Object.keys(editing).includes(key) ) delete this.state[key]
-    })
-
-    this.setState({...editing})
-  }
 
   handleChangeText = (text, field) => {
     this.setState({
@@ -113,6 +99,28 @@ class EditMember extends Component{
   
   addMargin = num => this.setState({ avoidView: num })
 
+  openImages = () => {
+    ImagePicker.launchImageLibraryAsync()
+    .then(pic => {
+      return this.setState({img_uri:pic.uri})})
+  }
+  
+  addURI = userData => this.setState({ ...userData })
+
+  componentDidMount = () => {
+    const editing = this.props.navigation.getParam('editing')
+    editing.focusedOn = null
+    editing.avoidView = 0
+    editing.hiddenId = '********',
+    editing.showId = false
+    Object.keys(this.state).forEach(key => {
+      
+      if(!Object.keys(editing).includes(key) ) delete this.state[key]
+    })
+
+    this.setState({...editing})
+  }
+
   render(){
     return (
       <LinearGradient
@@ -147,6 +155,19 @@ class EditMember extends Component{
               }
               style={styles.img}
             />
+          }
+
+          {this.state.img_uri
+            ? <View style={{flexDirection:'row'}}>
+                <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state})}>
+                  <Icon name="camera-alt" size={36} color="#ffffff80"/>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{width:50,  margin:10}} onPress={this.openImages}>
+                  <Icon name="photo" size={36} color="#ffffff80"/>
+                </TouchableOpacity>
+              </View>
+            : null
           }
 
           <View style={styles.nameHolder}>

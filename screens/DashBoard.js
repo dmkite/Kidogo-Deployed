@@ -33,10 +33,6 @@ class DashBoard extends Component{
     this.setState({fontLoaded:true})
     this.props.addFees()
     }
-    
-  getInfo = async () => {
-    console.log( await SecureStore.getItemAsync('_SIGNEDIN'))
-  }
 
   render(){
     return(
