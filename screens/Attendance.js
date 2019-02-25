@@ -20,10 +20,10 @@ export default class Attendance extends Component{
   render(){
     return (
       <LinearGradient
-        style={[styles.actionContainer, { flex: 1, padding:10 }]}
+        style={[styles.actionContainer, { flex: 1}]}
         colors={['#11011B', '#3C233D']}>
         <Header navigation={this.props.navigation}/>
-        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('CheckIn')}>
+        <TouchableOpacity style={[styles.actionButton, {margin:10, marginBotom:0}]} onPress={() => this.props.navigation.navigate('CheckIn')}>
             <ImageBackground
               style={styles.buttonImage}
               source={require('../assets/CHECKIN.png')}>
@@ -31,7 +31,7 @@ export default class Attendance extends Component{
           </ImageBackground>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('CheckOut')}>
+        <TouchableOpacity style={[styles.actionButton, {margin:10, marginBotom:0}]} onPress={() => this.props.navigation.navigate('CheckOut')}>
             <ImageBackground
               style={styles.buttonImage}
               source={require('../assets/CHECKOUT.png')}>
@@ -39,7 +39,7 @@ export default class Attendance extends Component{
           </ImageBackground>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.actionButton} onPress={() => this.props.navigation.navigate('AttendanceHistory')}>
+        <TouchableOpacity style={[styles.actionButton, {margin:10}]} onPress={() => this.props.navigation.navigate('AttendanceHistory')}>
             <ImageBackground
               style={styles.buttonImage}
               source={require('../assets/HISTORY.png')}>
