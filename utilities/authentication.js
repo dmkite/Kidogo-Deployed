@@ -28,7 +28,7 @@ export function signUp(username, password, phone, failure, redirect){
     password,
     attributes: {
       preferred_username: username,
-      phone_number: '+19802260372' //phone_number replaced with own phone for demo
+      phone_number
     },
     validationData: []  
   })

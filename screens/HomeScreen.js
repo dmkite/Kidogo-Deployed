@@ -7,7 +7,6 @@ import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
 import bcrypt from 'react-native-bcrypt'
 import Loading from '../components/Loading'
-import addData from '../seeds'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -66,7 +65,6 @@ export default class HomeScreen extends Component{
   
   handleSignIn = async () => {
     const {newCaregivers} = await getAsync(false, false, false, false, true)
-    console.log(newCaregivers)
     const user = newCaregivers[this.state.username.toLowerCase()]
     if (!user) return this.setState({ loading:false, error: `No username found for ${this.state.username}` })
     else{
@@ -109,7 +107,6 @@ export default class HomeScreen extends Component{
   }  
 
   componentDidMount = async () => {
-    await addData()
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })
