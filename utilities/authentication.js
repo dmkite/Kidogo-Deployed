@@ -20,7 +20,7 @@ export const signIn = async (username, password, success, failure) => {
     });
 }
 
-export function signUp(username, password, phone, failure){
+export function signUp(username, password, phone, failure, redirect){
   const phone_number = '+254' + phone.split('-').join('')
   
   Auth.signUp({
@@ -33,10 +33,7 @@ export function signUp(username, password, phone, failure){
     validationData: []  
   })
     .then(data => console.log(data))
-    .catch(err => {
-      failure(err.message || 'Something went wrong')
-      // console.error(err)
-      });
+    .catch(err => Promise.all([failure(err.message || 'Something went wrong'), redirect('caregiver')]))
 }
 
 export function confirm(username, code, success, failure, changeLoading){

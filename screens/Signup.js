@@ -64,7 +64,7 @@ class Signup extends Component{
 
   getCode = () => {
     const {username, password, phone} = this.state
-    signUp(username.toLowerCase().trim(), password, phone, this.setError)
+    signUp(username.toLowerCase().trim(), password, phone, this.setError, this.changeQuestions)
     this.setState({questionFocus: 'confirm'})
   }
 
