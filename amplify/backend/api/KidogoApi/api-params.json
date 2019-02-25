@@ -19,8 +19,8 @@
     "privacy": {
         "auth": 1,
         "unauth": 0,
-        "authRoleName": "kidogo-20190216133116-authRole",
-        "unAuthRoleName": "kidogo-20190216133116-unauthRole"
+        "authRoleName": "kidogo-20190225121615-authRole",
+        "unAuthRoleName": "kidogo-20190225121615-unauthRole"
     },
     "dependsOn": [
         {
@@ -32,5 +32,5 @@
             ]
         }
     ],
-    "uuid": "d61c7ae4"
+    "uuid": "d6664803"
 }

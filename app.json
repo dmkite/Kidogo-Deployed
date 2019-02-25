@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Kidogo",
-    "slug": "Kidogo",
+    "name": "KidogoApp",
+    "slug": "KidogoApp",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -24,10 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kidogo.kidogo"
+      "bundleIdentifier": "com.kidogoApp.kidogoApp"
     },
     "android": {
-      "package": "com.kidogo.kidogo"
+      "package": "com.kidogoApp.kidogoApp"
     }
   }
 }

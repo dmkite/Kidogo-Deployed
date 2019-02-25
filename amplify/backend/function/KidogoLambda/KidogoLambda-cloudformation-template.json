@@ -67,8 +67,8 @@
 				"Runtime": "nodejs8.10",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "kidogo-20190216133116-deployment",
-					"S3Key": "amplify-builds/KidogoLambda-1550708116-latest-build.zip"
+					"S3Bucket": "kidogo-20190225121615-deployment",
+					"S3Key": "amplify-builds/KidogoLambda-1551126260-latest-build.zip"
 				}
 			}
 		},

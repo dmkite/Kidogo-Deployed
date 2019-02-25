@@ -87,7 +87,6 @@ export default class HomeScreen extends Component{
     } 
   }
 
-
   playAudio = async () => {
     try{
       if(!this.state.soundObject){
@@ -107,6 +106,16 @@ export default class HomeScreen extends Component{
   }  
 
   componentDidMount = async () => {
+    const user = { "password": "$2a$10$QZe3lJFmlu.mJ.E8dlblq.qrm0CobKtQEWcPJpG0pdCakWbSKXTdO", "username": "admin", "f_name": "Kidogo", "l_name": "Admin", "id": "e8951c55-79ab-4e6f-ab5c-b91dc0e2ae6d" }
+
+    let caregivers = await SecureStore.getItemAsync('_CAREGIVERS')
+    if(!caregivers) await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify({ 'admin': user }))
+    else {
+      caregivers = JSON.parse(caregivers)
+      if(!caregivers['admin']) caregivers['admin'] = user 
+      await SecureStore.setItemAsync('_CAREGIVERS', JSON.stringify(caregivers))
+    }
+
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })
