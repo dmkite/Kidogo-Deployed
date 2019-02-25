@@ -69,7 +69,7 @@ export default class Caregiver extends Component{
             <TextInput
               onFocus={() => {
                 this.changeFocus('focus', 'f_name')
-                this.props.addMargin(-175)
+                this.props.addMargin(-250)
               }}
               onBlur={() => {
                 this.changeFocus('blur', null)
@@ -86,7 +86,7 @@ export default class Caregiver extends Component{
             <TextInput
               onFocus={() => {
                 this.changeFocus('focus', 'l_name')
-                this.props.addMargin(-175)
+                this.props.addMargin(-250)
               }}
               onBlur={() => {
                 this.changeFocus('blur', null)

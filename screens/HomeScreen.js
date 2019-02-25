@@ -7,6 +7,7 @@ import {Icon} from 'react-native-elements'
 import getAsync from '../utilities/getAsync'
 import bcrypt from 'react-native-bcrypt'
 import Loading from '../components/Loading'
+import addData from '../seeds'
 
 export default class HomeScreen extends Component{
   constructor(props){
@@ -107,6 +108,7 @@ export default class HomeScreen extends Component{
   }  
 
   componentDidMount = async () => {
+    await addData()
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })

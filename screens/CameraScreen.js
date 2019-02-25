@@ -33,7 +33,6 @@ class CameraScreen extends Component {
         const addURI = this.props.navigation.getParam('addURI')
         const userData = this.props.navigation.getParam('userData')
         userData.img_uri = pic.uri
-        console.log(pic.uri)
         addURI(userData)
         this.props.navigation.goBack()
       })

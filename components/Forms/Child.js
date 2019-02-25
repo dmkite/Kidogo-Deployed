@@ -68,7 +68,6 @@ class Child extends Component{
   openImages = () => {
     ImagePicker.launchImageLibraryAsync()
     .then(pic => {
-      console.log(pic.uri)
       return this.setState({img_uri:pic.uri})})
   }
 

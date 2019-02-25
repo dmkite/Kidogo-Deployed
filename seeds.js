@@ -1204,7 +1204,5 @@ export default addData = async () => {
   await SecureStore.setItemAsync(`_ACCOUNTS_${id}`, JSON.stringify(accounts))
   await SecureStore.setItemAsync(`_ATTENDANCE_${id}`, JSON.stringify(attendance))
   await SecureStore.setItemAsync(`_PAYMENTS_${id}`, JSON.stringify(payments))
-
-  console.log('the deed is done, my lord')
 }
 

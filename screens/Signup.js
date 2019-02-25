@@ -177,7 +177,7 @@ class Signup extends Component{
                 {...this.state} 
                 changeQuestions={this.changeQuestions} 
                 getCode={this.getCode}
-              setError={this.setError}
+                setError={this.setError}
               />
             :<Confirm 
                 username={this.state.username.trim().toLowerCase()}

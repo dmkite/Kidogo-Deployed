@@ -18,11 +18,14 @@ export default class Caregiver extends Component {
   render(){
     return (
       <ScrollView>
+
         <Text style={styles.h1}>Add centre address</Text>
+
         <Image
           source={require('../../assets/CENTRE.png')}
           style={styles.img}
         />
+
         <TextInput
           onFocus={() => {
             this.changeFocus('focus', 'centre_address_1')
@@ -36,7 +39,8 @@ export default class Caregiver extends Component {
           value={this.props.centre_address_1}
           onChangeText={(text) => this.props.handleChangeText(text, 'centre_address_1')}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'centre_address_1' ? styles.focused : null]}>Centre Address </Text>
+
+        <Text style={[styles.label, this.state.focusedOn === 'centre_address_1' ? styles.focused : null]}>Centre Address</Text>
 
         <TextInput
           onFocus={() => {
@@ -51,20 +55,26 @@ export default class Caregiver extends Component {
           value={this.props.centre_address_2}
           onChangeText={(text) => this.props.handleChangeText(text, 'centre_address_2')}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'centre_address_2' ? styles.focused : null]}>City </Text>
+
+        <Text style={[styles.label, this.state.focusedOn === 'centre_address_2' ? styles.focused : null]}>City</Text>
+
         {this.props.centre_address_1 && this.props.centre_address_2
-          ? <View style={{marginVertical:20, marginHorizontal:10, flexDirection:'row', justifyContent:'space-between'}}>
+          ? <View style={{marginVertical:20, marginHorizontal:10, flexDirection:'row', justifyContent:'space-between'}}> 
               <TouchableOpacity style={[styles.button, { flex:0.5, marginRight:5}]} onPress={() => this.props.changeQuestions('caregiver')}>
                 <Text style={styles.btnText}>back</Text>
               </TouchableOpacity>
 
+        
               <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={this.props.getCode}>
                 <Text style={styles.btnText}>get code</Text>
               </TouchableOpacity>
+            
             </View>
           : null
         }
-        <View style={{height:75}}></View> {/*spacer */}
+
+        <View style={{height:75}}></View>
+      
       </ScrollView> 
     )
   }
