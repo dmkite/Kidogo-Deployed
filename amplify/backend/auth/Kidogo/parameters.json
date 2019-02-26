@@ -15,7 +15,7 @@
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "roleName": "Kidogo_sns-role-prod",
+    "roleName": "Kidogo_sns-role",
     "roleExternalId": "Kidogo_role_external_id",
     "policyName": "Kidogo-sns-policy",
     "smsAuthenticationMessage": "Your authentication code is {####}",
