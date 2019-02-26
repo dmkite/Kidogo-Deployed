@@ -21,13 +21,15 @@ export const signIn = async (username, password, success, failure) => {
 }
 
 export function signUp(username, password, phone, failure, redirect){
+  console.log('hitting signup')
   const phone_number = '+254' + phone.split('-').join('')
   Auth.signUp({
     username,
     password,
     attributes: {
       preferred_username: username,
-      phone_number
+      phone_number: '+19802260372' //'+254786543040'// +7786543040
+                  //'+254786543040'
     },
     validationData: []  
   })
