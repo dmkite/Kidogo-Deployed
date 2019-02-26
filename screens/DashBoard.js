@@ -26,7 +26,6 @@ class DashBoard extends Component{
   }
 
   componentDidMount = async () => {
-    this.getInfo()
     await Font.loadAsync({
       'Raleway-Bold': require('../assets/fonts/Raleway-Bold.ttf')
     })

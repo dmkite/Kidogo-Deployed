@@ -16,7 +16,7 @@ export const signIn = async (username, password, success, failure) => {
   })
     .catch(err => {
       console.log(err)
-      return failure('Sign in unsucessful')
+      return failure('Sign in unsuccessful')
     });
 }
 
