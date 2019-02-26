@@ -22,7 +22,6 @@ export const signIn = async (username, password, success, failure) => {
 
 export function signUp(username, password, phone, failure, redirect){
   const phone_number = '+254' + phone.split('-').join('')
-  
   Auth.signUp({
     username,
     password,

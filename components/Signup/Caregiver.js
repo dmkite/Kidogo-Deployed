@@ -104,8 +104,7 @@ export default class Caregiver extends Component{
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
           value={this.props.phone}
           keyboardType="number-pad"
-          maxLength={11}
-          minLength={11}
+          maxLength={12}
           onFocus={() => {
             this.changeFocus('focus', 'phone')
             this.props.addMargin(-375)
@@ -114,10 +113,10 @@ export default class Caregiver extends Component{
               this.changeFocus('blur', null)
               this.props.addMargin(0)
           }}
-          onChangeText={(text) => this.props.handleNumberChange(text, 'phone', 2, 6)}
+          onChangeText={(text) => this.props.handleNumberChange(text, 'phone', 3, 7)}
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Phone</Text>   
-        {(!!this.props.f_name && !!this.props.l_name && this.props.password.length >= 8 && !!this.props.username && this.props.phone.length === 11)
+        {(!!this.props.f_name && !!this.props.l_name && this.props.password.length >= 8 && !!this.props.username && this.props.phone.length === 12)
           ? <View style={{flexDirection:'row', height:50, margin:10}} >
               <View style={{flex:0.5}}></View>
               <TouchableOpacity style={[ styles.button, {marginVertical:20, flex:0.5, alignSelf:'flex-end'}]} onPress={ () => this.props.changeQuestions('centre')}>

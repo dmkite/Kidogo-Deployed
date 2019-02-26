@@ -30,6 +30,12 @@ export const styles = {
   numberInput:{
     flex:.2,
     height:50,
+    borderBottomWidth:1,
+    borderColor:'#ffffff80',
+    color:'#ffffff80',
+    fontSize:18,
+    textAlign:'center',
+    marginRight: 10
   },
   questionText: {
     fontSize: 18, 

@@ -273,7 +273,7 @@ class EditMember extends Component{
                 style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
                 value={this.state.phone}
                 keyboardType="number-pad"
-                maxLength={11}
+                maxLength={12}
                 onFocus={() => {
                   this.changeFocus('focus', 'phone')
                   this.addMargin(-375)
@@ -283,7 +283,7 @@ class EditMember extends Component{
                   this.addMargin(0)
                 }}
                 placeholder={this.props.navigation.getParam('editing').phone}
-                onChangeText={(text) => this.handleNumberChange(text, 'phone', 2, 6)}
+                onChangeText={(text) => this.handleNumberChange(text, 'phone', 3, 7)}
               />
               <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>   
               </View>

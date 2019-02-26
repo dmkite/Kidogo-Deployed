@@ -13,7 +13,8 @@ class AfternoonQuestions extends Component {
   render(){
     return (
       <View style={styles.questionHolder}>
-        {this.state.onQuestion == 1
+        {console.log(this.props.onQuestion)}
+        {this.props.onQuestion == 1
           ? <View>
             <Image
               source={require('../../assets/ADULTS.png')}
@@ -21,17 +22,16 @@ class AfternoonQuestions extends Component {
                 height: 200, width: 200, alignSelf: 'center', borderRadius: 100, marginTop: 50
               }}
             />
-            <Text style={status.questionText}>How many adults/caregivers were in the centre today?</Text>
+            <Text style={styles.questionText}>How many adults/caregivers were in the centre today?</Text>
             <View style={styles.inputHolder}>
               <TextInput
                 style={styles.numberInput}
-                placeholder="cargivers"
                 keyboardType="number-pad"
                 maxLength={2}
-                onChangeText={this.setState({val: numberValidation(text)})}
+                onChangeText={text => this.setState({val: numberValidation(text)})}
               />
-              <TouchableOpacity style={styles.button}>
-                <Text>Submit</Text>
+              <TouchableOpacity style={styles.button} onPress={() => this.props.answer('aft', this.state.val)}>
+                <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -46,13 +46,13 @@ class AfternoonQuestions extends Component {
             <View style={styles.buttonBlock}>
               <TouchableOpacity
                 style={styles.button }
-                onPress={() => this.answer('aft', 'yes')}
+                onPress={() => this.props.answer('aft', 'yes')}
               >
                 <Text style={styles.buttonText}>Yes</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, {marginRight: 0, marginLeft: 5 }]}
-                onPress={() => this.answer('aft', 'no')}
+                onPress={() => this.props.answer('aft', 'no')}
               >
                 <Text style={styles.buttonText}>No</Text>
               </TouchableOpacity>
