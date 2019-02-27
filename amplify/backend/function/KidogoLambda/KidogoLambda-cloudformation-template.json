@@ -68,7 +68,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "kidogo-20190225121615-deployment",
-					"S3Key": "amplify-builds/KidogoLambda-1551126260-latest-build.zip"
+					"S3Key": "amplify-builds/KidogoLambda-1551222596-latest-build.zip"
 				}
 			}
 		},
@@ -78,12 +78,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"kidogoLambdaRoleaa182bb2",
+						"kidogoLambdaRole4c4b74f5",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"kidogoLambdaRoleaa182bb2",
+									"kidogoLambdaRole4c4b74f5",
 									"-",
 									{
 										"Ref": "env"

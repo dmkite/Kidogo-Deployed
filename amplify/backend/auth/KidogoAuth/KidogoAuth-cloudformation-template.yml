@@ -72,10 +72,10 @@ Parameters:
               
   defaultPasswordPolicy:
     Type: String
-          
+              
   passwordPolicyMinLength:
-    Type: String
-                  
+    Type: Number
+              
   passwordPolicyCharacters:
     Type: CommaDelimitedList
             
@@ -126,10 +126,7 @@ Parameters:
             
   resourceName:
     Type: String
-                  
-  userpoolClientWriteAttributes:
-    Type: CommaDelimitedList
-                                            
+                                                  
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -206,7 +203,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: Kidogo_app_clientWeb
+      ClientName: KidogoAuth_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -333,7 +330,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'Kidogo_identitypool_c4e3dd30', !Join ['',['Kidogo_identitypool_c4e3dd30', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'KidogoAuth_identitypool_13488975', !Join ['',['KidogoAuth_identitypool_13488975', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

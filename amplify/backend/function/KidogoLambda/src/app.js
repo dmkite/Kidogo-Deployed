@@ -14,7 +14,7 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "centres";
+let tableName = "KidogoDB";
 if(process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
@@ -78,10 +78,8 @@ app.get(path + hashKeyPath, function(req, res) {
 
   dynamodb.query(queryParams, (err, data) => {
     if (err) {
-      // res.status(200).send({path, hashKeyPath, queryParams})
-      json({error: 'Could not load items: ' + err});
+      res.json({error: 'Could not load items: ' + err});
     } else {
-      // res.status(200).send({ path, hashKeyPath, queryParams })
       res.json(data.Items);
     }
   });
@@ -91,7 +89,7 @@ app.get(path + hashKeyPath, function(req, res) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + hashKeyPath /*+ sortKeyPath*/, function(req, res) {
+app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   var params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
@@ -103,13 +101,13 @@ app.get(path + hashKeyPath /*+ sortKeyPath*/, function(req, res) {
       res.json({error: 'Wrong column type ' + err});
     }
   }
-  // if (hasSortKey) {
-  //   try {
-  //     params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-  //   } catch(err) {
-  //     res.json({error: 'Wrong column type ' + err});
-  //   }
-  // }
+  if (hasSortKey) {
+    try {
+      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
+    } catch(err) {
+      res.json({error: 'Wrong column type ' + err});
+    }
+  }
 
   let getItemParams = {
     TableName: tableName,
@@ -118,13 +116,11 @@ app.get(path + hashKeyPath /*+ sortKeyPath*/, function(req, res) {
 
   dynamodb.get(getItemParams,(err, data) => {
     if(err) {
-      res.status(200).send({ path, hashKeyPath });
+      res.json({error: 'Could not load items: ' + err.message});
     } else {
       if (data.Item) {
-        // res.status(200).send({path, hashKeyPath, params})
         res.json(data.Item);
       } else {
-        // res.status(200).send({ path, hashKeyPath, params })
         res.json(data) ;
       }
     }

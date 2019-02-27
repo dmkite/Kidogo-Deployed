@@ -1,13 +1,13 @@
 {
-    "identityPoolName": "Kidogo_identitypool_c4e3dd30",
+    "identityPoolName": "KidogoAuth_identitypool_13488975",
     "allowUnauthenticatedIdentities": false,
     "thirdPartyAuth": false,
-    "lambdaLogPolicy": "Kidogo_lambda_log_policy",
-    "openIdLambdaRoleName": "Kidogo_openid_lambda_role",
-    "openIdRolePolicy": "Kidogo_openid_pass_role_policy",
-    "openIdLambdaIAMPolicy": "Kidogo_openid_lambda_iam_policy",
-    "openIdLogPolicy": "Kidogo_openid_lambda_log_policy",
-    "userPoolName": "Kidogo",
+    "lambdaLogPolicy": "KidogoAuth_lambda_log_policy",
+    "openIdLambdaRoleName": "KidogoAuth_openid_lambda_role",
+    "openIdRolePolicy": "KidogoAuth_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "KidogoAuth_openid_lambda_iam_policy",
+    "openIdLogPolicy": "KidogoAuth_openid_lambda_log_policy",
+    "userPoolName": "kidogod44ebd4b_userpool_d44ebd4b",
     "autoVerifiedAttributes": [
         "phone_number"
     ],
@@ -15,15 +15,15 @@
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "roleName": "Kidogo_sns-role",
-    "roleExternalId": "Kidogo_role_external_id",
-    "policyName": "Kidogo-sns-policy",
+    "roleName": "KidogoAuth_sns-role",
+    "roleExternalId": "KidogoAuth_role_external_id",
+    "policyName": "KidogoAuth-sns-policy",
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": true,
-    "passwordPolicyMinLength": "8",
+    "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [
         "Requires Lowercase",
         "Requires Uppercase"
@@ -32,25 +32,23 @@
         "preferred_username",
         "phone_number"
     ],
-    "userpoolClientName": "Kidogo_app_client",
+    "userpoolClientName": "KidogoAuth_app_client",
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientReadAttributes": [],
-    "mfaLambdaRole": "Kidogo_totp_lambda_role",
-    "mfaLambdaLogPolicy": "Kidogo_totp_lambda_log_policy",
-    "mfaPassRolePolicy": "Kidogo_totp_pass_role_policy",
-    "mfaLambdaIAMPolicy": "Kidogo_totp_lambda_iam_policy",
-    "userpoolClientLambdaRole": "Kidogo_userpoolclient_lambda_role",
-    "userpoolClientLogPolicy": "Kidogo_userpoolclient_lambda_log_policy",
-    "userpoolClientLambdaPolicy": "Kidogo_userpoolclient_lambda_iam_policy",
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "KidogoAuth_totp_lambda_role",
+    "mfaLambdaLogPolicy": "KidogoAuth_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "KidogoAuth_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "KidogoAuth_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "KidogoAuth_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "KidogoAuth_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "KidogoAuth_userpoolclient_lambda_iam_policy",
     "userpoolClientSetAttributes": false,
     "useDefault": "manual",
     "authSelections": "identityPoolAndUserPool",
-    "resourceName": "Kidogo",
-    "userpoolClientWriteAttributes": [
-        "phone_number",
-        "preferred_username"
-    ],
+    "resourceName": "KidogoAuth",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },

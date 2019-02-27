@@ -26,10 +26,9 @@ export function signUp(username, password, phone, failure, redirect){
   Auth.signUp({
     username,
     password,
-    attributes: {
+    attributes: { 
       preferred_username: username,
-      phone_number: '+19802260372' //'+254786543040'// +7786543040
-                  //'+254786543040'
+      phone_number
     },
     validationData: []  
   })
