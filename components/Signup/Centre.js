@@ -67,6 +67,8 @@ export default class Caregiver extends Component {
         
               <TouchableOpacity style={[styles.button, { flex: 0.5, marginLeft: 5 }]} onPress={this.props.getCode}>
                 <Text style={styles.btnText}>get code</Text>
+              {/* <TouchableOpacity style={[styles.button, {flex:0.5, marginLeft:5}]} onPress={this.props.storeAndNavigate}>
+                <Text style={styles.btnText}>sign in</Text> */}
               </TouchableOpacity>
             
             </View>

@@ -132,7 +132,7 @@ class Guardian extends Component{
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
           value={this.state.phone}
           keyboardType="number-pad"
-          maxLength={12}
+          maxLength={11}
           onFocus={() => {
             this.changeFocus('focus', 'phone')
             this.props.addMargin(-375)
@@ -189,7 +189,7 @@ class Guardian extends Component{
                 onPress={() => this.props.openForm('guardians')}>
                 <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
               </TouchableOpacity>
-              {this.state.f_name && this.state.l_name && this.state.phone && this.state.phone.length === 12 
+              {this.state.f_name && this.state.l_name && this.state.phone && this.state.phone.length === 11
                 ? <TouchableOpacity style={[styles.button, { flex: .5, marginTop: 20 }]}
                     onPress={() => {
                       let guardian = { ...this.state }

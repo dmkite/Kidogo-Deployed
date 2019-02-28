@@ -157,7 +157,7 @@ class EditMember extends Component{
             />
           }
 
-          {this.state.img_uri
+          {this.props.navigation.getParam('type') === 'children'
             ? <View style={{flexDirection:'row'}}>
                 <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state})}>
                   <Icon name="camera-alt" size={36} color="#ffffff80"/>
@@ -273,7 +273,7 @@ class EditMember extends Component{
                 style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
                 value={this.state.phone}
                 keyboardType="number-pad"
-                maxLength={12}
+                maxLength={11}
                 onFocus={() => {
                   this.changeFocus('focus', 'phone')
                   this.addMargin(-375)

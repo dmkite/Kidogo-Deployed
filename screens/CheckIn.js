@@ -57,9 +57,10 @@ class CheckIn extends Component{
   }  
 
   componentDidMount = () => {
-    if(!this.props.attendance[this.state.d.getToday()]){
+
+    // if(!this.props.attendance[this.state.d.getToday()]){
       this.props.getAttendance(this.state.d.getToday())
-    }
+    // }
   }
 
   render(){

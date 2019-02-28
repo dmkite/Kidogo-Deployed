@@ -26,6 +26,27 @@ export function getAttendance(today, isCheckout){
           return acc
         }, {})
       }
+      else{
+        newAccounts.map(acct => {
+          acct.children.map(child => {
+            if(!newAttendance[today][child.id]){
+              newAttendance[today][child.id] = {
+                acctId: acct.id,
+                checkIn: isCheckout ? false : now,
+                f_name: child.f_name,
+                l_Name: child.l_name,
+                id: child.id,
+                img_uri: child.img_uri
+              }
+            }
+            else{
+              newAttendance[today][child.id].f_name = child.f_name 
+              newAttendance[today][child.id].l_name = child.l_name 
+              newAttendance[today][child.id].img_uri = child.img_uri
+            }
+          })
+        })
+      }
       let signedIn = await SecureStore.getItemAsync('_SIGNEDIN')
       const { user: { id } } = JSON.parse(signedIn)
       await SecureStore.setItemAsync(`_ATTENDANCE_${id}`, JSON.stringify(newAttendance))

@@ -77,10 +77,12 @@ class Signup extends Component{
   }
 
   storeAndNavigate = async () => {
-    let { username, password, f_name, l_name, centre_address_1, centre_address_2 } = this.state
+    let { username, password, phone, f_name, l_name, centre_address_1, centre_address_2 } = this.state
     username = username.toLowerCase()
     const caregiverId = uuid()
     const centreId = uuid()
+    // await this.setState({loading:true})
+    // signUp(username.trim(), password, phone, this.setError, this.changeQuestions)
 
     const centre = {
       id: centreId,
@@ -178,7 +180,9 @@ class Signup extends Component{
                 changeQuestions={this.changeQuestions} 
                 getCode={this.getCode}
                 setError={this.setError}
+                storeAndNavigate={this.storeAndNavigate}
               />
+
             :<Confirm 
                 username={this.state.username.trim().toLowerCase()}
                 handleChangeText={this.handleChangeText}
