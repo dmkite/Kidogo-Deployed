@@ -38,6 +38,8 @@ export default class Caregiver extends Component {
           style={[styles.input, this.state.focusedOn === 'centre_address_1' ? styles.focused : null]}
           value={this.props.centre_address_1}
           onChangeText={(text) => this.props.handleChangeText(text, 'centre_address_1')}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this.cityInput.focus()}
         />
 
         <Text style={[styles.label, this.state.focusedOn === 'centre_address_1' ? styles.focused : null]}>Centre Address</Text>
@@ -54,6 +56,9 @@ export default class Caregiver extends Component {
           style={[styles.input, {width:150}, this.state.focusedOn === 'centre_address_2' ? styles.focused : null]}
           value={this.props.centre_address_2}
           onChangeText={(text) => this.props.handleChangeText(text, 'centre_address_2')}
+          ref={(input) => this.cityInput = input}
+          blurOnSubmit={false}
+          onSubmitEditing={this.props.getCode}
         />
 
         <Text style={[styles.label, this.state.focusedOn === 'centre_address_2' ? styles.focused : null]}>City</Text>

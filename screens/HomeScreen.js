@@ -156,6 +156,8 @@ export default class HomeScreen extends Component{
           style={[styles.input, this.state.focusedOn === 'username' ? styles.focused : null]}
           value={this.state.username}
           onChangeText={(text) => this.handleChangeText(text, 'username')}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this.passwordInput.focus()}
         />
         <Text style={[styles.label, this.state.focusedOn === 'username' ? styles.focused : null]}>Username </Text>
 
@@ -172,6 +174,8 @@ export default class HomeScreen extends Component{
             style={[styles.input, { flex: 0.9, marginRight: 0 }, this.state.focusedOn === 'password' ? styles.focused : null]}
             value={this.state.showPassword ? this.state.password : this.state.hiddenPassword}
             onChangeText={(text) => this.handlePassword(text)}
+            ref={(input) => this.passwordInput = input}
+            onSubmitEditing={() => Promise.all([this.setState({ loading: true }), this.handleSignIn()])}
           />
           <View style={[styles.showButton, this.state.focusedOn === 'password' ? styles.focused : null]}>
             <TouchableOpacity onPress={this.showPassword}>

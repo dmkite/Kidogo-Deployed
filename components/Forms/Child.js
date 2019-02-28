@@ -103,6 +103,8 @@ class Child extends Component{
               style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.l_nameInput.focus()}
             />
             <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
@@ -120,6 +122,10 @@ class Child extends Component{
               style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+              ref={(input) => this.l_nameInput = input}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.bDayInput.focus()}
+              
             />
             <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
           </View>
@@ -140,7 +146,9 @@ class Child extends Component{
               onBlur={() => {
                 this.changeFocus('blur', null)
                 this.props.addMargin(0)
-              }}/>
+              }}
+              ref={(input) => this.bDayInput = input}
+              />
               <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Siku ya Kuzaliwa</Text>
           </View>
           <View style={{ flex: .5, marginLeft: 5}}>
@@ -171,7 +179,8 @@ class Child extends Component{
           onBlur={() => {
             this.changeFocus('blur', null)
             this.props.addMargin(0)
-          }} />
+          }} 
+          />
       
         <Text style={[styles.label, this.state.focusedOn === 'notes' ? styles.focused : null]}>Kitu chochote unaweza elezea</Text>
 

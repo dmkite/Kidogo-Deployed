@@ -51,6 +51,8 @@ class EmergencyContact extends Component{
               style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.l_nameInput.focus()}
             />
             <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
@@ -68,6 +70,9 @@ class EmergencyContact extends Component{
               style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+              ref={(input) => this.l_nameInput = input}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.phoneInput.focus()}
             />
             <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia
 </Text>
@@ -88,6 +93,7 @@ class EmergencyContact extends Component{
             this.props.addMargin(0)
           }}
           onChangeText={(text) => this.handleNumberChange(text, 'phone', 3, 7)}
+          ref={(input) => this.phoneInput = input}
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>  
 

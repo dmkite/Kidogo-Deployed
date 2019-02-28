@@ -76,6 +76,8 @@ class Guardian extends Component{
               style={[styles.input, this.state.focusedOn === 'f_name' ? styles.focused : null]}
               value={this.state.f_name}
               onChangeText={(text) => this.handleChangeText(text, 'f_name')}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.l_nameInput.focus()}
             />
             <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
           </View>
@@ -93,6 +95,9 @@ class Guardian extends Component{
               style={[styles.input, this.state.focusedOn === 'l_name' ? styles.focused : null]}
               value={this.state.l_name}
               onChangeText={(text) => this.handleChangeText(text, 'l_name')}
+              ref={(input) => this.l_nameInput = input}
+              blurOnSubmit={false}
+              onSubmitEditing={() => this.streetInput.focus()}
             />
             <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
           </View>
@@ -110,6 +115,9 @@ class Guardian extends Component{
             this.changeFocus('blur', null)
             this.props.addMargin(0)
           }}
+          ref={(input) => this.streetInput = input}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this.cityInput.focus()}
         />
         <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>   
 
@@ -125,6 +133,9 @@ class Guardian extends Component{
             this.changeFocus('blur', null)
             this.props.addMargin(0)
           }}
+          ref={(input) => this.cityInput = input}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this.phoneInput.focus()}
         />
         <Text style={[styles.label, this.state.focusedOn === 'city' ? styles.focused : null]}>Mji</Text>   
 
@@ -142,6 +153,9 @@ class Guardian extends Component{
             this.props.addMargin(0)
           }}
           onChangeText={(text) => this.handleNumberChange(text, 'phone', 3, 7)}
+          ref={(input) => this.phoneInput = input}
+          blurOnSubmit={false}
+          onSubmitEditing={() => this.govt_idInput.focus()}
         />
         <Text style={[styles.label, this.state.focusedOn === 'phone' ? styles.focused : null]}>Nambari ya Simu</Text>   
 
@@ -160,6 +174,7 @@ class Guardian extends Component{
             maxLength={8}
             value={this.state.showId ? this.state.govt_id : this.state.hiddenId}
             onChangeText={(text) => this.handleId(text)}
+            ref={(input) => this.govt_idInput = input}
           />
           <View style={[styles.showButton, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>
             <TouchableOpacity onPress={this.showId}>
