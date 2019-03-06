@@ -79,7 +79,7 @@ class Guardian extends Component{
               blurOnSubmit={false}
               onSubmitEditing={() => this.l_nameInput.focus()}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina ya Kwanza</Text>
           </View>
 
           <View style={{ flex: .5, marginLeft: 5 }}>

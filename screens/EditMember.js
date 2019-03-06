@@ -186,7 +186,7 @@ class EditMember extends Component{
                 onChangeText={(text) => this.handleChangeText(text, 'f_name')}
                 placeholder={this.props.navigation.getParam('editing').f_name} 
               />
-              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'f_name' ? styles.focused : null]}>Jina ya Kwanza</Text>
             </View>
 
             <View style={{ flex: .5, marginLeft: 5 }}>
