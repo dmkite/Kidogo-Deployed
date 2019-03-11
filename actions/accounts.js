@@ -116,6 +116,7 @@ export function changeMember(changes, acctId, memberType, memberId){
       newAccounts = newAccounts.map(acct => {
         if (acct.id === acctId) {
           acct[memberType] = acct[memberType].map(member => {
+            if (memberType === 'guardians' && changes.isPrimary) member.isPrimary = false
             if(member.id === memberId) member = {...member, ...changes}
             return member
           })

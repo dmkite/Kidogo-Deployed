@@ -154,5 +154,6 @@ export const styles = {
   },
   raleway:{
     fontFamily:'Raleway-Bold'
-  }
+  },
+
 }

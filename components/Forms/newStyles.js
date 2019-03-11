@@ -143,5 +143,26 @@ export const styles = {
   },
   raleway:{
     fontFamily: 'Raleway-Bold'
+  },
+  primaryHolder:{
+    margin:10,
+    flexDirection:'row'
+  },
+  primaryToggle:{
+    height:20,
+    width:20,
+    borderRadius:10,
+    borderWidth:2,
+    borderColor:'#ffffff80',
+    marginRight:10
+  },
+  toggleSelected:{
+    backgroundColor:'#ffffff80'
+  },
+  primaryText:{
+    fontSize:18,
+    flex:.8,
+    color:'#ffffff80',
+    lineHeight:20,
   }
 }

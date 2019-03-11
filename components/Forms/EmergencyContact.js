@@ -74,7 +74,7 @@ class EmergencyContact extends Component{
               blurOnSubmit={false}
               onSubmitEditing={() => this.phoneInput.focus()}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Jina ya Pili/Familia
 </Text>
           </View>
         </View>
@@ -83,7 +83,7 @@ class EmergencyContact extends Component{
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
           value={this.state.phone}
           keyboardType="number-pad"
-          maxLength={11}
+          maxLength={12}
           onFocus={() => {
             this.changeFocus('focus', 'phone')
             this.props.addMargin(-150)
@@ -102,7 +102,7 @@ class EmergencyContact extends Component{
             <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]} onPress={() => this.props.openForm('e_contacts')}>
               <Text style={styles.btnText}>Cancel</Text>
             </TouchableOpacity>
-            {this.state.phone && this.state.phone.length === 11 && this.state.f_name
+            {this.state.phone && this.state.phone.length === 12 && this.state.f_name
               ? <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 }]}
                   onPress={() => {
                     let e_contact = { ...this.state }
@@ -114,7 +114,7 @@ class EmergencyContact extends Component{
               : null
             }
           </View>
-          :  this.state.phone && this.state.phone.length === 11 && this.state.f_name
+          :  this.state.phone && this.state.phone.length === 12 && this.state.f_name
             ? <View style={{flexDirection: 'row', marginTop:20, marginHorizontal:10}}>
                 <TouchableOpacity style={[styles.button, { flex: .5, marginRight:5 } ]}
                   onPress={() => {

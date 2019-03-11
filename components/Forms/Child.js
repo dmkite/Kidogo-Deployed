@@ -127,7 +127,7 @@ class Child extends Component{
               onSubmitEditing={() => this.bDayInput.focus()}
               
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Jina ya Pili/Familia</Text>
           </View>
         </View>
 
@@ -149,7 +149,7 @@ class Child extends Component{
               }}
               ref={(input) => this.bDayInput = input}
               />
-              <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Siku ya Kuzaliwa</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Tarehe ya Kuzaliwa</Text>
           </View>
           <View style={{ flex: .5, marginLeft: 5}}>
             <View style={[styles.input, { height:30, paddingLeft:0}] }>

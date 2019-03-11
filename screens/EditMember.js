@@ -21,6 +21,7 @@ class EditMember extends Component{
       city:null,
       govt_id: null,
       phone: null,
+      isPrimary: false,
       focusedOn: null,
       avoidView: 0,
       img_uri: null,
@@ -120,6 +121,8 @@ class EditMember extends Component{
 
     this.setState({...editing})
   }
+  
+  toggle = () => this.setState({ isPrimary: !this.state.isPrimary })
 
   render(){
     return (
@@ -156,7 +159,13 @@ class EditMember extends Component{
               style={styles.img}
             />
           }
-
+          {this.props.navigation.getParam('type') === 'guardians'
+            ? <View style={styles.primaryHolder}>
+              <TouchableOpacity style={[styles.primaryToggle, this.state.isPrimary ? styles.toggleSelected : null]} onPress={this.toggle}></TouchableOpacity>
+              <Text style={styles.primaryText}>Primary caregiver</Text>
+            </View>
+          : null
+          }
           {this.props.navigation.getParam('type') === 'children'
             ? <View style={{flexDirection:'row'}}>
                 <TouchableOpacity style={{width:50,  margin:10}} onPress={() => this.props.navigation.navigate('Camera', {addURI: this.addURI, userData: this.state})}>
@@ -204,7 +213,7 @@ class EditMember extends Component{
                 onChangeText={(text) => this.handleChangeText(text, 'l_name')}
                 placeholder={this.props.navigation.getParam('editing').l_name} 
               />
-              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Jina ya Pili/Familia</Text>
             </View>
           </View>
 
@@ -226,7 +235,7 @@ class EditMember extends Component{
                     this.changeFocus('blur', null)
                     this.addMargin(0)
                   }} />
-                <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Siku ya Kuzaliwa</Text>
+                <Text style={[styles.label, this.state.focusedOn === 'birthdate' ? styles.focused : null]}>Tarehe ya Kuzaliwa</Text>
               </View>
               <View style={{ flex: .5, marginLeft: 5 }}>
                 <View style={[styles.input, { height: 30, paddingLeft: 0 }]}>
@@ -273,7 +282,7 @@ class EditMember extends Component{
                 style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
                 value={this.state.phone}
                 keyboardType="number-pad"
-                maxLength={11}
+                maxLength={12}
                 onFocus={() => {
                   this.changeFocus('focus', 'phone')
                   this.addMargin(-375)
@@ -305,7 +314,7 @@ class EditMember extends Component{
                     this.addMargin(0)
                   }}
                 />
-                <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>
+              <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Kijiji unaoishi</Text>
 
                 <TextInput
                   value={this.state.city}

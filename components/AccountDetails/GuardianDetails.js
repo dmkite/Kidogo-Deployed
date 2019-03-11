@@ -31,7 +31,8 @@ export default class GuardianDetails extends Component{
               <View style={styles.childDetails} key={i}>
 
                 <View style={[styles.imgAndName, {height:50}]}>
-                  <Text style={[styles.name, {marginLeft:-5, lineHeight:50}]}>{g.f_name + ' ' + g.l_name}</Text>
+                  <Text style={[styles.name, { marginLeft: -5, lineHeight: 50 }]}>{g.f_name + ' ' + g.l_name} {g.isPrimary ? '(PRIMARY)' : null}</Text>
+                    
                   <TouchableOpacity 
                     style={styles.editBtn} 
                     onPress={() => this.props.navigation.navigate('EditMember', { editing: g, acctId: this.props.acctId, type: 'guardians' })}

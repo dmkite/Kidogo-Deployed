@@ -16,10 +16,13 @@ class Guardian extends Component{
       govt_id: null,
       street: null,
       city: null,
+      isPrimary: false,
       frequency: 'daily',
       rate: '100',
       hiddenId: null,
       showId: false,
+      alreadyAdded: false,
+      primaryChosen: false 
     }
   }
 
@@ -53,15 +56,26 @@ class Guardian extends Component{
       hiddenId
     })
   }
-
+  
   showId = () => this.setState({showId: !this.state.showId})
   
   pickerChange = itemValue => this.setState({ frequency: itemValue })
+  
+  toggle = () => this.setState({isPrimary: !this.state.isPrimary})
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
         <Image source={require('../../assets/GUARDIAN.png')} style={styles.img}/>
+        {this.state.primaryChosen 
+        ? null
+        : <View style={styles.primaryHolder}>
+            <TouchableOpacity style={[styles.primaryToggle, this.state.isPrimary ? styles.toggleSelected : null]} onPress={this.toggle}></TouchableOpacity>
+            <Text style={styles.primaryText}>Primary caregiver</Text>
+          </View>
+
+        }
+        
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
             <TextInput
@@ -99,7 +113,7 @@ class Guardian extends Component{
               blurOnSubmit={false}
               onSubmitEditing={() => this.streetInput.focus()}
             />
-            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Ama Familia</Text>
+            <Text style={[styles.label, this.state.focusedOn === 'l_name' ? styles.focused : null]}>Jina ya Pili/Familia</Text>
           </View>
         </View>
 
@@ -119,7 +133,7 @@ class Guardian extends Component{
           blurOnSubmit={false}
           onSubmitEditing={() => this.cityInput.focus()}
         />
-        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Mahali</Text>   
+        <Text style={[styles.label, this.state.focusedOn === 'street' ? styles.focused : null]}>Kijiji unaoishi</Text>   
 
         <TextInput
           value={this.state.city}
@@ -143,7 +157,7 @@ class Guardian extends Component{
           style={[styles.input, this.state.focusedOn === 'phone' ? styles.focused : null]}
           value={this.state.phone}
           keyboardType="number-pad"
-          maxLength={11}
+          maxLength={12}
           onFocus={() => {
             this.changeFocus('focus', 'phone')
             this.props.addMargin(-375)
@@ -184,7 +198,7 @@ class Guardian extends Component{
         </View>
         <Text style={[styles.label, this.state.focusedOn === 'govt_id' ? styles.focused : null]}>Nambari ya Kitambulisho</Text> 
 
-        {this.props.accountAlreadyCreated 
+        {this.props.accountAlreadyCreated || this.state.alreadyAdded
           ? null
           : <Rate 
               addMargin={this.props.addMargin} 
@@ -204,7 +218,7 @@ class Guardian extends Component{
                 onPress={() => this.props.openForm('guardians')}>
                 <Text style={[styles.nextText, { textAlign: 'left', marginLeft: 10 }]}>Cancel</Text>
               </TouchableOpacity>
-              {this.state.f_name && this.state.l_name && this.state.phone && this.state.phone.length === 11
+              {this.state.f_name && this.state.l_name && this.state.phone && this.state.phone.length === 12
                 ? <TouchableOpacity style={[styles.button, { flex: .5, marginTop: 20 }]}
                     onPress={() => {
                       let guardian = { ...this.state }
@@ -220,7 +234,7 @@ class Guardian extends Component{
                 : null
               }
             </View>
-            : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone && this.state.phone.length === 11            
+            : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone && this.state.phone.length === 12            
               ? <View style={{ flexDirection: 'row', marginTop:20, marginHorizontal: 10 }}>
                   <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5}]}
                     onPress={ () => {
@@ -235,10 +249,13 @@ class Guardian extends Component{
                             govt_id: null,
                             street: null,
                             city: null,
+                            isPrimary:false,
+                            alreadyAdded: true,
                             frequency: 'daily',
                             rate: '100',
                             hiddenId: null,
-                            showId: false })
+                            showId: false ,
+                            primaryChosen: this.state.isPrimary || this.state.primaryChosen ? true : false})
                       }
                     }>
                       <Text style={styles.btnText}>Add Another</Text>
