@@ -15,7 +15,6 @@ export function getAttendance(today, isCheckout){
             if (isCheckout) child.checkIn = false
             child.checkOut = false
             delete child.notes
-            delete child.gender
             delete child.birthdate
           })
           acc = acc.concat(acct.children)
