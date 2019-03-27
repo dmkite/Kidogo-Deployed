@@ -43,6 +43,9 @@ export function addMemberToAccount(newMember){
       let { newAccounts } = await getAsync(false, true)
       newAccounts = newAccounts.map(acct => {
         if(acct.id === newMember.id){
+          if(newMember.type === 'guardians' && newMember.content.isPrimary){
+            acct.guardians.forEach(g => g.isPrimary = false)
+          }
           acct[newMember.type].push(newMember.content)
         }
         return acct

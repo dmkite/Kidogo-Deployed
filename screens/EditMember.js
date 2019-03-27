@@ -115,29 +115,47 @@ class EditMember extends Component{
     editing.hiddenId = '********',
     editing.showId = false
     Object.keys(this.state).forEach(key => {
-      
       if(!Object.keys(editing).includes(key) ) delete this.state[key]
     })
 
     this.setState({...editing})
   }
-  
-  toggle = () => this.setState({ isPrimary: !this.state.isPrimary })
+
+  addWarning = warningContent => {
+    if(!warningContent) warningContent = <View>
+        <Text style={styles.deleteWarningText}>Hold the button down to delete</Text>
+        <View style={styles.iconHolder}>
+          <Icon name="touch-app" color="#ffffff80" />
+          <Icon name="timer" color="#ffffff80" />
+          <Icon name="timer-3" color="#ffffff80" />
+        </View>
+      </View>
+    console.log(warningContent, typeof(warning))
+    this.setState({ warning: true, warningContent})
+    setTimeout(() => {
+      this.setState({warning: false, warningContent: null})
+    }, 5000)
+  }
+
+  toggle = () => {
+    // acctId
+    console.log(this.props.accounts[0].id)
+    console.log(this.props.navigation.getParam('acctId'))
+
+    const [acct] = this.props.accounts.filter(acct => acct.id === this.props.navigation.getParam('acctId'))
+    if (acct.guardians.length === 1 || this.state.isPrimary) return this.addWarning(<View>
+      <Text style={styles.deleteWarningText}>Accounts need a primary guardian.</Text>
+    </View>)
+    this.setState({ isPrimary: !this.state.isPrimary })
+  }
 
   render(){
     return (
       <LinearGradient
         style={[{ flex: 1 }, this.state.avoidView ? { marginTop: Number(this.state.avoidView) } : null]}
         colors={['#11011B', '#3C233D']}>
-        {this.state.deleteMessage
-          ? <View style={styles.deleteWarning}>
-            <Text style={styles.deleteWarningText}>Hold the button down to delete</Text>
-            <View style={styles.iconHolder}>
-              <Icon name="touch-app" color="#ffffff80" />
-              <Icon name="timer" color="#ffffff80" />
-              <Icon name="timer-3" color="#ffffff80"/>
-            </View>
-          </View>
+        {this.state.warning
+          ? <View style={styles.deleteWarning}>{this.state.warningContent}</View>
           : null
         }
         <ScrollView style={{paddingBottom:100}}>
@@ -372,12 +390,7 @@ class EditMember extends Component{
             <TouchableOpacity 
               style={[styles.button, {marginLeft: 5, marginRight:10 }]} 
               onLongPress={this.deleteMember}
-              onPress={() => {
-                this.setState({ deleteMessage: !this.state.deleteMessage })
-                setTimeout(() => {
-                  this.setState({ deleteMessage: !this.state.deleteMessage })
-                }, 5000)
-              }}
+              onPress={() => this.addWarning()}
             >
               <Text style={styles.btnText}>Delete {this.props.navigation.getParam('editing').f_name}</Text>
             </TouchableOpacity>

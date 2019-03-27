@@ -1,7 +1,7 @@
 import { GET_ACCOUNTS, ADD_MESSAGE, UPDATE_ACCOUNTS } from '../actions/accounts'
 import { ADD_FEES } from '../actions/payments'
-
 import uuid from 'uuid'
+
 const INITIAL_STATE = [
     {
       children: [],
