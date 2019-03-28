@@ -22,7 +22,6 @@ class Guardian extends Component{
       hiddenId: null,
       showId: false,
       alreadyAdded: false,
-      primaryChosen: false 
     }
   }
 
@@ -61,20 +60,19 @@ class Guardian extends Component{
   
   pickerChange = itemValue => this.setState({ frequency: itemValue })
   
-  toggle = () => this.setState({isPrimary: !this.state.isPrimary})
+  toggle = () => {
+    if(this.props.isFirst) return
+    this.setState({isPrimary: !this.state.isPrimary})
+}
 
   render(){
     return (
       <ScrollView style={{ flex: 1 }} >
         <Image source={require('../../assets/GUARDIAN.png')} style={styles.img}/>
-        {this.state.primaryChosen 
-        ? null
-        : <View style={styles.primaryHolder}>
-            <TouchableOpacity style={[styles.primaryToggle, this.state.isPrimary ? styles.toggleSelected : null]} onPress={this.toggle}></TouchableOpacity>
+        <View style={styles.primaryHolder}>
+            <TouchableOpacity style={[styles.primaryToggle, this.state.isPrimary || this.props.isFirst ? styles.toggleSelected : null]} onPress={this.toggle}></TouchableOpacity>
             <Text style={styles.primaryText}>Primary caregiver</Text>
           </View>
-
-        }
         
         <View style={styles.nameHolder}>
           <View style={{ flex: .5, marginRight: 5 }}>
@@ -236,6 +234,7 @@ class Guardian extends Component{
             </View>
             : this.state.f_name && this.state.l_name && this.state.rate && this.state.frequency && this.state.phone && this.state.phone.length === 12            
               ? <View style={{ flexDirection: 'row', marginTop:20, marginHorizontal: 10 }}>
+                  
                   <TouchableOpacity style={[styles.button, { flex: 0.5, marginRight:5}]}
                     onPress={ () => {
                           let guardian = { ...this.state }

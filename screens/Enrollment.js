@@ -54,6 +54,9 @@ class Enrollment extends Component{
       newState.frequency = data.frequency
       delete data.rate
       delete data.frequency
+      if(data.isPrimary){
+        this.state.guardians.forEach(g => g.isPrimary = false)
+      }
     }
     newState[field].push(data)
     this.setState({...newState})
@@ -135,11 +138,14 @@ class Enrollment extends Component{
                 changeQuestionFocus={this.changeQuestionFocus}
                 addMargin={this.addMargin}
                 addToAccount={this.addToAccount}
+                isFirst={!this.state.guardians.length}
+                addAnother={this.state.guardians.length >= 2}
              />
              : <EmergencyContact
-               addMargin={this.addMargin}
-               addToAccount={this.addToAccount}
-               submitAccount={this.submitAccount}
+                addMargin={this.addMargin}
+                addToAccount={this.addToAccount}
+                submitAccount={this.submitAccount}
+                addAnother={this.state.e_contacts.length >= 2}
              />
         }
         {this.state.message
